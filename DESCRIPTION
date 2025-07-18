@@ -19,10 +19,12 @@ Imports:
     dplyr,
     ggplot2,
     glyexp (>= 0.7.0),
+    glystats (>= 0.1.0),
     magrittr,
     rlang,
     tibble,
     tidyplots,
     tidyr
-Remotes: 
-    glycoverse/glyexp
+Remotes:  
+    glycoverse/glyexp,
+    glycoverse/glystats
