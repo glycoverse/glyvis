@@ -7,8 +7,7 @@
 #'
 #' @param object A [glyexp::experiment()] object.
 #' @param type The type of plot, one of "heatmap" (default) or "barplot".
-#' @param ... Other arguments passed to underlying functions
-#'   ([tidyplots::add_boxplot()] for barplot, [tidyplots::add_heatmap()] for heatmap).
+#' @param ... Other arguments passed to underlying ggplot2 functions.
 #'
 #' @returns A ggplot object.
 #' @export
@@ -32,17 +31,33 @@ fortify.glyexp_experiment <- function(model, data, ...) {
 }
 
 .plot_exp_heatmap <- function(object, ...) {
-  object %>%
+  df <- object %>%
     fortify.glyexp_experiment() %>%
-    dplyr::mutate(value = as.double(scale(.data$value)), .by = "variable") %>%
-    tidyplot(x = .data$sample, y = .data$variable, color = .data$value) %>%
-    add_heatmap(rotate_labels = 90)
+    dplyr::mutate(value = as.double(scale(.data$value)), .by = "variable")
+
+  ggplot(df, aes(x = .data$sample, y = .data$variable, fill = .data$value)) +
+    geom_tile() +
+    scale_fill_viridis_c() +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(angle = 90, hjust = 1),
+      axis.text.y = element_blank()
+      ) +
+    labs(fill = expression(log[2]("Int.")))
 }
 
 .plot_exp_barplot <- function(object, ...) {
-  object %>%
-    fortify.glyexp_experiment() %>%
-    tidyplot(x = .data$sample, y = .data$value) %>%
-    add_boxplot() %>%
-    adjust_x_axis(rotate_labels = 90)
+  df <- object %>%
+    fortify.glyexp_experiment()
+
+  ggplot(df, aes(x = .data$sample, y = .data$value)) +
+    geom_boxplot(
+      fill = glyvis_colors[1],
+      color = glyvis_colors[1],
+      alpha = 0.5,
+      staplewidth = 0.5
+    ) +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    labs(x = "Sample", y = expression(log[2]("Int.")))
 }

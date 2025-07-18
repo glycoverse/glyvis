@@ -11,8 +11,7 @@
 
 \item{type}{The type of plot, one of "heatmap" (default) or "barplot".}
 
-\item{...}{Other arguments passed to underlying functions
-(\code{\link[tidyplots:add_boxplot]{tidyplots::add_boxplot()}} for barplot, \code{\link[tidyplots:add_heatmap]{tidyplots::add_heatmap()}} for heatmap).}
+\item{...}{Other arguments passed to underlying ggplot2 functions.}
 }
 \value{
 A ggplot object.

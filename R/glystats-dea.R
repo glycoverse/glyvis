@@ -18,8 +18,8 @@ autoplot.glystats_dea_res_ttest <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  up_color = "#FF7777",
-  down_color = "#7DA8E6",
+  up_color = "#D55E00",
+  down_color = "#56B4E9",
   ...
 ) {
   .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
@@ -32,8 +32,8 @@ autoplot.glystats_dea_res_wilcoxon <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  up_color = "#FF7777",
-  down_color = "#7DA8E6",
+  up_color = "#D55E00",
+  down_color = "#56B4E9",
   ...
 ) {
   .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
@@ -48,7 +48,6 @@ autoplot.glystats_dea_res_wilcoxon <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p" (raw p-values without multiple testing correction).
-#' @param sig_color The color for significant candidates. Defaults to "#FF7777".
 #' @param ... Other arguments passed to underlying functions.
 #' @returns A ggplot object.
 #' @export
@@ -56,10 +55,9 @@ autoplot.glystats_dea_res_anova <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  sig_color = "#FF7777",
   ...
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, sig_color, ...)
+  .plot_multigroup_dea(object, p_cutoff, p_col, ...)
 }
 
 #' @rdname autoplot.glystats_dea_res_anova
@@ -68,10 +66,9 @@ autoplot.glystats_dea_res_kruskal <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  sig_color = "#FF7777",
   ...
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, sig_color, ...)
+  .plot_multigroup_dea(object, p_cutoff, p_col, ...)
 }
 
 .plot_2group_dea <- function(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...) {
@@ -86,21 +83,27 @@ autoplot.glystats_dea_res_kruskal <- function(
       neglog10p = -log10(.data[[p_col]]),
       direction = dplyr::if_else(.data$log2fc > 0, "up", "down", NA),
       candidate = abs(.data$log2fc) >= log2fc_cutoff & .data[[p_col]] < p_cutoff,
+      point_color = dplyr::case_when(
+        !.data$candidate ~ "lightgrey",
+        .data$candidate & .data$direction == "up" ~ up_color,
+        .data$candidate & .data$direction == "down" ~ down_color,
+        TRUE ~ "lightgrey"
+      )
     )
-  df %>%
-    tidyplot(x = .data$log2fc, y = .data$neglog10p) %>%
-    add_data_points(data = filter_rows(!.data$candidate),
-                    color = "lightgrey") %>%
-    add_data_points(data = filter_rows(.data$candidate, .data$direction == "up"),
-                    color = up_color) %>%
-    add_data_points(data = filter_rows(.data$candidate, .data$direction == "down"),
-                    color = down_color) %>%
-    add_reference_lines(x = c(-log2fc_cutoff, log2fc_cutoff), y = -log10(p_cutoff)) %>%
-    adjust_x_axis_title("$Log[2]~fold~change$") %>%
-    adjust_y_axis_title("$-Log[10]~italic(P)~adjusted$")
+
+  ggplot(df, aes(x = .data$log2fc, y = .data$neglog10p)) +
+    geom_point(aes(color = .data$point_color)) +
+    scale_color_identity() +
+    geom_vline(xintercept = c(-log2fc_cutoff, log2fc_cutoff), linetype = "dashed", alpha = 0.7) +
+    geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
+    theme_classic() +
+    labs(
+      x = expression(Log[2]~fold~change),
+      y = expression(-Log[10]~italic(P)~adjusted)
+    )
 }
 
-.plot_multigroup_dea <- function(object, p_cutoff, p_col, sig_color, ...) {
+.plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p", "p_adj"))
 
@@ -108,15 +111,20 @@ autoplot.glystats_dea_res_kruskal <- function(
     dplyr::mutate(
       neglog10p = -log10(.data[[p_col]]),
       candidate = .data[[p_col]] < p_cutoff,
+      point_color = dplyr::if_else(.data$candidate, glyvis_colors[1], "lightgrey")
     )
-  df %>%
-    tidyplot(x = .data$variable, y = .data$neglog10p) %>%
-    add_data_points(data = filter_rows(!.data$candidate),
-                    color = "lightgrey") %>%
-    add_data_points(data = filter_rows(.data$candidate),
-                    color = sig_color) %>%
-    add_reference_lines(y = -log10(p_cutoff)) %>%
-    adjust_y_axis_title("$-Log[10]~italic(P)~adjusted$") %>%
-    remove_x_axis_ticks() %>%
-    remove_x_axis_labels()
+
+  ggplot(df, aes(x = .data$variable, y = .data$neglog10p)) +
+    geom_point(aes(color = .data$point_color)) +
+    scale_color_identity() +
+    geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
+    theme_classic() +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank()
+    ) +
+    labs(
+      x = "Variable",
+      y = expression(-Log[10]~italic(P)~adjusted)
+    )
 }

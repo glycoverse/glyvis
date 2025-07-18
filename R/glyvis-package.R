@@ -2,9 +2,8 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @import ggplot2
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @importFrom ggplot2 autoplot fortify
-#' @import tidyplots
 ## usethis namespace: end
 NULL
