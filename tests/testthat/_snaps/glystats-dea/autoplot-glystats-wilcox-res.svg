@@ -345,6 +345,6 @@
 <text transform='translate(13.45,252.18) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='3.06px' lengthAdjust='spacingAndGlyphs'>t</text>
 <text transform='translate(13.45,249.13) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='6.12px' lengthAdjust='spacingAndGlyphs'>e</text>
 <text transform='translate(13.45,243.01) rotate(-90)' style='font-size: 11.00px; font-family: sans;' textLength='6.12px' lengthAdjust='spacingAndGlyphs'>d</text>
-<text x='37.92' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='208.43px' lengthAdjust='spacingAndGlyphs'>autoplot.glystats_dea_res_wilcoxon</text>
+<text x='37.92' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='164.38px' lengthAdjust='spacingAndGlyphs'>autoplot.glystats_wilcox_res</text>
 </g>
 </svg>

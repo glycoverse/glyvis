@@ -27,24 +27,10 @@ autoplot.glystats_pca_res <- function(object, type = "individual", group_col = "
     tidyr::pivot_wider(names_from = "PC", values_from = "value", names_prefix = "PC")
 
   if (group_col %in% colnames(df)) {
-    min_n_per_group <- df %>%
-      dplyr::count(.data[[group_col]]) %>%
-      dplyr::pull(.data$n) %>%
-      min()
-    p <- ggplot(df, aes(x = .data$PC1, y = .data$PC2, color = .data[[group_col]])) +
-      geom_point()
-    if (min_n_per_group > 3) {
-      p <- p + stat_ellipse(level = 0.95, alpha = 0.3)
-    }
-    p <- p + theme_minimal() +
-      labs(color = group_col)
+    .glyvis_scatter(df, x = "PC1", y = "PC2", group = group_col)
   } else {
-    p <- ggplot(df, aes(x = .data$PC1, y = .data$PC2)) +
-      geom_point() +
-      theme_minimal()
+    .glyvis_scatter(df, x = "PC1", y = "PC2", group = NULL)
   }
-  p +
-    scale_color_manual(values = glyvis_colors)
 }
 
 .plot_pca_variables <- function(object, ...) {
@@ -52,8 +38,5 @@ autoplot.glystats_pca_res <- function(object, type = "individual", group_col = "
     dplyr::filter(.data$PC %in% 1:2) %>%
     tidyr::pivot_wider(names_from = "PC", values_from = "value", names_prefix = "PC")
 
-  ggplot(df, aes(x = .data$PC1, y = .data$PC2)) +
-    geom_point(color = glyvis_colors[1]) +
-    theme_minimal() +
-    labs(x = "PC1", y = "PC2")
+  .glyvis_scatter(df, x = "PC1", y = "PC2", group = NULL)
 }

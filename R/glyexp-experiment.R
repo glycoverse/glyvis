@@ -35,14 +35,7 @@ fortify.glyexp_experiment <- function(model, data, ...) {
     fortify.glyexp_experiment() %>%
     dplyr::mutate(value = as.double(scale(.data$value)), .by = "variable")
 
-  ggplot(df, aes(x = .data$sample, y = .data$variable, fill = .data$value)) +
-    geom_tile() +
-    scale_fill_viridis_c() +
-    theme_minimal() +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1),
-      axis.text.y = element_blank()
-      ) +
+  .glyvis_heatmap(df, x = "sample", y = "variable", value = "value") +
     labs(fill = expression(log[2]("Int.")))
 }
 
@@ -50,14 +43,6 @@ fortify.glyexp_experiment <- function(model, data, ...) {
   df <- object %>%
     fortify.glyexp_experiment()
 
-  ggplot(df, aes(x = .data$sample, y = .data$value)) +
-    geom_boxplot(
-      fill = glyvis_colors[1],
-      color = glyvis_colors[1],
-      alpha = 0.5,
-      staplewidth = 0.5
-    ) +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  .glyvis_boxplot(df, x = "sample", value = "value") +
     labs(x = "Sample", y = expression(log[2]("Int.")))
 }

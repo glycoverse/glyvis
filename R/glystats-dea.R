@@ -1,9 +1,9 @@
 #' Plots for 2-Group Differential Expression Analysis (DEA)
 #'
-#' Visualization for `glystats_dea_res_ttest` and `glystats_dea_res_wilcoxon`.
+#' Visualization for `glystats_ttest_res` and `glystats_wilcox_res`.
 #' Draw a volcano plot.
 #'
-#' @param object A `glystats_dea_res_ttest` or `glystats_dea_res_wilcoxon` object.
+#' @param object A `glystats_ttest_res` or `glystats_wilcox_res` object.
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
@@ -13,7 +13,7 @@
 #' @param ... Other arguments passed to underlying functions.
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_dea_res_ttest <- function(
+autoplot.glystats_ttest_res <- function(
   object,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
@@ -25,9 +25,9 @@ autoplot.glystats_dea_res_ttest <- function(
   .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
 }
 
-#' @rdname autoplot.glystats_dea_res_ttest
+#' @rdname autoplot.glystats_ttest_res
 #' @export
-autoplot.glystats_dea_res_wilcoxon <- function(
+autoplot.glystats_wilcox_res <- function(
   object,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
@@ -41,17 +41,17 @@ autoplot.glystats_dea_res_wilcoxon <- function(
 
 #' Plots for Multi-Group Differential Expression Analysis (DEA)
 #'
-#' Visualization for `glystats_dea_res_anova` and `glystats_dea_res_kruskal`.
+#' Visualization for `glystats_anova_res` and `glystats_kruskal_res`.
 #' Draw a lolipop plot for p-values.
 #'
-#' @param object A `glystats_dea_res_anova` or `glystats_dea_res_kruskal` object.
+#' @param object A `glystats_anova_res` or `glystats_kruskal_res` object.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p" (raw p-values without multiple testing correction).
 #' @param ... Other arguments passed to underlying functions.
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_dea_res_anova <- function(
+autoplot.glystats_anova_res <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
@@ -60,9 +60,9 @@ autoplot.glystats_dea_res_anova <- function(
   .plot_multigroup_dea(object, p_cutoff, p_col, ...)
 }
 
-#' @rdname autoplot.glystats_dea_res_anova
+#' @rdname autoplot.glystats_anova_res
 #' @export
-autoplot.glystats_dea_res_kruskal <- function(
+autoplot.glystats_kruskal_res <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
@@ -107,22 +107,15 @@ autoplot.glystats_dea_res_kruskal <- function(
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p", "p_adj"))
 
-  df <- object %>%
+  df <- object$main_test %>%
     dplyr::mutate(
       neglog10p = -log10(.data[[p_col]]),
       candidate = .data[[p_col]] < p_cutoff,
       point_color = dplyr::if_else(.data$candidate, glyvis_colors[1], "lightgrey")
     )
 
-  ggplot(df, aes(x = .data$variable, y = .data$neglog10p)) +
-    geom_point(aes(color = .data$point_color)) +
-    scale_color_identity() +
+  .glyvis_lolipop(df, x = "variable", y = "neglog10p") +
     geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
-    theme_classic() +
-    theme(
-      axis.text.x = element_blank(),
-      axis.ticks.x = element_blank()
-    ) +
     labs(
       x = "Variable",
       y = expression(-Log[10]~italic(P)~adjusted)
