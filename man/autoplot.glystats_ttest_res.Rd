@@ -45,6 +45,7 @@ Can also be "p" (raw p-values without multiple testing correction).}
 A ggplot object.
 }
 \description{
-Visualization for \code{glystats_ttest_res} and \code{glystats_wilcox_res}.
+Visualization for results from \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}} and \code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}
+(\code{glystats_ttest_res} and \code{glystats_wilcox_res} objects).
 Draw a volcano plot.
 }

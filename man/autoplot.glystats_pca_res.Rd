@@ -19,7 +19,7 @@
 A ggplot object.
 }
 \description{
-Visualization for \code{glystats_pca_res} results.
+Visualization for \code{\link[glystats:gly_pca]{glystats::gly_pca()}} results (\code{glystats_pca_res} object).
 Possible \code{type}s of plots:
 \itemize{
 \item "individual" (default): Plot samples as individuals.

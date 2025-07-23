@@ -1,11 +1,11 @@
 #' Plots for Experiments
 #'
-#' Visualization for [glyexp::experiment()].
+#' Visualization for [glyexp::experiment()] (`glyexp_experiment` object).
 #' Possible `type`s of plots:
 #' - "barplot" (default): Barplot of expression values for each sample.
 #' - "heatmap": Expression heatmap with columns as samples and rows as variables.
 #'
-#' @param object A [glyexp::experiment()] object.
+#' @param object A `glyexp_experiment` object.
 #' @param type The type of plot, one of "heatmap" (default) or "barplot".
 #' @param ... Other arguments passed to underlying ggplot2 functions.
 #'

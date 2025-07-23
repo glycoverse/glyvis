@@ -7,7 +7,7 @@
 \method{autoplot}{glyexp_experiment}(object, type = "barplot", ...)
 }
 \arguments{
-\item{object}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{object}{A \code{glyexp_experiment} object.}
 
 \item{type}{The type of plot, one of "heatmap" (default) or "barplot".}
 
@@ -17,7 +17,7 @@
 A ggplot object.
 }
 \description{
-Visualization for \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Visualization for \code{\link[glyexp:experiment]{glyexp::experiment()}} (\code{glyexp_experiment} object).
 Possible \code{type}s of plots:
 \itemize{
 \item "barplot" (default): Barplot of expression values for each sample.

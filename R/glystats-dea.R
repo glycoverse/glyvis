@@ -1,6 +1,7 @@
 #' Plots for 2-Group Differential Expression Analysis (DEA)
 #'
-#' Visualization for `glystats_ttest_res` and `glystats_wilcox_res`.
+#' Visualization for results from [glystats::gly_ttest()] and [glystats::gly_wilcox()]
+#' (`glystats_ttest_res` and `glystats_wilcox_res` objects).
 #' Draw a volcano plot.
 #'
 #' @param object A `glystats_ttest_res` or `glystats_wilcox_res` object.
@@ -11,6 +12,7 @@
 #' @param up_color The color for up-regulated candidates. Defaults to "#FF7777".
 #' @param down_color The color for down-regulated candidates. Defaults to "#7DA8E6".
 #' @param ... Other arguments passed to underlying functions.
+#'
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_ttest_res <- function(

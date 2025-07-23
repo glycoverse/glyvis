@@ -1,6 +1,6 @@
 #' Plots for Principal Component Analysis (PCA)
 #'
-#' Visualization for `glystats_pca_res` results.
+#' Visualization for [glystats::gly_pca()] results (`glystats_pca_res` object).
 #' Possible `type`s of plots:
 #' - "individual" (default): Plot samples as individuals.
 #' - "variables": Plot loadings for variables.
