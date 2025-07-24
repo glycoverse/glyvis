@@ -80,7 +80,7 @@ autoplot.glystats_kruskal_res <- function(
   checkmate::assert_string(up_color)
   checkmate::assert_string(down_color)
 
-  df <- object %>%
+  df <- object$tidy_result %>%
     dplyr::mutate(
       neglog10p = -log10(.data[[p_col]]),
       direction = dplyr::if_else(.data$log2fc > 0, "up", "down", NA),
@@ -109,7 +109,7 @@ autoplot.glystats_kruskal_res <- function(
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p", "p_adj"))
 
-  df <- object$main_test %>%
+  df <- object$tidy_result$main_test %>%
     dplyr::mutate(
       neglog10p = -log10(.data[[p_col]]),
       candidate = .data[[p_col]] < p_cutoff,
