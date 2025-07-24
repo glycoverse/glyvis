@@ -4,16 +4,25 @@
 \alias{autoplot.glystats_pca_res}
 \title{Plots for Principal Component Analysis (PCA)}
 \usage{
-\method{autoplot}{glystats_pca_res}(object, type = "individual", group_col = "group", ...)
+\method{autoplot}{glystats_pca_res}(object, type = "individual", groups = NULL, ...)
 }
 \arguments{
 \item{object}{A \code{glystats_pca_res} object.}
 
-\item{type}{The type of plot, one of "individual" (default) or "variables".}
+\item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
 
-\item{group_col}{For "individual" plot, the column name of the group information in the sample information.}
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.
+Only applicable to "individual" and "biplot" types.
+Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
 
-\item{...}{Other arguments passed to underlying functions.}
+\item{...}{Other arguments passed to factoextra functions.
+\itemize{
+\item For "screeplot", see \code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}.
+\item For "individual", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}}.
+\item For "variables", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}.
+\item For "biplot", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.
+}}
 }
 \value{
 A ggplot object.
@@ -22,7 +31,13 @@ A ggplot object.
 Visualization for \code{\link[glystats:gly_pca]{glystats::gly_pca()}} results (\code{glystats_pca_res} object).
 Possible \code{type}s of plots:
 \itemize{
+\item "screeplot": Scree plot to see the contribution of each PC.
 \item "individual" (default): Plot samples as individuals.
 \item "variables": Plot loadings for variables.
+\item "biplot": Biplot showing both samples and variables.
 }
+}
+\seealso{
+\code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}},
+\code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}
 }
