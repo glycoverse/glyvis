@@ -17,11 +17,14 @@ RoxygenNote: 7.3.2
 URL: https://glycoverse.github.io/glyvis/
 Imports:
     checkmate,
+    cli,
     dplyr,
+    factoextra,
     ggplot2,
     glyexp (>= 0.7.0),
     magrittr,
     rlang,
+    stringr,
     tibble,
     tidyr
 Remotes:  

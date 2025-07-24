@@ -1,4 +1,4 @@
-test_that("autoplot works for glystats_dea_res", {
+test_that("autoplot works for glystats DEA results", {
   suppressMessages(
     ttest_res <- test_gp_exp |>
       glyexp::filter_obs(group %in% c("C", "H")) |>
@@ -33,5 +33,15 @@ test_that("autoplot works for glystats_dea_res", {
   vdiffr::expect_doppelganger(
     "autoplot.glystats_kruskal_res",
     autoplot(kruskal_res)
+  )
+
+  suppressMessages(
+    limma_res <- test_gp_exp |>
+      glyexp::filter_obs(group %in% c("C", "H")) |>
+      glystats::gly_limma()
+  )
+  vdiffr::expect_doppelganger(
+    "autoplot.glystats_limma_res",
+    autoplot(limma_res)
   )
 })

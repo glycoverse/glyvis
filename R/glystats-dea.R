@@ -73,6 +73,40 @@ autoplot.glystats_kruskal_res <- function(
   .plot_multigroup_dea(object, p_cutoff, p_col, ...)
 }
 
+#' Plots for Limma Result
+#'
+#' Visualization for results from [glystats::gly_limma()] (`glystats_limma_res` objects).
+#' Only 2-group comparison is supported, and a volcano plot is drawn.
+#'
+#' @param object A `glystats_limma_res` object.
+#' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
+#' @param p_cutoff The p-value cutoff. Defaults to 0.05.
+#' @param p_col The column name for p-value. Defaults to "p_adj".
+#'   Can also be "p" (raw p-values without multiple testing correction).
+#' @param up_color The color for up-regulated candidates. Defaults to "#FF7777".
+#' @param down_color The color for down-regulated candidates. Defaults to "#7DA8E6".
+#' @param ... Other arguments passed to underlying functions.
+#'
+#' @returns A ggplot object.
+#' @export
+autoplot.glystats_limma_res <- function(
+  object,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  up_color = "#D55E00",
+  down_color = "#56B4E9",
+  ...
+) {
+  if ("contrast" %in% colnames(object$tidy_result)) {
+    cli::cli_abort(c(
+      "Number of contrasts must be exactly 1 for limma result.",
+      "x" = "Found {.val {dplyr::n_distinct(object$tidy_result$contrast)}} contrasts: {.val {unique(object$tidy_result$contrast)}}."
+    ))
+  }
+  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
+}
+
 .plot_2group_dea <- function(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...) {
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   checkmate::assert_number(p_cutoff, lower = 0)

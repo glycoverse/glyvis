@@ -3,6 +3,7 @@
 S3method(autoplot,glyexp_experiment)
 S3method(autoplot,glystats_anova_res)
 S3method(autoplot,glystats_kruskal_res)
+S3method(autoplot,glystats_limma_res)
 S3method(autoplot,glystats_pca_res)
 S3method(autoplot,glystats_ttest_res)
 S3method(autoplot,glystats_wilcox_res)
