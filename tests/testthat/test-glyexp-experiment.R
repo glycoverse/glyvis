@@ -1,13 +1,13 @@
-test_that("autoplot for glyrepr_experiment", {
+test_that("autoplot for glyexp_experiment", {
   x <- glyexp::toy_experiment()
 
   vdiffr::expect_doppelganger(
-    "autoplot.glyrepr_experiment.barplot",
+    "autoplot.glyexp_experiment.barplot",
     autoplot(x, type = "barplot")
   )
 
   vdiffr::expect_doppelganger(
-    "autoplot.glyrepr_experiment.heatmap",
+    "autoplot.glyexp_experiment.heatmap",
     autoplot(x, type = "heatmap")
   )
 })
