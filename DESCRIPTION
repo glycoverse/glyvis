@@ -6,10 +6,12 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-Suggests: 
+Suggests:
     testthat (>= 3.0.0),
     vdiffr,
-    glystats (>= 0.1.0)
+    glystats (>= 0.3.0),
+    factoextra,
+    GGally
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -19,7 +21,6 @@ Imports:
     checkmate,
     cli,
     dplyr,
-    factoextra,
     ggplot2,
     glyexp (>= 0.7.0),
     magrittr,
