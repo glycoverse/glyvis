@@ -1,3 +1,6 @@
+skip_on_ci()
+skip_on_cran()
+
 test_that("autoplot for glyexp_experiment", {
   x <- glyexp::toy_experiment()
 

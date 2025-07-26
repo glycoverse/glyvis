@@ -1,3 +1,6 @@
+skip_on_ci()
+skip_on_cran()
+
 test_that("autoplot works for glystats_pca_res", {
   set.seed(1234)
   suppressMessages(

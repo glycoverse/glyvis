@@ -1,7 +1,8 @@
+skip_on_ci()
+skip_on_cran()
+
 test_that("autoplot works for glystats cor results", {
   skip_if_not_installed("Hmisc")
-  skip_on_cran()
-  skip_on_ci()
   suppressMessages(
     cor_res <- test_gp_exp |>
       glyexp::slice_sample_var(n = 5) |>
