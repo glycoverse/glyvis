@@ -50,7 +50,7 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
 }
 
 .glyvis_dotchart <- function(df, x, y) {
-  ggplot(df, aes(x = reorder(.data[[x]], dplyr::desc(.data[[y]])), y = .data[[y]])) +
+  ggplot(df, aes(x = stats::reorder(.data[[x]], dplyr::desc(.data[[y]])), y = .data[[y]])) +
     geom_point(color = glyvis_colors[1]) +
     theme_bw()
 }
