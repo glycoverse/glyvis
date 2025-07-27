@@ -10,6 +10,7 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr,
     glystats (>= 0.3.0),
+    ggdendro,
     factoextra,
     GGally,
     enrichplot
