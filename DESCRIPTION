@@ -11,7 +11,8 @@ Suggests:
     vdiffr,
     glystats (>= 0.3.0),
     factoextra,
-    GGally
+    GGally,
+    enrichplot
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -28,7 +29,7 @@ Imports:
     stringr,
     tibble,
     tidyr
-Remotes:  
+Remotes: 
     glycoverse/glyexp,
     glycoverse/glystats
 Depends: R (>= 4.0)
