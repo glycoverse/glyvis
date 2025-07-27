@@ -5,7 +5,7 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
   ggplot(df, aes(x = .data[[x]], y = .data[[y]], fill = .data[[value]])) +
     geom_tile() +
     scale_fill_viridis_c() +
-    theme_minimal() +
+    theme_bw() +
     theme(
       axis.text.x = element_text(angle = 90, hjust = 1),
       axis.text.y = element_blank()
@@ -31,7 +31,7 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
         alpha = 0.5,
         staplewidth = 0.5
       ) +
-      theme_classic() +
+      theme_bw() +
       theme(axis.text.x = element_text(angle = 90, hjust = 1))
   }
 }
@@ -45,13 +45,12 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
   } else {
     ggplot(df, aes(x = .data[[x]], y = .data[[y]])) +
       geom_point(color = glyvis_colors[1]) +
-      theme_classic()
+      theme_bw()
   }
 }
 
-.glyvis_lolipop <- function(df, x, y) {
-  ggplot(df, aes(x = .data[[x]], y = .data[[y]])) +
-    geom_col(fill = "grey90") +
+.glyvis_dotchart <- function(df, x, y) {
+  ggplot(df, aes(x = reorder(.data[[x]], dplyr::desc(.data[[y]])), y = .data[[y]])) +
     geom_point(color = glyvis_colors[1]) +
-    theme_classic()
+    theme_bw()
 }

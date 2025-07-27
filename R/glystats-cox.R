@@ -1,7 +1,7 @@
 #' Plots for Cox Proportional Hazards Model
 #'
 #' Visualization for results from [glystats::gly_cox()] (`glystats_cox_res` objects).
-#' Draw a lolipop plot for p-values.
+#' Draw a dotchart for p-values.
 #'
 #' @param object A `glystats_cox_res` object.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
@@ -27,7 +27,7 @@ autoplot.glystats_cox_res <- function(
       point_color = dplyr::if_else(.data$candidate, glyvis_colors[1], "lightgrey")
     )
 
-  .glyvis_lolipop(df, x = "variable", y = "neglog10p") +
+  .glyvis_dotchart(df, x = "variable", y = "neglog10p") +
     geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
     labs(
       x = "Variable",
