@@ -24,5 +24,5 @@ A ggplot object.
 }
 \description{
 Visualization for \code{glystats_anova_res} and \code{glystats_kruskal_res}.
-Draw a lolipop plot for p-values.
+Draw a dotchart for p-values.
 }

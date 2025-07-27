@@ -21,5 +21,5 @@ A ggplot object.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_cox]{glystats::gly_cox()}} (\code{glystats_cox_res} objects).
-Draw a lolipop plot for p-values.
+Draw a dotchart for p-values.
 }
