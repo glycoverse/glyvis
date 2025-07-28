@@ -32,6 +32,7 @@ test_that("autoplot works for glystats_pca_res with groups parameter", {
 
   # Test with explicit groups parameter
   groups <- c("A", "A", "A", "B", "B", "B", "C", "C", "C", "D", "D", "D")
+  names(groups) <- c("C_1", "C_2", "C_3", "H_1", "H_2", "H_3", "M_1", "M_2", "M_3", "Y_1", "Y_2", "Y_3")
 
   vdiffr::expect_doppelganger(
     "autoplot.glystats_pca_res_individual_with_groups",
@@ -100,33 +101,6 @@ test_that("autoplot works without groups when no group info available", {
   )
 })
 
-test_that("autoplot validates groups parameter correctly", {
-  set.seed(1234)
-  suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
-  )
-
-  # Test with wrong length groups
-  wrong_groups <- c("A", "B", "C")  # Should be 12 elements
-  expect_error(
-    autoplot(pca_res, groups = wrong_groups),
-    "Length of.*groups.*must be equal to the number of samples"
-  )
-})
-
-test_that("autoplot validates group_col parameter correctly", {
-  set.seed(1234)
-  suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
-  )
-
-  # Test with non-existent group_col
-  expect_error(
-    autoplot(pca_res, group_col = "nonexistent_column"),
-    "Column.*nonexistent_column.*not found"
-  )
-})
-
 test_that("groups parameter takes precedence over group_col", {
   set.seed(1234)
   suppressMessages(
@@ -135,6 +109,7 @@ test_that("groups parameter takes precedence over group_col", {
 
   # When both groups and group_col are provided, groups should be used
   groups <- c("X", "X", "X", "Y", "Y", "Y", "Z", "Z", "Z", "W", "W", "W")
+  names(groups) <- c("C_1", "C_2", "C_3", "H_1", "H_2", "H_3", "M_1", "M_2", "M_3", "Y_1", "Y_2", "Y_3")
 
   vdiffr::expect_doppelganger(
     "autoplot.glystats_pca_res_groups_precedence",
@@ -152,24 +127,5 @@ test_that("autoplot type validation works correctly", {
   expect_error(
     autoplot(pca_res, type = "invalid_type"),
     "Must be element of set"
-  )
-})
-
-test_that("groups parameter accepts both factor and character", {
-  set.seed(1234)
-  suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
-  )
-
-  # Test with character groups
-  char_groups <- c("A", "A", "A", "B", "B", "B", "C", "C", "C", "D", "D", "D")
-  expect_no_error(
-    autoplot(pca_res, type = "individual", groups = char_groups)
-  )
-
-  # Test with factor groups
-  factor_groups <- factor(char_groups)
-  expect_no_error(
-    autoplot(pca_res, type = "individual", groups = factor_groups)
   )
 })

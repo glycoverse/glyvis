@@ -37,8 +37,9 @@ autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL
     checkmate::check_character(groups),
     checkmate::check_null(groups)
   )
+  checkmate::assert_string(group_col, null.ok = TRUE)
 
-  groups <- .get_pca_groups(object, groups, group_col)
+  groups <- .prepare_groups(object, groups, group_col, .pca_group_extractor)
 
   switch(
     type,
@@ -49,43 +50,15 @@ autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL
   )
 }
 
-.get_pca_groups <- function(object, groups, group_col) {
-  # Case 1: `groups` is specified: use `groups` directly and ignore `group_col`
-  if (!is.null(groups)) {
-    if (length(groups) != length(unique(object$tidy_result$samples$sample))) {
-      cli::cli_abort(c(
-        "Length of {.arg groups} must be equal to the number of samples.",
-        "i" = "Number of samples: {.val {length(unique(object$tidy_result$samples$sample))}}.",
-        "i" = "Length of {.arg groups}: {.val {length(groups)}}."
-      ))
-    }
-    return(groups)
+.pca_group_extractor <- function(object, group_col) {
+  if (!group_col %in% colnames(object$tidy_result$samples)) {
+    return(NULL)
   }
-
-  # Case 2: `group_col` is specified: check existence, and extract from `object$tidy_result$samples`
-  if (!is.null(group_col)) {
-    if (!group_col %in% colnames(object$tidy_result$samples)) {
-      cli::cli_abort(c(
-        "Column {.val {group_col}} not found.",
-        "i" = "Does your `glyexp::experiment()` contain the column in the sample information tibble?"
-      ))
-    }
-    return(.get_groups_from_pca_res(object, group_col))
-  }
-
-  # Case 3: both are not specified: try "group"
-  if ("group" %in% colnames(object$tidy_result$samples)) {
-    return(.get_groups_from_pca_res(object, "group"))
-  }
-
-  # Case 4: neither is specified and "group" doesn't exist: return NULL
-  return(NULL)
-}
-
-.get_groups_from_pca_res <- function(object, group_col) {
-  object$tidy_result$samples %>%
-    dplyr::distinct(.data$sample, .data[[group_col]]) %>%
-    dplyr::pull(.data[[group_col]])
+  df <- object$tidy_result$samples %>%
+    dplyr::distinct(.data$sample, .data[[group_col]])
+  groups <- df[[group_col]]
+  names(groups) <- df$sample
+  groups
 }
 
 .plot_pca_screeplot <- function(object, ...) {
