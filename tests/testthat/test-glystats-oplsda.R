@@ -1,9 +1,8 @@
 skip_on_ci()
 skip_on_cran()
+skip_if_not_installed("ropls")
 
 test_that("autoplot works for glystats_oplsda_res with default parameters", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -20,8 +19,6 @@ test_that("autoplot works for glystats_oplsda_res with default parameters", {
 })
 
 test_that("autoplot works for glystats_oplsda_res scores plots", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -45,8 +42,6 @@ test_that("autoplot works for glystats_oplsda_res scores plots", {
 })
 
 test_that("autoplot works for glystats_oplsda_res loadings plots", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -70,8 +65,6 @@ test_that("autoplot works for glystats_oplsda_res loadings plots", {
 })
 
 test_that("autoplot works for glystats_oplsda_res vip and variance plots", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -93,8 +86,6 @@ test_that("autoplot works for glystats_oplsda_res vip and variance plots", {
 })
 
 test_that("autoplot type validation works correctly", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -110,8 +101,6 @@ test_that("autoplot type validation works correctly", {
 })
 
 test_that("autoplot y_type validation works correctly", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -127,8 +116,6 @@ test_that("autoplot y_type validation works correctly", {
 })
 
 test_that("autoplot handles missing orthogonal components gracefully", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -150,8 +137,6 @@ test_that("autoplot handles missing orthogonal components gracefully", {
 })
 
 test_that("autoplot handles missing second predictive component gracefully", {
-  skip_if_not_installed("ropls")
-
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({

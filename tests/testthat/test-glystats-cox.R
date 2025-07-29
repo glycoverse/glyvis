@@ -1,8 +1,8 @@
 skip_on_ci()
 skip_on_cran()
+skip_if_not_installed("survival")
 
 test_that("autoplot works for glystats cox results", {
-  skip_if_not_installed("survival")
 
   # Create test survival data with fixed seed for reproducibility
   set.seed(123)
@@ -45,7 +45,6 @@ test_that("autoplot works for glystats cox results", {
 })
 
 test_that("autoplot works for glystats cox results with different p_col options", {
-  skip_if_not_installed("survival")
 
   # Create test survival data with fixed seed for reproducibility
   set.seed(456)
@@ -88,7 +87,6 @@ test_that("autoplot works for glystats cox results with different p_col options"
 })
 
 test_that("autoplot works for glystats cox results with different p_cutoff values", {
-  skip_if_not_installed("survival")
 
   # Create test survival data with fixed seed for reproducibility
   set.seed(789)
@@ -131,7 +129,6 @@ test_that("autoplot works for glystats cox results with different p_cutoff value
 })
 
 test_that("autoplot.glystats_cox_res parameter validation works", {
-  skip_if_not_installed("survival")
 
   # Create minimal test data
   set.seed(999)
