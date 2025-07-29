@@ -4,16 +4,31 @@
 \alias{autoplot.glystats_oplsda_res}
 \title{Plots for OPLS-DA}
 \usage{
-\method{autoplot}{glystats_oplsda_res}(object, type = "loadings", y_type = "o1", ...)
+\method{autoplot}{glystats_oplsda_res}(
+  object,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL
+)
 }
 \arguments{
 \item{object}{A \code{glystats_oplsda_res} object.}
 
-\item{type}{The type of plot, one of "loadings", "scores", "vip", or "screeplot".}
+\item{type}{The type of plot, one of "loadings", "scores", "vip", "variance", or "s-plot". Defaults to "scores".}
 
-\item{y_type}{What to plot on the y-axis when \code{type} is "scores" or "loadings". Either "p2" or "o1".}
+\item{y_type}{What to plot on the y-axis when \code{type} is "scores" or "loadings". Either "p2" or "o1". Defaults to "o1".}
 
-\item{...}{Other arguments passed to underlying functions.}
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.
+Only applicable to "scores" and "loadings" types.}
+
+\item{group_col}{A character string specifying where to find the group information.
+If you uses \code{\link[glystats:gly_oplsda]{glystats::gly_oplsda()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
+sample information has already been added to the result.
+In this case, you can specify the column name in the sample information tibble
+to be used for coloring.
+If not provided, this function will try "group".}
 }
 \value{
 A ggplot object.
@@ -22,9 +37,10 @@ A ggplot object.
 Visualization for results from \code{\link[glystats:gly_oplsda]{glystats::gly_oplsda()}} (\code{glystats_oplsda_res} object).
 Possible \code{type}s of plots:
 \itemize{
+\item "scores" (default): Plot scores for samples.
 \item "loadings": Plot loadings for variables.
-\item "scores": Plot scores for samples.
 \item "vip": Plot VIP scores for variables.
-\item "screeplot": Plot explained variance for each component.
+\item "variance": Plot explained variance for each component.
+\item "s-plot": Plot the correlation between p1 and pcorr1.
 }
 }

@@ -64,7 +64,7 @@ test_that("autoplot works for glystats_oplsda_res loadings plots", {
   }
 })
 
-test_that("autoplot works for glystats_oplsda_res vip and variance plots", {
+test_that("autoplot works for glystats_oplsda_res vip", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
     capture.output({
@@ -77,11 +77,35 @@ test_that("autoplot works for glystats_oplsda_res vip and variance plots", {
     "autoplot.glystats_oplsda_res_vip",
     autoplot(oplsda_res, type = "vip")
   )
+})
+
+test_that("autoplot works for glystats_oplsda_res variance", {
+  set.seed(1234)
+  suppressMessages(suppressWarnings({
+    capture.output({
+      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+    }, type = "output")
+  }))
 
   # Test variance plot
   vdiffr::expect_doppelganger(
     "autoplot.glystats_oplsda_res_variance",
     autoplot(oplsda_res, type = "variance")
+  )
+})
+
+test_that("autoplot works for glystats_oplsda_res s-plot", {
+  set.seed(1234)
+  suppressMessages(suppressWarnings({
+    capture.output({
+      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+    }, type = "output")
+  }))
+
+  # Test s-plot
+  vdiffr::expect_doppelganger(
+    "autoplot.glystats_oplsda_res_s-plot",
+    autoplot(oplsda_res, type = "s-plot")
   )
 })
 

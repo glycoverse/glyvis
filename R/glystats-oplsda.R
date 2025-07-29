@@ -6,9 +6,10 @@
 #' - "loadings": Plot loadings for variables.
 #' - "vip": Plot VIP scores for variables.
 #' - "variance": Plot explained variance for each component.
+#' - "s-plot": Plot the correlation between p1 and pcorr1.
 #'
 #' @param object A `glystats_oplsda_res` object.
-#' @param type The type of plot, one of "loadings", "scores", "vip", or "variance". Defaults to "scores".
+#' @param type The type of plot, one of "loadings", "scores", "vip", "variance", or "s-plot". Defaults to "scores".
 #' @param y_type What to plot on the y-axis when `type` is "scores" or "loadings". Either "p2" or "o1". Defaults to "o1".
 #' @param groups A factor or character vector specifying group membership for each sample.
 #'   If provided, the plot will be colored by group.
@@ -23,7 +24,7 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL) {
-  checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance"))
+  checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance", "s-plot"))
   checkmate::assert_choice(y_type, c("p2", "o1"))
   checkmate::assert(
     checkmate::check_factor(groups),
@@ -41,7 +42,8 @@ autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1",
     scores = .plot_oplsda_scores(object, y_type, groups),
     loadings = .plot_oplsda_loadings(object, y_type),
     vip = .plot_oplsda_vip(object),
-    variance = .plot_oplsda_variance(object)
+    variance = .plot_oplsda_variance(object),
+    "s-plot" = .plot_oplsda_splot(object)
   )
 }
 
@@ -69,6 +71,22 @@ autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1",
 .plot_oplsda_variance <- function(object) {
   .glyvis_barplot(object$tidy_result$variance, "component", "prop_var_explained", ordered = TRUE) +
     labs(x = "Component", y = "Proportion of variance explained")
+}
+
+.plot_oplsda_splot <- function(object) {
+  df <- object$tidy_result$variables %>%
+    dplyr::mutate(color = dplyr::case_when(
+      .data$pcorr1 > 0.5 ~ glyvis_colors[[6]],
+      .data$pcorr1 < -0.5 ~ glyvis_colors[[1]],
+      TRUE ~ "lightgrey"
+    ))
+  ggplot(df, aes(.data$p1, .data$pcorr1)) +
+    geom_point(aes(color = .data$color)) +
+    scale_color_identity() +
+    ggrepel::geom_label_repel(aes(label = .data$variable)) +
+    geom_hline(yintercept = c(-0.5, 0.5), linetype = "dashed", alpha = 0.7) +
+    theme_bw() +
+    labs(x = "Predictive component 1 (p1)", y = "Correlation with p1")
 }
 
 .assert_oplsda_o1_exist <- function(df) {
