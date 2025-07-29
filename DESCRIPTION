@@ -9,7 +9,7 @@ License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),
     vdiffr,
-    glystats (>= 0.3.0),
+    glystats (>= 0.4.0),
     ggdendro,
     factoextra,
     GGally,
