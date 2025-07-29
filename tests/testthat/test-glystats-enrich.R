@@ -1,6 +1,7 @@
 skip_on_ci()
 skip_on_cran()
 skip_if_not_installed("clusterProfiler")
+skip("Enrichment functions are too slow.")
 
 test_that("autoplot works for glystats go enrich results", {
   suppressMessages(go_res <- glystats::gly_enrich_go(test_gp_exp))
