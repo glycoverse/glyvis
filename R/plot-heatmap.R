@@ -1,4 +1,4 @@
-#' Heatmap Plot
+#' Heatmap
 #'
 #' Draw a heatmap from a [glyexp::experiment()].
 #'

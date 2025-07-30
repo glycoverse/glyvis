@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot-volcano.R
 \name{plot_volcano}
 \alias{plot_volcano}
-\title{Plot a Volcano Plot}
+\title{Volcano Plot}
 \usage{
 plot_volcano(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL)
 }

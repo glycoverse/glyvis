@@ -1,4 +1,4 @@
-#' Plot a Volcano Plot
+#' Volcano Plot
 #'
 #' This function accepts a [glyexp::experiment()],
 #' performs differential expression analysis using [glystats::gly_limma()],
