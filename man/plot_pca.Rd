@@ -4,10 +4,12 @@
 \alias{plot_pca}
 \title{PCA Plot}
 \usage{
-plot_pca(exp)
+plot_pca(exp, ...)
 }
 \arguments{
 \item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+
+\item{...}{Additional arguments passed to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
 }
 \value{
 A ggplot object.
