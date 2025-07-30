@@ -1,3 +1,12 @@
+.validate_group_args <- function(groups, group_col) {
+  checkmate::assert(
+    checkmate::check_factor(groups),
+    checkmate::check_character(groups),
+    checkmate::check_null(groups)
+  )
+  checkmate::assert_string(group_col, null.ok = TRUE)
+}
+
 #' Prepare group information for analysis
 #'
 #' @description

@@ -27,12 +27,7 @@
 autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
   checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance", "s-plot"))
   checkmate::assert_choice(y_type, c("p2", "o1"))
-  checkmate::assert(
-    checkmate::check_factor(groups),
-    checkmate::check_character(groups),
-    checkmate::check_null(groups)
-  )
-  checkmate::assert_string(group_col, null.ok = TRUE)
+  .validate_group_args(groups, group_col)
 
   # The `samples` tibble of `gly_oplsda()` has similar structure as `gly_pca()`,
   # so we can reuse the same group extractor.

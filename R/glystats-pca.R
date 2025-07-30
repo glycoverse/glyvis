@@ -32,12 +32,7 @@
 autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL, group_col = NULL, ...) {
   .check_pkg_available("factoextra")
   checkmate::assert_choice(type, c("screeplot", "individual", "variables", "biplot"))
-  checkmate::assert(
-    checkmate::check_factor(groups),
-    checkmate::check_character(groups),
-    checkmate::check_null(groups)
-  )
-  checkmate::assert_string(group_col, null.ok = TRUE)
+  .validate_group_args(groups, group_col)
 
   groups <- .prepare_groups(object, groups, group_col)
 

@@ -17,13 +17,7 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_tsne_res <- function(object, groups = NULL, group_col = NULL, ...) {
-  checkmate::assert(
-    checkmate::check_factor(groups),
-    checkmate::check_character(groups),
-    checkmate::check_null(groups)
-  )
-  checkmate::assert_string(group_col, null.ok = TRUE)
-
+  .validate_group_args(groups, group_col)
   groups <- .prepare_groups(object, groups, group_col)
 
   df <- object$tidy_result

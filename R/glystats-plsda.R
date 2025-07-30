@@ -24,12 +24,7 @@
 #' @export
 autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, group_col = NULL, ...) {
   checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance"))
-  checkmate::assert(
-    checkmate::check_factor(groups),
-    checkmate::check_character(groups),
-    checkmate::check_null(groups)
-  )
-  checkmate::assert_string(group_col, null.ok = TRUE)
+  .validate_group_args(groups, group_col)
 
   # The `samples` tibble of `gly_plsda()` has similar structure as `gly_pca()`,
   # so we can reuse the same group extractor.
