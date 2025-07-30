@@ -59,12 +59,27 @@
 #' @keywords internal
 #' @noRd
 .get_samples <- function(object) {
-  df <- purrr::detect(object$tidy_result, ~ "sample" %in% colnames(.x))
-  if (is.null(df)) {
+  abort_no_sample <- function() {
     cli::cli_abort(c(
       "Can't extract sample information from {.arg object}.",
       "i" = "It's not you, it's us. Please report this bug."
     ))
+  }
+
+  tidy_result <- object$tidy_result
+
+  # Case 1: `tidy_result` is a single tibble
+  if (tibble::is_tibble(tidy_result)) {
+    samples <- unique(tidy_result$sample)
+    if (is.null(samples)) {
+      abort_no_sample()
+    }
+    return(samples)
+  }
+  # Case 2: `tidy_result` is a list of tibbles
+  df <- purrr::detect(tidy_result, ~ "sample" %in% colnames(.x))
+  if (is.null(df)) {
+    abort_no_sample()
   }
   return(unique(df$sample))
 }
