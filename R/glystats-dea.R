@@ -11,7 +11,7 @@
 #'   Can also be "p" (raw p-values without multiple testing correction).
 #' @param up_color The color for up-regulated candidates. Defaults to "#FF7777".
 #' @param down_color The color for down-regulated candidates. Defaults to "#7DA8E6".
-#' @param ... Other arguments passed to underlying functions.
+#' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export

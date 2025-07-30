@@ -18,10 +18,11 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
+#' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, group_col = NULL) {
+autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, group_col = NULL, ...) {
   checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance"))
   checkmate::assert(
     checkmate::check_factor(groups),

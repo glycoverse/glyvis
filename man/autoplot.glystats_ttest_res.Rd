@@ -39,7 +39,7 @@ Can also be "p" (raw p-values without multiple testing correction).}
 
 \item{down_color}{The color for down-regulated candidates. Defaults to "#7DA8E6".}
 
-\item{...}{Other arguments passed to underlying functions.}
+\item{...}{Ignored.}
 }
 \value{
 A ggplot object.

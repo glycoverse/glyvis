@@ -11,7 +11,7 @@
 
 \item{type}{The type of plot, one of "heatmap" (default) or "barplot".}
 
-\item{...}{Other arguments passed to underlying ggplot2 functions.}
+\item{...}{Ignored.}
 }
 \value{
 A ggplot object.

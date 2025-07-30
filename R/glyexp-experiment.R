@@ -7,7 +7,7 @@
 #'
 #' @param object A `glyexp_experiment` object.
 #' @param type The type of plot, one of "heatmap" (default) or "barplot".
-#' @param ... Other arguments passed to underlying ggplot2 functions.
+#' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export

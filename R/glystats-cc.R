@@ -4,7 +4,7 @@
 #' Suggest users to use `output_file` parameter in `gly_consensus_clustering()` instead.
 #'
 #' @param object A `glystats_cc_res` object.
-#' @param ... Other arguments passed to underlying functions.
+#' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export

@@ -9,7 +9,8 @@
   type = "scores",
   y_type = "o1",
   groups = NULL,
-  group_col = NULL
+  group_col = NULL,
+  ...
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
+
+\item{...}{Ignored.}
 }
 \value{
 A ggplot object.

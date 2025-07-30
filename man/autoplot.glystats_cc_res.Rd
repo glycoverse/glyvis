@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{A \code{glystats_cc_res} object.}
 
-\item{...}{Other arguments passed to underlying functions.}
+\item{...}{Ignored.}
 }
 \value{
 A ggplot object.

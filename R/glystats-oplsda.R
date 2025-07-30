@@ -20,10 +20,11 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
+#' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL) {
+autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
   checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance", "s-plot"))
   checkmate::assert_choice(y_type, c("p2", "o1"))
   checkmate::assert(
