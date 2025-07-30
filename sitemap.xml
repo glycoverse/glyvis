@@ -12,10 +12,24 @@
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cc_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cor_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cox_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_go_ora_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_hclust_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_limma_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_oplsda_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_pca_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_plsda_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_roc_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_tsne_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_ttest_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_umap_res.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_wgcna_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/glyvis-package.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/index.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_corrplot.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_heatmap.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_pca.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_tsne.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_umap.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/plot_volcano.html</loc></url>
 </urlset>
 
