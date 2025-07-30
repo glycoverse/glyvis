@@ -24,18 +24,9 @@ autoplot.glystats_tsne_res <- function(object, groups = NULL, group_col = NULL, 
   )
   checkmate::assert_string(group_col, null.ok = TRUE)
 
-  groups <- .prepare_groups(object, groups, group_col, .tsne_group_extractor)
+  groups <- .prepare_groups(object, groups, group_col)
 
   df <- object$tidy_result
   df$group <- groups
   .glyvis_scatter(df, "tsne1", "tsne2", group = "group")
-}
-
-.tsne_group_extractor <- function(object, group_col) {
-  if (!group_col %in% colnames(object$tidy_result)) {
-    return(NULL)
-  }
-  groups <- object$tidy_result[[group_col]]
-  names(groups) <- object$tidy_result$sample
-  groups
 }

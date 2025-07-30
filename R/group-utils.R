@@ -23,12 +23,13 @@
 #'   It should have signature `function(object, group_col)`.
 #'   It should return NULL if `group_col` does not exist in `object`,
 #'   and return a named-by-samples factor vector if it exists.
+#'   Default to `.default_group_extractor`.
 #'
 #' @returns A factor vector of group information, or NULL if no valid group information is provided.
 #'
 #' @keywords internal
 #' @noRd
-.prepare_groups <- function(object, groups, group_col, group_extractor) {
+.prepare_groups <- function(object, groups, group_col, group_extractor = .default_group_extractor) {
   # Get sample names from object
   samples <- .get_samples(object)
 
@@ -120,4 +121,28 @@
     ))
   }
   return(groups[samples])  # reorder groups to match sample order
+}
+
+.default_group_extractor <- function(object, group_col) {
+  tibble_group_extractor <- function(df, group_col) {
+    if (!group_col %in% colnames(df)) {
+      return(NULL)
+    }
+    df <- dplyr::distinct(df, .data$sample, .data[[group_col]])
+    groups <- df[[group_col]]
+    names(groups) <- df$sample
+    groups
+  }
+
+  if (tibble::is_tibble(object$tidy_result)) {
+    return(tibble_group_extractor(object$tidy_result, group_col))
+  } else {
+    for (df in object$tidy_result) {
+      groups <- tibble_group_extractor(df, group_col)
+      if (!is.null(groups)) {
+        return(groups)
+      }
+    }
+    return(NULL)
+  }
 }

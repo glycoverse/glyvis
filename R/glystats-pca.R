@@ -39,7 +39,7 @@ autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL
   )
   checkmate::assert_string(group_col, null.ok = TRUE)
 
-  groups <- .prepare_groups(object, groups, group_col, .pca_group_extractor)
+  groups <- .prepare_groups(object, groups, group_col)
 
   switch(
     type,
@@ -48,17 +48,6 @@ autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL
     variables = .plot_pca_variables(object, ...),
     biplot = .plot_pca_biplot(object, groups, ...)
   )
-}
-
-.pca_group_extractor <- function(object, group_col) {
-  if (!group_col %in% colnames(object$tidy_result$samples)) {
-    return(NULL)
-  }
-  df <- object$tidy_result$samples %>%
-    dplyr::distinct(.data$sample, .data[[group_col]])
-  groups <- df[[group_col]]
-  names(groups) <- df$sample
-  groups
 }
 
 .plot_pca_screeplot <- function(object, ...) {

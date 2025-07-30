@@ -33,7 +33,7 @@ autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, 
 
   # The `samples` tibble of `gly_plsda()` has similar structure as `gly_pca()`,
   # so we can reuse the same group extractor.
-  groups <- .prepare_groups(object, groups, group_col, .pca_group_extractor)
+  groups <- .prepare_groups(object, groups, group_col)
 
   switch(
     type,
