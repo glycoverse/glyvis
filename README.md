@@ -14,8 +14,8 @@ status](https://www.r-pkg.org/badges/version/glyvis)](https://CRAN.R-project.org
 coverage](https://codecov.io/gh/glycoverse/glyvis/graph/badge.svg)](https://app.codecov.io/gh/glycoverse/glyvis)
 <!-- badges: end -->
 
-> [!Note]
-> **This package is currently under development and is not for production use.**
+> \[!Note\] **This package is currently under development and is not for
+> production use.**
 
 The goal of glyvis is to visualize everything in the `glycoverse`
 ecosystem. Bioinformatics analysis results, glycan structures, glycan
@@ -23,11 +23,17 @@ biosynthesis pathways, and more. Just `autoplot()` it!
 
 ## Installation
 
-You can install the development version of glyvis from
+You can install the latest release of glyvis from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
+pak::pak("glycoverse/glyvis@*release")
+```
+
+Or install the development version:
+
+``` r
 pak::pak("glycoverse/glyvis")
 ```
 
