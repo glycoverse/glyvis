@@ -14,12 +14,14 @@ status](https://www.r-pkg.org/badges/version/glyvis)](https://CRAN.R-project.org
 coverage](https://codecov.io/gh/glycoverse/glyvis/graph/badge.svg)](https://app.codecov.io/gh/glycoverse/glyvis)
 <!-- badges: end -->
 
-> \[!Note\] **This package is currently under development and is not for
-> production use.**
-
 The goal of glyvis is to visualize everything in the `glycoverse`
-ecosystem. Bioinformatics analysis results, glycan structures, glycan
-biosynthesis pathways, and more. Just `autoplot()` it!
+ecosystem. Visualization is an essential part of data analysis. Human
+beings are more sensitive to visual information than text and numbers.
+Plotting helps us to understand the data better. `glyvis` provides a
+unified interface for visualizing `glycoverse` data, including
+statistical results, experiments, glycan biosynthesis pathways, and
+more. It implements the `autoplot()` method for various `glycoverse`
+data structures. Just `autoplot()` it!
 
 ## Installation
 
@@ -37,6 +39,33 @@ Or install the development version:
 pak::pak("glycoverse/glyvis")
 ```
 
+## Documentation
+
+-   📚 Reference:
+    [Here](https://glycoverse.github.io/glyvis/reference/index.html)
+
+## Role in `glycoverse`
+
+The main purpose of `glyvis` is to provide visualization for `glystats`
+results. It implements `autoplot()` methods for each result class in
+`glystats`, so that the users can visualize the results directly to get
+a quick overview. It also provides some other visualization functions
+for `glycoverse` data structures, such as `glyexp::experiment()`,
+`glyrepr::glycan_structure()`, and others. This package is not intended
+to produce publication-quality figures, but to provide a quick
+exploration of the data.
+
 ## Example
 
-Coming soon!
+``` r
+library(glyvis)
+library(glystats)
+
+exp <- ...  # an glyexp::experiment()
+
+# Perform a t-test
+ttest_res <- gly_ttest(exp)
+
+# Visualize the results
+autoplot(ttest_res)
+```
