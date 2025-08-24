@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -53,10 +54,7 @@
 </div>
 <!-- badges: start -->
 
-<blockquote>
-<p>[!Note] <strong>This package is currently under development and is not for production use.</strong></p>
-</blockquote>
-<p>The goal of glyvis is to visualize everything in the <code>glycoverse</code> ecosystem. Bioinformatics analysis results, glycan structures, glycan biosynthesis pathways, and more. Just <code>autoplot()</code> it!</p>
+<p>The goal of glyvis is to visualize everything in the <code>glycoverse</code> ecosystem. Visualization is an essential part of data analysis. Human beings are more sensitive to visual information than text and numbers. Plotting helps us to understand the data better. <code>glyvis</code> provides a unified interface for visualizing <code>glycoverse</code> data, including statistical results, experiments, glycan biosynthesis pathways, and more. It implements the <code>autoplot()</code> method for various <code>glycoverse</code> data structures. Just <code>autoplot()</code> it!</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -69,9 +67,33 @@
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"glycoverse/glyvis"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<ul>
+<li>📚 Reference: <a href="https://glycoverse.github.io/glyvis/reference/index.html">Here</a>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="role-in-glycoverse">Role in <code>glycoverse</code>
+<a class="anchor" aria-label="anchor" href="#role-in-glycoverse"></a>
+</h2>
+<p>The main purpose of <code>glyvis</code> is to provide visualization for <code>glystats</code> results. It implements <code>autoplot()</code> methods for each result class in <code>glystats</code>, so that the users can visualize the results directly to get a quick overview. It also provides some other visualization functions for <code>glycoverse</code> data structures, such as <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code>, <code>glyrepr::glycan_structure()</code>, and others. This package is not intended to produce publication-quality figures, but to provide a quick exploration of the data.</p>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Coming soon!</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyvis/">glyvis</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glystats/" class="external-link">glystats</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">...</span>  <span class="co"># an glyexp::experiment()</span></span>
+<span></span>
+<span><span class="co"># Perform a t-test</span></span>
+<span><span class="va">ttest_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glycoverse.github.io/glystats/reference/gly_ttest.html" class="external-link">gly_ttest</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualize the results</span></span>
+<span><span class="fu">autoplot</span><span class="op">(</span><span class="va">ttest_res</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
