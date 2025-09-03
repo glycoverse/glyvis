@@ -29,14 +29,14 @@ You can install the latest release of glyvis from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
-pak::pak("glycoverse/glyvis@*release")
+# install.packages("devtools")
+devtools::install_github("glycoverse/glyvis@*release")
 ```
 
 Or install the development version:
 
 ``` r
-pak::pak("glycoverse/glyvis")
+devtools::install_github("glycoverse/glyvis")
 ```
 
 ## Documentation
