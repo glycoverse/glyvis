@@ -36,14 +36,14 @@ Just `autoplot()` it!
 You can install the latest release of glyvis from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("glycoverse/glyvis@*release")
+# install.packages("remotes")
+remotes::install_github("glycoverse/glyvis@*release")
 ```
 
 Or install the development version:
 
 ``` r
-devtools::install_github("glycoverse/glyvis")
+remotes::install_github("glycoverse/glyvis")
 ```
 
 ## Documentation
