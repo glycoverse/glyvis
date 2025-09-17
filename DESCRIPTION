@@ -13,8 +13,7 @@ Suggests:
     ggdendro,
     factoextra,
     GGally,
-    enrichplot,
-    ggtree (>= 3.17.0)
+    enrichplot
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -24,7 +23,7 @@ Imports:
     checkmate,
     cli,
     dplyr,
-    ggplot2 (>= 3.5.0),
+    ggplot2,
     ggrepel,
     glyexp (>= 0.7.0),
     magrittr,
