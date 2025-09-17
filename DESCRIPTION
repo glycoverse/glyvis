@@ -10,10 +10,12 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr,
     glystats (>= 0.4.0),
+    glyclean (>= 0.6.4),
     ggdendro,
     factoextra,
     GGally,
-    enrichplot
+    enrichplot,
+    ggseqlogo
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -32,7 +34,8 @@ Imports:
     stringr,
     tibble,
     tidyr
-Remotes: 
+Remotes:
     glycoverse/glyexp@*release,
-    glycoverse/glystats@*release
+    glycoverse/glystats@*release,
+    glycoverse/glyclean@*release
 Depends: R (>= 4.0)
