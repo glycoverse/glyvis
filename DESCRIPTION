@@ -23,7 +23,7 @@ Imports:
     checkmate,
     cli,
     dplyr,
-    ggplot2,
+    ggplot2 (>= 3.5.0),
     ggrepel,
     glyexp (>= 0.7.0),
     magrittr,
