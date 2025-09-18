@@ -1,0 +1,93 @@
+---
+title: "Get Started with glyvis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get Started with glyvis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+> "The simple graph has brought more information to the data analyst's mind than any other device." — John Tukey
+
+Data visualization isn't just another step in your analysis pipeline—it's where insights come alive. 
+As visual creatures, we process charts and graphs far more intuitively than walls of numbers and text.
+`glyvis` brings this visual power to the `glycoverse`, offering lightning-fast and effortless visualization for your glycomics data.
+Built as the perfect companion to `glystats`, it transforms complex statistical results into clear, compelling visuals.
+
+```{r setup}
+library(glyvis)
+library(glyexp)
+library(glyclean)
+library(glystats)
+```
+
+Let's dive in with some real data to see `glyvis` in action.
+We'll work with the `real_experiment` dataset bundled with `glyexp`—
+a compelling real-world N-glycoproteomics study featuring 12 patients across four distinct liver conditions:
+healthy controls (H), hepatitis (M), cirrhosis (Y), and hepatocellular carcinoma (C), with 3 samples representing each condition.
+To get our data analysis-ready, we'll use `glyclean::auto_clean()` for streamlined preprocessing.
+
+```{r}
+exp <- auto_clean(real_experiment)
+```
+
+## The Dual Nature of `glyvis`
+
+Think of `glyvis` as a versatile artist with two distinct painting styles:
+
+- **`autoplot()`** — The intelligent assistant that automatically crafts suitable plots from your `glystats` results
+- **`plot_xxx()`** — The precision toolkit for creating specific visualizations exactly as you envision them
+
+Let's see this in action. To create a PCA plot, we can take the direct route with `plot_pca()` on our `exp` data:
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+plot_pca(exp)
+```
+
+Alternatively, we can take the analytical pathway: first conducting PCA analysis with `glystats::gly_pca()`,
+then letting `autoplot()` work its magic on the statistical results.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+pca_res <- gly_pca(exp)
+autoplot(pca_res)
+```
+
+While the first approach gets you there quickly,
+the second pathway unlocks a world of possibilities with your results.
+You gain access to the underlying statistical objects for advanced analyses,
+and can craft custom `ggplot2` masterpieces tailored for publications.
+
+The beauty of `autoplot()` lies in its versatility—it speaks fluent `glystats` across nearly every analysis type.
+Explore [the complete reference](https://glycoverse.github.io/glyvis/reference/index.html) to discover the full spectrum of `autoplot()` capabilities
+and specialized `plot_xxx()` functions.
+
+## A Philosophy on Aesthetics
+
+Let's set expectations straight: `glyvis` isn't your publication graphics department. 
+Creating truly stunning, publication-ready figures is an art form that demands thoughtful customization.
+Every compelling visualization emerges from careful consideration of countless decisions:
+
+- **Focus**: What story does your data want to tell?
+- **Scale**: How much visual real estate will make your message shine without overwhelming?
+- **Layout**: How can multiple plots dance together harmoniously?
+- **Palette**: Which colors will captivate while staying true to your data?
+- **Annotation**: What labels and text will guide your reader's eye?
+- **Polish**: The devil's in the details—legends, fonts, ticks, axes, grids...
+
+These creative choices flow from your intimate knowledge of the data and its scientific context.
+`glyvis` doesn't presume to make these artistic decisions for you.
+
+Instead, think of `glyvis` as your data exploration companion.
+It excels at what it was born to do: transforming `glystats` results into instant, informative visuals.
+It's your first glimpse into the data's soul, helping you spot patterns and generate hypotheses at the speed of thought.

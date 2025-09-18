@@ -6,3 +6,6 @@
 .quarto
 docs
 tests/vdiffr.Rout.fail
+inst/doc
+/doc/
+/Meta/
