@@ -1,3 +1,14 @@
+# glyvis 0.2.0
+
+## New features
+
+* Add `plot_logo()` to plot logo plots for glycosites.
+
+## Minor improvements and bug fixes
+
+* Re-export `autoplot()` from `ggplot2` to prevent the 'could not find function "autoplot"' error when `ggplot2` is not loaded.
+* Add a Get Started vignette.
+
 # glyvis 0.1.2
 
 ## Minor improvements and bug fixes
