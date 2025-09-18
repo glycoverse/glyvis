@@ -5,6 +5,9 @@
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @export autoplot
 ## usethis namespace: end
 NULL
+
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot
