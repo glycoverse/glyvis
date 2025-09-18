@@ -5,6 +5,8 @@
 <url><loc>https://glycoverse.github.io/glyvis/LICENSE-text.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/LICENSE.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/SUPPORT.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/articles/glyvis.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/articles/index.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/authors.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/index.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/news/index.html</loc></url>
@@ -33,5 +35,6 @@
 <url><loc>https://glycoverse.github.io/glyvis/reference/plot_tsne.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/plot_umap.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/plot_volcano.html</loc></url>
+<url><loc>https://glycoverse.github.io/glyvis/reference/reexports.html</loc></url>
 </urlset>
 
