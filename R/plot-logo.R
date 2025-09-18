@@ -20,6 +20,7 @@ plot_logo <- function(exp, n_aa = 5L, fasta = NULL, ...) {
   checkmate::assert_class(exp, "glyexp_experiment")
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
+  .assert_exp_type(exp, "glycoproteomics")
 
   if (!"site_sequence" %in% colnames(exp$var_info)) {
     if (is.null(fasta)) {
