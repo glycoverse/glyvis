@@ -1,4 +1,8 @@
-# glyvis (development version)
+# glyvis 0.2.1
+
+## Minor improvements and bug fixes
+
+* Adapt to the breaking changes in `glystats` v0.5.0.
 
 # glyvis 0.2.0
 
