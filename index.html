@@ -85,16 +85,36 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyvis/">glyvis</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyexp/" class="external-link">glyexp</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyclean/" class="external-link">glyclean</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'glyclean'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     aggregate</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glystats/" class="external-link">glystats</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyvis/">glyvis</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="va">...</span>  <span class="co"># an glyexp::experiment()</span></span>
+<span><span class="va">exp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glycoverse.github.io/glyclean/reference/auto_clean.html" class="external-link">auto_clean</a></span><span class="op">(</span><span class="va">real_experiment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ Normalizing data (Median)</span></span>
+<span><span class="co">#&gt; ✔ Normalizing data (Median) [79ms]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Removing variables with &gt;50% missing values</span></span>
+<span><span class="co">#&gt; ✔ Removing variables with &gt;50% missing values [10ms]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Imputing missing values</span></span>
+<span><span class="co">#&gt; ℹ Sample size &lt;= 30, using sample minimum imputation</span></span>
+<span><span class="co">#&gt; ℹ Imputing missing values✔ Imputing missing values [11ms]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Aggregating data</span></span>
+<span><span class="co">#&gt; ✔ Aggregating data [376ms]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ℹ Normalizing data again</span></span>
+<span><span class="co">#&gt; ✔ Normalizing data again [8ms]</span></span>
 <span></span>
-<span><span class="co"># Perform a t-test</span></span>
-<span><span class="va">ttest_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glycoverse.github.io/glystats/reference/gly_ttest.html" class="external-link">gly_ttest</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Visualize the results</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">ttest_res</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pca_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glycoverse.github.io/glystats/reference/gly_pca.html" class="external-link">gly_pca</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">pca_res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
