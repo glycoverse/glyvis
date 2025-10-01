@@ -82,7 +82,7 @@ test_that("autoplot works for glystats cox results with different p_col options"
   # Test with raw p-values
   vdiffr::expect_doppelganger(
     "autoplot.glystats_cox_res_p_raw",
-    autoplot(cox_result, p_col = "p")
+    autoplot(cox_result, p_col = "p_val")
   )
 })
 

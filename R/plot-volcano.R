@@ -32,6 +32,6 @@ plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_grou
   }
 
   limma_res <- glystats::gly_limma(exp, group_col, p_adj_method, ref_group)
-  p_col <- if (is.null(p_adj_method)) "p" else "p_adj"
+  p_col <- if (is.null(p_adj_method)) "p_val" else "p_adj"
   autoplot(limma_res, p_col = p_col)
 }

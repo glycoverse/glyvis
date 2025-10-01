@@ -6,7 +6,7 @@
 #' @param object A `glystats_cox_res` object.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
-#'   Can also be "p" (raw p-values without multiple testing correction).
+#'   Can also be "p_val" (raw p-values without multiple testing correction).
 #' @param ... Ignored.
 #'
 #' @returns A ggplot object.
@@ -18,7 +18,7 @@ autoplot.glystats_cox_res <- function(
   ...
 ) {
   checkmate::assert_number(p_cutoff, lower = 0)
-  checkmate::assert_choice(p_col, c("p", "p_adj"))
+  checkmate::assert_choice(p_col, c("p_val", "p_adj"))
 
   df <- object$tidy_result %>%
     dplyr::mutate(
