@@ -62,15 +62,14 @@ but to provide a quick exploration of the data.
 
 ## Example
 
-```r
-library(glyvis)
+```{r}
+library(glyexp)
+library(glyclean)
 library(glystats)
+library(glyvis)
 
-exp <- ...  # an glyexp::experiment()
+exp <- auto_clean(real_experiment)
 
-# Perform a t-test
-ttest_res <- gly_ttest(exp)
-
-# Visualize the results
-autoplot(ttest_res)
+pca_res <- gly_pca(exp)
+autoplot(pca_res)
 ```

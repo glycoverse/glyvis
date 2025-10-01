@@ -58,14 +58,35 @@ exploration of the data.
 ## Example
 
 ``` r
-library(glyvis)
+library(glyexp)
+library(glyclean)
+#> 
+#> Attaching package: 'glyclean'
+#> The following object is masked from 'package:stats':
+#> 
+#>     aggregate
 library(glystats)
+library(glyvis)
 
-exp <- ...  # an glyexp::experiment()
+exp <- auto_clean(real_experiment)
+#> ℹ Normalizing data (Median)
+#> ✔ Normalizing data (Median) [79ms]
+#> 
+#> ℹ Removing variables with >50% missing values
+#> ✔ Removing variables with >50% missing values [10ms]
+#> 
+#> ℹ Imputing missing values
+#> ℹ Sample size <= 30, using sample minimum imputation
+#> ℹ Imputing missing values✔ Imputing missing values [11ms]
+#> 
+#> ℹ Aggregating data
+#> ✔ Aggregating data [376ms]
+#> 
+#> ℹ Normalizing data again
+#> ✔ Normalizing data again [8ms]
 
-# Perform a t-test
-ttest_res <- gly_ttest(exp)
-
-# Visualize the results
-autoplot(ttest_res)
+pca_res <- gly_pca(exp)
+autoplot(pca_res)
 ```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
