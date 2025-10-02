@@ -9,8 +9,6 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param up_color The color for up-regulated candidates. Defaults to "#FF7777".
-#' @param down_color The color for down-regulated candidates. Defaults to "#7DA8E6".
 #' @param ... Ignored.
 #'
 #' @returns A ggplot object.
@@ -20,11 +18,9 @@ autoplot.glystats_ttest_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  up_color = "#D55E00",
-  down_color = "#56B4E9",
   ...
 ) {
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
+  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' @rdname autoplot.glystats_ttest_res
@@ -34,11 +30,9 @@ autoplot.glystats_wilcox_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  up_color = "#D55E00",
-  down_color = "#56B4E9",
   ...
 ) {
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
+  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' Plots for Multi-Group Differential Expression Analysis (DEA)
@@ -83,8 +77,6 @@ autoplot.glystats_kruskal_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param up_color The color for up-regulated candidates. Defaults to "#FF7777".
-#' @param down_color The color for down-regulated candidates. Defaults to "#7DA8E6".
 #' @param ... Other arguments passed to underlying functions.
 #'
 #' @returns A ggplot object.
@@ -94,8 +86,6 @@ autoplot.glystats_limma_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  up_color = "#D55E00",
-  down_color = "#56B4E9",
   ...
 ) {
   if ("contrast" %in% colnames(object$tidy_result)) {
@@ -104,39 +94,14 @@ autoplot.glystats_limma_res <- function(
       "x" = "Found {.val {dplyr::n_distinct(object$tidy_result$contrast)}} contrasts: {.val {unique(object$tidy_result$contrast)}}."
     ))
   }
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...)
+  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
-.plot_2group_dea <- function(object, log2fc_cutoff, p_cutoff, p_col, up_color, down_color, ...) {
+.plot_2group_dea <- function(object, log2fc_cutoff, p_cutoff, p_col, ...) {
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
-  checkmate::assert_string(up_color)
-  checkmate::assert_string(down_color)
-
-  df <- object$tidy_result %>%
-    dplyr::mutate(
-      neglog10p = -log10(.data[[p_col]]),
-      direction = dplyr::if_else(.data$log2fc > 0, "up", "down", NA),
-      candidate = abs(.data$log2fc) >= log2fc_cutoff & .data[[p_col]] < p_cutoff,
-      point_color = dplyr::case_when(
-        !.data$candidate ~ "lightgrey",
-        .data$candidate & .data$direction == "up" ~ up_color,
-        .data$candidate & .data$direction == "down" ~ down_color,
-        TRUE ~ "lightgrey"
-      )
-    )
-
-  ggplot(df, aes(x = .data$log2fc, y = .data$neglog10p)) +
-    geom_point(aes(color = .data$point_color)) +
-    scale_color_identity() +
-    geom_vline(xintercept = c(-log2fc_cutoff, log2fc_cutoff), linetype = "dashed", alpha = 0.7) +
-    geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
-    theme_classic() +
-    labs(
-      x = expression(Log[2]~fold~change),
-      y = expression(-Log[10]~italic(P)~adjusted)
-    )
+  .glyvis_volcano(object$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
 }
 
 .plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {

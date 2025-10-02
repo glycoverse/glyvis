@@ -4,15 +4,7 @@
 \alias{autoplot.glystats_limma_res}
 \title{Plots for Limma Result}
 \usage{
-\method{autoplot}{glystats_limma_res}(
-  object,
-  log2fc_cutoff = 1,
-  p_cutoff = 0.05,
-  p_col = "p_adj",
-  up_color = "#D55E00",
-  down_color = "#56B4E9",
-  ...
-)
+\method{autoplot}{glystats_limma_res}(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 }
 \arguments{
 \item{object}{A \code{glystats_limma_res} object.}
@@ -22,11 +14,7 @@
 \item{p_cutoff}{The p-value cutoff. Defaults to 0.05.}
 
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
-Can also be "p" (raw p-values without multiple testing correction).}
-
-\item{up_color}{The color for up-regulated candidates. Defaults to "#FF7777".}
-
-\item{down_color}{The color for down-regulated candidates. Defaults to "#7DA8E6".}
+Can also be "p_val" (raw p-values without multiple testing correction).}
 
 \item{...}{Other arguments passed to underlying functions.}
 }

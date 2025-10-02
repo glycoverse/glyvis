@@ -15,6 +15,7 @@ Suggests:
     factoextra,
     GGally,
     enrichplot,
+    EnhancedVolcano,
     ggseqlogo,
     knitr,
     rmarkdown

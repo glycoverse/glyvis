@@ -13,10 +13,11 @@
 #'   If NULL, no adjustment is performed.
 #' @param ref_group A character string specifying the reference group.
 #'   If NULL (default), the first level of the group factor is used as the reference.
+#' @param ... Other arguments passed to [EnhancedVolcano::EnhancedVolcano()].
 #'
 #' @returns A ggplot object.
 #' @export
-plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL) {
+plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL, ...) {
   checkmate::assert_class(exp, "glyexp_experiment")
   checkmate::assert_string(group_col)
   checkmate::assert_choice(p_adj_method, stats::p.adjust.methods, null.ok = TRUE)
@@ -33,5 +34,5 @@ plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_grou
 
   limma_res <- glystats::gly_limma(exp, group_col, p_adj_method, ref_group)
   p_col <- if (is.null(p_adj_method)) "p_val" else "p_adj"
-  autoplot(limma_res, p_col = p_col)
+  autoplot(limma_res, p_col = p_col, ...)
 }

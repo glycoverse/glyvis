@@ -15,7 +15,7 @@
 \item{p_cutoff}{The p-value cutoff. Defaults to 0.05.}
 
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
-Can also be "p" (raw p-values without multiple testing correction).}
+Can also be "p_val" (raw p-values without multiple testing correction).}
 
 \item{...}{Other arguments passed to underlying functions.}
 }
