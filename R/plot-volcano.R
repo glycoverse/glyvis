@@ -8,6 +8,7 @@
 #' @param exp A [glyexp::experiment()] object.
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
+#' @param test "ttest", "wilcox", or "limma". Default is "limma".
 #' @param p_adj_method A character string specifying the method to adjust p-values.
 #'   See `p.adjust.methods` for available methods. Default is "BH".
 #'   If NULL, no adjustment is performed.
@@ -17,9 +18,10 @@
 #'
 #' @returns A ggplot object.
 #' @export
-plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL, ...) {
+plot_volcano <- function(exp, group_col = "group", test = "limma", p_adj_method = "BH", ref_group = NULL, ...) {
   checkmate::assert_class(exp, "glyexp_experiment")
   checkmate::assert_string(group_col)
+  checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
   checkmate::assert_choice(p_adj_method, stats::p.adjust.methods, null.ok = TRUE)
   checkmate::assert_string(ref_group, null.ok = TRUE)
 
@@ -32,7 +34,11 @@ plot_volcano <- function(exp, group_col = "group", p_adj_method = "BH", ref_grou
     ))
   }
 
-  limma_res <- glystats::gly_limma(exp, group_col, p_adj_method, ref_group)
+  dea_res <- switch(test,
+    "ttest" = glystats::gly_ttest(exp, group_col, p_adj_method, ref_group),
+    "wilcox" = glystats::gly_wilcox(exp, group_col, p_adj_method, ref_group),
+    "limma" = glystats::gly_limma(exp, group_col, p_adj_method, ref_group)
+  )
   p_col <- if (is.null(p_adj_method)) "p_val" else "p_adj"
-  autoplot(limma_res, p_col = p_col, ...)
+  autoplot(dea_res, p_col = p_col, ...)
 }

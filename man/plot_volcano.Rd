@@ -4,7 +4,14 @@
 \alias{plot_volcano}
 \title{Volcano Plot}
 \usage{
-plot_volcano(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL)
+plot_volcano(
+  exp,
+  group_col = "group",
+  test = "limma",
+  p_adj_method = "BH",
+  ref_group = NULL,
+  ...
+)
 }
 \arguments{
 \item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
@@ -12,12 +19,16 @@ plot_volcano(exp, group_col = "group", p_adj_method = "BH", ref_group = NULL)
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
 
+\item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
+
 \item{p_adj_method}{A character string specifying the method to adjust p-values.
 See \code{p.adjust.methods} for available methods. Default is "BH".
 If NULL, no adjustment is performed.}
 
 \item{ref_group}{A character string specifying the reference group.
 If NULL (default), the first level of the group factor is used as the reference.}
+
+\item{...}{Other arguments passed to \code{\link[EnhancedVolcano:EnhancedVolcano]{EnhancedVolcano::EnhancedVolcano()}}.}
 }
 \value{
 A ggplot object.
