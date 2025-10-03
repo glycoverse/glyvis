@@ -103,3 +103,18 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
     ...
   )
 }
+
+#' Internal ROC plotter
+#'
+#' @param df A data frame with the following columns:
+#'   - `variable`: a character vector of variable names.
+#'   - `specificity`: a numeric vector of specificity values.
+#'   - `sensitivity`: a numeric vector of sensitivity values.
+#' @noRd
+.glyvis_roc <- function(df) {
+  ggplot(df, aes(1 - .data$specificity, .data$sensitivity)) +
+    geom_path(aes(color = .data$variable)) +
+    geom_abline(lty = 3) +
+    coord_equal() +
+    theme_bw()
+}

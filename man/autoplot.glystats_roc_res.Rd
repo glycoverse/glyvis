@@ -4,12 +4,15 @@
 \alias{autoplot.glystats_roc_res}
 \title{Plots for ROC Analysis}
 \usage{
-\method{autoplot}{glystats_roc_res}(object, auc_cutoff = 0.5, ...)
+\method{autoplot}{glystats_roc_res}(object, type = "dotplot", auc_cutoff = 0.5, ...)
 }
 \arguments{
 \item{object}{A \code{glystats_roc_res} object.}
 
-\item{auc_cutoff}{The AUC cutoff. Defaults to 0.5.}
+\item{type}{"dotplot" or "roc". Defaults to "dotplot".
+If "roc", at most 10 variables can be plotted.}
+
+\item{auc_cutoff}{The AUC cutoff. Defaults to 0.5. Only used if type is "dotplot".}
 
 \item{...}{Ignored.}
 }
@@ -18,5 +21,5 @@ A ggplot object.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_roc]{glystats::gly_roc()}} (\code{glystats_roc_res} objects).
-Draw a dotchart for AUC values.
+At most 10 variables can be plotted.
 }
