@@ -4,12 +4,16 @@
 \alias{autoplot.glyexp_experiment}
 \title{Plots for Experiments}
 \usage{
-\method{autoplot}{glyexp_experiment}(object, type = "barplot", ...)
+\method{autoplot}{glyexp_experiment}(object, type = "heatmap", group_col = "group", ...)
 }
 \arguments{
 \item{object}{A \code{glyexp_experiment} object.}
 
-\item{type}{The type of plot, one of "heatmap" (default) or "barplot".}
+\item{type}{The type of plot, one of "heatmap" (default) or "boxplot".}
+
+\item{group_col}{A character string specifying where to find the group information.
+It should be a column in the sample information tibble. Defaults to "group".
+Only applicable to "boxplot".}
 
 \item{...}{Ignored.}
 }
@@ -20,7 +24,7 @@ A ggplot object.
 Visualization for \code{\link[glyexp:experiment]{glyexp::experiment()}} (\code{glyexp_experiment} object).
 Possible \code{type}s of plots:
 \itemize{
-\item "barplot" (default): Barplot of expression values for each sample.
-\item "heatmap": Expression heatmap with columns as samples and rows as variables.
+\item "heatmap": (Default) Expression heatmap with columns as samples and rows as variables.
+\item "boxplot": Boxplot of expression values for each sample.
 }
 }
