@@ -5,8 +5,8 @@ test_that("autoplot for glyexp_experiment", {
   x <- glyexp::toy_experiment
 
   vdiffr::expect_doppelganger(
-    "autoplot.glyexp_experiment.barplot",
-    autoplot(x, type = "barplot")
+    "autoplot.glyexp_experiment.boxplot",
+    autoplot(x, type = "boxplot")
   )
 
   vdiffr::expect_doppelganger(

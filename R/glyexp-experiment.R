@@ -2,21 +2,21 @@
 #'
 #' Visualization for [glyexp::experiment()] (`glyexp_experiment` object).
 #' Possible `type`s of plots:
-#' - "barplot" (default): Barplot of expression values for each sample.
-#' - "heatmap": Expression heatmap with columns as samples and rows as variables.
+#' - "heatmap": (Default) Expression heatmap with columns as samples and rows as variables.
+#' - "boxplot": Boxplot of expression values for each sample.
 #'
 #' @param object A `glyexp_experiment` object.
-#' @param type The type of plot, one of "heatmap" (default) or "barplot".
+#' @param type The type of plot, one of "heatmap" (default) or "boxplot".
 #' @param ... Ignored.
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glyexp_experiment <- function(object, type = "barplot", ...) {
-  checkmate::assert_choice(type, c("heatmap", "barplot"))
+autoplot.glyexp_experiment <- function(object, type = "heatmap", ...) {
+  checkmate::assert_choice(type, c("heatmap", "boxplot"))
   switch(
     type,
     heatmap = .plot_exp_heatmap(object, ...),
-    barplot = .plot_exp_barplot(object, ...)
+    boxplot = .plot_exp_boxplot(object, ...)
   )
 }
 
@@ -39,7 +39,7 @@ fortify.glyexp_experiment <- function(model, data, ...) {
     labs(fill = expression(log[2]("Int.")))
 }
 
-.plot_exp_barplot <- function(object, ...) {
+.plot_exp_boxplot <- function(object, ...) {
   df <- object %>%
     fortify.glyexp_experiment()
 
