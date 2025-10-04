@@ -16,7 +16,7 @@
 #' @seealso [ggseqlogo::ggseqlogo()]
 #' @export
 plot_logo <- function(exp, n_aa = 5L, fasta = NULL, ...) {
-  .check_pkg_available("ggseqlogo")
+  rlang::check_installed("ggseqlogo")
   checkmate::assert_class(exp, "glyexp_experiment")
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
@@ -29,7 +29,7 @@ plot_logo <- function(exp, n_aa = 5L, fasta = NULL, ...) {
         "i" = "Or call {.fn glyclean::add_site_seq} on the experiment before calling {.fn plot_logo}."
       ))
     }
-    .check_pkg_available("glyclean")
+    rlang::check_installed("glyclean")
     exp <- glyclean::add_site_seq(exp, fasta, n_aa)
   }
 

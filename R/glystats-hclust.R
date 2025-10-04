@@ -10,6 +10,6 @@
 #' @seealso [ggdendro::ggdendrogram()]
 #' @export
 autoplot.glystats_hclust_res <- function(object, ...) {
-  .check_pkg_available("ggdendro")
+  rlang::check_installed("ggdendro")
   ggdendro::ggdendrogram(object$raw_result, ...)
 }

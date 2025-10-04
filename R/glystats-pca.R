@@ -30,7 +30,7 @@
 #'   [factoextra::fviz_pca_var()], [factoextra::fviz_pca_biplot()]
 #' @export
 autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL, group_col = NULL, ...) {
-  .check_pkg_available("factoextra")
+  rlang::check_installed("factoextra")
   checkmate::assert_choice(type, c("screeplot", "individual", "variables", "biplot"))
   .validate_group_args(groups, group_col)
 

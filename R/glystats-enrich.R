@@ -33,7 +33,7 @@ autoplot.glystats_reactome_ora_res <- function(object, type = "dotplot", ...) {
 
 #' @importFrom graphics barplot
 .plot_enrich <- function(object, type, ...) {
-  .check_pkg_available("enrichplot")
+  rlang::check_installed("enrichplot")
   checkmate::assert_choice(type, c("dotplot", "barplot", "network"))
   switch(
     type,

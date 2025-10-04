@@ -8,6 +8,6 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_cor_res <- function(object, ...) {
-  .check_pkg_available("GGally")
+  rlang::check_installed("GGally")
   GGally::ggcorr(object$raw_result$r, ...)
 }
