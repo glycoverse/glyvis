@@ -14,7 +14,7 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
 
 .glyvis_boxplot <- function(df, x, value, group = NULL) {
   if (!is.null(group)) {
-    ggplot(df, aes(x = .data[[x]], y = .data[[value]], color = .data[[group]]), fill = .data[[group]]) +
+    ggplot(df, aes(x = .data[[x]], y = .data[[value]], color = .data[[group]], fill = .data[[group]])) +
       geom_boxplot(
         alpha = 0.5,
         staplewidth = 0.5
