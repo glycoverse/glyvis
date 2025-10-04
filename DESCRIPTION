@@ -34,9 +34,7 @@ Imports:
     magrittr,
     purrr,
     rlang,
-    stringr,
-    tibble,
-    tidyr
+    tibble
 Remotes:
     glycoverse/glyexp@*release,
     glycoverse/glystats@*release,
