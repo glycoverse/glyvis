@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,22 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="glyvis-030">glyvis 0.3.0<a class="anchor" aria-label="anchor" href="#glyvis-030"></a></h2>
+<div class="section level3">
+<h3 id="new-features-0-3-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h3>
+<ul><li>Add a <code>test</code> parameter to <code><a href="../reference/plot_volcano.html">plot_volcano()</a></code> to specify the statistical test type.</li>
+<li>Add <code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> to plot grouped boxplots for experiment objects.</li>
+<li>ROC curves can be plotted for <code><a href="https://glycoverse.github.io/glystats/reference/gly_roc.html" class="external-link">glystats::gly_roc()</a></code> results using <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> now.</li>
+<li>Add <code><a href="../reference/plot_roc.html">plot_roc()</a></code> to plot ROC curves directly from experiment objects.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-bug-fixes-0-3-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-3-0"></a></h3>
+<ul><li>Better volcano plots using <code>EnhancedVolcano</code> package.</li>
+<li>Fix the inconsistent behaviour of plotting experiment objects with <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code>. Previously, boxplots were actually plotted when <code>type = "barplot"</code>. Now boxplots grouped by the group column are plotted, faceted by variables, when <code>type = "boxplot"</code>.</li>
+<li>Use <code><a href="https://rlang.r-lib.org/reference/is_installed.html" class="external-link">rlang::check_installed()</a></code> for better optional dependency checking.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="glyvis-021">glyvis 0.2.1<a class="anchor" aria-label="anchor" href="#glyvis-021"></a></h2>
