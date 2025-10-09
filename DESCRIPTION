@@ -1,6 +1,6 @@
 Package: glyvis
 Title: What the Package Does (One Line, Title Case)
-Version: 0.3.0.9000
+Version: 0.3.1
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
@@ -9,8 +9,8 @@ License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),
     vdiffr,
-    glystats (>= 0.5.0.9000),
-    glyclean (>= 0.7.0.9000),
+    glystats (>= 0.5.1),
+    glyclean (>= 0.7.1),
     ggdendro,
     factoextra,
     GGally,
@@ -30,14 +30,14 @@ Imports:
     dplyr,
     ggplot2,
     ggrepel,
-    glyexp (>= 0.9.2.9000),
+    glyexp (>= 0.10.0),
     magrittr,
     purrr,
     rlang,
     tibble
 Remotes:
-    glycoverse/glyexp,
-    glycoverse/glystats,
-    glycoverse/glyclean
+    glycoverse/glyexp@*release,
+    glycoverse/glystats@*release,
+    glycoverse/glyclean@*release
 Depends: R (>= 4.0)
 VignetteBuilder: knitr
