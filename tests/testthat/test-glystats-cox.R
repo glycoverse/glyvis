@@ -30,8 +30,7 @@ test_that("autoplot works for glystats cox results", {
     expr_mat = expr_mat,
     sample_info = sample_info,
     var_info = var_info,
-    exp_type = "glycomics",
-    glycan_type = "N"
+    exp_type = "others"
   )
 
   # Get Cox results
@@ -72,8 +71,7 @@ test_that("autoplot works for glystats cox results with different p_col options"
     expr_mat = expr_mat,
     sample_info = sample_info,
     var_info = var_info,
-    exp_type = "glycoproteomics",
-    glycan_type = "N"
+    exp_type = "others"
   )
 
   # Get Cox results
@@ -114,8 +112,7 @@ test_that("autoplot works for glystats cox results with different p_cutoff value
     expr_mat = expr_mat,
     sample_info = sample_info,
     var_info = var_info,
-    exp_type = "glycomics",
-    glycan_type = "O"
+    exp_type = "others"
   )
 
   # Get Cox results
@@ -151,8 +148,7 @@ test_that("autoplot.glystats_cox_res parameter validation works", {
     expr_mat = expr_mat,
     sample_info = sample_info,
     var_info = var_info,
-    exp_type = "glycomics",
-    glycan_type = "N"
+    exp_type = "others"
   )
 
   cox_result <- suppressMessages(glystats::gly_cox(exp))
