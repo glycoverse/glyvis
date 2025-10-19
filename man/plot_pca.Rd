@@ -2,20 +2,45 @@
 % Please edit documentation in R/plot-pca.R
 \name{plot_pca}
 \alias{plot_pca}
+\alias{plot_pca.glyexp_experiment}
 \title{PCA Plot}
 \usage{
-plot_pca(exp, ...)
+plot_pca(x, type = "individual", ...)
+
+\method{plot_pca}{glyexp_experiment}(x, type = "individual", groups = NULL, group_col = NULL, ...)
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
 
-\item{...}{Additional arguments passed to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
+\item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
+
+\item{...}{Additional arguments passed to underlying factoextra functions:
+\itemize{
+\item type = "screeplot": \code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}.
+\item type = "individual": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}}.
+\item type = "variables": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}.
+\item type = "biplot": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.
+}}
+
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.
+Only applicable to "individual" and "biplot" types.
+Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
+
+\item{group_col}{A character string specifying where to find the group information.
+If you uses \code{\link[glystats:gly_pca]{glystats::gly_pca()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
+sample information has already been added to the result.
+In this case, you can specify the column name in the sample information tibble
+to be used for coloring.
+If not provided, this function will try "group".}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-performs PCA using \code{\link[glystats:gly_pca]{glystats::gly_pca()}},
-and plots the PCA scores plot.
+Draw a PCA scores plot.
+}
+\seealso{
+\code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}},
+\code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}
 }

@@ -2,23 +2,24 @@
 % Please edit documentation in R/plot-corrplot.R
 \name{plot_corrplot}
 \alias{plot_corrplot}
+\alias{plot_corrplot.glyexp_experiment}
 \title{Correlation Plot}
 \usage{
-plot_corrplot(exp, on = "variable", ...)
+plot_corrplot(x, ...)
+
+\method{plot_corrplot}{glyexp_experiment}(x, on = "variable", ...)
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
+
+\item{...}{Additional arguments passed to \code{\link[GGally:ggcorr]{GGally::ggcorr()}}.}
 
 \item{on}{A character string specifying what to correlate. Either "variable" (default) to correlate
 variables/features, or "sample" to correlate samples/observations.}
-
-\item{...}{Additional arguments passed to \code{\link[glystats:gly_cor]{glystats::gly_cor()}} and \code{\link[=autoplot]{autoplot()}}.}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-performs correlation analysis using \code{\link[glystats:gly_cor]{glystats::gly_cor()}},
-and plots a correlation matrix heatmap.
+Draw a correlation matrix heatmap.
 }

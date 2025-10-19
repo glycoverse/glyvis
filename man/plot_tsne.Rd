@@ -2,20 +2,31 @@
 % Please edit documentation in R/plot-tsne.R
 \name{plot_tsne}
 \alias{plot_tsne}
+\alias{plot_tsne.glyexp_experiment}
 \title{t-SNE Plot}
 \usage{
-plot_tsne(exp, ...)
+plot_tsne(x, ...)
+
+\method{plot_tsne}{glyexp_experiment}(x, groups = NULL, group_col = NULL, ...)
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
 
-\item{...}{Additional arguments passed to \code{\link[glystats:gly_tsne]{glystats::gly_tsne()}}.}
+\item{...}{Ignored.}
+
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.}
+
+\item{group_col}{A character string specifying where to find the group information.
+If you uses \code{\link[glystats:gly_tsne]{glystats::gly_tsne()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
+sample information has already been added to the result.
+In this case, you can specify the column name in the sample information tibble
+to be used for coloring.
+If not provided, this function will try "group".}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-performs t-SNE using \code{\link[glystats:gly_tsne]{glystats::gly_tsne()}},
-and plots the t-SNE scores plot.
+Draw a t-SNE scores plot.
 }

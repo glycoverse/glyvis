@@ -1,20 +1,30 @@
 #' Correlation Plot
 #'
-#' This function accepts a [glyexp::experiment()],
-#' performs correlation analysis using [glystats::gly_cor()],
-#' and plots a correlation matrix heatmap.
+#' Draw a correlation matrix heatmap.
 #'
-#' @param exp A [glyexp::experiment()] object.
+#' @param x An object to be plotted.
 #' @param on A character string specifying what to correlate. Either "variable" (default) to correlate
 #'   variables/features, or "sample" to correlate samples/observations.
-#' @param ... Additional arguments passed to [glystats::gly_cor()] and [autoplot()].
+#' @param ... Additional arguments passed to [GGally::ggcorr()].
 #'
 #' @returns A ggplot object.
 #' @export
-plot_corrplot <- function(exp, on = "variable", ...) {
-  checkmate::assert_class(exp, "glyexp_experiment")
-  checkmate::assert_choice(on, c("variable", "sample"))
-  
-  cor_res <- glystats::gly_cor(exp, on = on, ...)
-  autoplot(cor_res, ...)
+plot_corrplot <- function(x, ...) {
+  UseMethod("plot_corrplot")
+}
+
+#' @rdname plot_corrplot
+#' @export
+plot_corrplot.glyexp_experiment <- function(x, on = "variable", ...) {
+  cor_res <- glystats::gly_cor(x, on = on)
+  .plot_corrplot(cor_res)
+}
+
+#' Internal function to plot correlation matrix
+#' @param cor_res A `glystats_cor_res` object.
+#' @param ... Other arguments passed to [GGally::ggcorr()].
+#' @noRd
+.plot_corrplot <- function(cor_res, ...) {
+  rlang::check_installed("GGally")
+  GGally::ggcorr(cor_res$raw_result$r, ...)
 }

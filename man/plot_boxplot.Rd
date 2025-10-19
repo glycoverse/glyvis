@@ -2,12 +2,17 @@
 % Please edit documentation in R/plot-boxplot.R
 \name{plot_boxplot}
 \alias{plot_boxplot}
+\alias{plot_boxplot.glyexp_experiment}
 \title{Boxplot}
 \usage{
-plot_boxplot(exp, group_col = "group")
+plot_boxplot(x, ...)
+
+\method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ...)
 }
 \arguments{
-\item{exp}{A \code{glyexp_experiment} object.}
+\item{x}{An object to be plotted.}
+
+\item{...}{Ignored.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
@@ -16,6 +21,5 @@ that contains group labels. Default is "group".}
 A ggplot object.
 }
 \description{
-Draw a boxplot from a \code{\link[glyexp:experiment]{glyexp::experiment()}}.
-There should be a group column in the sample information tibble.
+Draw a boxplot.
 }

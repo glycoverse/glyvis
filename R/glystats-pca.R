@@ -30,41 +30,5 @@
 #'   [factoextra::fviz_pca_var()], [factoextra::fviz_pca_biplot()]
 #' @export
 autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL, group_col = NULL, ...) {
-  rlang::check_installed("factoextra")
-  checkmate::assert_choice(type, c("screeplot", "individual", "variables", "biplot"))
-  .validate_group_args(groups, group_col)
-
-  groups <- .prepare_groups(object, groups, group_col)
-
-  switch(
-    type,
-    screeplot = .plot_pca_screeplot(object, ...),
-    individual = .plot_pca_individual(object, groups, ...),
-    variables = .plot_pca_variables(object, ...),
-    biplot = .plot_pca_biplot(object, groups, ...)
-  )
-}
-
-.plot_pca_screeplot <- function(object, ...) {
-  factoextra::fviz_screeplot(object$raw_result, ...)
-}
-
-.plot_pca_individual <- function(object, groups, ...) {
-  if (is.null(groups)) {
-    factoextra::fviz_pca_ind(object$raw_result, ...)
-  } else {
-    factoextra::fviz_pca_ind(object$raw_result, habillage = groups, ...)
-  }
-}
-
-.plot_pca_variables <- function(object, ...) {
-  factoextra::fviz_pca_var(object$raw_result, ...)
-}
-
-.plot_pca_biplot <- function(object, groups, ...) {
-  if (is.null(groups)) {
-    factoextra::fviz_pca_biplot(object$raw_result, ...)
-  } else {
-    factoextra::fviz_pca_biplot(object$raw_result, habillage = groups, ...)
-  }
+  .plot_pca(object, type = type, groups = groups, group_col = group_col, ...)
 }

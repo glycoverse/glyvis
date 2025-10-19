@@ -2,20 +2,31 @@
 % Please edit documentation in R/plot-umap.R
 \name{plot_umap}
 \alias{plot_umap}
+\alias{plot_umap.glyexp_experiment}
 \title{UMAP Plot}
 \usage{
-plot_umap(exp, ...)
+plot_umap(x, ...)
+
+\method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, ...)
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
 
-\item{...}{Additional arguments passed to \code{\link[glystats:gly_umap]{glystats::gly_umap()}}.}
+\item{...}{Ignored.}
+
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.}
+
+\item{group_col}{A character string specifying where to find the group information.
+If you uses \code{\link[glystats:gly_umap]{glystats::gly_umap()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
+sample information has already been added to the result.
+In this case, you can specify the column name in the sample information tibble
+to be used for coloring.
+If not provided, this function will try "group".}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-performs UMAP using \code{\link[glystats:gly_umap]{glystats::gly_umap()}},
-and plots the UMAP scores plot.
+Draw a UMAP scores plot.
 }

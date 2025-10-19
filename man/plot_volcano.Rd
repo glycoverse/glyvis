@@ -2,40 +2,50 @@
 % Please edit documentation in R/plot-volcano.R
 \name{plot_volcano}
 \alias{plot_volcano}
+\alias{plot_volcano.glyexp_experiment}
 \title{Volcano Plot}
 \usage{
-plot_volcano(
-  exp,
+plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+
+\method{plot_volcano}{glyexp_experiment}(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
   group_col = "group",
   test = "limma",
-  p_adj_method = "BH",
   ref_group = NULL,
+  p_adj_method = "BH",
   ...
 )
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
+
+\item{log2fc_cutoff}{The log2 fold change cutoff. Defaults to 1.}
+
+\item{p_cutoff}{The p-value cutoff. Defaults to 0.05.}
+
+\item{p_col}{The column name for p-value. Defaults to "p_adj".
+Can also be "p_val" (raw p-values without multiple testing correction).}
+
+\item{...}{Other arguments passed to \code{\link[EnhancedVolcano:EnhancedVolcano]{EnhancedVolcano::EnhancedVolcano()}}.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
 
 \item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
 
-\item{p_adj_method}{A character string specifying the method to adjust p-values.
-See \code{p.adjust.methods} for available methods. Default is "BH".
-If NULL, no adjustment is performed.}
-
 \item{ref_group}{A character string specifying the reference group.
 If NULL (default), the first level of the group factor is used as the reference.}
 
-\item{...}{Other arguments passed to \code{\link[EnhancedVolcano:EnhancedVolcano]{EnhancedVolcano::EnhancedVolcano()}}.}
+\item{p_adj_method}{A character string specifying the method to adjust p-values.
+See \code{p.adjust.methods} for available methods. Default is "BH".
+If NULL, no adjustment is performed.}
 }
 \value{
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-performs differential expression analysis using \code{\link[glystats:gly_limma]{glystats::gly_limma()}},
-and plots a volcano plot.
-There should be only two groups.
+Draw a volcano plot.
 }

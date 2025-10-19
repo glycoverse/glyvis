@@ -2,12 +2,15 @@
 % Please edit documentation in R/plot-logo.R
 \name{plot_logo}
 \alias{plot_logo}
+\alias{plot_logo.glyexp_experiment}
 \title{Logo Plot}
 \usage{
-plot_logo(exp, n_aa = 5L, fasta = NULL, ...)
+plot_logo(x, n_aa = 5L, fasta = NULL, ...)
+
+\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, ...)
 }
 \arguments{
-\item{exp}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{An object to be plotted.}
 
 \item{n_aa}{The number of amino acids to the left and right of the glycosylation site.
 For example, if \code{n_aa = 5}, the resulting sequence will contain 11 amino acids.}
@@ -22,8 +25,7 @@ this argument can be omitted.}
 A ggplot object.
 }
 \description{
-This function accepts a \code{\link[glyexp:experiment]{glyexp::experiment()}},
-and plots the logo plot for all glycosites.
+Draw a logo plot for all glycosites.
 Positions with insufficient flanking amino acids will be padded with "X".
 }
 \seealso{

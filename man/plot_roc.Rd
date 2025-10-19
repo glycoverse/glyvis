@@ -2,12 +2,21 @@
 % Please edit documentation in R/plot-roc.R
 \name{plot_roc}
 \alias{plot_roc}
+\alias{plot_roc.glyexp_experiment}
 \title{ROC plot}
 \usage{
-plot_roc(exp, group_col = "group")
+plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
+
+\method{plot_roc}{glyexp_experiment}(x, type = "roc", auc_cutoff = 0.5, group_col = "group", ...)
 }
 \arguments{
-\item{exp}{A \code{glyexp::experiment()} object with no more than 10 variables.}
+\item{x}{An object to be plotted.}
+
+\item{type}{The type of plot, one of "dotplot" or "roc". Default is "roc".}
+
+\item{auc_cutoff}{The AUC cutoff. Default is 0.5.}
+
+\item{...}{Ignored.}
 
 \item{group_col}{A character string specifying the column name of the grouping variable.
 Defaults to "group".}
@@ -16,7 +25,7 @@ Defaults to "group".}
 A ggplot object.
 }
 \description{
-Plot ROC curves for all variables in an experiment.
+Draw ROC curves.
 Only two groups are allowed.
 At most 10 variables can be plotted.
 }

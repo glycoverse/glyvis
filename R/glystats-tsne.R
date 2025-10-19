@@ -17,10 +17,5 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_tsne_res <- function(object, groups = NULL, group_col = NULL, ...) {
-  .validate_group_args(groups, group_col)
-  groups <- .prepare_groups(object, groups, group_col)
-
-  df <- object$tidy_result
-  df$group <- groups
-  .glyvis_scatter(df, "tsne1", "tsne2", group = "group")
+  .plot_tsne(object, groups = groups, group_col = group_col)
 }

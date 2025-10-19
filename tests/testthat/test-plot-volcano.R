@@ -83,13 +83,6 @@ test_that("plot_volcano works with custom ref_group", {
   )
 })
 
-test_that("plot_volcano fails with non-experiment object", {
-  expect_error(
-    plot_volcano("not_an_experiment"),
-    "Must inherit from class 'glyexp_experiment'"
-  )
-})
-
 test_that("plot_volcano fails with invalid group_col", {
   suppressMessages(
     sub_exp <- test_gp_exp |>

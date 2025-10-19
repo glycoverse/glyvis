@@ -2,16 +2,21 @@
 % Please edit documentation in R/plot-heatmap.R
 \name{plot_heatmap}
 \alias{plot_heatmap}
+\alias{plot_heatmap.glyexp_experiment}
 \title{Heatmap}
 \usage{
-plot_heatmap(exp)
+plot_heatmap(x, ...)
+
+\method{plot_heatmap}{glyexp_experiment}(x, ...)
 }
 \arguments{
-\item{exp}{A \code{glyexp_experiment} object.}
+\item{x}{An object to be plotted.}
+
+\item{...}{Ignored.}
 }
 \value{
 A ggplot object.
 }
 \description{
-Draw a heatmap from a \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Draw a heatmap.
 }
