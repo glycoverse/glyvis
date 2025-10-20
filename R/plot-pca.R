@@ -19,6 +19,12 @@ plot_pca <- function(x, type = "individual", ...) {
 }
 
 #' @rdname plot_pca
+#' @export
+plot_pca.glystats_pca_res <- function(x, type = "individual", ...) {
+  .plot_pca(x, type = type, ...)
+}
+
+#' @rdname plot_pca
 #' @param groups A factor or character vector specifying group membership for each sample.
 #'   If provided, the plot will be colored by group.
 #'   Only applicable to "individual" and "biplot" types.
