@@ -16,6 +16,12 @@ plot_roc <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
 }
 
 #' @rdname plot_roc
+#' @export
+plot_roc.glystats_roc_res <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
+  .plot_roc(x, type = type, auc_cutoff = auc_cutoff)
+}
+
+#' @rdname plot_roc
 #' @param group_col A character string specifying the column name of the grouping variable.
 #'   Defaults to "group".
 #' @export

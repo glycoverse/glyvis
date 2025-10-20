@@ -2,10 +2,13 @@
 % Please edit documentation in R/plot-roc.R
 \name{plot_roc}
 \alias{plot_roc}
+\alias{plot_roc.glystats_roc_res}
 \alias{plot_roc.glyexp_experiment}
 \title{ROC plot}
 \usage{
 plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
+
+\method{plot_roc}{glystats_roc_res}(x, type = "roc", auc_cutoff = 0.5, ...)
 
 \method{plot_roc}{glyexp_experiment}(x, type = "roc", auc_cutoff = 0.5, group_col = "group", ...)
 }
