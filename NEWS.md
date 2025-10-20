@@ -1,5 +1,28 @@
 # glyvis (development version)
 
+We redesign most `plot_xxx()` functions to make them more flexible. Previously, these functions only accepts a `glyexp::experiment()` object. Now, they also accept corresponding `glystats` results, to be more intuitive and convenient.
+
+We also redesign the argument passing strategies in `plot_xxx()` functions, making clear separation between underlying statistical functions and plotting functions.
+
+## New features
+
+* Add `plot_oplsda()` to plot OPLS-DA plot from `glyexp::experiment()` or `glystats::gly_oplsda()` results.
+* Add `plot_plsda()` to plot PLS-DA plot from `glyexp::experiment()` or `glystats::gly_plsda()` results.
+* Add `plot_enrich()` to plot dotplot, barplot, or network plot from `glyexp::experiment()` or `glystats` enrichment functions (`glystats::gly_enrich_go()`, `glystats::gly_enrich_kegg()`, `glystats::gly_enrich_reactome()`).
+* `plot_corrplot()` now supports `glystats::gly_cor()` results.
+* `plot_pca()` now supports `glystats::gly_pca()` results.
+* `plot_roc()` now supports `glystats::gly_roc()` results.
+* `plot_tsne()` now supports `glystats::gly_tsne()` results.
+* `plot_umap()` now supports `glystats::gly_umap()` results.
+* `plot_volcano()` now supports `glystats::gly_ttest()`, `glystats::gly_wilcox()`, or `glystats::gly_limma()` results.
+* Add a `stats_args` parameter to `plot_corrplot()`, `plot_pca()`, `plot_roc()`, `plot_tsne()`, `plot_umap()`, and `plot_volcano()`, to support specifying arguments for underlying glystats functions.
+* `...` in all `plot_xxx()` functions is passed to underlying plotting functions (if any).
+
+## Minor improvements and bug fixes
+
+* Add descriptions about supported data types in the documentation of all `plot_xxx()` functions.
+* Fix some inconsistent argument passiing in `plot_xxx()` functions.
+
 # glyvis 0.3.1
 
 ## Minor improvements and bug fixes
