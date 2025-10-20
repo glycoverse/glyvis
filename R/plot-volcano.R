@@ -59,12 +59,43 @@ plot_volcano.glyexp_experiment <- function(
     "wilcox" = glystats::gly_wilcox(x, group_col, p_adj_method, ref_group),
     "limma" = glystats::gly_limma(x, group_col, p_adj_method, ref_group)
   )
-  .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col)
+  .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
-.plot_volcano <- function(dea_res, log2fc_cutoff, p_cutoff, p_col) {
+#' @rdname plot_volcano
+#' @export
+plot_volcano.glystats_ttest_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
+  .plot_volcano(x, log2fc_cutoff, p_cutoff, p_col, ...)
+}
+
+#' @rdname plot_volcano
+#' @export
+plot_volcano.glystats_wilcox_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
+  .plot_volcano(x, log2fc_cutoff, p_cutoff, p_col, ...)
+}
+
+#' @rdname plot_volcano
+#' @export
+plot_volcano.glystats_limma_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
+  .plot_volcano_limma(x, log2fc_cutoff, p_cutoff, p_col, ...)
+}
+
+.plot_volcano_limma <- function(x, log2fc_cutoff, p_cutoff, p_col, ...) {
+  contrasts <- unique(paste0(x$tidy_result$ref_group, "_vs_", x$tidy_result$test_group))
+  if (length(contrasts) > 1) {
+    cli::cli_abort(c(
+      "Number of contrasts must be exactly 1 for limma result.",
+      "x" = "Found {.val {length(contrasts)}} contrasts: {.val {contrasts}}.",
+      "i" = "Maybe you want to filter the experiment to two groups first by using {.fn glyexp::filter_obs()}?"
+    ))
+  }
+  x$tidy_result$contrast <- contrasts
+  .glyvis_volcano(x$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
+}
+
+.plot_volcano <- function(dea_res, log2fc_cutoff, p_cutoff, p_col, ...) {
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
-  .glyvis_volcano(dea_res$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff)
+  .glyvis_volcano(dea_res$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
 }

@@ -3,6 +3,9 @@
 \name{plot_volcano}
 \alias{plot_volcano}
 \alias{plot_volcano.glyexp_experiment}
+\alias{plot_volcano.glystats_ttest_res}
+\alias{plot_volcano.glystats_wilcox_res}
+\alias{plot_volcano.glystats_limma_res}
 \title{Volcano Plot}
 \usage{
 plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
@@ -18,6 +21,12 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   p_adj_method = "BH",
   ...
 )
+
+\method{plot_volcano}{glystats_ttest_res}(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+
+\method{plot_volcano}{glystats_wilcox_res}(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+
+\method{plot_volcano}{glystats_limma_res}(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

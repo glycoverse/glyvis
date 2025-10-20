@@ -20,7 +20,7 @@ autoplot.glystats_ttest_res <- function(
   p_col = "p_adj",
   ...
 ) {
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' @rdname autoplot.glystats_ttest_res
@@ -32,7 +32,7 @@ autoplot.glystats_wilcox_res <- function(
   p_col = "p_adj",
   ...
 ) {
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' Plots for Multi-Group Differential Expression Analysis (DEA)
@@ -88,20 +88,7 @@ autoplot.glystats_limma_res <- function(
   p_col = "p_adj",
   ...
 ) {
-  if ("contrast" %in% colnames(object$tidy_result)) {
-    cli::cli_abort(c(
-      "Number of contrasts must be exactly 1 for limma result.",
-      "x" = "Found {.val {dplyr::n_distinct(object$tidy_result$contrast)}} contrasts: {.val {unique(object$tidy_result$contrast)}}."
-    ))
-  }
-  .plot_2group_dea(object, log2fc_cutoff, p_cutoff, p_col, ...)
-}
-
-.plot_2group_dea <- function(object, log2fc_cutoff, p_cutoff, p_col, ...) {
-  checkmate::assert_number(log2fc_cutoff, lower = 0)
-  checkmate::assert_number(p_cutoff, lower = 0)
-  checkmate::assert_choice(p_col, c("p_val", "p_adj"))
-  .glyvis_volcano(object$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
+  .plot_volcano_limma(object, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 .plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {
