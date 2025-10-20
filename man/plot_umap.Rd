@@ -2,10 +2,13 @@
 % Please edit documentation in R/plot-umap.R
 \name{plot_umap}
 \alias{plot_umap}
+\alias{plot_umap.glystats_umap_res}
 \alias{plot_umap.glyexp_experiment}
 \title{UMAP Plot}
 \usage{
 plot_umap(x, ...)
+
+\method{plot_umap}{glystats_umap_res}(x, groups = NULL, group_col = NULL, ...)
 
 \method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, ...)
 }

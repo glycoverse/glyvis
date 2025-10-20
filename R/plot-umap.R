@@ -21,8 +21,14 @@ plot_umap <- function(x, ...) {
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
 #' @export
+plot_umap.glystats_umap_res <- function(x, groups = NULL, group_col = NULL, ...) {
+  .plot_umap(x, groups = groups, group_col = group_col)
+}
+
+#' @rdname plot_umap
+#' @export
 plot_umap.glyexp_experiment <- function(x, groups = NULL, group_col = NULL, ...) {
-  umap_res <- glystats::gly_umap(x, ...)
+  umap_res <- glystats::gly_umap(x)
   .plot_umap(umap_res, groups = groups, group_col = group_col)
 }
 
