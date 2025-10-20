@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,10 +33,13 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.0" id="glyvis-040">glyvis 0.4.0<a class="anchor" aria-label="anchor" href="#glyvis-040"></a></h2>
 <p>We redesign most <code>plot_xxx()</code> functions to make them more flexible. Previously, these functions only accepts a <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> object. Now, they also accept corresponding <code>glystats</code> results, to be more intuitive and convenient.</p>
 <p>We also redesign the argument passing strategies in <code>plot_xxx()</code> functions, making clear separation between underlying statistical functions and plotting functions.</p>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
 <ul><li>Add <code><a href="../reference/plot_oplsda.html">plot_oplsda()</a></code> to plot OPLS-DA plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code><a href="https://glycoverse.github.io/glystats/reference/gly_oplsda.html" class="external-link">glystats::gly_oplsda()</a></code> results.</li>
 <li>Add <code><a href="../reference/plot_plsda.html">plot_plsda()</a></code> to plot PLS-DA plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code><a href="https://glycoverse.github.io/glystats/reference/gly_plsda.html" class="external-link">glystats::gly_plsda()</a></code> results.</li>
 <li>Add <code><a href="../reference/plot_enrich.html">plot_enrich()</a></code> to plot dotplot, barplot, or network plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code>glystats</code> enrichment functions (<code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_go()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_kegg()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_reactome()</a></code>).</li>
@@ -57,7 +60,7 @@
 <code>...</code> in all <code>plot_xxx()</code> functions is passed to underlying plotting functions (if any).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
+<h3 id="minor-improvements-and-bug-fixes-0-4-0">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-0-4-0"></a></h3>
 <ul><li>Add descriptions about supported data types in the documentation of all <code>plot_xxx()</code> functions.</li>
 <li>Fix some inconsistent argument passiing in <code>plot_xxx()</code> functions.</li>
 </ul></div>
@@ -127,7 +130,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by First Last.</p>
+  <p>Developed by Bin Fu.</p>
 </div>
 
 <div class="pkgdown-footer-right">
