@@ -118,3 +118,18 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
     coord_equal() +
     theme_bw()
 }
+
+#' Internal Forest plotter
+#'
+#' @param df A data frame with the following columns:
+#'   - `variable`: a character vector of variable names.
+#'   - `estimate`: a numeric vector of estimate values.
+#'   - `lower`: a numeric vector of lower bound values.
+#'   - `upper`: a numeric vector of upper bound values.
+#' @noRd
+.glyvis_forest <- function(df, estimate, lower, upper) {
+  ggplot(df, aes(x = .data[[estimate]], y = .data[["variable"]])) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = .data[[lower]], xmax = .data[[upper]])) +
+    theme_bw()
+}
