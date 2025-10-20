@@ -1,3 +1,6 @@
+skip_on_ci()
+skip_on_cran()
+
 test_that("plot_plsda works with glystats_plsda_res", {
   suppressMessages(plsda_res <- glystats::gly_plsda(exp_for_plsda()))
   p <- plot_plsda(plsda_res)

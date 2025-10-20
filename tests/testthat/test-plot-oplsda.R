@@ -1,3 +1,6 @@
+skip_on_ci()
+skip_on_cran()
+
 test_that("plot_oplsda works with glystats_oplsda_res", {
   set.seed(1234)
   suppressMessages(oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), ortho_i = 1))

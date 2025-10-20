@@ -1,3 +1,5 @@
+skip_on_ci()
+skip_on_cran()
 skip("Enrichment functions are too slow.")
 
 test_that("plot_enrich works with glystats_go_ora_res", {
