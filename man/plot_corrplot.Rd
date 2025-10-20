@@ -2,10 +2,13 @@
 % Please edit documentation in R/plot-corrplot.R
 \name{plot_corrplot}
 \alias{plot_corrplot}
+\alias{plot_corrplot.glystats_cor_res}
 \alias{plot_corrplot.glyexp_experiment}
 \title{Correlation Plot}
 \usage{
 plot_corrplot(x, ...)
+
+\method{plot_corrplot}{glystats_cor_res}(x, ...)
 
 \method{plot_corrplot}{glyexp_experiment}(x, on = "variable", ...)
 }

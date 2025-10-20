@@ -15,6 +15,12 @@ plot_corrplot <- function(x, ...) {
 
 #' @rdname plot_corrplot
 #' @export
+plot_corrplot.glystats_cor_res <- function(x, ...) {
+  .plot_corrplot(x)
+}
+
+#' @rdname plot_corrplot
+#' @export
 plot_corrplot.glyexp_experiment <- function(x, on = "variable", ...) {
   cor_res <- glystats::gly_cor(x, on = on)
   .plot_corrplot(cor_res)
