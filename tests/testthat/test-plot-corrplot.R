@@ -12,7 +12,10 @@ test_that("plot_corrplot works for glyexp_experiment with default parameters", {
 test_that("plot_corrplot works for glyexp_experiment with on = 'sample'", {
   vdiffr::expect_doppelganger(
     "plot_corrplot_sample",
-    suppressMessages(plot_corrplot(test_gp_exp |> glyexp::slice_head_var(n = 5), on = "sample"))
+    suppressMessages(plot_corrplot(
+      test_gp_exp |> glyexp::slice_head_var(n = 5),
+      stats_args = list(on = "sample"))
+    )
   )
 })
 

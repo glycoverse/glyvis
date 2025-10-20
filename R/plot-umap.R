@@ -31,9 +31,10 @@ plot_umap.glystats_umap_res <- function(x, groups = NULL, group_col = NULL, ...)
 }
 
 #' @rdname plot_umap
+#' @param stats_args A list of keyword arguments to pass to [glystats::gly_umap()].
 #' @export
-plot_umap.glyexp_experiment <- function(x, groups = NULL, group_col = NULL, ...) {
-  umap_res <- glystats::gly_umap(x)
+plot_umap.glyexp_experiment <- function(x, groups = NULL, group_col = NULL, stats_args = list(), ...) {
+  umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
   .plot_umap(umap_res, groups = groups, group_col = group_col)
 }
 

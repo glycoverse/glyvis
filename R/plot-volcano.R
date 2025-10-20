@@ -25,48 +25,25 @@ plot_volcano <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj",
 }
 
 #' @rdname plot_volcano
-#' @param group_col A character string specifying the column name in sample information
-#'   that contains group labels. Default is "group".
 #' @param test "ttest", "wilcox", or "limma". Default is "limma".
-#' @param ref_group A character string specifying the reference group.
-#'   If NULL (default), the first level of the group factor is used as the reference.
-#' @param p_adj_method A character string specifying the method to adjust p-values.
-#'   See `p.adjust.methods` for available methods. Default is "BH".
-#'   If NULL, no adjustment is performed.
+#' @param stats_args A list of keyword arguments to pass to [glystats::gly_ttest()],
+#'   [glystats::gly_wilcox()], or [glystats::gly_limma()].
 #' @export
 plot_volcano.glyexp_experiment <- function(
   x,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  group_col = "group",
   test = "limma",
-  ref_group = NULL,
-  p_adj_method = "BH",
+  stats_args = list(),
   ...
 ) {
-  checkmate::assert_string(group_col)
   checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
-  checkmate::assert_choice(p_adj_method, stats::p.adjust.methods, null.ok = TRUE)
-  checkmate::assert_string(ref_group, null.ok = TRUE)
-
-  if ((group_col %in% colnames(x$sample_info)) && length(unique(x$sample_info[[group_col]])) != 2) {
-    n_levels <- length(unique(x$sample_info[[group_col]]))
-    level_values <- unique(x$sample_info[[group_col]])
-    cli::cli_abort(c(
-      "The group column must have exactly 2 levels for volcano plot.",
-      "x" = "Found {.val {n_levels}} levels: {.val {level_values}}."
-    ))
-  }
-  if (is.null(p_adj_method)) {
-    p_col <- "p_val"
-    cli::cli_alert_info("No p-value adjustment method specified. Using raw p-values.")
-  }
 
   dea_res <- switch(test,
-    "ttest" = glystats::gly_ttest(x, group_col, p_adj_method, ref_group),
-    "wilcox" = glystats::gly_wilcox(x, group_col, p_adj_method, ref_group),
-    "limma" = glystats::gly_limma(x, group_col, p_adj_method, ref_group)
+    "ttest" = rlang::exec(glystats::gly_ttest, x, !!!stats_args),
+    "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
+    "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
   )
   .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }

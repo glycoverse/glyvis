@@ -27,11 +27,9 @@ plot_roc.glystats_roc_res <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
 }
 
 #' @rdname plot_roc
-#' @param group_col A character string specifying the column name of the grouping variable.
-#'   Defaults to "group".
+#' @param stats_args A list of keyword arguments to pass to [glystats::gly_roc()].
 #' @export
-plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, group_col = "group", ...) {
-  checkmate::assert_string(group_col)
+plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
   if (nrow(x) > 10) {
@@ -41,7 +39,7 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, group_
       "i" = "Try to filter the experiment before plotting."
     ))
   }
-  roc_res <- glystats::gly_roc(x, group_col = group_col)
+  roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
   .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff)
 }
 

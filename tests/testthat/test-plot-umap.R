@@ -3,10 +3,9 @@ skip_on_cran()
 skip_if_not_installed("uwot")
 
 test_that("plot_umap works for glyexp_experiment", {
-  skip("Waiting for stats_args parameter to be implemented")
   vdiffr::expect_doppelganger(
     "plot_umap",
-    suppressMessages(plot_umap(test_gp_exp, n_neighbors = 3))
+    suppressMessages(plot_umap(test_gp_exp, stats_args = list(n_neighbors = 3)))
   )
 })
 

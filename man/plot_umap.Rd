@@ -10,7 +10,7 @@ plot_umap(x, ...)
 
 \method{plot_umap}{glystats_umap_res}(x, groups = NULL, group_col = NULL, ...)
 
-\method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, ...)
+\method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}
@@ -26,6 +26,8 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
+
+\item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_umap]{glystats::gly_umap()}}.}
 }
 \value{
 A ggplot object.

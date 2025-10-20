@@ -6,16 +6,30 @@
 \alias{plot_pca.glyexp_experiment}
 \title{PCA Plot}
 \usage{
-plot_pca(x, type = "individual", ...)
+plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
 
-\method{plot_pca}{glystats_pca_res}(x, type = "individual", ...)
+\method{plot_pca}{glystats_pca_res}(x, type = "individual", groups = NULL, group_col = NULL, ...)
 
-\method{plot_pca}{glyexp_experiment}(x, type = "individual", groups = NULL, group_col = NULL, ...)
+\method{plot_pca}{glyexp_experiment}(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
 \item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
+
+\item{groups}{A factor or character vector specifying group membership for each sample.
+If provided, the plot will be colored by group.
+Only applicable to "individual" and "biplot" types.
+Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
+
+\item{group_col}{A character string specifying where to find the group information.}
 
 \item{...}{Additional arguments passed to underlying factoextra functions:
 \itemize{
@@ -25,17 +39,7 @@ plot_pca(x, type = "individual", ...)
 \item type = "biplot": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.
 }}
 
-\item{groups}{A factor or character vector specifying group membership for each sample.
-If provided, the plot will be colored by group.
-Only applicable to "individual" and "biplot" types.
-Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
-
-\item{group_col}{A character string specifying where to find the group information.
-If you uses \code{\link[glystats:gly_pca]{glystats::gly_pca()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
-sample information has already been added to the result.
-In this case, you can specify the column name in the sample information tibble
-to be used for coloring.
-If not provided, this function will try "group".}
+\item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
 }
 \value{
 A ggplot object.

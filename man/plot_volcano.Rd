@@ -15,10 +15,8 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  group_col = "group",
   test = "limma",
-  ref_group = NULL,
-  p_adj_method = "BH",
+  stats_args = list(),
   ...
 )
 
@@ -40,17 +38,10 @@ Can also be "p_val" (raw p-values without multiple testing correction).}
 
 \item{...}{Other arguments passed to \code{\link[EnhancedVolcano:EnhancedVolcano]{EnhancedVolcano::EnhancedVolcano()}}.}
 
-\item{group_col}{A character string specifying the column name in sample information
-that contains group labels. Default is "group".}
-
 \item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
 
-\item{ref_group}{A character string specifying the reference group.
-If NULL (default), the first level of the group factor is used as the reference.}
-
-\item{p_adj_method}{A character string specifying the method to adjust p-values.
-See \code{p.adjust.methods} for available methods. Default is "BH".
-If NULL, no adjustment is performed.}
+\item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}},
+\code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}, or \code{\link[glystats:gly_limma]{glystats::gly_limma()}}.}
 }
 \value{
 A ggplot object.

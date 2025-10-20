@@ -25,9 +25,10 @@ plot_corrplot.glystats_cor_res <- function(x, ...) {
 }
 
 #' @rdname plot_corrplot
+#' @param stats_args A list of keyword arguments to pass to [glystats::gly_cor()].
 #' @export
-plot_corrplot.glyexp_experiment <- function(x, on = "variable", ...) {
-  cor_res <- glystats::gly_cor(x, on = on)
+plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
+  cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
   .plot_corrplot(cor_res)
 }
 
