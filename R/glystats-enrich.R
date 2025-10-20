@@ -30,15 +30,3 @@ autoplot.glystats_kegg_ora_res <- function(object, type = "dotplot", ...) {
 autoplot.glystats_reactome_ora_res <- function(object, type = "dotplot", ...) {
   .plot_enrich(object, type, ...)
 }
-
-#' @importFrom graphics barplot
-.plot_enrich <- function(object, type, ...) {
-  rlang::check_installed("enrichplot")
-  checkmate::assert_choice(type, c("dotplot", "barplot", "network"))
-  switch(
-    type,
-    dotplot = enrichplot::dotplot(object$raw_result, ...),
-    barplot = barplot(object$raw_result, ...),
-    network = enrichplot::emapplot(enrichplot::pairwise_termsim(object$raw_result), ...)
-  )
-}
