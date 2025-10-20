@@ -4,11 +4,11 @@
 \name{glyvis-package}
 \alias{glyvis}
 \alias{glyvis-package}
-\title{glyvis: What the Package Does (One Line, Title Case)}
+\title{glyvis: Fast Visualization For Glycoverse}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-What the package does (one paragraph).
+Provides a unified interface for visualizing glycomics data within the 'glycoverse' ecosystem. Implements 'autoplot()' methods for various data structures including statistical results from 'glystats', experimental data from 'glyexp', and glycan structures from 'glyrepr'. Designed for rapid data exploration and quality assessment rather than publication-quality figure generation.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Bin Fu \email{23110220018@m.fudan.edu.cn} (\href{https://orcid.org/0000-0001-8567-2997}{ORCID})
 
 }
 \keyword{internal}

@@ -1,10 +1,15 @@
 Package: glyvis
-Title: What the Package Does (One Line, Title Case)
-Version: 0.3.1.9000
+Title: Fast Visualization For Glycoverse
+Version: 0.4.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Bin", "Fu", , "23110220018@m.fudan.edu.cn", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8567-2997"))
+Description: Provides a unified interface for visualizing glycomics data 
+    within the 'glycoverse' ecosystem. Implements 'autoplot()' methods for 
+    various data structures including statistical results from 'glystats', 
+    experimental data from 'glyexp', and glycan structures from 'glyrepr'. 
+    Designed for rapid data exploration and quality assessment rather than 
+    publication-quality figure generation.
 License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),

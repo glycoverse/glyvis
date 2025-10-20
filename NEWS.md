@@ -1,4 +1,4 @@
-# glyvis (development version)
+# glyvis 0.4.0
 
 We redesign most `plot_xxx()` functions to make them more flexible. Previously, these functions only accepts a `glyexp::experiment()` object. Now, they also accept corresponding `glystats` results, to be more intuitive and convenient.
 
