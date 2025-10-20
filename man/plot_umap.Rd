@@ -32,4 +32,11 @@ A ggplot object.
 }
 \description{
 Draw a UMAP scores plot.
+Currently supported data types:
+\itemize{
+\item \code{glystats_umap_res}: Result from \code{\link[glystats:gly_umap]{glystats::gly_umap()}}.
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+UMAP analysis is first performed using \code{\link[glystats:gly_umap]{glystats::gly_umap()}},
+then the result is plotted.
+}
 }

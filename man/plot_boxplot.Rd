@@ -22,4 +22,9 @@ A ggplot object.
 }
 \description{
 Draw a boxplot.
+Currently supported data types:
+\itemize{
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Boxplots of log2-transformed expression values are plotted, grouped by the group column.
+}
 }

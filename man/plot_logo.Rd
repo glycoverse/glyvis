@@ -27,6 +27,11 @@ A ggplot object.
 \description{
 Draw a logo plot for all glycosites.
 Positions with insufficient flanking amino acids will be padded with "X".
+Currently supported data types:
+\itemize{
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Logo plot of glycosylation sites is plotted.
+}
 }
 \seealso{
 \code{\link[ggseqlogo:ggseqlogo]{ggseqlogo::ggseqlogo()}}

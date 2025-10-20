@@ -1,6 +1,15 @@
 #' Volcano Plot
 #'
 #' Draw a volcano plot.
+#' Currently supported data types:
+#' - `glystats_ttest_res`: Result from [glystats::gly_ttest()].
+#' - `glystats_wilcox_res`: Result from [glystats::gly_wilcox()].
+#' - `glystats_limma_res`: Result from [glystats::gly_limma()].
+#'   Only two-group comparisons are supported.
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   Differential expression analysis is first performed using [glystats::gly_ttest()],
+#'   [glystats::gly_wilcox()], or [glystats::gly_limma()]
+#'   (controlled by the `test` argument), then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.

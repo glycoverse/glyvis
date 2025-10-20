@@ -1,6 +1,11 @@
 #' PCA Plot
 #'
 #' Draw a PCA scores plot.
+#' Currently supported data types:
+#' - `glystats_pca_res`: Result from [glystats::gly_pca()].
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   PCA analysis is first performed using [glystats::gly_pca()],
+#'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param type The type of plot, one of "screeplot", "individual", "variables", or "biplot".

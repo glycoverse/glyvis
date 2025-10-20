@@ -19,4 +19,9 @@ A ggplot object.
 }
 \description{
 Draw a heatmap.
+Currently supported data types:
+\itemize{
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Heatmap of log2-transformed expression values is plotted.
+}
 }

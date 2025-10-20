@@ -1,6 +1,11 @@
 #' t-SNE Plot
 #'
 #' Draw a t-SNE scores plot.
+#' Currently supported data types:
+#' - `glystats_tsne_res`: Result from [glystats::gly_tsne()].
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   t-SNE analysis is first performed using [glystats::gly_tsne()],
+#'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param ... Ignored.

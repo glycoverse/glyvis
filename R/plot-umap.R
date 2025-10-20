@@ -1,6 +1,11 @@
 #' UMAP Plot
 #'
 #' Draw a UMAP scores plot.
+#' Currently supported data types:
+#' - `glystats_umap_res`: Result from [glystats::gly_umap()].
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   UMAP analysis is first performed using [glystats::gly_umap()],
+#'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param ... Ignored.

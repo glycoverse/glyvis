@@ -57,4 +57,15 @@ A ggplot object.
 }
 \description{
 Draw a volcano plot.
+Currently supported data types:
+\itemize{
+\item \code{glystats_ttest_res}: Result from \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}}.
+\item \code{glystats_wilcox_res}: Result from \code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}.
+\item \code{glystats_limma_res}: Result from \code{\link[glystats:gly_limma]{glystats::gly_limma()}}.
+Only two-group comparisons are supported.
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Differential expression analysis is first performed using \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}},
+\code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}, or \code{\link[glystats:gly_limma]{glystats::gly_limma()}}
+(controlled by the \code{test} argument), then the result is plotted.
+}
 }

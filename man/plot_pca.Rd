@@ -42,6 +42,13 @@ A ggplot object.
 }
 \description{
 Draw a PCA scores plot.
+Currently supported data types:
+\itemize{
+\item \code{glystats_pca_res}: Result from \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+PCA analysis is first performed using \code{\link[glystats:gly_pca]{glystats::gly_pca()}},
+then the result is plotted.
+}
 }
 \seealso{
 \code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}},

@@ -1,6 +1,11 @@
 #' Correlation Plot
 #'
 #' Draw a correlation matrix heatmap.
+#' Currently supported data types:
+#' - `glystats_cor_res`: Result from [glystats::gly_cor()].
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   Correlation analysis is first performed using [glystats::gly_cor()],
+#'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param on A character string specifying what to correlate. Either "variable" (default) to correlate

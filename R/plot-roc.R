@@ -3,6 +3,11 @@
 #' Draw ROC curves.
 #' Only two groups are allowed.
 #' At most 10 variables can be plotted.
+#' Currently supported data types:
+#' - `glystats_roc_res`: Result from [glystats::gly_roc()].
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   ROC analysis is first performed using [glystats::gly_roc()],
+#'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param type The type of plot, one of "dotplot" or "roc". Default is "roc".

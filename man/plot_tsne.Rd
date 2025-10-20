@@ -32,4 +32,11 @@ A ggplot object.
 }
 \description{
 Draw a t-SNE scores plot.
+Currently supported data types:
+\itemize{
+\item \code{glystats_tsne_res}: Result from \code{\link[glystats:gly_tsne]{glystats::gly_tsne()}}.
+\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+t-SNE analysis is first performed using \code{\link[glystats:gly_tsne]{glystats::gly_tsne()}},
+then the result is plotted.
+}
 }

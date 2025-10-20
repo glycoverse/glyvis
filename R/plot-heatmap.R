@@ -1,6 +1,9 @@
 #' Heatmap
 #'
 #' Draw a heatmap.
+#' Currently supported data types:
+#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#'   Heatmap of log2-transformed expression values is plotted.
 #'
 #' @param x An object to be plotted.
 #' @param ... Ignored.
