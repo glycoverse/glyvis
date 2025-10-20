@@ -8,8 +8,6 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param on A character string specifying what to correlate. Either "variable" (default) to correlate
-#'   variables/features, or "sample" to correlate samples/observations.
 #' @param ... Additional arguments passed to [GGally::ggcorr()].
 #'
 #' @returns A ggplot object.

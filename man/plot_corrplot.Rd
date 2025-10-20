@@ -18,9 +18,6 @@ plot_corrplot(x, ...)
 \item{...}{Additional arguments passed to \code{\link[GGally:ggcorr]{GGally::ggcorr()}}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_cor]{glystats::gly_cor()}}.}
-
-\item{on}{A character string specifying what to correlate. Either "variable" (default) to correlate
-variables/features, or "sample" to correlate samples/observations.}
 }
 \value{
 A ggplot object.
