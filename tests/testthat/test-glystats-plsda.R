@@ -2,13 +2,6 @@ skip_on_ci()
 skip_on_cran()
 skip_if_not_installed("ropls")
 
-# Helper function to create test data for PLS-DA
-exp_for_plsda <- function() {
-  test_gp_exp |>
-    glyexp::slice_head_var(n = 3) |>
-    glyexp::mutate_obs(group = dplyr::if_else(group %in% c("H", "M"), "control", "case"))
-}
-
 test_that("autoplot works for glystats_plsda_res with default parameters", {
   set.seed(1234)
   suppressMessages(suppressWarnings({

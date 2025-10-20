@@ -23,18 +23,5 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, group_col = NULL, ...) {
-  checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance"))
-  .validate_group_args(groups, group_col)
-
-  # The `samples` tibble of `gly_plsda()` has similar structure as `gly_pca()`,
-  # so we can reuse the same group extractor.
-  groups <- .prepare_groups(object, groups, group_col)
-
-  switch(
-    type,
-    scores = .plot_oplsda_scores(object, "p2", groups),
-    loadings = .plot_oplsda_loadings(object, "p2"),
-    vip = .plot_oplsda_vip(object),
-    variance = .plot_oplsda_variance(object)
-  )
+  .plot_plsda(object, type, groups, group_col, ...)
 }
