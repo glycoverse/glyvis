@@ -3,6 +3,7 @@ skip_on_cran()
 skip_if_not_installed("Rtsne")
 
 test_that("plot_tsne works for glyexp_experiment", {
+  set.seed(123)
   vdiffr::expect_doppelganger(
     "plot_tsne",
     suppressMessages(plot_tsne(test_gp_exp, stats_args = list(perplexity = 3)))
