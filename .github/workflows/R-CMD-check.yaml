@@ -22,9 +22,6 @@ jobs:
           - {os: ubuntu-latest,  r: 'release'}
           - {os: ubuntu-latest,  r: 'oldrel-1'}
 
-    # 建议：R-devel 允许失败，避免上游波动导致整条工作流红掉
-    continue-on-error: ${{ matrix.config.r == 'devel' }}
-
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
@@ -39,62 +36,28 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # ---- 关键修复：在 ubuntu + R-devel 上启用 Bioconductor (devel) 源 ----
-      - name: Configure Bioconductor repos for R-devel (Ubuntu only)
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'devel'
-        run: |
-          Rscript -e 'install.packages("BiocManager", repos = "https://cloud.r-project.org")'
-          Rscript -e 'opts <- BiocManager::repositories(version = "devel"); \
-                      dput(opts); \
-                      options(repos = opts); \
-                      writeLines(sprintf("options(repos = %s)", deparse(opts)), "~/.Rprofile")'
-
       # ---------- oldrel-1: Pin compatible package versions ----------
       - name: Install deps (oldrel-1, pin GGally/ggstats/ggplot2)
         if: matrix.config.r == 'oldrel-1'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: check
+          # Precise versions: avoid pak backtracking to upgrade to ggplot2 4.0.0
           extra-packages: |
             any::rcmdcheck
             cran::ggplot2@3.5.2
             cran::ggstats@0.7.0
             cran::GGally@2.2.1
 
-      # ---------- devel: 显式包含 Bioc 源与 EnhancedVolcano，并固定工具包 ----------
-      - name: Install deps (devel with Bioc)
-        if: matrix.config.r == 'devel'
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          needs: check
-          extra-repositories: |
-            https://bioconductor.org/packages/devel/bioc
-            https://bioconductor.org/packages/devel/data/annotation
-            https://bioconductor.org/packages/devel/data/experiment
-            https://bioconductor.org/packages/devel/workflows
-          extra-packages: |
-            any::rcmdcheck
-            any::sessioninfo
-            bioc::EnhancedVolcano
-
-      # ---------- 其他版本：常规安装 ----------
-      - name: Install deps (release & others)
-        if: matrix.config.r != 'oldrel-1' && matrix.config.r != 'devel'
+      # ---------- Other R versions: normal installation ----------
+      - name: Install deps (others)
+        if: matrix.config.r != 'oldrel-1'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: check
           extra-packages: any::rcmdcheck
 
-      # 可选：在 R-devel 上略过 vignettes（若 EnhancedVolcano 仅用于 vignette，可以减少偶发失败）
       - uses: r-lib/actions/check-r-package@v2
-        if: matrix.config.r != 'devel'
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-
-      - uses: r-lib/actions/check-r-package@v2
-        if: matrix.config.r == 'devel'
-        with:
-          upload-snapshots: true
-          # 若你需要构建 vignette，把下一行里的 "--no-build-vignettes" 去掉
-          build_args: 'c("--no-manual","--no-build-vignettes","--compact-vignettes=gs+qpdf")'
