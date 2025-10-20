@@ -2,3 +2,10 @@ url: https://glycoverse.github.io/glyvis/
 template:
   bootstrap: 5
 
+reference:
+- title: "Autoplot Methods"
+  contents:
+  - starts_with("autoplot")
+- title: "Direct Plot"
+  contents:
+  - starts_with("plot_")
