@@ -2,10 +2,13 @@
 % Please edit documentation in R/plot-tsne.R
 \name{plot_tsne}
 \alias{plot_tsne}
+\alias{plot_tsne.glystats_tsne_res}
 \alias{plot_tsne.glyexp_experiment}
 \title{t-SNE Plot}
 \usage{
 plot_tsne(x, ...)
+
+\method{plot_tsne}{glystats_tsne_res}(x, groups = NULL, group_col = NULL, ...)
 
 \method{plot_tsne}{glyexp_experiment}(x, groups = NULL, group_col = NULL, ...)
 }
