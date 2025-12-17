@@ -61,22 +61,48 @@ plot_volcano.glystats_wilcox_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.
 }
 
 #' @rdname plot_volcano
+#' @param contrast A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+#'   Must be one of the contrasts in the result.
+#'   When there is only one contrast (two-group comparison), it can be NULL (default).
 #' @export
-plot_volcano.glystats_limma_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
-  .plot_volcano_limma(x, log2fc_cutoff, p_cutoff, p_col, ...)
+plot_volcano.glystats_limma_res <- function(x, contrast = NULL, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
+  .plot_volcano_limma(x, contrast, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
-.plot_volcano_limma <- function(x, log2fc_cutoff, p_cutoff, p_col, ...) {
+.plot_volcano_limma <- function(x, contrast, log2fc_cutoff, p_cutoff, p_col, ...) {
+  checkmate::assert_string(contrast, null.ok = TRUE)
   contrasts <- unique(paste0(x$tidy_result$ref_group, "_vs_", x$tidy_result$test_group))
-  if (length(contrasts) > 1) {
+  if (length(contrasts) > 1 && is.null(contrast)) {
     cli::cli_abort(c(
-      "Number of contrasts must be exactly 1 for limma result.",
-      "x" = "Found {.val {length(contrasts)}} contrasts: {.val {contrasts}}.",
-      "i" = "Maybe you want to filter the experiment to two groups first by using {.fn glyexp::filter_obs()}?"
+      "{.arg contrast} is required when there are multiple contrasts in the result.",
+      "i" = "Available contrasts: {.val {contrasts}}."
     ))
   }
-  x$tidy_result$contrast <- contrasts
-  .glyvis_volcano(x$tidy_result, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
+  if (is.null(contrast)) {  # only one contrast
+    contrast <- contrasts[1]
+  }
+  if (stringr::str_count(contrast, "_vs_") != 1) {
+    cli::cli_abort("Invalid contrast format: {.val {contrast}}. Expected format: {.val group1_vs_group2}")
+  }
+  parts <- stringr::str_split_1(contrast, "_vs_")
+  ref_group <- parts[1]
+  test_group <- parts[2]
+  tidy_res <- x$tidy_result
+  if (!ref_group %in% tidy_res$ref_group) {
+    cli::cli_abort(c(
+      "Cannot find reference group {.val {ref_group}} in the result.",
+      "i" = "Available reference groups: {.val {unique(tidy_res$ref_group)}}."
+    ))
+  }
+  if (!test_group %in% tidy_res$test_group) {
+    cli::cli_abort(c(
+      "Cannot find test group {.val {test_group}} in the result.",
+      "i" = "Available test groups: {.val {unique(tidy_res$test_group)}}."
+    ))
+  }
+  tidy_res <- tidy_res |>
+    dplyr::filter(.data$ref_group == ref_group, .data$test_group == test_group)
+  .glyvis_volcano(tidy_res, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
 }
 
 .plot_volcano <- function(dea_res, log2fc_cutoff, p_cutoff, p_col, ...) {

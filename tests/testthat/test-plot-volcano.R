@@ -70,3 +70,13 @@ test_that("plot_volcano works for glystats_limma_res", {
     plot_volcano(limma_res)
   )
 })
+
+test_that("plot_volcano works for glystats_limma_res with contrast", {
+  suppressMessages(
+    limma_res <- glystats::gly_limma(test_gp_exp)
+  )
+  vdiffr::expect_doppelganger(
+    "plot_volcano_limma_res_contrast",
+    plot_volcano(limma_res, contrast = "C_vs_H")
+  )
+})

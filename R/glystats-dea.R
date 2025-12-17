@@ -73,6 +73,9 @@ autoplot.glystats_kruskal_res <- function(
 #' Only 2-group comparison is supported, and a volcano plot is drawn.
 #'
 #' @param object A `glystats_limma_res` object.
+#' @param contrast A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+#'    Must be one of the contrasts in the result.
+#'    When there is only one contrast (two-group comparison), it can be NULL (default).
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
@@ -83,12 +86,13 @@ autoplot.glystats_kruskal_res <- function(
 #' @export
 autoplot.glystats_limma_res <- function(
   object,
+  contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
   ...
 ) {
-  .plot_volcano_limma(object, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano_limma(object, contrast, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 .plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {
