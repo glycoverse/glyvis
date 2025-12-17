@@ -26,7 +26,7 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 
 \method{plot_volcano}{glystats_limma_res}(
   x,
-  contrast,
+  contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
@@ -50,7 +50,9 @@ Can also be "p_val" (raw p-values without multiple testing correction).}
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}},
 \code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}, or \code{\link[glystats:gly_limma]{glystats::gly_limma()}}.}
 
-\item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".}
+\item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+Must be one of the contrasts in the result.
+When there is only one contrast (two-group comparison), it can be NULL (default).}
 }
 \value{
 A ggplot object.

@@ -4,10 +4,21 @@
 \alias{autoplot.glystats_limma_res}
 \title{Plots for Limma Result}
 \usage{
-\method{autoplot}{glystats_limma_res}(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+\method{autoplot}{glystats_limma_res}(
+  object,
+  contrast = NULL,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  ...
+)
 }
 \arguments{
 \item{object}{A \code{glystats_limma_res} object.}
+
+\item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+Must be one of the contrasts in the result.
+When there is only one contrast (two-group comparison), it can be NULL (default).}
 
 \item{log2fc_cutoff}{The log2 fold change cutoff. Defaults to 1.}
 

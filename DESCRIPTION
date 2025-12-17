@@ -22,6 +22,7 @@ Suggests:
     enrichplot,
     EnhancedVolcano,
     ggseqlogo,
+    pheatmap,
     knitr,
     rmarkdown
 Config/testthat/edition: 3
@@ -40,6 +41,7 @@ Imports:
     magrittr,
     purrr,
     rlang,
+    stringr,
     tibble
 Remotes:
     glycoverse/glyexp@*release,
