@@ -1,4 +1,10 @@
-# glyvis (development version)
+# glyvis 0.4.1
+
+## Minor improvements and bug fixes
+
+* `plot_volcano()` now supports `glystats::gly_limma()` results with multiple contrasts.
+* Use `pheatmap` and `ggplotify` in `plot_heatmap()` to plot heatmaps.
+* Remove `autoplot()` for `glystats_wgcna_res` objects for now. It will be re-implemented in the future with more features.
 
 # glyvis 0.4.0
 
