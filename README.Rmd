@@ -48,6 +48,7 @@ remotes::install_github("glycoverse/glyvis")
 
 ## Documentation
 
+- 🚀 Get started: [Here](https://glycoverse.github.io/glyvis/articles/glyvis.html)
 - 📚 Reference: [Here](https://glycoverse.github.io/glyvis/reference/index.html)
 
 ## Role in `glycoverse`

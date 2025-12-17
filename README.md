@@ -41,6 +41,8 @@ remotes::install_github("glycoverse/glyvis")
 
 ## Documentation
 
+-   🚀 Get started:
+    [Here](https://glycoverse.github.io/glyvis/articles/glyvis.html)
 -   📚 Reference:
     [Here](https://glycoverse.github.io/glyvis/reference/index.html)
 
@@ -69,21 +71,41 @@ library(glystats)
 library(glyvis)
 
 exp <- auto_clean(real_experiment)
-#> ℹ Normalizing data (Median)
-#> ✔ Normalizing data (Median) [79ms]
 #> 
-#> ℹ Removing variables with >50% missing values
-#> ✔ Removing variables with >50% missing values [10ms]
+#> ── Normalizing data ──
 #> 
-#> ℹ Imputing missing values
-#> ℹ Sample size <= 30, using sample minimum imputation
-#> ℹ Imputing missing values✔ Imputing missing values [11ms]
+#> ℹ No QC samples found. Using default normalization method based on experiment type.
+#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
+#> ✔ Normalization completed.
 #> 
-#> ℹ Aggregating data
-#> ✔ Aggregating data [376ms]
+#> ── Removing variables with too many missing values ──
 #> 
-#> ℹ Normalizing data again
-#> ✔ Normalizing data again [8ms]
+#> ℹ No QC samples found. Using all samples.
+#> ℹ Applying preset "discovery"...
+#> ℹ Total removed: 24 (0.56%) variables.
+#> ✔ Variable removal completed.
+#> 
+#> ── Imputing missing values ──
+#> 
+#> ℹ No QC samples found. Using default imputation method based on sample size.
+#> ℹ Sample size <= 30, using `impute_sample_min()`.
+#> ✔ Imputation completed.
+#> 
+#> ── Aggregating data ──
+#> 
+#> ℹ Aggregating to "gfs" level
+#> ✔ Aggregation completed.
+#> 
+#> ── Normalizing data again ──
+#> 
+#> ℹ No QC samples found. Using default normalization method based on experiment type.
+#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
+#> ✔ Normalization completed.
+#> 
+#> ── Correcting batch effects ──
+#> 
+#> ℹ Batch column  not found in sample_info. Skipping batch correction.
+#> ✔ Batch correction completed.
 
 pca_res <- gly_pca(exp)
 autoplot(pca_res)
