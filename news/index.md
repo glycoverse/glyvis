@@ -2,6 +2,22 @@
 
 ## glyvis (development version)
 
+## glyvis 0.4.1
+
+### Minor improvements and bug fixes
+
+- [`plot_volcano()`](https://glycoverse.github.io/glyvis/reference/plot_volcano.md)
+  now supports
+  [`glystats::gly_limma()`](https://glycoverse.github.io/glystats/reference/gly_limma.html)
+  results with multiple contrasts.
+- Use `pheatmap` and `ggplotify` in
+  [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  to plot heatmaps.
+- Remove
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  for `glystats_wgcna_res` objects for now. It will be re-implemented in
+  the future with more features.
+
 ## glyvis 0.4.0
 
 We redesign most `plot_xxx()` functions to make them more flexible.
