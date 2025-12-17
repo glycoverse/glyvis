@@ -9,5 +9,5 @@
 #' @returns A ggplot object.
 #' @export
 autoplot.glystats_wgcna_res <- function(object, ...) {
-  .glyvis_heatmap(object$tidy_result$eigenvalues, "sample", "module", "eigenvalue")
+  cli::cli_abort("{.fn autoplot} for {.cls glystats_wgcna_res} objects is not implemented yet.")
 }
