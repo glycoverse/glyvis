@@ -90,10 +90,10 @@ Differential expression analysis is first performed using <code><a href="https:/
 <span><span class="co"># S3 method for class 'glystats_limma_res'</span></span>
 <span><span class="fu">plot_volcano</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  <span class="va">contrast</span>,</span>
 <span>  log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  p_cutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  p_col <span class="op">=</span> <span class="st">"p_adj"</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -133,7 +133,9 @@ Can also be "p_val" (raw p-values without multiple testing correction).</p></dd>
 
 
 <dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
-<dd><p>A character string specifying the contrast to plot, in the format of "group1_vs_group2".</p></dd>
+<dd><p>A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+Must be one of the contrasts in the result.
+When there is only one contrast (two-group comparison), it can be NULL (default).</p></dd>
 
 </dl></div>
     <div class="section level2">

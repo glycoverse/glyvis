@@ -42,7 +42,14 @@ Only 2-group comparison is supported, and a volcano plot is drawn.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'glystats_limma_res'</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">object</span>, log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>, p_cutoff <span class="op">=</span> <span class="fl">0.05</span>, p_col <span class="op">=</span> <span class="st">"p_adj"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  contrast <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  p_cutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  p_col <span class="op">=</span> <span class="st">"p_adj"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -51,6 +58,12 @@ Only 2-group comparison is supported, and a volcano plot is drawn.</p>
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>A <code>glystats_limma_res</code> object.</p></dd>
+
+
+<dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
+<dd><p>A character string specifying the contrast to plot, in the format of "group1_vs_group2".
+Must be one of the contrasts in the result.
+When there is only one contrast (two-group comparison), it can be NULL (default).</p></dd>
 
 
 <dt id="arg-log-fc-cutoff">log2fc_cutoff<a class="anchor" aria-label="anchor" href="#arg-log-fc-cutoff"></a></dt>

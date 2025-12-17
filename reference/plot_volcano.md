@@ -46,10 +46,10 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 # S3 method for class 'glystats_limma_res'
 plot_volcano(
   x,
-  contrast,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
+  contrast = NULL,
   ...
 )
 ```
@@ -93,7 +93,9 @@ plot_volcano(
 - contrast:
 
   A character string specifying the contrast to plot, in the format of
-  "group1_vs_group2".
+  "group1_vs_group2". Must be one of the contrasts in the result. When
+  there is only one contrast (two-group comparison), it can be NULL
+  (default).
 
 ## Value
 
