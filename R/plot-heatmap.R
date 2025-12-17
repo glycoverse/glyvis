@@ -22,7 +22,7 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
 
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
-#' @param ... Other arguments passed to [.glyvis_heatmap()].
+#' @param ... Other arguments passed to `.glyvis_heatmap()`.
 #' @noRd
 .plot_exp_heatmap <- function(exp, ...) {
   df <- exp %>%

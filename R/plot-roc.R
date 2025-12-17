@@ -47,7 +47,7 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_
 #' @param roc_res A `glystats_roc_res` object.
 #' @param type The type of plot, one of "dotplot" or "roc".
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Other arguments passed to [.glyvis_dotchart()] or [.glyvis_roc()].
+#' @param ... Other arguments passed to `.glyvis_dotchart()` or `.glyvis_roc()`.
 #' @noRd
 .plot_roc <- function(roc_res, type, auc_cutoff, ...) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
@@ -61,7 +61,7 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_
 #' Internal function to plot ROC dotplot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Other arguments passed to [.glyvis_dotchart()].
+#' @param ... Other arguments passed to `.glyvis_dotchart()`.
 #' @noRd
 .plot_roc_dotplot <- function(roc_res, auc_cutoff, ...) {
   df <- roc_res$tidy_result$auc %>%
@@ -76,7 +76,7 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_
 
 #' Internal function to plot ROC curves
 #' @param roc_res A `glystats_roc_res` object.
-#' @param ... Other arguments passed to [.glyvis_roc()].
+#' @param ... Other arguments passed to `.glyvis_roc()`.
 #' @noRd
 .plot_roc_curves <- function(roc_res, ...) {
   if (nrow(roc_res$tidy_result$auc) > 10) {

@@ -26,7 +26,7 @@ plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
 #' @param exp A `glyexp_experiment` object.
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
-#' @param ... Other arguments passed to [.glyvis_boxplot()].
+#' @param ... Other arguments passed to `.glyvis_boxplot()`.
 #' @noRd
 .plot_exp_boxplot <- function(exp, group_col, ...) {
   # We don't want to plot too many variables.
