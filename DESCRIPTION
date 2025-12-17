@@ -34,6 +34,7 @@ Imports:
     cli,
     dplyr,
     ggplot2,
+    ggplotify,
     ggrepel,
     glyexp (>= 0.10.0),
     magrittr,

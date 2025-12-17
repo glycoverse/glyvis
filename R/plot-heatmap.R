@@ -17,7 +17,7 @@ plot_heatmap <- function(x, ...) {
 #' @rdname plot_heatmap
 #' @export
 plot_heatmap.glyexp_experiment <- function(x, ...) {
-  .plot_exp_heatmap(x)
+  .plot_exp_heatmap(x, ...)
 }
 
 #' Internal function to plot heatmap
@@ -25,10 +25,6 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
 #' @param ... Other arguments passed to `.glyvis_heatmap()`.
 #' @noRd
 .plot_exp_heatmap <- function(exp, ...) {
-  df <- exp %>%
-    fortify.glyexp_experiment() %>%
-    dplyr::mutate(value = as.double(scale(.data$value)), .by = "variable")
-
-  .glyvis_heatmap(df, x = "sample", y = "variable", value = "value") +
-    labs(fill = expression(log[2]("Int.")))
+  p <- pheatmap::pheatmap(log2(exp$expr_mat + 1), scale = "row", show_rownames = FALSE, ...)
+  ggplotify::as.ggplot(p)
 }

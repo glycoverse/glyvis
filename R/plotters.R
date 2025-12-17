@@ -1,17 +1,6 @@
 # The color palette was copied from the `colors_discrete_friendly` of `tidyplots` package.
 glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E00")
 
-.glyvis_heatmap <- function(df, x, y, value) {
-  ggplot(df, aes(x = .data[[x]], y = .data[[y]], fill = .data[[value]])) +
-    geom_tile() +
-    scale_fill_viridis_c() +
-    theme_bw() +
-    theme(
-      axis.text.x = element_text(angle = 90, hjust = 1),
-      axis.text.y = element_blank()
-    )
-}
-
 .glyvis_boxplot <- function(df, x, value, group = NULL) {
   if (!is.null(group)) {
     ggplot(df, aes(x = .data[[x]], y = .data[[value]], color = .data[[group]], fill = .data[[group]])) +
