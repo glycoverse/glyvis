@@ -26,10 +26,10 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 
 \method{plot_volcano}{glystats_limma_res}(
   x,
-  contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
+  contrast = NULL,
   ...
 )
 }

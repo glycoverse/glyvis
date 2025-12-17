@@ -65,11 +65,11 @@ plot_volcano.glystats_wilcox_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.
 #'   Must be one of the contrasts in the result.
 #'   When there is only one contrast (two-group comparison), it can be NULL (default).
 #' @export
-plot_volcano.glystats_limma_res <- function(x, contrast = NULL, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...) {
-  .plot_volcano_limma(x, contrast, log2fc_cutoff, p_cutoff, p_col, ...)
+plot_volcano.glystats_limma_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", contrast = NULL, ...) {
+  .plot_volcano_limma(x, log2fc_cutoff, p_cutoff, p_col, contrast, ...)
 }
 
-.plot_volcano_limma <- function(x, contrast, log2fc_cutoff, p_cutoff, p_col, ...) {
+.plot_volcano_limma <- function(x, log2fc_cutoff, p_cutoff, p_col, contrast, ...) {
   checkmate::assert_string(contrast, null.ok = TRUE)
   contrasts <- unique(paste0(x$tidy_result$ref_group, "_vs_", x$tidy_result$test_group))
   if (length(contrasts) > 1 && is.null(contrast)) {
