@@ -29,7 +29,7 @@ glystats::gly_wilcox(), or glystats::gly_limma()
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,14 @@ Differential expression analysis is first performed using <code><a href="https:/
 <span><span class="fu">plot_volcano</span><span class="op">(</span><span class="va">x</span>, log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>, p_cutoff <span class="op">=</span> <span class="fl">0.05</span>, p_col <span class="op">=</span> <span class="st">"p_adj"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'glystats_limma_res'</span></span>
-<span><span class="fu">plot_volcano</span><span class="op">(</span><span class="va">x</span>, log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>, p_cutoff <span class="op">=</span> <span class="fl">0.05</span>, p_col <span class="op">=</span> <span class="st">"p_adj"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">plot_volcano</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">contrast</span>,</span>
+<span>  log2fc_cutoff <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  p_cutoff <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  p_col <span class="op">=</span> <span class="st">"p_adj"</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -124,6 +131,10 @@ Can also be "p_val" (raw p-values without multiple testing correction).</p></dd>
 <dd><p>A list of keyword arguments to pass to <code><a href="https://glycoverse.github.io/glystats/reference/gly_ttest.html" class="external-link">glystats::gly_ttest()</a></code>,
 <code><a href="https://glycoverse.github.io/glystats/reference/gly_wilcox.html" class="external-link">glystats::gly_wilcox()</a></code>, or <code><a href="https://glycoverse.github.io/glystats/reference/gly_limma.html" class="external-link">glystats::gly_limma()</a></code>.</p></dd>
 
+
+<dt id="arg-contrast">contrast<a class="anchor" aria-label="anchor" href="#arg-contrast"></a></dt>
+<dd><p>A character string specifying the contrast to plot, in the format of "group1_vs_group2".</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -139,7 +150,7 @@ Can also be "p_val" (raw p-values without multiple testing correction).</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
