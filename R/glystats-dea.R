@@ -92,7 +92,7 @@ autoplot.glystats_limma_res <- function(
   p_col = "p_adj",
   ...
 ) {
-  .plot_volcano_limma(object, contrast, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano_limma(object, log2fc_cutoff, p_cutoff, p_col, contrast, ...)
 }
 
 .plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {
