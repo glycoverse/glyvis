@@ -1,4 +1,9 @@
-# glyvis (development version)
+# glyvis 0.4.2
+
+## Minor improvements and bug fixes
+
+* Fix the bug that `plot_volcano()` cannot correctly handle the `contrast` argument for `glystats::gly_limma()` results.
+* Fix the bug that `autoplot()` method for `glystats::gly_limma()` results does not work.
 
 # glyvis 0.4.1
 
