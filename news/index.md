@@ -2,6 +2,21 @@
 
 ## glyvis (development version)
 
+## glyvis 0.4.2
+
+### Minor improvements and bug fixes
+
+- Fix the bug that
+  [`plot_volcano()`](https://glycoverse.github.io/glyvis/reference/plot_volcano.md)
+  cannot correctly handle the `contrast` argument for
+  [`glystats::gly_limma()`](https://glycoverse.github.io/glystats/reference/gly_limma.html)
+  results.
+- Fix the bug that
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  method for
+  [`glystats::gly_limma()`](https://glycoverse.github.io/glystats/reference/gly_limma.html)
+  results does not work.
+
 ## glyvis 0.4.1
 
 ### Minor improvements and bug fixes
