@@ -73,10 +73,14 @@ test_that("plot_volcano works for glystats_limma_res", {
 
 test_that("plot_volcano works for glystats_limma_res with contrast", {
   suppressMessages(
-    limma_res <- glystats::gly_limma(test_gp_exp)
+    limma_res <- test_gp_exp |>
+      glyexp::mutate_obs(group = factor(group, levels = c("H", "M", "Y", "C"))) |>
+      glystats::gly_limma()
   )
+  p1 <- plot_volcano(limma_res, contrast = "H_vs_C")
+  p2 <- plot_volcano(limma_res, contrast = "Y_vs_C")
   vdiffr::expect_doppelganger(
     "plot_volcano_limma_res_contrast",
-    plot_volcano(limma_res, contrast = "C_vs_H")
+    patchwork::wrap_plots(p1, p2)
   )
 })

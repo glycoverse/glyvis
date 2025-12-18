@@ -101,7 +101,7 @@ plot_volcano.glystats_limma_res <- function(x, log2fc_cutoff = 1, p_cutoff = 0.0
     ))
   }
   tidy_res <- tidy_res |>
-    dplyr::filter(.data$ref_group == ref_group, .data$test_group == test_group)
+    dplyr::filter(.data$ref_group == .env$ref_group, .data$test_group == .env$test_group)
   .glyvis_volcano(tidy_res, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
 }
 

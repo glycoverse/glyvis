@@ -5,6 +5,7 @@
 #' @import ggplot2
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @importFrom rlang .env
 #' @importFrom graphics barplot
 ## usethis namespace: end
 NULL
