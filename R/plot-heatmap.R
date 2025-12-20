@@ -22,9 +22,9 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
 
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
-#' @param ... Other arguments passed to `.glyvis_heatmap()`.
+#' @param ... Other arguments passed to `pheatmap::pheatmap()`.
 #' @noRd
 .plot_exp_heatmap <- function(exp, ...) {
-  p <- pheatmap::pheatmap(log2(exp$expr_mat + 1), scale = "row", show_rownames = FALSE, ...)
+  p <- pheatmap::pheatmap(log2(exp$expr_mat + 1), scale = "row", show_rownames = FALSE, silent = TRUE, ...)
   ggplotify::as.ggplot(p)
 }
