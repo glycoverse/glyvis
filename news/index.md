@@ -1,5 +1,16 @@
 # Changelog
 
+## glyvis (development version)
+
+## glyvis 0.4.3
+
+### Minor improvements and bug fixes
+
+- Fix the bug that
+  [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  always sends the plot to the plot panel even when the result is passed
+  to a variable.
+
 ## glyvis 0.4.2
 
 ### Minor improvements and bug fixes
