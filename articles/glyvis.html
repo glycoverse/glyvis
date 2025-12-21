@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,14 +144,14 @@ direct route with <code><a href="../reference/plot_pca.html">plot_pca()</a></cod
 data:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_pca.html">plot_pca</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span></span></code></pre></div>
-<p><img src="glyvis_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="384"></p>
+<p><img src="glyvis_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="384"></p>
 <p>Alternatively, we can take the analytical pathway: first conducting
 PCA analysis with <code><a href="https://glycoverse.github.io/glystats/reference/gly_pca.html" class="external-link">glystats::gly_pca()</a></code>, then letting
 <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> work its magic on the statistical results.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pca_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glycoverse.github.io/glystats/reference/gly_pca.html" class="external-link">gly_pca</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">pca_res</span><span class="op">)</span></span></code></pre></div>
-<p><img src="glyvis_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="384"></p>
+<p><img src="glyvis_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="384"></p>
 <p>While the first approach gets you there quickly, the second pathway
 unlocks a world of possibilities with your results. You gain access to
 the underlying statistical objects for advanced analyses, and can craft
