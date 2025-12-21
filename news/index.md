@@ -1,5 +1,16 @@
 # Changelog
 
+## glyvis (development version)
+
+## glyvis 0.4.4
+
+### Minor improvements and bug fixes
+
+- Suppress harmless warnings in
+  [`plot_volcano()`](https://glycoverse.github.io/glyvis/reference/plot_volcano.md)
+  and
+  [`plot_pca()`](https://glycoverse.github.io/glyvis/reference/plot_pca.md).
+
 ## glyvis 0.4.3
 
 ### Minor improvements and bug fixes
