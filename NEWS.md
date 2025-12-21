@@ -1,4 +1,8 @@
-# glyvis (development version)
+# glyvis 0.4.4
+
+## Minor improvements and bug fixes
+
+* Suppress harmless warnings in `plot_volcano()` and `plot_pca()`.
 
 # glyvis 0.4.3
 
