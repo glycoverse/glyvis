@@ -81,15 +81,18 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
 
 .glyvis_volcano <- function(df, p_col, log2fc_col, p_cutoff, log2fc_cutoff, ...) {
   rlang::check_installed("EnhancedVolcano")
-  EnhancedVolcano::EnhancedVolcano(
-    df,
-    lab = df$variable,
-    x = log2fc_col,
-    y = p_col,
-    pCutoff = p_cutoff,
-    FCcutoff = log2fc_cutoff,
-    labSize = 0,
-    ...
+  suppressWarnings(
+    EnhancedVolcano::EnhancedVolcano(
+      df,
+      lab = df$variable,
+      x = log2fc_col,
+      y = p_col,
+      pCutoff = p_cutoff,
+      FCcutoff = log2fc_cutoff,
+      labSize = 0,
+      ...
+    ),
+    class = "lifecycle_warning_deprecated"
   )
 }
 

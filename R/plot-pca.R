@@ -52,11 +52,14 @@ plot_pca.glyexp_experiment <- function(x, type = "individual", groups = NULL, gr
   .validate_group_args(groups, group_col)
 
   groups <- .prepare_groups(pca_res, groups, group_col)
-  switch(type,
-    screeplot = .plot_pca_screeplot(pca_res, ...),
-    individual = .plot_pca_individual(pca_res, groups, ...),
-    variables = .plot_pca_variables(pca_res, ...),
-    biplot = .plot_pca_biplot(pca_res, groups, ...)
+  suppressWarnings(
+    switch(type,
+      screeplot = .plot_pca_screeplot(pca_res, ...),
+      individual = .plot_pca_individual(pca_res, groups, ...),
+      variables = .plot_pca_variables(pca_res, ...),
+      biplot = .plot_pca_biplot(pca_res, groups, ...)
+    ),
+    class = "lifecycle_warning_deprecated"
   )
 }
 
