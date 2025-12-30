@@ -1,4 +1,8 @@
-# glyvis (development version)
+# glyvis 0.4.5
+
+## Minor improvements and bug fixes
+
+* Fix the bug that `plot_heatmap()` cannot handle NA values. Now a more robust clustering method is used and zero-variance variables are removed.
 
 # glyvis 0.4.4
 
