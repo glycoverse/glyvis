@@ -10,18 +10,16 @@ plot_heatmap(x, ...)
 \method{plot_heatmap}{glyexp_experiment}(x, ...)
 }
 \arguments{
-\item{x}{An object to be plotted.}
+\item{x}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
 
-\item{...}{Ignored.}
+\item{...}{Other arguments passed to \code{pheatmap::pheatmap()}.}
 }
 \value{
 A ggplot object.
 }
 \description{
-Draw a heatmap.
-Currently supported data types:
-\itemize{
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Draw a heatmap from a \code{\link[glyexp:experiment]{glyexp::experiment()}}.
 Heatmap of log2-transformed expression values is plotted.
-}
+Before plotting, zero-variance rows and columns are filtered out
+to ensure robust clustering.
 }

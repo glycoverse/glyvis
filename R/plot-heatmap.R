@@ -1,12 +1,12 @@
 #' Heatmap
 #'
-#' Draw a heatmap.
-#' Currently supported data types:
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
-#'   Heatmap of log2-transformed expression values is plotted.
+#' Draw a heatmap from a [glyexp::experiment()].
+#' Heatmap of log2-transformed expression values is plotted.
+#' Before plotting, zero-variance rows and columns are filtered out
+#' to ensure robust clustering.
 #'
-#' @param x An object to be plotted.
-#' @param ... Ignored.
+#' @param x A [glyexp::experiment()] object.
+#' @param ... Other arguments passed to `pheatmap::pheatmap()`.
 #'
 #' @returns A ggplot object.
 #' @export
@@ -27,6 +27,10 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
 .plot_exp_heatmap <- function(exp, ...) {
   mat <- log2(exp$expr_mat + 1)
 
+  # Filter out zero-variance rows and columns
+  filtered <- .filter_zero_variance(mat)
+  mat <- filtered$mat
+
   # Use robust clustering that handles NA values
   row_clust <- .robust_hclust(mat, by = "row")
   col_clust <- .robust_hclust(mat, by = "col")
@@ -42,6 +46,53 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
     ...
   )
   ggplotify::as.ggplot(p)
+}
+
+#' Filter out rows and columns with zero variance
+#'
+#' Rows/columns with zero variance (all values identical) will cause NA
+#' correlations during clustering. This function removes them and warns
+#' the user about which samples/variables were removed.
+#'
+#' @param mat A numeric matrix.
+#' @returns A list with `mat` (filtered matrix), `removed_rows`, and `removed_cols`.
+#' @noRd
+.filter_zero_variance <- function(mat) {
+  # Calculate variance for each row (ignoring NA)
+  row_vars <- apply(mat, 1, stats::var, na.rm = TRUE)
+  zero_var_rows <- is.na(row_vars) | row_vars == 0
+  removed_rows <- rownames(mat)[zero_var_rows]
+
+
+  # Calculate variance for each column (ignoring NA)
+  col_vars <- apply(mat, 2, stats::var, na.rm = TRUE)
+  zero_var_cols <- is.na(col_vars) | col_vars == 0
+  removed_cols <- colnames(mat)[zero_var_cols]
+
+  # Warn about removed rows (variables)
+ if (length(removed_rows) > 0) {
+    cli::cli_warn(c(
+      "Removed {length(removed_rows)} variable{?s} with zero variance from heatmap:",
+      "i" = "Variables: {.val {removed_rows}}"
+    ))
+  }
+
+  # Warn about removed columns (samples)
+  if (length(removed_cols) > 0) {
+    cli::cli_warn(c(
+      "Removed {length(removed_cols)} sample{?s} with zero variance from heatmap:",
+      "i" = "Samples: {.val {removed_cols}}"
+    ))
+  }
+
+  # Filter the matrix
+  mat <- mat[!zero_var_rows, !zero_var_cols, drop = FALSE]
+
+  list(
+    mat = mat,
+    removed_rows = removed_rows,
+    removed_cols = removed_cols
+  )
 }
 
 #' Robust hierarchical clustering that handles NA values
