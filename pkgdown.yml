@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   glyvis: glyvis.html
-last_built: 2025-12-30T07:18Z
+last_built: 2025-12-30T07:20Z
 urls:
   reference: https://glycoverse.github.io/glyvis/reference
   article: https://glycoverse.github.io/glyvis/articles
