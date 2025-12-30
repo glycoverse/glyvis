@@ -1,10 +1,10 @@
 # Heatmap
 
-Draw a heatmap. Currently supported data types:
-
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  Heatmap of log2-transformed expression values is plotted.
+Draw a heatmap from a
+[`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
+Heatmap of log2-transformed expression values is plotted. Before
+plotting, zero-variance rows and columns are filtered out to ensure
+robust clustering.
 
 ## Usage
 
@@ -19,11 +19,14 @@ plot_heatmap(x, ...)
 
 - x:
 
-  An object to be plotted.
+  A
+  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
+  object.
 
 - ...:
 
-  Ignored.
+  Other arguments passed to
+  [`pheatmap::pheatmap()`](https://rdrr.io/pkg/pheatmap/man/pheatmap.html).
 
 ## Value
 
