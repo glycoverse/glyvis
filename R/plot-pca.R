@@ -59,7 +59,7 @@ plot_pca.glyexp_experiment <- function(x, type = "individual", groups = NULL, gr
       variables = .plot_pca_variables(pca_res, ...),
       biplot = .plot_pca_biplot(pca_res, groups, ...)
     ),
-    class = "lifecycle_warning_deprecated"
+    classes = "lifecycle_warning_deprecated"
   )
 }
 

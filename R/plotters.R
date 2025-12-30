@@ -92,7 +92,7 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
       labSize = 0,
       ...
     ),
-    class = "lifecycle_warning_deprecated"
+    classes = "lifecycle_warning_deprecated"
   )
 }
 
