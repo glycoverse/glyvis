@@ -1,5 +1,7 @@
 # Changelog
 
+## glyvis (development version)
+
 ## glyvis 0.4.5
 
 ### Minor improvements and bug fixes

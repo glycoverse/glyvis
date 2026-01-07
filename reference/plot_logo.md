@@ -11,10 +11,10 @@ types:
 ## Usage
 
 ``` r
-plot_logo(x, n_aa = 5L, fasta = NULL, ...)
+plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
 # S3 method for class 'glyexp_experiment'
-plot_logo(x, n_aa = 5L, fasta = NULL, ...)
+plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 ```
 
 ## Arguments
@@ -33,7 +33,13 @@ plot_logo(x, n_aa = 5L, fasta = NULL, ...)
 
   The path to the FASTA file containing protein sequences. If
   [`glyclean::add_site_seq()`](https://glycoverse.github.io/glyclean/reference/add_site_seq.html)
-  has been called on the experiment, this argument can be omitted.
+  has been called on the experiment, this argument can be omitted. When
+  `site_sequence` is missing and `fasta` is `NULL`, UniProt.ws is used
+  to fetch protein sequences automatically.
+
+- tax_id:
+
+  The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 
 - ...:
 
