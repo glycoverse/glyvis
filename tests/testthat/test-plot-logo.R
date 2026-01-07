@@ -23,7 +23,16 @@ test_that("plot_logo works with custom n_aa", {
   vdiffr::expect_doppelganger("plot_logo_with_custom_n_aa", p)
 })
 
-test_that("plot_logo failed with no fasta and no site_sequence", {
+test_that("plot_logo works with UniProt.ws fallback", {
+  skip_if_not_installed("UniProt.ws")
+  skip_if_offline()
   exp <- test_gp_exp
-  expect_error(plot_logo(exp), "`fasta` is required to add site sequence information.")
+  suppressMessages(p <- plot_logo(exp, tax_id = 9606))
+  vdiffr::expect_doppelganger("plot_logo_with_uniprot", p)
+})
+
+test_that("plot_logo fails when protein metadata is missing", {
+  exp <- test_gp_exp
+  exp$var_info <- dplyr::select(exp$var_info, -protein)
+  expect_error(plot_logo(exp), "protein")
 })
