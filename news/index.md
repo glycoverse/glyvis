@@ -2,6 +2,14 @@
 
 ## glyvis (development version)
 
+## glyvis 0.5.0
+
+### New features
+
+- [`plot_logo()`](https://glycoverse.github.io/glyvis/reference/plot_logo.md)
+  now fetches protein sequences from Uniprot automatically if a fasta
+  file is not provided.
+
 ## glyvis 0.4.5
 
 ### Minor improvements and bug fixes
