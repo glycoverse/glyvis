@@ -5,9 +5,9 @@
 \alias{plot_logo.glyexp_experiment}
 \title{Logo Plot}
 \usage{
-plot_logo(x, n_aa = 5L, fasta = NULL, ...)
+plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
-\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, ...)
+\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}
@@ -17,7 +17,10 @@ For example, if \code{n_aa = 5}, the resulting sequence will contain 11 amino ac
 
 \item{fasta}{The path to the FASTA file containing protein sequences.
 If \code{glyclean::add_site_seq()} has been called on the experiment,
-this argument can be omitted.}
+this argument can be omitted. When \code{site_sequence} is missing and \code{fasta}
+is \code{NULL}, UniProt.ws is used to fetch protein sequences automatically.}
+
+\item{tax_id}{The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.}
 
 \item{...}{Additional arguments passed to \code{\link[ggseqlogo:ggseqlogo]{ggseqlogo::ggseqlogo()}}.}
 }

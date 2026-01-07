@@ -11,7 +11,9 @@
 #'   For example, if `n_aa = 5`, the resulting sequence will contain 11 amino acids.
 #' @param fasta The path to the FASTA file containing protein sequences.
 #'   If `glyclean::add_site_seq()` has been called on the experiment,
-#'   this argument can be omitted.
+#'   this argument can be omitted. When `site_sequence` is missing and `fasta`
+#'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
+#' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 #' @param ... Additional arguments passed to [ggseqlogo::ggseqlogo()].
 #'
 #' @returns A ggplot object.
@@ -33,7 +35,9 @@ plot_logo.glyexp_experiment <- function(x, n_aa = 5L, fasta = NULL, tax_id = 960
 #'   For example, if `n_aa = 5`, the resulting sequence will contain 11 amino acids.
 #' @param fasta The path to the FASTA file containing protein sequences.
 #'   If `glyclean::add_site_seq()` has been called on the experiment,
-#'   this argument can be omitted.
+#'   this argument can be omitted. When `site_sequence` is missing and `fasta`
+#'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
+#' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 #' @param ... Other arguments passed to [ggseqlogo::ggseqlogo()].
 #' @noRd
 .plot_exp_logo <- function(exp, n_aa, fasta, tax_id, ...) {
