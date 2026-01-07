@@ -1,4 +1,8 @@
-# glyvis (development version)
+# glyvis 0.5.0
+
+## New features
+
+* `plot_logo()` now fetches protein sequences from Uniprot automatically if a fasta file is not provided.
 
 # glyvis 0.4.5
 
