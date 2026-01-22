@@ -26,7 +26,13 @@ data structures. Just `autoplot()` it!
 ## Installation
 
 You can install the latest release of glyvis from
-[GitHub](https://github.com/) with:
+[r-universe](https://glycoverse.r-universe.dev/glyvis):
+
+``` r
+install.packages('glyvis', repos = c('https://glycoverse.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+Or from [GitHub](https://github.com/glycoverse/glyvis):
 
 ``` r
 # install.packages("remotes")
@@ -111,4 +117,4 @@ pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" alt="" width="100%" />
