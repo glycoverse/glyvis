@@ -15,7 +15,13 @@ it!
 ## Installation
 
 You can install the latest release of glyvis from
-[GitHub](https://github.com/) with:
+[r-universe](https://glycoverse.r-universe.dev/glyvis):
+
+``` r
+install.packages('glyvis', repos = c('https://glycoverse.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+Or from [GitHub](https://github.com/glycoverse/glyvis):
 
 ``` r
 # install.packages("remotes")
