@@ -61,7 +61,7 @@ figures, but to provide a quick exploration of the data.
 library(glyexp)
 library(glyclean)
 #> 
-#> Attaching package: 'glyclean'
+#> 载入程序包：'glyclean'
 #> The following object is masked from 'package:stats':
 #> 
 #>     aggregate
