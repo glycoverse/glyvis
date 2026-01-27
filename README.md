@@ -9,6 +9,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/glyvis)](https://CRAN.R-project.org/package=glyvis)
+[![R-universe
+version](https://glycoverse.r-universe.dev/glyvis/badges/version)](https://glycoverse.r-universe.dev/glyvis)
 [![R-CMD-check](https://github.com/glycoverse/glyvis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/glycoverse/glyvis/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/glycoverse/glyvis/graph/badge.svg)](https://app.codecov.io/gh/glycoverse/glyvis)
@@ -69,7 +71,7 @@ exploration of the data.
 library(glyexp)
 library(glyclean)
 #> 
-#> Attaching package: 'glyclean'
+#> 载入程序包：'glyclean'
 #> The following object is masked from 'package:stats':
 #> 
 #>     aggregate
