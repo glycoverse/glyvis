@@ -1,4 +1,8 @@
-# glyvis (development version)
+# glyvis 0.5.1
+
+## Minor improvements and bug fixes
+
+* Update dependency strategy to use the r-universe repo.
 
 # glyvis 0.5.0
 
