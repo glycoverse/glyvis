@@ -45,9 +45,5 @@ Imports:
     rlang,
     stringr,
     tibble
-Remotes:
-    glycoverse/glyexp@*release,
-    glycoverse/glystats@*release,
-    glycoverse/glyclean@*release
 Depends: R (>= 4.0)
 VignetteBuilder: knitr
