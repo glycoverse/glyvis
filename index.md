@@ -14,6 +14,17 @@ it!
 
 ## Installation
 
+### Install glycoverse
+
+We recommend installing the meta-package
+[glycoverse](https://github.com/glycoverse/glycoverse), which includes
+this package and other core glycoverse packages.
+
+### Install glyvis alone
+
+If you don’t want to install all glycoverse packages, you can only
+install glyvis.
+
 You can install the latest release of glyvis from
 [r-universe](https://glycoverse.r-universe.dev/glyvis)
 (**recommended**):
@@ -35,6 +46,11 @@ Or install the development version (NOT recommended):
 ``` r
 pak::pkg_install("glycoverse/glyvis")
 ```
+
+**Note:** Tips and troubleshooting for the meta-package
+[glycoverse](https://github.com/glycoverse/glycoverse) are also
+applicable here: [Installation of
+glycoverse](https://github.com/glycoverse/glycoverse#installation).
 
 ## Documentation
 
@@ -61,7 +77,6 @@ figures, but to provide a quick exploration of the data.
 
 ``` r
 library(glyexp)
-#> Warning: 程序包'glyexp'是用R版本4.5.2 来建造的
 library(glyclean)
 #> 
 #> 载入程序包：'glyclean'
