@@ -2,6 +2,9 @@ url: https://glycoverse.github.io/glyvis/
 template:
   bootstrap: 5
 
+development:
+  mode: auto
+
 reference:
 - title: "Autoplot Methods"
   contents:
