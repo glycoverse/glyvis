@@ -78,6 +78,7 @@ figures, but to provide a quick exploration of the data.
 ``` r
 library(glyexp)
 library(glyclean)
+#> Warning: 程序包'glyclean'是用R版本4.5.2 来建造的
 #> 
 #> 载入程序包：'glyclean'
 #> The following object is masked from 'package:stats':
