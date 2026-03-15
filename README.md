@@ -7,8 +7,6 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/glyvis)](https://CRAN.R-project.org/package=glyvis)
 [![R-universe
 version](https://glycoverse.r-universe.dev/glyvis/badges/version)](https://glycoverse.r-universe.dev/glyvis)
 [![R-CMD-check](https://github.com/glycoverse/glyvis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/glycoverse/glyvis/actions/workflows/R-CMD-check.yaml)
@@ -88,6 +86,7 @@ exploration of the data.
 ``` r
 library(glyexp)
 library(glyclean)
+#> Warning: 程序包'glyclean'是用R版本4.5.2 来建造的
 #> 
 #> 载入程序包：'glyclean'
 #> The following object is masked from 'package:stats':
