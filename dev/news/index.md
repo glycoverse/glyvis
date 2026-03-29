@@ -108,8 +108,8 @@ functions and plotting functions.
   [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
   or `glystats` enrichment functions
   ([`glystats::gly_enrich_go()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-  [`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-  [`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html)).
+  [`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_kegg.html),
+  [`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_reactome.html)).
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   now supports
   [`glystats::gly_cor()`](https://glycoverse.github.io/glystats/reference/gly_cor.html)
