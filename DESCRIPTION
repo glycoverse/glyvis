@@ -14,7 +14,7 @@ License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),
     vdiffr,
-    glystats (>= 0.5.1),
+    glystats (>= 0.10.0),
     glyclean (>= 0.7.1),
     ggdendro,
     factoextra,
