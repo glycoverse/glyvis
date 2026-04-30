@@ -2,6 +2,8 @@
 
 ## glyvis (development version)
 
+### Breaking changes
+
 - Remove stale
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
   methods for `glystats_cc_res` and `glystats_wgcna_res` objects because
