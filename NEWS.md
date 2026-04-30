@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+## Breaking changes
+
 * Remove stale `autoplot()` methods for `glystats_cc_res` and `glystats_wgcna_res` objects because the corresponding `glystats` functions have been removed.
 
 # glyvis 0.5.1
