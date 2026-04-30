@@ -1,8 +1,7 @@
-skip_on_ci()
-skip_on_cran()
-skip_if_not_installed("ConsensusClusterPlus")
+test_that("removed glystats result classes do not have autoplot methods", {
+  removed_classes <- c("glystats_cc_res", "glystats_wgcna_res")
 
-test_that("autoplot raises error for glystats cc results", {
-  cc_res <- suppressMessages(glystats::gly_consensus_clustering(test_gp_exp, max_k = 3, reps = 30))
-  expect_error(autoplot(cc_res), "Can't plot consensus clustering results currectly.")
+  purrr::walk(removed_classes, function(class) {
+    expect_null(getS3method("autoplot", class, optional = TRUE))
+  })
 })

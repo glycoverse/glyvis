@@ -24,7 +24,7 @@
 A ggplot object.
 }
 \description{
-Visualization for results from \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}}, \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_kegg()}}, and \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_reactome()}}
+Visualization for results from \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}}, \code{\link[glystats:gly_enrich_kegg]{glystats::gly_enrich_kegg()}}, and \code{\link[glystats:gly_enrich_reactome]{glystats::gly_enrich_reactome()}}
 (\code{glystats_go_ora_res}, \code{glystats_kegg_ora_res}, and \code{glystats_reactome_ora_res} objects).
 Possible \code{type}s of plots:
 \itemize{

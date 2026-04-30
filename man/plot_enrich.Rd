@@ -33,7 +33,7 @@ plot_enrich(x, type = "dotplot", ...)
 \item{enrich_type}{The type of enrichment analysis, one of "go" (default), "kegg", or "reactome".}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}},
-\code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_kegg()}}, or \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_reactome()}}.}
+\code{\link[glystats:gly_enrich_kegg]{glystats::gly_enrich_kegg()}}, or \code{\link[glystats:gly_enrich_reactome]{glystats::gly_enrich_reactome()}}.}
 }
 \value{
 A ggplot object.
@@ -43,10 +43,10 @@ Draw a enrichment analysis result plot.
 Currently supported data types:
 \itemize{
 \item \code{glystats_go_ora_res}: Result from \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}}.
-\item \code{glystats_kegg_ora_res}: Result from \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_kegg()}}.
-\item \code{glystats_reactome_ora_res}: Result from \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_reactome()}}.
+\item \code{glystats_kegg_ora_res}: Result from \code{\link[glystats:gly_enrich_kegg]{glystats::gly_enrich_kegg()}}.
+\item \code{glystats_reactome_ora_res}: Result from \code{\link[glystats:gly_enrich_reactome]{glystats::gly_enrich_reactome()}}.
 \item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
-Enrichment analysis is first performed using \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}}, \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_kegg()}},
-or \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_reactome()}}, then the result is plotted.
+Enrichment analysis is first performed using \code{\link[glystats:gly_enrich_go]{glystats::gly_enrich_go()}}, \code{\link[glystats:gly_enrich_kegg]{glystats::gly_enrich_kegg()}},
+or \code{\link[glystats:gly_enrich_reactome]{glystats::gly_enrich_reactome()}}, then the result is plotted.
 }
 }
