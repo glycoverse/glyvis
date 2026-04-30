@@ -3,6 +3,7 @@ skip_on_cran()
 skip_if_not_installed("uwot")
 
 test_that("plot_umap works for glyexp_experiment", {
+  set.seed(123)
   vdiffr::expect_doppelganger(
     "plot_umap",
     suppressMessages(plot_umap(test_gp_exp, stats_args = list(n_neighbors = 3)))

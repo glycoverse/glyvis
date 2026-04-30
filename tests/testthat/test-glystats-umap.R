@@ -3,6 +3,7 @@ skip_on_cran()
 skip_if_not_installed("uwot")
 
 test_that("autoplot works for glystats umap results", {
+  set.seed(123)
   suppressMessages(
     umap_res <- glystats::gly_umap(test_gp_exp, n_neighbors = 3)
   )
