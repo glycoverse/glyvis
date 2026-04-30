@@ -7,8 +7,6 @@
 - [`autoplot(`*`<glystats_anova_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
   [`autoplot(`*`<glystats_kruskal_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
   : Plots for Multi-Group Differential Expression Analysis (DEA)
-- [`autoplot(`*`<glystats_cc_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cc_res.md)
-  : Plots for Consensus Clustering
 - [`autoplot(`*`<glystats_cor_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cor_res.md)
   : Plots for Correlation Analysis
 - [`autoplot(`*`<glystats_cox_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cox_res.md)
@@ -36,8 +34,6 @@
   : Plots for 2-Group Differential Expression Analysis (DEA)
 - [`autoplot(`*`<glystats_umap_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_umap_res.md)
   : Plots for UMAP
-- [`autoplot(`*`<glystats_wgcna_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_wgcna_res.md)
-  : Plots for WGCNA
 
 ## Direct Plot
 

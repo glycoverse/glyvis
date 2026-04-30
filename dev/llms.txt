@@ -30,6 +30,7 @@ You can install the latest release of glyvis from
 (**recommended**):
 
 ``` r
+
 # install.packages("pak")
 pak::repo_add(glycoverse = "https://glycoverse.r-universe.dev")
 pak::pkg_install("glyvis")
@@ -38,12 +39,14 @@ pak::pkg_install("glyvis")
 Or from [GitHub](https://github.com/glycoverse/glyvis):
 
 ``` r
+
 pak::pkg_install("glycoverse/glyvis@*release")
 ```
 
 Or install the development version (NOT recommended):
 
 ``` r
+
 pak::pkg_install("glycoverse/glyvis")
 ```
 
@@ -76,6 +79,7 @@ figures, but to provide a quick exploration of the data.
 ## Example
 
 ``` r
+
 library(glyexp)
 library(glyclean)
 #> Warning: 程序包'glyclean'是用R版本4.5.2 来建造的
@@ -139,8 +143,6 @@ autoplot(pca_res)
 - [`autoplot(`*`<glystats_anova_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
   [`autoplot(`*`<glystats_kruskal_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
   : Plots for Multi-Group Differential Expression Analysis (DEA)
-- [`autoplot(`*`<glystats_cc_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cc_res.md)
-  : Plots for Consensus Clustering
 - [`autoplot(`*`<glystats_cor_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cor_res.md)
   : Plots for Correlation Analysis
 - [`autoplot(`*`<glystats_cox_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cox_res.md)
@@ -168,8 +170,6 @@ autoplot(pca_res)
   : Plots for 2-Group Differential Expression Analysis (DEA)
 - [`autoplot(`*`<glystats_umap_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_umap_res.md)
   : Plots for UMAP
-- [`autoplot(`*`<glystats_wgcna_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_wgcna_res.md)
-  : Plots for WGCNA
 
 ## Direct Plot
 

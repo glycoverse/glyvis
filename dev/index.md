@@ -30,6 +30,7 @@ You can install the latest release of glyvis from
 (**recommended**):
 
 ``` r
+
 # install.packages("pak")
 pak::repo_add(glycoverse = "https://glycoverse.r-universe.dev")
 pak::pkg_install("glyvis")
@@ -38,12 +39,14 @@ pak::pkg_install("glyvis")
 Or from [GitHub](https://github.com/glycoverse/glyvis):
 
 ``` r
+
 pak::pkg_install("glycoverse/glyvis@*release")
 ```
 
 Or install the development version (NOT recommended):
 
 ``` r
+
 pak::pkg_install("glycoverse/glyvis")
 ```
 
@@ -76,6 +79,7 @@ figures, but to provide a quick exploration of the data.
 ## Example
 
 ``` r
+
 library(glyexp)
 library(glyclean)
 #> Warning: 程序包'glyclean'是用R版本4.5.2 来建造的

@@ -2,9 +2,9 @@
 
 Visualization for results from
 [`glystats::gly_enrich_go()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-[`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
+[`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_kegg.html),
 and
-[`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html)
+[`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_reactome.html)
 (`glystats_go_ora_res`, `glystats_kegg_ora_res`, and
 `glystats_reactome_ora_res` objects). Possible `type`s of plots:
 
