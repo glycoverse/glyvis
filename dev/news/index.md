@@ -2,6 +2,8 @@
 
 ## glyvis (development version)
 
+## glyvis 0.6.0
+
 ### Breaking changes
 
 - Remove stale
