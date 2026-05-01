@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.6.0" id="glyvis-060">glyvis 0.6.0<a class="anchor" aria-label="anchor" href="#glyvis-060"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-6-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-6-0"></a></h3>
+<ul><li>Remove stale <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods for <code>glystats_cc_res</code> and <code>glystats_wgcna_res</code> objects because the corresponding <code>glystats</code> functions have been removed.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.1" id="glyvis-051">glyvis 0.5.1<a class="anchor" aria-label="anchor" href="#glyvis-051"></a></h2>
@@ -96,7 +100,7 @@
 <h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
 <ul><li>Add <code><a href="../reference/plot_oplsda.html">plot_oplsda()</a></code> to plot OPLS-DA plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code><a href="https://glycoverse.github.io/glystats/reference/gly_oplsda.html" class="external-link">glystats::gly_oplsda()</a></code> results.</li>
 <li>Add <code><a href="../reference/plot_plsda.html">plot_plsda()</a></code> to plot PLS-DA plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code><a href="https://glycoverse.github.io/glystats/reference/gly_plsda.html" class="external-link">glystats::gly_plsda()</a></code> results.</li>
-<li>Add <code><a href="../reference/plot_enrich.html">plot_enrich()</a></code> to plot dotplot, barplot, or network plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code>glystats</code> enrichment functions (<code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_go()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_kegg()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_reactome()</a></code>).</li>
+<li>Add <code><a href="../reference/plot_enrich.html">plot_enrich()</a></code> to plot dotplot, barplot, or network plot from <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code> or <code>glystats</code> enrichment functions (<code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_go.html" class="external-link">glystats::gly_enrich_go()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_kegg.html" class="external-link">glystats::gly_enrich_kegg()</a></code>, <code><a href="https://glycoverse.github.io/glystats/reference/gly_enrich_reactome.html" class="external-link">glystats::gly_enrich_reactome()</a></code>).</li>
 <li>
 <code><a href="../reference/plot_corrplot.html">plot_corrplot()</a></code> now supports <code><a href="https://glycoverse.github.io/glystats/reference/gly_cor.html" class="external-link">glystats::gly_cor()</a></code> results.</li>
 <li>

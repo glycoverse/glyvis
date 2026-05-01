@@ -1,6 +1,13 @@
 # Changelog
 
-## glyvis (development version)
+## glyvis 0.6.0
+
+### Breaking changes
+
+- Remove stale
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods for `glystats_cc_res` and `glystats_wgcna_res` objects because
+  the corresponding `glystats` functions have been removed.
 
 ## glyvis 0.5.1
 
@@ -108,8 +115,8 @@ functions and plotting functions.
   [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
   or `glystats` enrichment functions
   ([`glystats::gly_enrich_go()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-  [`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-  [`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html)).
+  [`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_kegg.html),
+  [`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_reactome.html)).
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/reference/plot_corrplot.md)
   now supports
   [`glystats::gly_cor()`](https://glycoverse.github.io/glystats/reference/gly_cor.html)

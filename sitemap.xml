@@ -12,7 +12,6 @@
 <url><loc>https://glycoverse.github.io/glyvis/news/index.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glyexp_experiment.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_anova_res.html</loc></url>
-<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cc_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cor_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_cox_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_go_ora_res.html</loc></url>
@@ -25,7 +24,6 @@
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_tsne_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_ttest_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_umap_res.html</loc></url>
-<url><loc>https://glycoverse.github.io/glyvis/reference/autoplot.glystats_wgcna_res.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/glyvis-package.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/index.html</loc></url>
 <url><loc>https://glycoverse.github.io/glyvis/reference/plot_boxplot.html</loc></url>

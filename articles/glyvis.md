@@ -12,6 +12,7 @@ Built as the perfect companion to `glystats`, it transforms complex
 statistical results into clear, compelling visuals.
 
 ``` r
+
 library(glyvis)
 library(glyexp)
 library(glyclean)
@@ -33,6 +34,7 @@ representing each condition. To get our data analysis-ready, we’ll use
 for streamlined preprocessing.
 
 ``` r
+
 exp <- auto_clean(real_experiment)
 #> 
 #> ── Normalizing data ──
@@ -88,6 +90,7 @@ route with
 on our `exp` data:
 
 ``` r
+
 plot_pca(exp)
 ```
 
@@ -101,6 +104,7 @@ then letting
 work its magic on the statistical results.
 
 ``` r
+
 pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
