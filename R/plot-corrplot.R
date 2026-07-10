@@ -36,5 +36,15 @@ plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
 #' @noRd
 .plot_corrplot <- function(cor_res, ...) {
   rlang::check_installed("GGally")
-  GGally::ggcorr(cor_res$raw_result$r, ...)
+
+  correlation <- cor_res$raw_result$r
+  feature_names <- colnames(correlation)
+  safe_feature_names <- make.names(feature_names, unique = TRUE)
+  dimnames(correlation) <- list(safe_feature_names, safe_feature_names)
+
+  plot <- GGally::ggcorr(correlation, ...)
+  diagonal_layer <- length(plot$layers)
+  plot$layers[[diagonal_layer]]$data$diagLabel <- feature_names
+
+  plot
 }
