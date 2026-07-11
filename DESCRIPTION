@@ -25,7 +25,8 @@ Suggests:
     pheatmap,
     knitr,
     rmarkdown,
-    patchwork
+    patchwork,
+    S4Vectors
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -43,9 +44,8 @@ Imports:
     methods,
     purrr,
     rlang,
-    S4Vectors,
     stringr,
     SummarizedExperiment,
     tibble
-Depends: R (>= 4.0)
+Depends: R (>= 4.1)
 VignetteBuilder: knitr

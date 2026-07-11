@@ -70,7 +70,9 @@
   if (is.null(ids)) {
     ids <- as.character(seq_len(nrow(info)))
   }
-  dplyr::bind_cols(tibble::tibble(!!id := ids), info)
+  id_info <- tibble::tibble(ids)
+  colnames(id_info) <- id
+  dplyr::bind_cols(id_info, info)
 }
 
 #' Fortify a supported experiment container
