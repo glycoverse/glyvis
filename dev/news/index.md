@@ -2,6 +2,8 @@
 
 ## glyvis (development version)
 
+## glyvis 0.7.0
+
 ### New features
 
 - Experiment visualization methods now accept `SummarizedExperiment`
@@ -14,6 +16,11 @@
 - Remove enrichment plotting functions and methods because the
   corresponding `glystats::gly_enrich_*()` functions have been removed.
   (#4)
+
+### Minor improvements and bug fixes
+
+- [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
+  now preserves feature labels that are not syntactic R identifiers.
 
 ## glyvis 0.6.0
 
