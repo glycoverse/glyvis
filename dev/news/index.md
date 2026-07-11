@@ -2,6 +2,12 @@
 
 ## glyvis (development version)
 
+### Breaking changes
+
+- Remove enrichment plotting functions and methods because the
+  corresponding `glystats::gly_enrich_*()` functions have been removed.
+  (#4)
+
 ## glyvis 0.6.0
 
 ### Breaking changes
@@ -111,14 +117,10 @@ functions and plotting functions.
   or
   [`glystats::gly_plsda()`](https://glycoverse.github.io/glystats/reference/gly_plsda.html)
   results.
-- Add
-  [`plot_enrich()`](https://glycoverse.github.io/glyvis/dev/reference/plot_enrich.md)
-  to plot dotplot, barplot, or network plot from
+- Add `plot_enrich()` to plot dotplot, barplot, or network plot from
   [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
-  or `glystats` enrichment functions
-  ([`glystats::gly_enrich_go()`](https://glycoverse.github.io/glystats/reference/gly_enrich_go.html),
-  [`glystats::gly_enrich_kegg()`](https://glycoverse.github.io/glystats/reference/gly_enrich_kegg.html),
-  [`glystats::gly_enrich_reactome()`](https://glycoverse.github.io/glystats/reference/gly_enrich_reactome.html)).
+  or `glystats` enrichment functions (`glystats::gly_enrich_go()`,
+  `glystats::gly_enrich_kegg()`, `glystats::gly_enrich_reactome()`).
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   now supports
   [`glystats::gly_cor()`](https://glycoverse.github.io/glystats/reference/gly_cor.html)

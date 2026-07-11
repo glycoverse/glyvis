@@ -11,10 +11,6 @@
   : Plots for Correlation Analysis
 - [`autoplot(`*`<glystats_cox_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_cox_res.md)
   : Plots for Cox Proportional Hazards Model
-- [`autoplot(`*`<glystats_go_ora_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_go_ora_res.md)
-  [`autoplot(`*`<glystats_kegg_ora_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_go_ora_res.md)
-  [`autoplot(`*`<glystats_reactome_ora_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_go_ora_res.md)
-  : Plots for Enrichment Analysis
 - [`autoplot(`*`<glystats_hclust_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_hclust_res.md)
   : Plots for Hierarchical Clustering
 - [`autoplot(`*`<glystats_limma_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_limma_res.md)
@@ -41,8 +37,6 @@
   : Boxplot
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   : Correlation Plot
-- [`plot_enrich()`](https://glycoverse.github.io/glyvis/dev/reference/plot_enrich.md)
-  : Plot Enrichment Analysis Results
 - [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
   : Heatmap
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
