@@ -2,9 +2,12 @@
 % Please edit documentation in R/glyexp-experiment.R
 \name{autoplot.glyexp_experiment}
 \alias{autoplot.glyexp_experiment}
+\alias{autoplot.SummarizedExperiment}
 \title{Plots for Experiments}
 \usage{
 \method{autoplot}{glyexp_experiment}(object, type = "heatmap", group_col = "group", ...)
+
+\method{autoplot}{SummarizedExperiment}(object, type = "heatmap", group_col = "group", ...)
 }
 \arguments{
 \item{object}{A \code{glyexp_experiment} object.}

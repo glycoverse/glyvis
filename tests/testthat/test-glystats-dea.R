@@ -3,8 +3,7 @@ skip_on_cran()
 
 test_that("autoplot works for glystats t-test results", {
   suppressMessages(
-    ttest_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    ttest_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_ttest()
   )
   vdiffr::expect_doppelganger(
@@ -15,8 +14,7 @@ test_that("autoplot works for glystats t-test results", {
 
 test_that("autoplot works for glystats wilcoxon results", {
   suppressMessages(
-    wilcox_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    wilcox_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_wilcox()
   )
   vdiffr::expect_doppelganger(
@@ -27,7 +25,7 @@ test_that("autoplot works for glystats wilcoxon results", {
 
 test_that("autoplot works for glystats anova results", {
   suppressMessages(
-    anova_res <- glystats::gly_anova(test_gp_exp)
+    anova_res <- glystats::gly_anova(test_gp_se)
   )
   vdiffr::expect_doppelganger(
     "autoplot.glystats_anova_res",
@@ -38,7 +36,7 @@ test_that("autoplot works for glystats anova results", {
 test_that("autoplot works for glystats kruskal results", {
   skip_if_not_installed("FSA")
   suppressMessages(
-    kruskal_res <- glystats::gly_kruskal(test_gp_exp)
+    kruskal_res <- glystats::gly_kruskal(test_gp_se)
   )
   vdiffr::expect_doppelganger(
     "autoplot.glystats_kruskal_res",
@@ -49,8 +47,7 @@ test_that("autoplot works for glystats kruskal results", {
 test_that("autoplot works for glystats limma results", {
   skip_if_not_installed("limma")
   suppressMessages(
-    limma_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    limma_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_limma()
   )
   vdiffr::expect_doppelganger(

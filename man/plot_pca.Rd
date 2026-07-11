@@ -4,6 +4,7 @@
 \alias{plot_pca}
 \alias{plot_pca.glystats_pca_res}
 \alias{plot_pca.glyexp_experiment}
+\alias{plot_pca.SummarizedExperiment}
 \title{PCA Plot}
 \usage{
 plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
@@ -11,6 +12,15 @@ plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
 \method{plot_pca}{glystats_pca_res}(x, type = "individual", groups = NULL, group_col = NULL, ...)
 
 \method{plot_pca}{glyexp_experiment}(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
+
+\method{plot_pca}{SummarizedExperiment}(
   x,
   type = "individual",
   groups = NULL,

@@ -3,11 +3,14 @@
 \name{plot_heatmap}
 \alias{plot_heatmap}
 \alias{plot_heatmap.glyexp_experiment}
+\alias{plot_heatmap.SummarizedExperiment}
 \title{Heatmap}
 \usage{
 plot_heatmap(x, ...)
 
 \method{plot_heatmap}{glyexp_experiment}(x, ...)
+
+\method{plot_heatmap}{SummarizedExperiment}(x, ...)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}

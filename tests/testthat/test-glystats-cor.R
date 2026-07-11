@@ -4,8 +4,7 @@ skip_if_not_installed("Hmisc")
 
 test_that("autoplot works for glystats cor results", {
   suppressMessages(
-    cor_res <- test_gp_exp |>
-      glyexp::slice_head_var(n = 5) |>
+    cor_res <- subset_test_gp_se(variables = seq_len(5)) |>
       glystats::gly_cor()
   )
   vdiffr::expect_doppelganger(

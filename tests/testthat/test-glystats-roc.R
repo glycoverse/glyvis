@@ -3,12 +3,16 @@ skip_on_cran()
 skip_if_not_installed("pROC")
 
 test_that("autoplot works for glystats roc results", {
+  exp <- set_test_gp_col(
+    col = "group",
+    value = dplyr::if_else(
+      SummarizedExperiment::colData(test_gp_se)$group %in% c("H", "M"),
+      "control",
+      "case"
+    )
+  )
   suppressMessages(
-    roc_res <- test_gp_exp |>
-      glyexp::mutate_obs(
-        group = dplyr::if_else(group %in% c("H", "M"), "control", "case")
-      ) |>
-      glystats::gly_roc()
+    roc_res <- glystats::gly_roc(exp)
   )
   vdiffr::expect_doppelganger(
     "autoplot.glystats_roc_res",
@@ -17,13 +21,18 @@ test_that("autoplot works for glystats roc results", {
 })
 
 test_that("autoplot works for glystats roc results with type = 'roc'", {
+  exp <- subset_test_gp_se(variables = seq_len(10))
+  exp <- set_test_gp_col(
+    exp,
+    "group",
+    dplyr::if_else(
+      SummarizedExperiment::colData(exp)$group %in% c("H", "C"),
+      "control",
+      "case"
+    )
+  )
   suppressMessages(
-    roc_res <- test_gp_exp |>
-      glyexp::slice_head_var(n = 10) |>
-      glyexp::mutate_obs(
-        group = dplyr::if_else(group %in% c("H", "C"), "control", "case")
-      ) |>
-      glystats::gly_roc()
+    roc_res <- glystats::gly_roc(exp)
   )
   vdiffr::expect_doppelganger(
     "autoplot.glystats_roc_res with type = 'roc'",

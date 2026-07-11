@@ -3,11 +3,14 @@
 \name{plot_boxplot}
 \alias{plot_boxplot}
 \alias{plot_boxplot.glyexp_experiment}
+\alias{plot_boxplot.SummarizedExperiment}
 \title{Boxplot}
 \usage{
 plot_boxplot(x, ...)
 
 \method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ...)
+
+\method{plot_boxplot}{SummarizedExperiment}(x, group_col = "group", ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

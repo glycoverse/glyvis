@@ -4,6 +4,7 @@
 \alias{plot_umap}
 \alias{plot_umap.glystats_umap_res}
 \alias{plot_umap.glyexp_experiment}
+\alias{plot_umap.SummarizedExperiment}
 \title{UMAP Plot}
 \usage{
 plot_umap(x, ...)
@@ -11,6 +12,8 @@ plot_umap(x, ...)
 \method{plot_umap}{glystats_umap_res}(x, groups = NULL, group_col = NULL, ...)
 
 \method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+
+\method{plot_umap}{SummarizedExperiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

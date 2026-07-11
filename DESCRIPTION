@@ -14,8 +14,8 @@ License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),
     vdiffr,
-    glystats (>= 0.10.0),
-    glyclean (>= 0.7.1),
+    glystats (>= 0.10.1.9000),
+    glyclean (>= 0.14.1.9000),
     ggdendro,
     factoextra,
     GGally,
@@ -25,7 +25,8 @@ Suggests:
     pheatmap,
     knitr,
     rmarkdown,
-    patchwork
+    patchwork,
+    S4Vectors
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -38,11 +39,13 @@ Imports:
     ggplot2,
     ggplotify,
     ggrepel,
-    glyexp (>= 0.10.0),
+    glyexp (>= 0.15.0),
     magrittr,
+    methods,
     purrr,
     rlang,
     stringr,
+    SummarizedExperiment,
     tibble
-Depends: R (>= 4.0)
+Depends: R (>= 4.1)
 VignetteBuilder: knitr

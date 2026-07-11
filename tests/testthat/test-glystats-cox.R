@@ -24,13 +24,8 @@ test_that("autoplot works for glystats cox results", {
     type = rep("marker", 5)
   )
 
-  # Create experiment object
-  exp <- glyexp::experiment(
-    expr_mat = expr_mat,
-    sample_info = sample_info,
-    var_info = var_info,
-    exp_type = "others"
-  )
+  # Create SummarizedExperiment object
+  exp <- new_test_se(expr_mat, sample_info, var_info)
 
   # Get Cox results
   cox_result <- suppressMessages(glystats::gly_cox(exp))
@@ -64,13 +59,8 @@ test_that("autoplot works for glystats cox results with different p_col options"
     type = rep("gene", 3)
   )
 
-  # Create experiment object
-  exp <- glyexp::experiment(
-    expr_mat = expr_mat,
-    sample_info = sample_info,
-    var_info = var_info,
-    exp_type = "others"
-  )
+  # Create SummarizedExperiment object
+  exp <- new_test_se(expr_mat, sample_info, var_info)
 
   # Get Cox results
   cox_result <- suppressMessages(glystats::gly_cox(exp))
@@ -104,13 +94,8 @@ test_that("autoplot works for glystats cox results with different p_cutoff value
     type = rep("biomarker", 4)
   )
 
-  # Create experiment object
-  exp <- glyexp::experiment(
-    expr_mat = expr_mat,
-    sample_info = sample_info,
-    var_info = var_info,
-    exp_type = "others"
-  )
+  # Create SummarizedExperiment object
+  exp <- new_test_se(expr_mat, sample_info, var_info)
 
   # Get Cox results
   cox_result <- suppressMessages(glystats::gly_cox(exp))
@@ -140,12 +125,7 @@ test_that("autoplot.glystats_cox_res parameter validation works", {
     type = rep("test", 2)
   )
 
-  exp <- glyexp::experiment(
-    expr_mat = expr_mat,
-    sample_info = sample_info,
-    var_info = var_info,
-    exp_type = "others"
-  )
+  exp <- new_test_se(expr_mat, sample_info, var_info)
 
   cox_result <- suppressMessages(glystats::gly_cox(exp))
 

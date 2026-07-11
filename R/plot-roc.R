@@ -49,6 +49,28 @@ plot_roc.glyexp_experiment <- function(
   .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff)
 }
 
+#' @rdname plot_roc
+#' @export
+plot_roc.SummarizedExperiment <- function(
+  x,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  ...
+) {
+  checkmate::assert_choice(type, c("dotplot", "roc"))
+  checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
+  if (nrow(x) > 10) {
+    cli::cli_abort(c(
+      "Number of variables must be less than or equal to 10.",
+      "x" = "Current number of variables: {.val {nrow(x)}}",
+      "i" = "Try to filter the experiment before plotting."
+    ))
+  }
+  roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
+  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff)
+}
+
 #' Internal function to plot ROC plot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param type The type of plot, one of "dotplot" or "roc".

@@ -7,7 +7,7 @@ skip_on_cran()
 test_that(".prepare_groups works with explicit groups parameter (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with explicit groups parameter
@@ -36,7 +36,7 @@ test_that(".prepare_groups works with explicit groups parameter (colored)", {
 test_that(".prepare_groups works with group_col parameter (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res_with_group <- glystats::gly_pca(test_gp_exp)
+    pca_res_with_group <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with group_col parameter (using existing "group" column)
@@ -49,7 +49,7 @@ test_that(".prepare_groups works with group_col parameter (colored)", {
 test_that(".prepare_groups automatically uses 'group' column when available (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res_with_group <- glystats::gly_pca(test_gp_exp)
+    pca_res_with_group <- glystats::gly_pca(test_gp_se)
   )
 
   # Test automatic detection of "group" column
@@ -62,8 +62,7 @@ test_that(".prepare_groups automatically uses 'group' column when available (col
 test_that(".prepare_groups works without groups when no group info available (not colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res_no_group <- test_gp_exp |>
-      glyexp::select_obs(-group) |>
+    pca_res_no_group <- drop_test_gp_col(col = "group") |>
       glystats::gly_pca()
   )
 
@@ -77,7 +76,7 @@ test_that(".prepare_groups works without groups when no group info available (no
 test_that(".prepare_groups validates groups parameter length correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with wrong length groups
@@ -92,7 +91,7 @@ test_that(".prepare_groups validates groups parameter length correctly", {
 test_that(".prepare_groups validates group_col parameter correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with non-existent group_col
@@ -105,7 +104,7 @@ test_that(".prepare_groups validates group_col parameter correctly", {
 test_that(".prepare_groups handles groups parameter precedence over group_col (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # When both groups and group_col are provided, groups should be used
@@ -134,7 +133,7 @@ test_that(".prepare_groups handles groups parameter precedence over group_col (c
 test_that(".prepare_groups accepts both factor and character groups (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with character groups
@@ -169,7 +168,7 @@ test_that(".prepare_groups accepts both factor and character groups (colored)", 
 test_that(".prepare_groups validates groups parameter names correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with unnamed groups
@@ -196,7 +195,7 @@ test_that(".prepare_groups validates groups parameter names correctly", {
 test_that(".prepare_groups validates groups parameter sample name alignment correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with mismatched sample names
@@ -237,7 +236,7 @@ test_that(".prepare_groups validates groups parameter sample name alignment corr
 test_that(".prepare_groups handles partial sample name mismatch correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with partially matching sample names
@@ -264,7 +263,7 @@ test_that(".prepare_groups handles partial sample name mismatch correctly", {
 test_that(".prepare_groups handles extra sample names in groups correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with extra sample names in groups
@@ -307,8 +306,7 @@ test_that(".prepare_groups handles extra sample names in groups correctly", {
 test_that(".prepare_groups handles NULL groups and NULL group_col correctly (not colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res_no_group <- test_gp_exp |>
-      glyexp::select_obs(-group) |>
+    pca_res_no_group <- drop_test_gp_col(col = "group") |>
       glystats::gly_pca()
   )
 
@@ -327,7 +325,7 @@ test_that(".prepare_groups handles NULL groups and NULL group_col correctly (not
 test_that(".prepare_groups handles NULL groups with valid group_col (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with groups = NULL but valid group_col
@@ -340,7 +338,7 @@ test_that(".prepare_groups handles NULL groups with valid group_col (colored)", 
 test_that(".prepare_groups handles empty character groups correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with empty character vector
@@ -354,7 +352,7 @@ test_that(".prepare_groups handles empty character groups correctly", {
 test_that(".prepare_groups handles single-level factor groups (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with single-level factor (all samples in same group)
@@ -382,7 +380,7 @@ test_that(".prepare_groups handles single-level factor groups (colored)", {
 test_that(".prepare_groups handles groups with NA values correctly (colored)", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with groups containing NA values
@@ -413,7 +411,7 @@ test_that(".prepare_groups handles groups with NA values correctly (colored)", {
 test_that(".prepare_groups validates numeric groups correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with numeric groups (should be rejected)
@@ -441,7 +439,7 @@ test_that(".prepare_groups validates numeric groups correctly", {
 test_that(".prepare_groups validates logical groups correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with logical groups (should be rejected)

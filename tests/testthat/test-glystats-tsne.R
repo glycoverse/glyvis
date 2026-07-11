@@ -4,7 +4,7 @@ skip_if_not_installed("Rtsne")
 
 test_that("autoplot works for glystats tsne results", {
   suppressWarnings(suppressMessages(
-    tsne_res <- glystats::gly_tsne(test_gp_exp)
+    tsne_res <- glystats::gly_tsne(test_gp_se)
   ))
   vdiffr::expect_doppelganger(
     "autoplot.glystats_tsne_res",

@@ -4,6 +4,7 @@
 \alias{plot_oplsda}
 \alias{plot_oplsda.glystats_oplsda_res}
 \alias{plot_oplsda.glyexp_experiment}
+\alias{plot_oplsda.SummarizedExperiment}
 \title{OPLS-DA Plot}
 \usage{
 plot_oplsda(
@@ -25,6 +26,16 @@ plot_oplsda(
 )
 
 \method{plot_oplsda}{glyexp_experiment}(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
+
+\method{plot_oplsda}{SummarizedExperiment}(
   x,
   type = "scores",
   y_type = "o1",
