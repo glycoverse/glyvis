@@ -64,11 +64,20 @@
 #' @noRd
 .as_info_tibble <- function(info, id, ids) {
   info <- tibble::as_tibble(info)
-  if (id %in% colnames(info)) {
-    return(info)
-  }
   if (is.null(ids)) {
     ids <- as.character(seq_len(nrow(info)))
+  }
+  if (id %in% colnames(info)) {
+    id_col <- match(id, colnames(info))
+    if (identical(as.character(info[[id_col]]), ids)) {
+      info[[id_col]] <- NULL
+    } else {
+      metadata_id <- make.unique(c(
+        colnames(info),
+        paste0(id, "_metadata")
+      ))[[ncol(info) + 1]]
+      colnames(info)[[id_col]] <- metadata_id
+    }
   }
   id_info <- tibble::tibble(ids)
   colnames(id_info) <- id
