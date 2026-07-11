@@ -15,6 +15,9 @@ plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+
+# S3 method for class 'GlycoproteomicSE'
+plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 ```
 
 ## Arguments

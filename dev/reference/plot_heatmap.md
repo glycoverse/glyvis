@@ -13,6 +13,9 @@ plot_heatmap(x, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_heatmap(x, ...)
+
+# S3 method for class 'SummarizedExperiment'
+plot_heatmap(x, ...)
 ```
 
 ## Arguments

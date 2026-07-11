@@ -2,6 +2,13 @@
 
 ## glyvis (development version)
 
+### New features
+
+- Experiment visualization methods now accept `SummarizedExperiment`
+  inputs, including `GlycomicSE` and `GlycoproteomicSE`;
+  [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
+  remains limited to glycoproteomics data. (#5)
+
 ### Breaking changes
 
 - Remove enrichment plotting functions and methods because the

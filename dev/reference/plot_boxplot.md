@@ -14,6 +14,9 @@ plot_boxplot(x, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_boxplot(x, group_col = "group", ...)
+
+# S3 method for class 'SummarizedExperiment'
+plot_boxplot(x, group_col = "group", ...)
 ```
 
 ## Arguments

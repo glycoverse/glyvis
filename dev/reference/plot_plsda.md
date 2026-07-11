@@ -28,6 +28,16 @@ plot_plsda(
   stats_args = list(),
   ...
 )
+
+# S3 method for class 'SummarizedExperiment'
+plot_plsda(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
 ```
 
 ## Arguments

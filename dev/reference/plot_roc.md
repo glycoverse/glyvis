@@ -22,6 +22,9 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+
+# S3 method for class 'SummarizedExperiment'
+plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 ```
 
 ## Arguments

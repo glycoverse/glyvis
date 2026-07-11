@@ -3,6 +3,7 @@
 ## Autoplot Methods
 
 - [`autoplot(`*`<glyexp_experiment>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glyexp_experiment.md)
+  [`autoplot(`*`<SummarizedExperiment>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glyexp_experiment.md)
   : Plots for Experiments
 - [`autoplot(`*`<glystats_anova_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
   [`autoplot(`*`<glystats_kruskal_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_anova_res.md)
