@@ -45,8 +45,15 @@ plot_enrich.glystats_reactome_ora_res <- function(x, type = "dotplot", ...) {
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_enrich_go()],
 #'   [glystats::gly_enrich_kegg()], or [glystats::gly_enrich_reactome()].
 #' @export
-plot_enrich.glyexp_experiment <- function(x, type = "dotplot", enrich_type = "go", stats_args = list(), ...) {
-  f <- switch(enrich_type,
+plot_enrich.glyexp_experiment <- function(
+  x,
+  type = "dotplot",
+  enrich_type = "go",
+  stats_args = list(),
+  ...
+) {
+  f <- switch(
+    enrich_type,
     go = glystats::gly_enrich_go,
     kegg = glystats::gly_enrich_kegg,
     reactome = glystats::gly_enrich_reactome
@@ -62,6 +69,9 @@ plot_enrich.glyexp_experiment <- function(x, type = "dotplot", enrich_type = "go
     type,
     dotplot = enrichplot::dotplot(object$raw_result, ...),
     barplot = barplot(object$raw_result, ...),
-    network = enrichplot::emapplot(enrichplot::pairwise_termsim(object$raw_result), ...)
+    network = enrichplot::emapplot(
+      enrichplot::pairwise_termsim(object$raw_result),
+      ...
+    )
   )
 }

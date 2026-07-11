@@ -11,6 +11,11 @@
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_roc_res <- function(object, type = "dotplot", auc_cutoff = 0.5, ...) {
+autoplot.glystats_roc_res <- function(
+  object,
+  type = "dotplot",
+  auc_cutoff = 0.5,
+  ...
+) {
   .plot_roc(object, type, auc_cutoff)
 }

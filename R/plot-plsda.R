@@ -22,25 +22,50 @@
 #'
 #' @returns A ggplot object.
 #' @export
-plot_plsda <- function(x, type = "scores", groups = NULL, group_col = NULL, ...) {
+plot_plsda <- function(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   UseMethod("plot_plsda")
 }
 
 #' @rdname plot_plsda
 #' @export
-plot_plsda.glystats_plsda_res <- function(x, type = "scores", groups = NULL, group_col = NULL, ...) {
+plot_plsda.glystats_plsda_res <- function(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_plsda(x, type, groups, group_col, ...)
 }
 
 #' @rdname plot_plsda
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_plsda()].
 #' @export
-plot_plsda.glyexp_experiment <- function(x, type = "scores", groups = NULL, group_col = NULL, stats_args = list(), ...) {
+plot_plsda.glyexp_experiment <- function(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
   plsda_res <- rlang::exec(glystats::gly_plsda, x, !!!stats_args)
   .plot_plsda(plsda_res, type, groups, group_col, ...)
 }
 
-.plot_plsda <- function(object, type = "scores", groups = NULL, group_col = NULL, ...) {
+.plot_plsda <- function(
+  object,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance"))
   .validate_group_args(groups, group_col)
 

@@ -16,6 +16,11 @@
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_tsne_res <- function(object, groups = NULL, group_col = NULL, ...) {
+autoplot.glystats_tsne_res <- function(
+  object,
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_tsne(object, groups = groups, group_col = group_col)
 }

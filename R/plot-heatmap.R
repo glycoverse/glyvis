@@ -63,14 +63,13 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
   zero_var_rows <- is.na(row_vars) | row_vars == 0
   removed_rows <- rownames(mat)[zero_var_rows]
 
-
   # Calculate variance for each column (ignoring NA)
   col_vars <- apply(mat, 2, stats::var, na.rm = TRUE)
   zero_var_cols <- is.na(col_vars) | col_vars == 0
   removed_cols <- colnames(mat)[zero_var_cols]
 
   # Warn about removed rows (variables)
- if (length(removed_rows) > 0) {
+  if (length(removed_rows) > 0) {
     cli::cli_warn(c(
       "Removed {length(removed_rows)} variable{?s} with zero variance from heatmap:",
       "i" = "Variables: {.val {removed_rows}}"

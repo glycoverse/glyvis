@@ -1,9 +1,24 @@
 # The color palette was copied from the `colors_discrete_friendly` of `tidyplots` package.
-glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E00")
+glyvis_colors <- c(
+  "#0072B2",
+  "#56B4E9",
+  "#009E73",
+  "#F5C710",
+  "#E69F00",
+  "#D55E00"
+)
 
 .glyvis_boxplot <- function(df, x, value, group = NULL) {
   if (!is.null(group)) {
-    ggplot(df, aes(x = .data[[x]], y = .data[[value]], color = .data[[group]], fill = .data[[group]])) +
+    ggplot(
+      df,
+      aes(
+        x = .data[[x]],
+        y = .data[[value]],
+        color = .data[[group]],
+        fill = .data[[group]]
+      )
+    ) +
       geom_boxplot(
         alpha = 0.5,
         staplewidth = 0.5
@@ -25,12 +40,22 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
   }
 }
 
-.glyvis_scatter <- function(df, x, y, group = NULL, label = NULL, add_ellipse = FALSE) {
+.glyvis_scatter <- function(
+  df,
+  x,
+  y,
+  group = NULL,
+  label = NULL,
+  add_ellipse = FALSE
+) {
   if (is.null(group) && add_ellipse) {
     cli::cli_abort("Can't add ellipse to scatter plot without group.")
   }
   if (!is.null(group)) {
-    p <- ggplot(df, aes(x = .data[[x]], y = .data[[y]], color = .data[[group]])) +
+    p <- ggplot(
+      df,
+      aes(x = .data[[x]], y = .data[[y]], color = .data[[group]])
+    ) +
       geom_point() +
       theme_classic() +
       scale_color_manual(values = glyvis_colors)
@@ -57,20 +82,31 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
     ) +
     theme_bw()
   if (!is.null(label)) {
-    p <- p + ggrepel::geom_text_repel(aes(.data[[x]], .data[[y]], label = .data[[label]]))
+    p <- p +
+      ggrepel::geom_text_repel(aes(
+        .data[[x]],
+        .data[[y]],
+        label = .data[[label]]
+      ))
   }
   p
 }
 
 .glyvis_dotchart <- function(df, x, y) {
-  ggplot(df, aes(x = stats::reorder(.data[[x]], dplyr::desc(.data[[y]])), y = .data[[y]])) +
+  ggplot(
+    df,
+    aes(x = stats::reorder(.data[[x]], dplyr::desc(.data[[y]])), y = .data[[y]])
+  ) +
     geom_point(color = glyvis_colors[1]) +
     theme_bw()
 }
 
 .glyvis_barplot <- function(df, x, y, ordered = FALSE) {
   if (ordered) {
-    p <- ggplot(df, aes(stats::reorder(.data[[x]], dplyr::desc(.data[[y]])), .data[[y]]))
+    p <- ggplot(
+      df,
+      aes(stats::reorder(.data[[x]], dplyr::desc(.data[[y]])), .data[[y]])
+    )
   } else {
     p <- ggplot(df, aes(.data[[x]], .data[[y]]))
   }
@@ -79,7 +115,14 @@ glyvis_colors <- c("#0072B2", "#56B4E9", "#009E73", "#F5C710", "#E69F00", "#D55E
     theme_bw()
 }
 
-.glyvis_volcano <- function(df, p_col, log2fc_col, p_cutoff, log2fc_cutoff, ...) {
+.glyvis_volcano <- function(
+  df,
+  p_col,
+  log2fc_col,
+  p_cutoff,
+  log2fc_cutoff,
+  ...
+) {
   rlang::check_installed("EnhancedVolcano")
   suppressWarnings(
     EnhancedVolcano::EnhancedVolcano(

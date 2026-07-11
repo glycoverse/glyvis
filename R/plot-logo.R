@@ -25,7 +25,13 @@ plot_logo <- function(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...) {
 
 #' @rdname plot_logo
 #' @export
-plot_logo.glyexp_experiment <- function(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...) {
+plot_logo.glyexp_experiment <- function(
+  x,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  ...
+) {
   .plot_exp_logo(x, n_aa, fasta, tax_id, ...)
 }
 
@@ -75,9 +81,15 @@ plot_logo.glyexp_experiment <- function(x, n_aa = 5L, fasta = NULL, tax_id = 960
 
   proteins <- unique(exp$var_info$protein)
   if (anyNA(proteins) || any(!nzchar(proteins))) {
-    cli::cli_abort("{.var protein} must contain non-missing accessions for UniProt lookup.")
+    cli::cli_abort(
+      "{.var protein} must contain non-missing accessions for UniProt lookup."
+    )
   }
-  checkmate::assert_integerish(exp$var_info$protein_site, lower = 1, any.missing = FALSE)
+  checkmate::assert_integerish(
+    exp$var_info$protein_site,
+    lower = 1,
+    any.missing = FALSE
+  )
 
   uniprot <- UniProt.ws::UniProt.ws(taxId = tax_id)
   seq_tbl <- UniProt.ws::select(
@@ -89,7 +101,9 @@ plot_logo.glyexp_experiment <- function(x, n_aa = 5L, fasta = NULL, tax_id = 960
   seq_tbl <- seq_tbl[!is.na(seq_tbl$Sequence), , drop = FALSE]
   seq_tbl <- seq_tbl[!duplicated(seq_tbl$From), , drop = FALSE]
   if (nrow(seq_tbl) == 0) {
-    cli::cli_abort("UniProt.ws did not return any sequences for the requested accessions.")
+    cli::cli_abort(
+      "UniProt.ws did not return any sequences for the requested accessions."
+    )
   }
 
   seq_map <- stats::setNames(seq_tbl$Sequence, seq_tbl$From)

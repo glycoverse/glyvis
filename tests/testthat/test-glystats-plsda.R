@@ -5,9 +5,12 @@ skip_if_not_installed("ropls")
 test_that("autoplot works for glystats_plsda_res with default parameters", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test default plot (scores with p2)
@@ -20,9 +23,12 @@ test_that("autoplot works for glystats_plsda_res with default parameters", {
 test_that("autoplot works for glystats_plsda_res scores plots", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test scores plot (default uses p2)
@@ -35,9 +41,12 @@ test_that("autoplot works for glystats_plsda_res scores plots", {
 test_that("autoplot works for glystats_plsda_res loadings plots", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test loadings plot
@@ -50,9 +59,12 @@ test_that("autoplot works for glystats_plsda_res loadings plots", {
 test_that("autoplot works for glystats_plsda_res vip", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test VIP plot
@@ -65,9 +77,12 @@ test_that("autoplot works for glystats_plsda_res vip", {
 test_that("autoplot works for glystats_plsda_res variance", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test variance plot
@@ -80,9 +95,12 @@ test_that("autoplot works for glystats_plsda_res variance", {
 test_that("autoplot type validation works correctly", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test invalid type
@@ -95,10 +113,13 @@ test_that("autoplot type validation works correctly", {
 test_that("autoplot handles missing second predictive component gracefully", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      # Use only 1 component
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 1)
-    }, type = "output")
+    capture.output(
+      {
+        # Use only 1 component
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 1)
+      },
+      type = "output"
+    )
   }))
 
   # Should error when trying to plot p2 if only 1 component
@@ -116,9 +137,12 @@ test_that("autoplot handles missing second predictive component gracefully", {
 test_that("autoplot works with group coloring", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
-    }, type = "output")
+    capture.output(
+      {
+        plsda_res <- glystats::gly_plsda(exp_for_plsda(), ncomp = 2)
+      },
+      type = "output"
+    )
   }))
 
   # Test with group coloring

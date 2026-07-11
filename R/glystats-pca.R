@@ -29,6 +29,12 @@
 #' @seealso [factoextra::fviz_screeplot()], [factoextra::fviz_pca_ind()],
 #'   [factoextra::fviz_pca_var()], [factoextra::fviz_pca_biplot()]
 #' @export
-autoplot.glystats_pca_res <- function(object, type = "individual", groups = NULL, group_col = NULL, ...) {
+autoplot.glystats_pca_res <- function(
+  object,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_pca(object, type = type, groups = groups, group_col = group_col, ...)
 }

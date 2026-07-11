@@ -19,7 +19,9 @@ test_that("plot_logo works with fasta file", {
 
 test_that("plot_logo works with custom n_aa", {
   exp <- test_gp_exp
-  suppressMessages(p <- plot_logo(exp, n_aa = 3, fasta = "filtered_uniprotkb.fasta"))
+  suppressMessages(
+    p <- plot_logo(exp, n_aa = 3, fasta = "filtered_uniprotkb.fasta")
+  )
   vdiffr::expect_doppelganger("plot_logo_with_custom_n_aa", p)
 })
 

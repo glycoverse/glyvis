@@ -14,7 +14,12 @@
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glyexp_experiment <- function(object, type = "heatmap", group_col = "group", ...) {
+autoplot.glyexp_experiment <- function(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...
+) {
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
   switch(

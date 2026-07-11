@@ -28,32 +28,61 @@
 #' @seealso [factoextra::fviz_screeplot()], [factoextra::fviz_pca_ind()],
 #'   [factoextra::fviz_pca_var()], [factoextra::fviz_pca_biplot()]
 #' @export
-plot_pca <- function(x, type = "individual", groups = NULL, group_col = NULL, ...) {
+plot_pca <- function(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   UseMethod("plot_pca")
 }
 
 #' @rdname plot_pca
 #' @export
-plot_pca.glystats_pca_res <- function(x, type = "individual", groups = NULL, group_col = NULL, ...) {
+plot_pca.glystats_pca_res <- function(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_pca(x, type = type, ...)
 }
 
 #' @rdname plot_pca
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_pca()].
 #' @export
-plot_pca.glyexp_experiment <- function(x, type = "individual", groups = NULL, group_col = NULL, stats_args = list(), ...) {
+plot_pca.glyexp_experiment <- function(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
   .plot_pca(pca_res, type = type, groups = groups, group_col = group_col)
 }
 
-.plot_pca <- function(pca_res, type = "individual", groups = NULL, group_col = NULL, ...) {
+.plot_pca <- function(
+  pca_res,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   rlang::check_installed("factoextra")
-  checkmate::assert_choice(type, c("screeplot", "individual", "variables", "biplot"))
+  checkmate::assert_choice(
+    type,
+    c("screeplot", "individual", "variables", "biplot")
+  )
   .validate_group_args(groups, group_col)
 
   groups <- .prepare_groups(pca_res, groups, group_col)
   suppressWarnings(
-    switch(type,
+    switch(
+      type,
       screeplot = .plot_pca_screeplot(pca_res, ...),
       individual = .plot_pca_individual(pca_res, groups, ...),
       variables = .plot_pca_variables(pca_res, ...),

@@ -38,7 +38,12 @@
 #'
 #' @keywords internal
 #' @noRd
-.prepare_groups <- function(object, groups, group_col, group_extractor = .default_group_extractor) {
+.prepare_groups <- function(
+  object,
+  groups,
+  group_col,
+  group_extractor = .default_group_extractor
+) {
   # Get sample names from object
   samples <- .get_samples(object)
 
@@ -51,12 +56,17 @@
   # Case 2: `groups` not specified but `group_col` is specified
   # Check column existence, and extract from `object$tidy_result$samples`.
   if (!is.null(group_col)) {
-    return(.prepare_groups_from_group_col_arg(object, samples, group_col, group_extractor))
+    return(.prepare_groups_from_group_col_arg(
+      object,
+      samples,
+      group_col,
+      group_extractor
+    ))
   }
 
   # Case 3: neither is specified: try "group" (if exists)
   groups <- group_extractor(object, "group")
-  return(groups[samples])  # either NULL or extracted groups
+  return(groups[samples]) # either NULL or extracted groups
 }
 
 #' Get samples from object
@@ -118,10 +128,15 @@
     ))
   }
   # Case 1-4: `groups` is valid, reorder and return
-  return(groups[samples])  # reorder groups to match sample order
+  return(groups[samples]) # reorder groups to match sample order
 }
 
-.prepare_groups_from_group_col_arg <- function(object, samples, group_col, group_extractor) {
+.prepare_groups_from_group_col_arg <- function(
+  object,
+  samples,
+  group_col,
+  group_extractor
+) {
   groups <- group_extractor(object, group_col)
   if (is.null(groups)) {
     cli::cli_abort(c(
@@ -129,7 +144,7 @@
       "i" = "Does your `glyexp::experiment()` contain the {.field {group_col}} column in the sample information tibble?"
     ))
   }
-  return(groups[samples])  # reorder groups to match sample order
+  return(groups[samples]) # reorder groups to match sample order
 }
 
 .default_group_extractor <- function(object, group_col) {

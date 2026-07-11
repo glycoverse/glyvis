@@ -26,14 +26,25 @@ plot_umap <- function(x, ...) {
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
 #' @export
-plot_umap.glystats_umap_res <- function(x, groups = NULL, group_col = NULL, ...) {
+plot_umap.glystats_umap_res <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_umap(x, groups = groups, group_col = group_col)
 }
 
 #' @rdname plot_umap
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_umap()].
 #' @export
-plot_umap.glyexp_experiment <- function(x, groups = NULL, group_col = NULL, stats_args = list(), ...) {
+plot_umap.glyexp_experiment <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
   umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
   .plot_umap(umap_res, groups = groups, group_col = group_col)
 }

@@ -22,6 +22,12 @@
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_plsda_res <- function(object, type = "scores", groups = NULL, group_col = NULL, ...) {
+autoplot.glystats_plsda_res <- function(
+  object,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_plsda(object, type, groups, group_col, ...)
 }

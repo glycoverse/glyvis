@@ -5,10 +5,13 @@ skip_if_not_installed("ropls")
 test_that("autoplot works for glystats_oplsda_res with default parameters", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      # Force orthogonal components to ensure o1 is available for default plot
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), ortho_i = 1)
-    }, type = "output")
+    capture.output(
+      {
+        # Force orthogonal components to ensure o1 is available for default plot
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), ortho_i = 1)
+      },
+      type = "output"
+    )
   }))
 
   # Test default plot (scores with o1)
@@ -21,9 +24,16 @@ test_that("autoplot works for glystats_oplsda_res with default parameters", {
 test_that("autoplot works for glystats_oplsda_res scores plots", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), pred_i = 2, ortho_i = 1)
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(
+          exp_for_oplsda(),
+          pred_i = 2,
+          ortho_i = 1
+        )
+      },
+      type = "output"
+    )
   }))
 
   # Test scores plot with o1 (default y_type)
@@ -44,9 +54,16 @@ test_that("autoplot works for glystats_oplsda_res scores plots", {
 test_that("autoplot works for glystats_oplsda_res loadings plots", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), pred_i = 2, ortho_i = 1)
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(
+          exp_for_oplsda(),
+          pred_i = 2,
+          ortho_i = 1
+        )
+      },
+      type = "output"
+    )
   }))
 
   # Test loadings plot with o1
@@ -67,9 +84,12 @@ test_that("autoplot works for glystats_oplsda_res loadings plots", {
 test_that("autoplot works for glystats_oplsda_res vip", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+      },
+      type = "output"
+    )
   }))
 
   # Test VIP plot
@@ -82,9 +102,12 @@ test_that("autoplot works for glystats_oplsda_res vip", {
 test_that("autoplot works for glystats_oplsda_res variance", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+      },
+      type = "output"
+    )
   }))
 
   # Test variance plot
@@ -97,9 +120,12 @@ test_that("autoplot works for glystats_oplsda_res variance", {
 test_that("autoplot works for glystats_oplsda_res s-plot", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+      },
+      type = "output"
+    )
   }))
 
   # Test s-plot
@@ -112,9 +138,12 @@ test_that("autoplot works for glystats_oplsda_res s-plot", {
 test_that("autoplot type validation works correctly", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+      },
+      type = "output"
+    )
   }))
 
   # Test invalid type
@@ -127,9 +156,12 @@ test_that("autoplot type validation works correctly", {
 test_that("autoplot y_type validation works correctly", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
-    }, type = "output")
+    capture.output(
+      {
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda())
+      },
+      type = "output"
+    )
   }))
 
   # Test invalid y_type
@@ -142,10 +174,13 @@ test_that("autoplot y_type validation works correctly", {
 test_that("autoplot handles missing orthogonal components gracefully", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      # Force no orthogonal components
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), ortho_i = 0)
-    }, type = "output")
+    capture.output(
+      {
+        # Force no orthogonal components
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), ortho_i = 0)
+      },
+      type = "output"
+    )
   }))
 
   # Should error when trying to plot o1 if no orthogonal components
@@ -163,10 +198,13 @@ test_that("autoplot handles missing orthogonal components gracefully", {
 test_that("autoplot handles missing second predictive component gracefully", {
   set.seed(1234)
   suppressMessages(suppressWarnings({
-    capture.output({
-      # Use only 1 predictive component
-      oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), pred_i = 1)
-    }, type = "output")
+    capture.output(
+      {
+        # Use only 1 predictive component
+        oplsda_res <- glystats::gly_oplsda(exp_for_oplsda(), pred_i = 1)
+      },
+      type = "output"
+    )
   }))
 
   # Should error when trying to plot p2 if only 1 predictive component

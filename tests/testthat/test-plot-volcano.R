@@ -74,7 +74,9 @@ test_that("plot_volcano works for glystats_limma_res", {
 test_that("plot_volcano works for glystats_limma_res with contrast", {
   suppressMessages(
     limma_res <- test_gp_exp |>
-      glyexp::mutate_obs(group = factor(group, levels = c("H", "M", "Y", "C"))) |>
+      glyexp::mutate_obs(
+        group = factor(group, levels = c("H", "M", "Y", "C"))
+      ) |>
       glystats::gly_limma()
   )
   p1 <- plot_volcano(limma_res, contrast = "H_vs_C")

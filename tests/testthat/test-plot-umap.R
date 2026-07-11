@@ -14,6 +14,9 @@ test_that("plot_umap works for glystats_umap_res", {
   set.seed(123)
   vdiffr::expect_doppelganger(
     "plot_umap_umap_res",
-    suppressMessages(plot_umap(glystats::gly_umap(test_gp_exp, n_neighbors = 3)))
+    suppressMessages(plot_umap(glystats::gly_umap(
+      test_gp_exp,
+      n_neighbors = 3
+    )))
   )
 })

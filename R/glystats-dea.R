@@ -103,13 +103,21 @@ autoplot.glystats_limma_res <- function(
     dplyr::mutate(
       neglog10p = -log10(.data[[p_col]]),
       candidate = .data[[p_col]] < p_cutoff,
-      point_color = dplyr::if_else(.data$candidate, glyvis_colors[1], "lightgrey")
+      point_color = dplyr::if_else(
+        .data$candidate,
+        glyvis_colors[1],
+        "lightgrey"
+      )
     )
 
   .glyvis_dotchart(df, x = "variable", y = "neglog10p") +
-    geom_hline(yintercept = -log10(p_cutoff), linetype = "dashed", alpha = 0.7) +
+    geom_hline(
+      yintercept = -log10(p_cutoff),
+      linetype = "dashed",
+      alpha = 0.7
+    ) +
     labs(
       x = "Variable",
-      y = expression(-Log[10]~italic(P)~adjusted)
+      y = expression(-Log[10] ~ italic(P) ~ adjusted)
     )
 }

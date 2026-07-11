@@ -23,26 +23,58 @@
 #'
 #' @returns A ggplot object.
 #' @export
-plot_oplsda <- function(x, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
+plot_oplsda <- function(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   UseMethod("plot_oplsda")
 }
 
 #' @rdname plot_oplsda
 #' @export
-plot_oplsda.glystats_oplsda_res <- function(x, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
+plot_oplsda.glystats_oplsda_res <- function(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_oplsda(x, type, y_type, groups, group_col, ...)
 }
 
 #' @rdname plot_oplsda
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_oplsda()].
 #' @export
-plot_oplsda.glyexp_experiment <- function(x, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, stats_args = list(), ...) {
+plot_oplsda.glyexp_experiment <- function(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
   oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
   .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
 }
 
-.plot_oplsda <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
-  checkmate::assert_choice(type, c("loadings", "scores", "vip", "variance", "s-plot"))
+.plot_oplsda <- function(
+  object,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
+  checkmate::assert_choice(
+    type,
+    c("loadings", "scores", "vip", "variance", "s-plot")
+  )
   checkmate::assert_choice(y_type, c("p2", "o1"))
   .validate_group_args(groups, group_col)
 
@@ -63,7 +95,11 @@ plot_oplsda.glyexp_experiment <- function(x, type = "scores", y_type = "o1", gro
 .plot_oplsda_scores <- function(object, y_type, groups) {
   switch(
     y_type,
-    p2 = .plot_oplsda_scores_p1vp2(object$tidy_result$samples, "sample", groups),
+    p2 = .plot_oplsda_scores_p1vp2(
+      object$tidy_result$samples,
+      "sample",
+      groups
+    ),
     o1 = .plot_oplsda_scores_p1vo1(object$tidy_result$samples, "sample", groups)
   )
 }
@@ -82,17 +118,24 @@ plot_oplsda.glyexp_experiment <- function(x, type = "scores", y_type = "o1", gro
 }
 
 .plot_oplsda_variance <- function(object) {
-  .glyvis_barplot(object$tidy_result$variance, "component", "prop_var_explained", ordered = TRUE) +
+  .glyvis_barplot(
+    object$tidy_result$variance,
+    "component",
+    "prop_var_explained",
+    ordered = TRUE
+  ) +
     labs(x = "Component", y = "Proportion of variance explained")
 }
 
 .plot_oplsda_splot <- function(object) {
   df <- object$tidy_result$variables %>%
-    dplyr::mutate(color = dplyr::case_when(
-      .data$pcorr1 > 0.5 ~ glyvis_colors[[6]],
-      .data$pcorr1 < -0.5 ~ glyvis_colors[[1]],
-      TRUE ~ "lightgrey"
-    ))
+    dplyr::mutate(
+      color = dplyr::case_when(
+        .data$pcorr1 > 0.5 ~ glyvis_colors[[6]],
+        .data$pcorr1 < -0.5 ~ glyvis_colors[[1]],
+        TRUE ~ "lightgrey"
+      )
+    )
   ggplot(df, aes(.data$p1, .data$pcorr1)) +
     geom_point(aes(color = .data$color)) +
     scale_color_identity() +
@@ -125,7 +168,14 @@ plot_oplsda.glyexp_experiment <- function(x, type = "scores", y_type = "o1", gro
   if (!is.null(groups)) {
     df$group <- groups
   }
-  .glyvis_scatter(df, "p1", "o1", label = label_col, group = "group", add_ellipse = TRUE)
+  .glyvis_scatter(
+    df,
+    "p1",
+    "o1",
+    label = label_col,
+    group = "group",
+    add_ellipse = TRUE
+  )
 }
 
 .plot_oplsda_scores_p1vp2 <- function(df, label_col, groups) {
@@ -133,7 +183,14 @@ plot_oplsda.glyexp_experiment <- function(x, type = "scores", y_type = "o1", gro
   if (!is.null(groups)) {
     df$group <- groups
   }
-  .glyvis_scatter(df, "p1", "p2", label = label_col, group = "group", add_ellipse = TRUE)
+  .glyvis_scatter(
+    df,
+    "p1",
+    "p2",
+    label = label_col,
+    group = "group",
+    add_ellipse = TRUE
+  )
 }
 
 .plot_oplsda_loadings_p1vo1 <- function(df, label_col) {

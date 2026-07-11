@@ -34,7 +34,20 @@ test_that("autoplot works for glystats_pca_res with groups parameter", {
 
   # Test with explicit groups parameter
   groups <- c("A", "A", "A", "B", "B", "B", "C", "C", "C", "D", "D", "D")
-  names(groups) <- c("C_1", "C_2", "C_3", "H_1", "H_2", "H_3", "M_1", "M_2", "M_3", "Y_1", "Y_2", "Y_3")
+  names(groups) <- c(
+    "C_1",
+    "C_2",
+    "C_3",
+    "H_1",
+    "H_2",
+    "H_3",
+    "M_1",
+    "M_2",
+    "M_3",
+    "Y_1",
+    "Y_2",
+    "Y_3"
+  )
 
   vdiffr::expect_doppelganger(
     "autoplot.glystats_pca_res_individual_with_groups",
@@ -111,7 +124,20 @@ test_that("groups parameter takes precedence over group_col", {
 
   # When both groups and group_col are provided, groups should be used
   groups <- c("X", "X", "X", "Y", "Y", "Y", "Z", "Z", "Z", "W", "W", "W")
-  names(groups) <- c("C_1", "C_2", "C_3", "H_1", "H_2", "H_3", "M_1", "M_2", "M_3", "Y_1", "Y_2", "Y_3")
+  names(groups) <- c(
+    "C_1",
+    "C_2",
+    "C_3",
+    "H_1",
+    "H_2",
+    "H_3",
+    "M_1",
+    "M_2",
+    "M_3",
+    "Y_1",
+    "Y_2",
+    "Y_3"
+  )
 
   vdiffr::expect_doppelganger(
     "autoplot.glystats_pca_res_groups_precedence",

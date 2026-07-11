@@ -26,14 +26,25 @@ plot_tsne <- function(x, ...) {
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
 #' @export
-plot_tsne.glystats_tsne_res <- function(x, groups = NULL, group_col = NULL, ...) {
+plot_tsne.glystats_tsne_res <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_tsne(x, groups = groups, group_col = group_col)
 }
 
 #' @rdname plot_tsne
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_tsne()].
 #' @export
-plot_tsne.glyexp_experiment <- function(x, groups = NULL, group_col = NULL, stats_args = list(), ...) {
+plot_tsne.glyexp_experiment <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
   tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
   .plot_tsne(tsne_res, groups = groups, group_col = group_col)
 }

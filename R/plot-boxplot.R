@@ -51,5 +51,5 @@ plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
 
   .glyvis_boxplot(df, x = group_col, value = "value", group = group_col) +
     labs(x = "Group", y = expression(log[2]("Expr."))) +
-    facet_wrap(~ variable, scales = "free_y")
+    facet_wrap(~variable, scales = "free_y")
 }

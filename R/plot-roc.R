@@ -29,7 +29,13 @@ plot_roc.glystats_roc_res <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
 #' @rdname plot_roc
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_roc()].
 #' @export
-plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...) {
+plot_roc.glyexp_experiment <- function(
+  x,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  ...
+) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
   if (nrow(x) > 10) {
@@ -52,7 +58,8 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_
 .plot_roc <- function(roc_res, type, auc_cutoff, ...) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
-  switch(type,
+  switch(
+    type,
     dotplot = .plot_roc_dotplot(roc_res, auc_cutoff, ...),
     roc = .plot_roc_curves(roc_res, ...)
   )
@@ -67,7 +74,11 @@ plot_roc.glyexp_experiment <- function(x, type = "roc", auc_cutoff = 0.5, stats_
   df <- roc_res$tidy_result$auc %>%
     dplyr::mutate(
       candidate = .data$auc >= auc_cutoff,
-      point_color = dplyr::if_else(.data$candidate, glyvis_colors[1], "lightgrey")
+      point_color = dplyr::if_else(
+        .data$candidate,
+        glyvis_colors[1],
+        "lightgrey"
+      )
     )
   .glyvis_dotchart(df, x = "variable", y = "auc") +
     geom_hline(yintercept = auc_cutoff, linetype = "dashed", alpha = 0.7) +

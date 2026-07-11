@@ -24,6 +24,13 @@
 #'
 #' @returns A ggplot object.
 #' @export
-autoplot.glystats_oplsda_res <- function(object, type = "scores", y_type = "o1", groups = NULL, group_col = NULL, ...) {
+autoplot.glystats_oplsda_res <- function(
+  object,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  ...
+) {
   .plot_oplsda(object, type, y_type, groups, group_col, ...)
 }
