@@ -3,6 +3,7 @@
 \name{plot_volcano}
 \alias{plot_volcano}
 \alias{plot_volcano.glyexp_experiment}
+\alias{plot_volcano.SummarizedExperiment}
 \alias{plot_volcano.glystats_ttest_res}
 \alias{plot_volcano.glystats_wilcox_res}
 \alias{plot_volcano.glystats_limma_res}
@@ -11,6 +12,16 @@
 plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 
 \method{plot_volcano}{glyexp_experiment}(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  test = "limma",
+  stats_args = list(),
+  ...
+)
+
+\method{plot_volcano}{SummarizedExperiment}(
   x,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,

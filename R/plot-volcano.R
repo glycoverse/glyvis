@@ -57,6 +57,28 @@ plot_volcano.glyexp_experiment <- function(
 
 #' @rdname plot_volcano
 #' @export
+plot_volcano.SummarizedExperiment <- function(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  test = "limma",
+  stats_args = list(),
+  ...
+) {
+  checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
+
+  dea_res <- switch(
+    test,
+    "ttest" = rlang::exec(glystats::gly_ttest, x, !!!stats_args),
+    "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
+    "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
+  )
+  .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
+}
+
+#' @rdname plot_volcano
+#' @export
 plot_volcano.glystats_ttest_res <- function(
   x,
   log2fc_cutoff = 1,

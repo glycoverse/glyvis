@@ -4,6 +4,7 @@
 \alias{plot_tsne}
 \alias{plot_tsne.glystats_tsne_res}
 \alias{plot_tsne.glyexp_experiment}
+\alias{plot_tsne.SummarizedExperiment}
 \title{t-SNE Plot}
 \usage{
 plot_tsne(x, ...)
@@ -11,6 +12,8 @@ plot_tsne(x, ...)
 \method{plot_tsne}{glystats_tsne_res}(x, groups = NULL, group_col = NULL, ...)
 
 \method{plot_tsne}{glyexp_experiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+
+\method{plot_tsne}{SummarizedExperiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

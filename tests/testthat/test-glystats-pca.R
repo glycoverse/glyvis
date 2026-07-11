@@ -4,7 +4,7 @@ skip_on_cran()
 test_that("autoplot works for glystats_pca_res", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
   vdiffr::expect_doppelganger(
     "autoplot.glystats_pca_res_individual",
@@ -29,7 +29,7 @@ test_that("autoplot works for glystats_pca_res", {
 test_that("autoplot works for glystats_pca_res with groups parameter", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with explicit groups parameter
@@ -63,7 +63,7 @@ test_that("autoplot works for glystats_pca_res with groups parameter", {
 test_that("autoplot works for glystats_pca_res with group_col parameter", {
   set.seed(1234)
   suppressMessages(
-    pca_res_with_group <- glystats::gly_pca(test_gp_exp)
+    pca_res_with_group <- glystats::gly_pca(test_gp_se)
   )
 
   # Test with group_col parameter (using existing "group" column)
@@ -81,7 +81,7 @@ test_that("autoplot works for glystats_pca_res with group_col parameter", {
 test_that("autoplot automatically uses 'group' column when available", {
   set.seed(1234)
   suppressMessages(
-    pca_res_with_group <- glystats::gly_pca(test_gp_exp)
+    pca_res_with_group <- glystats::gly_pca(test_gp_se)
   )
 
   # Test automatic detection of "group" column
@@ -99,8 +99,7 @@ test_that("autoplot automatically uses 'group' column when available", {
 test_that("autoplot works without groups when no group info available", {
   set.seed(1234)
   suppressMessages(
-    pca_res_no_group <- test_gp_exp |>
-      glyexp::select_obs(-group) |>
+    pca_res_no_group <- drop_test_gp_col(col = "group") |>
       glystats::gly_pca()
   )
 
@@ -119,7 +118,7 @@ test_that("autoplot works without groups when no group info available", {
 test_that("groups parameter takes precedence over group_col", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # When both groups and group_col are provided, groups should be used
@@ -148,7 +147,7 @@ test_that("groups parameter takes precedence over group_col", {
 test_that("autoplot type validation works correctly", {
   set.seed(1234)
   suppressMessages(
-    pca_res <- glystats::gly_pca(test_gp_exp)
+    pca_res <- glystats::gly_pca(test_gp_se)
   )
 
   # Test invalid type

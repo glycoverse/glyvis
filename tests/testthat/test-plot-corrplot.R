@@ -4,7 +4,7 @@ skip_if_not_installed("Hmisc")
 
 test_that("plot_corrplot retains correlations with non-syntactic feature names", {
   cor_res <- suppressMessages(
-    glystats::gly_cor(test_gp_exp |> glyexp::slice_head_var(n = 5))
+    glystats::gly_cor(subset_test_gp_se(variables = seq_len(5)))
   )
 
   plot_data <- ggplot2::ggplot_build(plot_corrplot(cor_res))$data[[1]]
@@ -12,20 +12,20 @@ test_that("plot_corrplot retains correlations with non-syntactic feature names",
   expect_gt(nrow(plot_data), 0)
 })
 
-test_that("plot_corrplot works for glyexp_experiment with default parameters", {
+test_that("plot_corrplot works for SummarizedExperiment with default parameters", {
   vdiffr::expect_doppelganger(
     "plot_corrplot",
     suppressMessages(plot_corrplot(
-      test_gp_exp |> glyexp::slice_head_var(n = 5)
+      subset_test_gp_se(variables = seq_len(5))
     ))
   )
 })
 
-test_that("plot_corrplot works for glyexp_experiment with on = 'sample'", {
+test_that("plot_corrplot works for SummarizedExperiment with on = 'sample'", {
   vdiffr::expect_doppelganger(
     "plot_corrplot_sample",
     suppressMessages(plot_corrplot(
-      test_gp_exp |> glyexp::slice_head_var(n = 5),
+      subset_test_gp_se(variables = seq_len(5)),
       stats_args = list(on = "sample")
     ))
   )
@@ -33,7 +33,7 @@ test_that("plot_corrplot works for glyexp_experiment with on = 'sample'", {
 
 test_that("plot_corrplot works for glystats_cor_res with default parameters", {
   suppressMessages(
-    cor_res <- glystats::gly_cor(test_gp_exp |> glyexp::slice_head_var(n = 5))
+    cor_res <- glystats::gly_cor(subset_test_gp_se(variables = seq_len(5)))
   )
   vdiffr::expect_doppelganger(
     "plot_corrplot_cor_res",

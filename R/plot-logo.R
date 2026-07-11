@@ -35,6 +35,18 @@ plot_logo.glyexp_experiment <- function(
   .plot_exp_logo(x, n_aa, fasta, tax_id, ...)
 }
 
+#' @rdname plot_logo
+#' @export
+plot_logo.GlycoproteomicSE <- function(
+  x,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  ...
+) {
+  .plot_exp_logo(x, n_aa, fasta, tax_id, ...)
+}
+
 #' Internal function to plot logo plot
 #' @param exp A `glyexp_experiment` object.
 #' @param n_aa The number of amino acids to the left and right of the glycosylation site.
@@ -48,13 +60,19 @@ plot_logo.glyexp_experiment <- function(
 #' @noRd
 .plot_exp_logo <- function(exp, n_aa, fasta, tax_id, ...) {
   rlang::check_installed("ggseqlogo")
-  checkmate::assert_class(exp, "glyexp_experiment")
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
   checkmate::assert_integerish(tax_id, len = 1, lower = 1)
-  .assert_exp_type(exp, "glycoproteomics")
+  if (glyexp::is_experiment(exp)) {
+    .assert_exp_type(exp, "glycoproteomics")
+  } else if (!methods::is(exp, "GlycoproteomicSE")) {
+    cli::cli_abort(
+      "{.arg exp} must be a {.cls glyexp_experiment} or {.cls GlycoproteomicSE} object."
+    )
+  }
 
-  if (!"site_sequence" %in% colnames(exp$var_info)) {
+  var_info <- .get_var_info(exp)
+  if (!"site_sequence" %in% colnames(var_info)) {
     if (is.null(fasta)) {
       exp <- .add_site_seq_uniprot(exp, n_aa, tax_id)
     } else {
@@ -63,15 +81,16 @@ plot_logo.glyexp_experiment <- function(
     }
   }
 
-  seq <- unique(exp$var_info$site_sequence)
+  seq <- unique(.get_var_info(exp)$site_sequence)
   ggseqlogo::ggseqlogo(seq, ...)
 }
 
 .add_site_seq_uniprot <- function(exp, n_aa, tax_id) {
   rlang::check_installed("UniProt.ws")
 
+  var_info <- .get_var_info(exp)
   required_cols <- c("protein", "protein_site")
-  missing_cols <- setdiff(required_cols, colnames(exp$var_info))
+  missing_cols <- setdiff(required_cols, colnames(var_info))
   if (length(missing_cols) > 0) {
     cli::cli_abort(c(
       "UniProt.ws requires {.var {missing_cols}} column{?s} to add site sequence information.",
@@ -79,14 +98,14 @@ plot_logo.glyexp_experiment <- function(
     ))
   }
 
-  proteins <- unique(exp$var_info$protein)
+  proteins <- unique(var_info$protein)
   if (anyNA(proteins) || any(!nzchar(proteins))) {
     cli::cli_abort(
       "{.var protein} must contain non-missing accessions for UniProt lookup."
     )
   }
   checkmate::assert_integerish(
-    exp$var_info$protein_site,
+    var_info$protein_site,
     lower = 1,
     any.missing = FALSE
   )
@@ -115,11 +134,16 @@ plot_logo.glyexp_experiment <- function(
     ))
   }
 
-  exp$var_info$site_sequence <- purrr::map2_chr(
-    exp$var_info$protein,
-    exp$var_info$protein_site,
+  site_sequence <- purrr::map2_chr(
+    var_info$protein,
+    var_info$protein_site,
     ~ .build_site_seq(seq_map[[.x]], .y, n_aa, .x)
   )
+  if (methods::is(exp, "SummarizedExperiment")) {
+    SummarizedExperiment::rowData(exp)$site_sequence <- site_sequence
+  } else {
+    exp$var_info$site_sequence <- site_sequence
+  }
   exp
 }
 

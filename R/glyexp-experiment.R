@@ -29,7 +29,29 @@ autoplot.glyexp_experiment <- function(
   )
 }
 
+#' @rdname autoplot.glyexp_experiment
+#' @export
+autoplot.SummarizedExperiment <- function(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...
+) {
+  checkmate::assert_choice(type, c("heatmap", "boxplot"))
+  checkmate::assert_string(group_col)
+  switch(
+    type,
+    heatmap = .plot_exp_heatmap(object, ...),
+    boxplot = .plot_exp_boxplot(object, group_col, ...)
+  )
+}
+
 #' @export
 fortify.glyexp_experiment <- function(model, data, ...) {
-  tibble::as_tibble(model)
+  .fortify_experiment(model)
+}
+
+#' @export
+fortify.SummarizedExperiment <- function(model, data, ...) {
+  .fortify_experiment(model)
 }

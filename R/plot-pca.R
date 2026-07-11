@@ -65,6 +65,20 @@ plot_pca.glyexp_experiment <- function(
   .plot_pca(pca_res, type = type, groups = groups, group_col = group_col)
 }
 
+#' @rdname plot_pca
+#' @export
+plot_pca.SummarizedExperiment <- function(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
+  pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
+  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col)
+}
+
 .plot_pca <- function(
   pca_res,
   type = "individual",

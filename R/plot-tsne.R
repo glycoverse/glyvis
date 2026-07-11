@@ -49,6 +49,19 @@ plot_tsne.glyexp_experiment <- function(
   .plot_tsne(tsne_res, groups = groups, group_col = group_col)
 }
 
+#' @rdname plot_tsne
+#' @export
+plot_tsne.SummarizedExperiment <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
+  tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
+  .plot_tsne(tsne_res, groups = groups, group_col = group_col)
+}
+
 .plot_tsne <- function(tsne_res, groups = NULL, group_col = NULL) {
   .validate_group_args(groups, group_col)
   groups <- .prepare_groups(tsne_res, groups, group_col)

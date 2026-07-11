@@ -10,7 +10,7 @@ test_that("plot_oplsda works with glystats_oplsda_res", {
   vdiffr::expect_doppelganger("plot_oplsda_glystats_oplsda_res", p)
 })
 
-test_that("plot_oplsda works with glyexp_experiment", {
+test_that("plot_oplsda works with SummarizedExperiment", {
   set.seed(1234)
   suppressMessages(
     p <- plot_oplsda(exp_for_oplsda(), stats_args = list(ortho_i = 1))

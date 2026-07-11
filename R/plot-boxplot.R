@@ -22,6 +22,12 @@ plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
   .plot_exp_boxplot(x, group_col)
 }
 
+#' @rdname plot_boxplot
+#' @export
+plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
+  .plot_exp_boxplot(x, group_col)
+}
+
 #' Internal function to plot boxplot
 #' @param exp A `glyexp_experiment` object.
 #' @param group_col A character string specifying the column name in sample information
@@ -39,15 +45,15 @@ plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
   }
 
   # Check if the group column is in the sample information tibble.
-  if (!group_col %in% colnames(exp$sample_info)) {
+  sample_info <- .get_sample_info(exp)
+  if (!group_col %in% colnames(sample_info)) {
     cli::cli_abort(c(
       "Can't find column {.field {group_col}} in the sample information tibble.",
-      "i" = "Available columns: {.field {colnames(exp$sample_info)}}"
+      "i" = "Available columns: {.field {colnames(sample_info)}}"
     ))
   }
 
-  df <- exp %>%
-    fortify.glyexp_experiment()
+  df <- .fortify_experiment(exp)
 
   .glyvis_boxplot(df, x = group_col, value = "value", group = group_col) +
     labs(x = "Group", y = expression(log[2]("Expr."))) +

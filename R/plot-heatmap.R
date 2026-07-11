@@ -20,12 +20,18 @@ plot_heatmap.glyexp_experiment <- function(x, ...) {
   .plot_exp_heatmap(x, ...)
 }
 
+#' @rdname plot_heatmap
+#' @export
+plot_heatmap.SummarizedExperiment <- function(x, ...) {
+  .plot_exp_heatmap(x, ...)
+}
+
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
 #' @param ... Other arguments passed to `pheatmap::pheatmap()`.
 #' @noRd
 .plot_exp_heatmap <- function(exp, ...) {
-  mat <- log2(exp$expr_mat + 1)
+  mat <- log2(.get_expr_mat(exp) + 1)
 
   # Filter out zero-variance rows and columns
   filtered <- .filter_zero_variance(mat)

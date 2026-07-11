@@ -4,6 +4,7 @@
 \alias{plot_plsda}
 \alias{plot_plsda.glystats_plsda_res}
 \alias{plot_plsda.glyexp_experiment}
+\alias{plot_plsda.SummarizedExperiment}
 \title{PLS-DA Plot}
 \usage{
 plot_plsda(x, type = "scores", groups = NULL, group_col = NULL, ...)
@@ -11,6 +12,15 @@ plot_plsda(x, type = "scores", groups = NULL, group_col = NULL, ...)
 \method{plot_plsda}{glystats_plsda_res}(x, type = "scores", groups = NULL, group_col = NULL, ...)
 
 \method{plot_plsda}{glyexp_experiment}(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
+
+\method{plot_plsda}{SummarizedExperiment}(
   x,
   type = "scores",
   groups = NULL,

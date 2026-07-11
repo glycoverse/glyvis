@@ -63,6 +63,21 @@ plot_oplsda.glyexp_experiment <- function(
   .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
 }
 
+#' @rdname plot_oplsda
+#' @export
+plot_oplsda.SummarizedExperiment <- function(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
+  oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
+  .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
+}
+
 .plot_oplsda <- function(
   object,
   type = "scores",

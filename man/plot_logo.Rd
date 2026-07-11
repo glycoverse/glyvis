@@ -3,11 +3,14 @@
 \name{plot_logo}
 \alias{plot_logo}
 \alias{plot_logo.glyexp_experiment}
+\alias{plot_logo.GlycoproteomicSE}
 \title{Logo Plot}
 \usage{
 plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
 \method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+
+\method{plot_logo}{GlycoproteomicSE}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

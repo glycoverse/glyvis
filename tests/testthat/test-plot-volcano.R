@@ -4,8 +4,7 @@ skip_if_not_installed("limma")
 
 test_that("plot_volcano works with default parameters", {
   suppressMessages(
-    sub_exp <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H"))
+    sub_exp <- subset_test_gp_se(groups = c("C", "H"))
   )
 
   suppressMessages(
@@ -19,10 +18,13 @@ test_that("plot_volcano works with default parameters", {
 })
 
 test_that("plot_volcano works with custom group_col", {
+  sub_exp <- subset_test_gp_se(groups = c("C", "H"))
   suppressMessages(
-    sub_exp <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
-      glyexp::mutate_obs(treatment = group)
+    sub_exp <- set_test_gp_col(
+      sub_exp,
+      "treatment",
+      SummarizedExperiment::colData(sub_exp)$group
+    )
   )
 
   suppressMessages(
@@ -37,8 +39,7 @@ test_that("plot_volcano works with custom group_col", {
 
 test_that("plot_volcano works for glystats_ttest_res", {
   suppressMessages(
-    ttest_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    ttest_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_ttest()
   )
   vdiffr::expect_doppelganger(
@@ -49,8 +50,7 @@ test_that("plot_volcano works for glystats_ttest_res", {
 
 test_that("plot_volcano works for glystats_wilcox_res", {
   suppressMessages(
-    wilcox_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    wilcox_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_wilcox()
   )
   vdiffr::expect_doppelganger(
@@ -61,8 +61,7 @@ test_that("plot_volcano works for glystats_wilcox_res", {
 
 test_that("plot_volcano works for glystats_limma_res", {
   suppressMessages(
-    limma_res <- test_gp_exp |>
-      glyexp::filter_obs(group %in% c("C", "H")) |>
+    limma_res <- subset_test_gp_se(groups = c("C", "H")) |>
       glystats::gly_limma()
   )
   vdiffr::expect_doppelganger(
@@ -72,12 +71,15 @@ test_that("plot_volcano works for glystats_limma_res", {
 })
 
 test_that("plot_volcano works for glystats_limma_res with contrast", {
+  exp <- set_test_gp_col(
+    col = "group",
+    value = factor(
+      SummarizedExperiment::colData(test_gp_se)$group,
+      levels = c("H", "M", "Y", "C")
+    )
+  )
   suppressMessages(
-    limma_res <- test_gp_exp |>
-      glyexp::mutate_obs(
-        group = factor(group, levels = c("H", "M", "Y", "C"))
-      ) |>
-      glystats::gly_limma()
+    limma_res <- glystats::gly_limma(exp)
   )
   p1 <- plot_volcano(limma_res, contrast = "H_vs_C")
   p2 <- plot_volcano(limma_res, contrast = "Y_vs_C")

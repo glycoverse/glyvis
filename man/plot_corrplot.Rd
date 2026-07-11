@@ -4,6 +4,7 @@
 \alias{plot_corrplot}
 \alias{plot_corrplot.glystats_cor_res}
 \alias{plot_corrplot.glyexp_experiment}
+\alias{plot_corrplot.SummarizedExperiment}
 \title{Correlation Plot}
 \usage{
 plot_corrplot(x, ...)
@@ -11,6 +12,8 @@ plot_corrplot(x, ...)
 \method{plot_corrplot}{glystats_cor_res}(x, ...)
 
 \method{plot_corrplot}{glyexp_experiment}(x, stats_args = list(), ...)
+
+\method{plot_corrplot}{SummarizedExperiment}(x, stats_args = list(), ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

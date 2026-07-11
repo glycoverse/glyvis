@@ -30,6 +30,13 @@ plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
   .plot_corrplot(cor_res)
 }
 
+#' @rdname plot_corrplot
+#' @export
+plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
+  cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
+  .plot_corrplot(cor_res)
+}
+
 #' Internal function to plot correlation matrix
 #' @param cor_res A `glystats_cor_res` object.
 #' @param ... Other arguments passed to [GGally::ggcorr()].

@@ -4,6 +4,7 @@
 \alias{plot_roc}
 \alias{plot_roc.glystats_roc_res}
 \alias{plot_roc.glyexp_experiment}
+\alias{plot_roc.SummarizedExperiment}
 \title{ROC plot}
 \usage{
 plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
@@ -11,6 +12,8 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
 \method{plot_roc}{glystats_roc_res}(x, type = "roc", auc_cutoff = 0.5, ...)
 
 \method{plot_roc}{glyexp_experiment}(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+
+\method{plot_roc}{SummarizedExperiment}(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 }
 \arguments{
 \item{x}{An object to be plotted.}

@@ -49,6 +49,19 @@ plot_umap.glyexp_experiment <- function(
   .plot_umap(umap_res, groups = groups, group_col = group_col)
 }
 
+#' @rdname plot_umap
+#' @export
+plot_umap.SummarizedExperiment <- function(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+) {
+  umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
+  .plot_umap(umap_res, groups = groups, group_col = group_col)
+}
+
 .plot_umap <- function(umap_res, groups = NULL, group_col = NULL) {
   .validate_group_args(groups, group_col)
   groups <- .prepare_groups(umap_res, groups, group_col)
