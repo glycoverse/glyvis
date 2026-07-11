@@ -1,4 +1,4 @@
-# glyvis (development version)
+# glyvis 0.7.0
 
 ## New features
 
@@ -7,6 +7,10 @@
 ## Breaking changes
 
 * Remove enrichment plotting functions and methods because the corresponding `glystats::gly_enrich_*()` functions have been removed. (#4)
+
+## Minor improvements and bug fixes
+
+* `plot_corrplot()` now preserves feature labels that are not syntactic R identifiers.
 
 # glyvis 0.6.0
 
