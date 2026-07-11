@@ -1,5 +1,9 @@
 # glyvis (development version)
 
+## Breaking changes
+
+* Remove enrichment plotting functions and methods because the corresponding `glystats::gly_enrich_*()` functions have been removed.
+
 # glyvis 0.6.0
 
 ## Breaking changes

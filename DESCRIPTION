@@ -19,7 +19,6 @@ Suggests:
     ggdendro,
     factoextra,
     GGally,
-    enrichplot,
     EnhancedVolcano,
     ggseqlogo,
     UniProt.ws,
