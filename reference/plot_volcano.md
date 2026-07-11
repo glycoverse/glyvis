@@ -37,6 +37,17 @@ plot_volcano(
   ...
 )
 
+# S3 method for class 'SummarizedExperiment'
+plot_volcano(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  test = "limma",
+  stats_args = list(),
+  ...
+)
+
 # S3 method for class 'glystats_ttest_res'
 plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 

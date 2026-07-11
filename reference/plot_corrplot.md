@@ -21,6 +21,9 @@ plot_corrplot(x, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_corrplot(x, stats_args = list(), ...)
+
+# S3 method for class 'SummarizedExperiment'
+plot_corrplot(x, stats_args = list(), ...)
 ```
 
 ## Arguments

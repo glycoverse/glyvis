@@ -43,6 +43,17 @@ plot_oplsda(
   stats_args = list(),
   ...
 )
+
+# S3 method for class 'SummarizedExperiment'
+plot_oplsda(
+  x,
+  type = "scores",
+  y_type = "o1",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
 ```
 
 ## Arguments

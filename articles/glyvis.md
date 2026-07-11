@@ -15,6 +15,8 @@ statistical results into clear, compelling visuals.
 
 library(glyvis)
 library(glyexp)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 library(glyclean)
 #> 
 #> Attaching package: 'glyclean'
@@ -37,23 +39,22 @@ for streamlined preprocessing.
 
 exp <- auto_clean(real_experiment)
 #> 
-#> ── Normalizing data ──
-#> 
-#> ℹ No QC samples found. Using default normalization method based on experiment type.
-#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
-#> ✔ Normalization completed.
-#> 
 #> ── Removing variables with too many missing values ──
 #> 
-#> ℹ No QC samples found. Using all samples.
 #> ℹ Applying preset "discovery"...
 #> ℹ Total removed: 24 (0.56%) variables.
 #> ✔ Variable removal completed.
 #> 
+#> ── Normalizing data ──
+#> 
+#> ℹ Normalization method: `normalize_median()`
+#> ℹ Reason: default for "glycoproteomics".
+#> ✔ Normalization completed.
+#> 
 #> ── Imputing missing values ──
 #> 
-#> ℹ No QC samples found. Using default imputation method based on sample size.
-#> ℹ Sample size <= 30, using `impute_sample_min()`.
+#> ℹ Imputation method: `impute_min_prob()`
+#> ℹ Reason: default for "glycoproteomics" with n_samples < 30.
 #> ✔ Imputation completed.
 #> 
 #> ── Aggregating data ──
@@ -63,13 +64,13 @@ exp <- auto_clean(real_experiment)
 #> 
 #> ── Normalizing data again ──
 #> 
-#> ℹ No QC samples found. Using default normalization method based on experiment type.
-#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
+#> ℹ Normalization method: `normalize_median()`
+#> ℹ Reason: default for "glycoproteomics".
 #> ✔ Normalization completed.
 #> 
 #> ── Correcting batch effects ──
 #> 
-#> ℹ Batch column  not found in sample_info. Skipping batch correction.
+#> ℹ Batch column batch not found in sample_info. Skipping batch correction.
 #> ✔ Batch correction completed.
 ```
 

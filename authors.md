@@ -8,12 +8,12 @@
 ## Citation
 
 Fu B (2026). *glyvis: Fast Visualization For Glycoverse*. R package
-version 0.6.0, <https://glycoverse.github.io/glyvis/>.
+version 0.7.0, <https://glycoverse.github.io/glyvis/>.
 
     @Manual{,
       title = {glyvis: Fast Visualization For Glycoverse},
       author = {Bin Fu},
       year = {2026},
-      note = {R package version 0.6.0},
+      note = {R package version 0.7.0},
       url = {https://glycoverse.github.io/glyvis/},
     }

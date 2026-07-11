@@ -28,6 +28,16 @@ plot_pca(
   stats_args = list(),
   ...
 )
+
+# S3 method for class 'SummarizedExperiment'
+plot_pca(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...
+)
 ```
 
 ## Arguments

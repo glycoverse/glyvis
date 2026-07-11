@@ -14,6 +14,9 @@ Visualization for
 ``` r
 # S3 method for class 'glyexp_experiment'
 autoplot(object, type = "heatmap", group_col = "group", ...)
+
+# S3 method for class 'SummarizedExperiment'
+autoplot(object, type = "heatmap", group_col = "group", ...)
 ```
 
 ## Arguments

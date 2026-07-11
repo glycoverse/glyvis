@@ -21,6 +21,9 @@ plot_tsne(x, groups = NULL, group_col = NULL, ...)
 
 # S3 method for class 'glyexp_experiment'
 plot_tsne(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+
+# S3 method for class 'SummarizedExperiment'
+plot_tsne(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
 ```
 
 ## Arguments
