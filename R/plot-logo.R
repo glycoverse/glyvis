@@ -63,7 +63,7 @@ plot_logo.GlycoproteomicSE <- function(
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
   checkmate::assert_integerish(tax_id, len = 1, lower = 1)
-  if (glyexp::is_experiment(exp)) {
+  if (inherits(exp, "glyexp_experiment")) {
     .assert_exp_type(exp, "glycoproteomics")
   } else if (!methods::is(exp, "GlycoproteomicSE")) {
     cli::cli_abort(

@@ -4,6 +4,6 @@ skip_on_cran()
 test_that("plot_boxplot works", {
   vdiffr::expect_doppelganger(
     "plot_boxplot",
-    plot_boxplot(glyexp::toy_experiment)
+    plot_boxplot(legacy_toy_experiment())
   )
 })
