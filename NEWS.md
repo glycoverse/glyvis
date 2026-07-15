@@ -1,3 +1,5 @@
+# glyvis (development version)
+
 # glyvis 0.7.1
 
 * `plot_logo()` now recognizes glycoproteomics experiments consistently across legacy and current `glyexp` containers.
