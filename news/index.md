@@ -1,5 +1,11 @@
 # Changelog
 
+## glyvis 0.7.1
+
+- [`plot_logo()`](https://glycoverse.github.io/glyvis/reference/plot_logo.md)
+  now recognizes glycoproteomics experiments consistently across legacy
+  and current `glyexp` containers.
+
 ## glyvis 0.7.0
 
 ### New features
