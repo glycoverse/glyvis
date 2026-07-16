@@ -3,7 +3,8 @@
 #' Draw a correlation matrix heatmap.
 #' Currently supported data types:
 #' - `glystats_cor_res`: Result from [glystats::gly_cor()].
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   Correlation analysis is first performed using [glystats::gly_cor()],
 #'   then the result is plotted.
 #'

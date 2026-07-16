@@ -3,7 +3,8 @@
 #' Draw a UMAP scores plot.
 #' Currently supported data types:
 #' - `glystats_umap_res`: Result from [glystats::gly_umap()].
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   UMAP analysis is first performed using [glystats::gly_umap()],
 #'   then the result is plotted.
 #'
@@ -20,7 +21,7 @@ plot_umap <- function(x, ...) {
 #' @param groups A factor or character vector specifying group membership for each sample.
 #'   If provided, the plot will be colored by group.
 #' @param group_col A character string specifying where to find the group information.
-#'   If you uses [glystats::gly_umap()] on a [glyexp::experiment()] to get the result,
+#'   If the result was produced from a supported Glycoverse data container,
 #'   sample information has already been added to the result.
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.

@@ -76,7 +76,8 @@ Currently supported data types:
 \item \code{glystats_wilcox_res}: Result from \code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}.
 \item \code{glystats_limma_res}: Result from \code{\link[glystats:gly_limma]{glystats::gly_limma()}}.
 Only two-group comparisons are supported.
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
 Differential expression analysis is first performed using \code{\link[glystats:gly_ttest]{glystats::gly_ttest()}},
 \code{\link[glystats:gly_wilcox]{glystats::gly_wilcox()}}, or \code{\link[glystats:gly_limma]{glystats::gly_limma()}}
 (controlled by the \code{test} argument), then the result is plotted.

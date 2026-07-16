@@ -13,7 +13,7 @@ plot_heatmap(x, ...)
 \method{plot_heatmap}{SummarizedExperiment}(x, ...)
 }
 \arguments{
-\item{x}{A \code{\link[glyexp:experiment]{glyexp::experiment()}} object.}
+\item{x}{A supported Glycoverse data container.}
 
 \item{...}{Other arguments passed to \code{pheatmap::pheatmap()}.}
 }
@@ -21,7 +21,8 @@ plot_heatmap(x, ...)
 A ggplot object.
 }
 \description{
-Draw a heatmap from a \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+Draw a heatmap from a \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible \code{SummarizedExperiment}.
 Heatmap of log2-transformed expression values is plotted.
 Before plotting, zero-variance rows and columns are filtered out
 to ensure robust clustering.

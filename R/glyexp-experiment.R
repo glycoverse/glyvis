@@ -1,11 +1,12 @@
-#' Plots for Experiments
+#' Plots for Glycoverse Data Containers
 #'
-#' Visualization for [glyexp::experiment()] (`glyexp_experiment` object).
+#' Visualization for [glyexp::GlycomicSE()], [glyexp::GlycoproteomicSE()],
+#' and other compatible `SummarizedExperiment` objects.
 #' Possible `type`s of plots:
 #' - "heatmap": (Default) Expression heatmap with columns as samples and rows as variables.
 #' - "boxplot": Boxplot of expression values for each sample.
 #'
-#' @param object A `glyexp_experiment` object.
+#' @param object A supported Glycoverse data container.
 #' @param type The type of plot, one of "heatmap" (default) or "boxplot".
 #' @param group_col A character string specifying where to find the group information.
 #'   It should be a column in the sample information tibble. Defaults to "group".

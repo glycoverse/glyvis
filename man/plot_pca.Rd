@@ -59,7 +59,8 @@ Draw a PCA scores plot.
 Currently supported data types:
 \itemize{
 \item \code{glystats_pca_res}: Result from \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
 PCA analysis is first performed using \code{\link[glystats:gly_pca]{glystats::gly_pca()}},
 then the result is plotted.
 }

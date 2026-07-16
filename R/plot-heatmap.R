@@ -1,11 +1,12 @@
 #' Heatmap
 #'
-#' Draw a heatmap from a [glyexp::experiment()].
+#' Draw a heatmap from a [glyexp::GlycomicSE()],
+#' [glyexp::GlycoproteomicSE()], or other compatible `SummarizedExperiment`.
 #' Heatmap of log2-transformed expression values is plotted.
 #' Before plotting, zero-variance rows and columns are filtered out
 #' to ensure robust clustering.
 #'
-#' @param x A [glyexp::experiment()] object.
+#' @param x A supported Glycoverse data container.
 #' @param ... Other arguments passed to `pheatmap::pheatmap()`.
 #'
 #' @returns A ggplot object.

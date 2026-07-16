@@ -39,7 +39,7 @@ If provided, the plot will be colored by group.
 Only applicable to "scores" and "loadings" types.}
 
 \item{group_col}{A character string specifying where to find the group information.
-If you uses \code{\link[glystats:gly_plsda]{glystats::gly_plsda()}} on a \code{\link[glyexp:experiment]{glyexp::experiment()}} to get the result,
+If the result was produced from a supported Glycoverse data container,
 sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
@@ -57,7 +57,8 @@ Draw a PLS-DA scores plot.
 Currently supported data types:
 \itemize{
 \item \code{glystats_plsda_res}: Result from \code{\link[glystats:gly_plsda]{glystats::gly_plsda()}}.
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
 PLS-DA analysis is first performed using \code{\link[glystats:gly_plsda]{glystats::gly_plsda()}},
 then the result is plotted.
 }
