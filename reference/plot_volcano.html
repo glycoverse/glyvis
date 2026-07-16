@@ -5,7 +5,8 @@ glystats_ttest_res: Result from glystats::gly_ttest().
 glystats_wilcox_res: Result from glystats::gly_wilcox().
 glystats_limma_res: Result from glystats::gly_limma().
 Only two-group comparisons are supported.
-glyexp_experiment: Experiment created by glyexp::experiment().
+SummarizedExperiment: A glyexp::GlycomicSE(),
+glyexp::GlycoproteomicSE(), or other compatible container.
 Differential expression analysis is first performed using glystats::gly_ttest(),
 glystats::gly_wilcox(), or glystats::gly_limma()
 (controlled by the test argument), then the result is plotted.
@@ -16,7 +17,8 @@ glystats_ttest_res: Result from glystats::gly_ttest().
 glystats_wilcox_res: Result from glystats::gly_wilcox().
 glystats_limma_res: Result from glystats::gly_limma().
 Only two-group comparisons are supported.
-glyexp_experiment: Experiment created by glyexp::experiment().
+SummarizedExperiment: A glyexp::GlycomicSE(),
+glyexp::GlycoproteomicSE(), or other compatible container.
 Differential expression analysis is first performed using glystats::gly_ttest(),
 glystats::gly_wilcox(), or glystats::gly_limma()
 (controlled by the test argument), then the result is plotted.
@@ -29,7 +31,7 @@ glystats::gly_wilcox(), or glystats::gly_limma()
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +62,8 @@ Currently supported data types:</p><ul><li><p><code>glystats_ttest_res</code>: R
 <li><p><code>glystats_wilcox_res</code>: Result from <code><a href="https://glycoverse.github.io/glystats/reference/gly_wilcox.html" class="external-link">glystats::gly_wilcox()</a></code>.</p></li>
 <li><p><code>glystats_limma_res</code>: Result from <code><a href="https://glycoverse.github.io/glystats/reference/gly_limma.html" class="external-link">glystats::gly_limma()</a></code>.
 Only two-group comparisons are supported.</p></li>
-<li><p><code>glyexp_experiment</code>: Experiment created by <code><a href="https://glycoverse.github.io/glyexp/reference/experiment.html" class="external-link">glyexp::experiment()</a></code>.
+<li><p><code>SummarizedExperiment</code>: A <code><a href="https://glycoverse.github.io/glyexp/reference/GlycomicSE.html" class="external-link">glyexp::GlycomicSE()</a></code>,
+<code><a href="https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html" class="external-link">glyexp::GlycoproteomicSE()</a></code>, or other compatible container.
 Differential expression analysis is first performed using <code><a href="https://glycoverse.github.io/glystats/reference/gly_ttest.html" class="external-link">glystats::gly_ttest()</a></code>,
 <code><a href="https://glycoverse.github.io/glystats/reference/gly_wilcox.html" class="external-link">glystats::gly_wilcox()</a></code>, or <code><a href="https://glycoverse.github.io/glystats/reference/gly_limma.html" class="external-link">glystats::gly_limma()</a></code>
 (controlled by the <code>test</code> argument), then the result is plotted.</p></li>

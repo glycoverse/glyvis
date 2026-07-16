@@ -2,10 +2,11 @@
 
 Draw a boxplot. Currently supported data types:
 
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  Boxplots of log2-transformed expression values are plotted, grouped by
-  the group column.
+- `SummarizedExperiment`: A
+  [`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+  [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+  or other compatible container. Boxplots of log2-transformed expression
+  values are plotted, grouped by the group column.
 
 ## Usage
 

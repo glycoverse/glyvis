@@ -12,9 +12,11 @@ Draw a volcano plot. Currently supported data types:
   [`glystats::gly_limma()`](https://glycoverse.github.io/glystats/reference/gly_limma.html).
   Only two-group comparisons are supported.
 
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  Differential expression analysis is first performed using
+- `SummarizedExperiment`: A
+  [`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+  [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+  or other compatible container. Differential expression analysis is
+  first performed using
   [`glystats::gly_ttest()`](https://glycoverse.github.io/glystats/reference/gly_ttest.html),
   [`glystats::gly_wilcox()`](https://glycoverse.github.io/glystats/reference/gly_wilcox.html),
   or

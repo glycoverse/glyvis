@@ -4,7 +4,7 @@
 
 - [`autoplot(`*`<glyexp_experiment>`*`)`](https://glycoverse.github.io/glyvis/reference/autoplot.glyexp_experiment.md)
   [`autoplot(`*`<SummarizedExperiment>`*`)`](https://glycoverse.github.io/glyvis/reference/autoplot.glyexp_experiment.md)
-  : Plots for Experiments
+  : Plots for Glycoverse Data Containers
 - [`autoplot(`*`<glystats_anova_res>`*`)`](https://glycoverse.github.io/glyvis/reference/autoplot.glystats_anova_res.md)
   [`autoplot(`*`<glystats_kruskal_res>`*`)`](https://glycoverse.github.io/glyvis/reference/autoplot.glystats_anova_res.md)
   : Plots for Multi-Group Differential Expression Analysis (DEA)

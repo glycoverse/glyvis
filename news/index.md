@@ -1,5 +1,10 @@
 # Changelog
 
+## glyvis 0.7.2
+
+- Documentation now recommends `GlycomicSE` and `GlycoproteomicSE`
+  containers for Stage II of glycoverse/glyexp#15. (#6)
+
 ## glyvis 0.7.1
 
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/reference/plot_logo.md)

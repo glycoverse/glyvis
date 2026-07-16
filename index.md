@@ -71,7 +71,8 @@ methods for each result class in `glystats`, so that the users can
 visualize the results directly to get a quick overview. It also provides
 some other visualization functions for `glycoverse` data structures,
 such as
-[`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html),
+[`glyexp::GlycomicSE`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+[`glyexp::GlycoproteomicSE`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
 [`glyrepr::glycan_structure()`](https://glycoverse.github.io/glyrepr/reference/glycan_structure.html),
 and others. This package is not intended to produce publication-quality
 figures, but to provide a quick exploration of the data.

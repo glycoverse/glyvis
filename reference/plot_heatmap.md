@@ -1,10 +1,11 @@
 # Heatmap
 
 Draw a heatmap from a
-[`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-Heatmap of log2-transformed expression values is plotted. Before
-plotting, zero-variance rows and columns are filtered out to ensure
-robust clustering.
+[`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+[`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+or other compatible `SummarizedExperiment`. Heatmap of log2-transformed
+expression values is plotted. Before plotting, zero-variance rows and
+columns are filtered out to ensure robust clustering.
 
 ## Usage
 
@@ -22,9 +23,7 @@ plot_heatmap(x, ...)
 
 - x:
 
-  A
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
-  object.
+  A supported Glycoverse data container.
 
 - ...:
 
