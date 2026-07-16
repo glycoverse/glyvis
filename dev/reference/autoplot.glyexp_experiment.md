@@ -1,8 +1,10 @@
-# Plots for Experiments
+# Plots for Glycoverse Data Containers
 
 Visualization for
-[`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
-(`glyexp_experiment` object). Possible `type`s of plots:
+[`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+[`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+and other compatible `SummarizedExperiment` objects. Possible `type`s of
+plots:
 
 - "heatmap": (Default) Expression heatmap with columns as samples and
   rows as variables.
@@ -23,7 +25,7 @@ autoplot(object, type = "heatmap", group_col = "group", ...)
 
 - object:
 
-  A `glyexp_experiment` object.
+  A supported Glycoverse data container.
 
 - type:
 

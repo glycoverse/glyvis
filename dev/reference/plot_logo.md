@@ -4,9 +4,10 @@ Draw a logo plot for all glycosites. Positions with insufficient
 flanking amino acids will be padded with "X". Currently supported data
 types:
 
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  Logo plot of glycosylation sites is plotted.
+- `SummarizedExperiment`: A
+  [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html)
+  or other compatible glycoproteomics container. Logo plot of
+  glycosylation sites is plotted.
 
 ## Usage
 

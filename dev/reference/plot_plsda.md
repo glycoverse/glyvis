@@ -5,9 +5,11 @@ Draw a PLS-DA scores plot. Currently supported data types:
 - `glystats_plsda_res`: Result from
   [`glystats::gly_plsda()`](https://glycoverse.github.io/glystats/reference/gly_plsda.html).
 
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  PLS-DA analysis is first performed using
+- `SummarizedExperiment`: A
+  [`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+  [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+  or other compatible container. PLS-DA analysis is first performed
+  using
   [`glystats::gly_plsda()`](https://glycoverse.github.io/glystats/reference/gly_plsda.html),
   then the result is plotted.
 
@@ -60,14 +62,10 @@ plot_plsda(
 - group_col:
 
   A character string specifying where to find the group information. If
-  you uses
-  [`glystats::gly_plsda()`](https://glycoverse.github.io/glystats/reference/gly_plsda.html)
-  on a
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html)
-  to get the result, sample information has already been added to the
-  result. In this case, you can specify the column name in the sample
-  information tibble to be used for coloring. If not provided, this
-  function will try "group".
+  the result was produced from a supported Glycoverse data container,
+  sample information has already been added to the result. In this case,
+  you can specify the column name in the sample information tibble to be
+  used for coloring. If not provided, this function will try "group".
 
 - ...:
 

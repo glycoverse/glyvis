@@ -5,9 +5,10 @@ Draw a PCA scores plot. Currently supported data types:
 - `glystats_pca_res`: Result from
   [`glystats::gly_pca()`](https://glycoverse.github.io/glystats/reference/gly_pca.html).
 
-- `glyexp_experiment`: Experiment created by
-  [`glyexp::experiment()`](https://glycoverse.github.io/glyexp/reference/experiment.html).
-  PCA analysis is first performed using
+- `SummarizedExperiment`: A
+  [`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
+  [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
+  or other compatible container. PCA analysis is first performed using
   [`glystats::gly_pca()`](https://glycoverse.github.io/glystats/reference/gly_pca.html),
   then the result is plotted.
 
