@@ -5,7 +5,8 @@
 #' At most 10 variables can be plotted.
 #' Currently supported data types:
 #' - `glystats_roc_res`: Result from [glystats::gly_roc()].
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   ROC analysis is first performed using [glystats::gly_roc()],
 #'   then the result is plotted.
 #'

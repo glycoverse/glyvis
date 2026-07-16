@@ -6,7 +6,8 @@
 #' - `glystats_wilcox_res`: Result from [glystats::gly_wilcox()].
 #' - `glystats_limma_res`: Result from [glystats::gly_limma()].
 #'   Only two-group comparisons are supported.
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   Differential expression analysis is first performed using [glystats::gly_ttest()],
 #'   [glystats::gly_wilcox()], or [glystats::gly_limma()]
 #'   (controlled by the `test` argument), then the result is plotted.

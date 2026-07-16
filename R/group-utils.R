@@ -141,7 +141,7 @@
   if (is.null(groups)) {
     cli::cli_abort(c(
       "Column {.field {group_col}} not found.",
-      "i" = "Does your `glyexp::experiment()` contain the {.field {group_col}} column in the sample information tibble?"
+      "i" = "Does your data container contain the {.field {group_col}} column in its sample information?"
     ))
   }
   return(groups[samples]) # reorder groups to match sample order

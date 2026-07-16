@@ -30,7 +30,8 @@ Draw a correlation matrix heatmap.
 Currently supported data types:
 \itemize{
 \item \code{glystats_cor_res}: Result from \code{\link[glystats:gly_cor]{glystats::gly_cor()}}.
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
 Correlation analysis is first performed using \code{\link[glystats:gly_cor]{glystats::gly_cor()}},
 then the result is plotted.
 }

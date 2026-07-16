@@ -3,14 +3,14 @@
 \name{autoplot.glyexp_experiment}
 \alias{autoplot.glyexp_experiment}
 \alias{autoplot.SummarizedExperiment}
-\title{Plots for Experiments}
+\title{Plots for Glycoverse Data Containers}
 \usage{
 \method{autoplot}{glyexp_experiment}(object, type = "heatmap", group_col = "group", ...)
 
 \method{autoplot}{SummarizedExperiment}(object, type = "heatmap", group_col = "group", ...)
 }
 \arguments{
-\item{object}{A \code{glyexp_experiment} object.}
+\item{object}{A supported Glycoverse data container.}
 
 \item{type}{The type of plot, one of "heatmap" (default) or "boxplot".}
 
@@ -24,7 +24,8 @@ Only applicable to "boxplot".}
 A ggplot object.
 }
 \description{
-Visualization for \code{\link[glyexp:experiment]{glyexp::experiment()}} (\code{glyexp_experiment} object).
+Visualization for \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}}, \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}},
+and other compatible \code{SummarizedExperiment} objects.
 Possible \code{type}s of plots:
 \itemize{
 \item "heatmap": (Default) Expression heatmap with columns as samples and rows as variables.

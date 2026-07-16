@@ -27,7 +27,8 @@ A ggplot object.
 Draw a boxplot.
 Currently supported data types:
 \itemize{
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
+\code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
 Boxplots of log2-transformed expression values are plotted, grouped by the group column.
 }
 }

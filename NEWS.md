@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Documentation now recommends `GlycomicSE` and `GlycoproteomicSE` containers for Stage II of glycoverse/glyexp#15.
+
 # glyvis 0.7.1
 
 * `plot_logo()` now recognizes glycoproteomics experiments consistently across legacy and current `glyexp` containers.

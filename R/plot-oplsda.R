@@ -3,7 +3,8 @@
 #' Draw a OPLS-DA scores plot.
 #' Currently supported data types:
 #' - `glystats_oplsda_res`: Result from [glystats::gly_oplsda()].
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   OPLS-DA analysis is first performed using [glystats::gly_oplsda()],
 #'   then the result is plotted.
 #'
@@ -14,7 +15,7 @@
 #'   If provided, the plot will be colored by group.
 #'   Only applicable to "scores" and "loadings" types.
 #' @param group_col A character string specifying where to find the group information.
-#'   If you uses [glystats::gly_oplsda()] on a [glyexp::experiment()] to get the result,
+#'   If the result was produced from a supported Glycoverse data container,
 #'   sample information has already been added to the result.
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.

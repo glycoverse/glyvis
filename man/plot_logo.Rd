@@ -35,7 +35,8 @@ Draw a logo plot for all glycosites.
 Positions with insufficient flanking amino acids will be padded with "X".
 Currently supported data types:
 \itemize{
-\item \code{glyexp_experiment}: Experiment created by \code{\link[glyexp:experiment]{glyexp::experiment()}}.
+\item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} or other compatible
+glycoproteomics container.
 Logo plot of glycosylation sites is plotted.
 }
 }

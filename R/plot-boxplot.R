@@ -2,7 +2,8 @@
 #'
 #' Draw a boxplot.
 #' Currently supported data types:
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
+#'   [glyexp::GlycoproteomicSE()], or other compatible container.
 #'   Boxplots of log2-transformed expression values are plotted, grouped by the group column.
 #'
 #' @param x An object to be plotted.

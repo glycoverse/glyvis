@@ -76,10 +76,10 @@ The main purpose of `glyvis` is to provide visualization for `glystats`
 results. It implements `autoplot()` methods for each result class in
 `glystats`, so that the users can visualize the results directly to get
 a quick overview. It also provides some other visualization functions
-for `glycoverse` data structures, such as `glyexp::experiment()`,
-`glyrepr::glycan_structure()`, and others. This package is not intended
-to produce publication-quality figures, but to provide a quick
-exploration of the data.
+for `glycoverse` data structures, such as `glyexp::GlycomicSE`,
+`glyexp::GlycoproteomicSE`, `glyrepr::glycan_structure()`, and others.
+This package is not intended to produce publication-quality figures, but
+to provide a quick exploration of the data.
 
 ## Example
 

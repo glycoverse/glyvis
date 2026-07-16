@@ -3,7 +3,8 @@
 #' Draw a logo plot for all glycosites.
 #' Positions with insufficient flanking amino acids will be padded with "X".
 #' Currently supported data types:
-#' - `glyexp_experiment`: Experiment created by [glyexp::experiment()].
+#' - `SummarizedExperiment`: A [glyexp::GlycoproteomicSE()] or other compatible
+#'   glycoproteomics container.
 #'   Logo plot of glycosylation sites is plotted.
 #'
 #' @param x An object to be plotted.
