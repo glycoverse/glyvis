@@ -95,7 +95,7 @@ pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
 
-![](reference/figures/README-unnamed-chunk-2-1.png)
+![](reference/figures/README-pca.svg)
 
 ## Customize and export
 
@@ -106,7 +106,7 @@ plot_pca(exp, title = "Sample PCA", fontsize = 9,
   tidyplots::adjust_legend_title("Group")
 ```
 
-![](reference/figures/README-tidyplots-1.png)
+![](reference/figures/README-tidyplots.svg)
 
 All `plot_*()` and
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
