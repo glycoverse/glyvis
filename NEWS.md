@@ -1,9 +1,9 @@
 # glyvis (development version)
 
-* `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label.
-* `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options.
-* `plot_heatmap()` now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors.
-* `plot_pca()` now forwards explicit groups, group columns, and plotting options consistently across supported inputs.
+* `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label. (#7)
+* `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options. (#7)
+* `plot_heatmap()` now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors. (#7)
+* `plot_pca()` now forwards explicit groups, group columns, and plotting options consistently across supported inputs. (#7)
 
 # glyvis 0.7.2
 
