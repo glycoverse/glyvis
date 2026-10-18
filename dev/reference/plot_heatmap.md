@@ -5,7 +5,9 @@ Draw a heatmap from a
 [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
 or other compatible `SummarizedExperiment`. Heatmap of log2-transformed
 expression values is plotted. Before plotting, zero-variance rows and
-columns are filtered out to ensure robust clustering.
+columns are filtered out to ensure robust clustering. Supplied `hclust`
+objects must match the retained rows or columns, including their input
+order.
 
 ## Usage
 

@@ -2,6 +2,22 @@
 
 ## glyvis (development version)
 
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
+  now plots log2(abundance + 1) values with a matching axis label. (#7)
+- [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
+  and correlation
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods now display the supplied correlation coefficients without
+  recomputing correlations;
+  [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
+  forwards plotting options. (#7)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
+  now allows supplied options to override defaults, including row
+  labels, scaling, clustering, and missing-value colors. (#7)
+- [`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md)
+  now forwards explicit groups, group columns, and plotting options
+  consistently across supported inputs. (#7)
+
 ## glyvis 0.7.2
 
 - Documentation now recommends `GlycomicSE` and `GlycoproteomicSE`

@@ -33,7 +33,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
-</div>
+<ul><li>
+<code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> now plots log2(abundance + 1) values with a matching axis label. (#7)</li>
+<li>
+<code><a href="../reference/plot_corrplot.html">plot_corrplot()</a></code> and correlation <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods now display the supplied correlation coefficients without recomputing correlations; <code><a href="../reference/plot_corrplot.html">plot_corrplot()</a></code> forwards plotting options. (#7)</li>
+<li>
+<code><a href="../reference/plot_heatmap.html">plot_heatmap()</a></code> now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors. (#7)</li>
+<li>
+<code><a href="../reference/plot_pca.html">plot_pca()</a></code> now forwards explicit groups, group columns, and plotting options consistently across supported inputs. (#7)</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.2" id="glyvis-072">glyvis 0.7.2<a class="anchor" aria-label="anchor" href="#glyvis-072"></a></h2>
 <ul><li>Documentation now recommends <code>GlycomicSE</code> and <code>GlycoproteomicSE</code> containers for Stage II of glycoverse/glyexp#15. (#6)</li>
