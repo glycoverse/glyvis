@@ -63,12 +63,12 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_oplsda]{glystats::gly_oplsda()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a OPLS-DA scores plot.

@@ -9,9 +9,9 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_tsne <- function(x, ...) {
   UseMethod("plot_tsne")
@@ -33,7 +33,7 @@ plot_tsne.glystats_tsne_res <- function(
   group_col = NULL,
   ...
 ) {
-  .plot_tsne(x, groups = groups, group_col = group_col)
+  .plot_tsne(x, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_tsne
@@ -47,7 +47,7 @@ plot_tsne.glyexp_experiment <- function(
   ...
 ) {
   tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
-  .plot_tsne(tsne_res, groups = groups, group_col = group_col)
+  .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_tsne
@@ -60,14 +60,21 @@ plot_tsne.SummarizedExperiment <- function(
   ...
 ) {
   tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
-  .plot_tsne(tsne_res, groups = groups, group_col = group_col)
+  .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
 }
 
-.plot_tsne <- function(tsne_res, groups = NULL, group_col = NULL) {
+.plot_tsne <- function(tsne_res, groups = NULL, group_col = NULL, ...) {
   .validate_group_args(groups, group_col)
   groups <- .prepare_groups(tsne_res, groups, group_col)
 
   df <- tsne_res$tidy_result
   df$group <- groups
-  .glyvis_scatter(df, "tsne1", "tsne2", group = "group")
+  .glyvis_scatter(
+    df,
+    "tsne1",
+    "tsne2",
+    group = if (is.null(groups)) NULL else "group",
+    label_col = "sample",
+    ...
+  )
 }

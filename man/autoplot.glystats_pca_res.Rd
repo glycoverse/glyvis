@@ -13,8 +13,7 @@
 
 \item{groups}{A factor or character vector specifying group membership for each sample.
 If provided, the plot will be colored by group.
-Only applicable to "individual" and "biplot" types.
-Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
+Only applicable to "individual" and "biplot" types.}
 
 \item{group_col}{A character string specifying where to find the group information.
 If the result was produced from a supported Glycoverse data container,
@@ -23,16 +22,10 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Other arguments passed to factoextra functions.
-\itemize{
-\item For "screeplot", see \code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}.
-\item For "individual", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}}.
-\item For "variables", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}.
-\item For "biplot", see \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.
-}}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for \code{\link[glystats:gly_pca]{glystats::gly_pca()}} results (\code{glystats_pca_res} object).
@@ -43,8 +36,4 @@ Possible \code{type}s of plots:
 \item "variables": Plot loadings for variables.
 \item "biplot": Biplot showing both samples and variables.
 }
-}
-\seealso{
-\code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}},
-\code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}
 }

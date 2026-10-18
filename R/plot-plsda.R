@@ -19,9 +19,9 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_plsda <- function(
   x,
@@ -90,9 +90,9 @@ plot_plsda.SummarizedExperiment <- function(
 
   switch(
     type,
-    scores = .plot_oplsda_scores(object, "p2", groups),
-    loadings = .plot_oplsda_loadings(object, "p2"),
-    vip = .plot_oplsda_vip(object),
-    variance = .plot_oplsda_variance(object)
+    scores = .plot_oplsda_scores(object, "p2", groups, ...),
+    loadings = .plot_oplsda_loadings(object, "p2", ...),
+    vip = .plot_oplsda_vip(object, ...),
+    variance = .plot_oplsda_variance(object, ...)
   )
 }

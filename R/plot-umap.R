@@ -9,9 +9,9 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_umap <- function(x, ...) {
   UseMethod("plot_umap")
@@ -33,7 +33,7 @@ plot_umap.glystats_umap_res <- function(
   group_col = NULL,
   ...
 ) {
-  .plot_umap(x, groups = groups, group_col = group_col)
+  .plot_umap(x, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_umap
@@ -47,7 +47,7 @@ plot_umap.glyexp_experiment <- function(
   ...
 ) {
   umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
-  .plot_umap(umap_res, groups = groups, group_col = group_col)
+  .plot_umap(umap_res, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_umap
@@ -60,14 +60,21 @@ plot_umap.SummarizedExperiment <- function(
   ...
 ) {
   umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
-  .plot_umap(umap_res, groups = groups, group_col = group_col)
+  .plot_umap(umap_res, groups = groups, group_col = group_col, ...)
 }
 
-.plot_umap <- function(umap_res, groups = NULL, group_col = NULL) {
+.plot_umap <- function(umap_res, groups = NULL, group_col = NULL, ...) {
   .validate_group_args(groups, group_col)
   groups <- .prepare_groups(umap_res, groups, group_col)
 
   df <- umap_res$tidy_result
   df$group <- groups
-  .glyvis_scatter(df, "umap1", "umap2", group = "group")
+  .glyvis_scatter(
+    df,
+    "umap1",
+    "umap2",
+    group = if (is.null(groups)) NULL else "group",
+    label_col = "sample",
+    ...
+  )
 }

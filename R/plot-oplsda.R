@@ -20,9 +20,9 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_oplsda <- function(
   x,
@@ -100,65 +100,103 @@ plot_oplsda.SummarizedExperiment <- function(
 
   switch(
     type,
-    scores = .plot_oplsda_scores(object, y_type, groups),
-    loadings = .plot_oplsda_loadings(object, y_type),
-    vip = .plot_oplsda_vip(object),
-    variance = .plot_oplsda_variance(object),
-    "s-plot" = .plot_oplsda_splot(object)
+    scores = .plot_oplsda_scores(object, y_type, groups, ...),
+    loadings = .plot_oplsda_loadings(object, y_type, ...),
+    vip = .plot_oplsda_vip(object, ...),
+    variance = .plot_oplsda_variance(object, ...),
+    "s-plot" = .plot_oplsda_splot(object, ...)
   )
 }
 
-.plot_oplsda_scores <- function(object, y_type, groups) {
-  switch(
+.plot_oplsda_scores <- function(object, y_type, groups, ...) {
+  df <- object$tidy_result$samples
+  if (y_type == "o1") {
+    .assert_oplsda_o1_exist(df)
+  } else {
+    .assert_oplsda_p2_exist(df)
+  }
+  df$group <- groups
+  .glyvis_scatter(
+    df,
+    "p1",
     y_type,
-    p2 = .plot_oplsda_scores_p1vp2(
-      object$tidy_result$samples,
-      "sample",
-      groups
-    ),
-    o1 = .plot_oplsda_scores_p1vo1(object$tidy_result$samples, "sample", groups)
-  )
+    if (is.null(groups)) NULL else "group",
+    label_col = "sample",
+    ...
+  ) +
+    labs(
+      x = "Predictive component 1",
+      y = if (y_type == "o1") {
+        "Orthogonal component 1"
+      } else {
+        "Predictive component 2"
+      }
+    )
 }
 
-.plot_oplsda_loadings <- function(object, y_type) {
-  switch(
-    y_type,
-    p2 = .plot_oplsda_loadings_p1vp2(object$tidy_result$variables, "variable"),
-    o1 = .plot_oplsda_loadings_p1vo1(object$tidy_result$variables, "variable")
-  )
+.plot_oplsda_loadings <- function(object, y_type, ...) {
+  df <- object$tidy_result$variables
+  if (y_type == "o1") {
+    .assert_oplsda_o1_exist(df)
+  } else {
+    .assert_oplsda_p2_exist(df)
+  }
+  .glyvis_loadings(df, "p1", y_type, label_col = "variable", ...) +
+    labs(
+      x = "Predictive loading 1",
+      y = if (y_type == "o1") "Orthogonal loading 1" else "Predictive loading 2"
+    ) +
+    coord_equal()
 }
 
-.plot_oplsda_vip <- function(object) {
-  .glyvis_barplot(object$tidy_result$vip, "variable", "vip", ordered = TRUE) +
+.plot_oplsda_vip <- function(object, top_n = NULL, ...) {
+  .glyvis_barplot(
+    object$tidy_result$vip,
+    "variable",
+    "vip",
+    ordered = TRUE,
+    top_n = top_n,
+    ...
+  ) +
+    coord_flip() +
     labs(x = "Variable", y = "VIP score")
 }
 
-.plot_oplsda_variance <- function(object) {
+.plot_oplsda_variance <- function(object, ...) {
   .glyvis_barplot(
     object$tidy_result$variance,
     "component",
     "prop_var_explained",
-    ordered = TRUE
+    ...
   ) +
     labs(x = "Component", y = "Proportion of variance explained")
 }
 
-.plot_oplsda_splot <- function(object) {
-  df <- object$tidy_result$variables %>%
-    dplyr::mutate(
-      color = dplyr::case_when(
-        .data$pcorr1 > 0.5 ~ glyvis_colors[[6]],
-        .data$pcorr1 < -0.5 ~ glyvis_colors[[1]],
-        TRUE ~ "lightgrey"
-      )
-    )
-  ggplot(df, aes(.data$p1, .data$pcorr1)) +
-    geom_point(aes(color = .data$color)) +
-    scale_color_identity() +
-    ggrepel::geom_label_repel(aes(label = .data$variable)) +
-    geom_hline(yintercept = c(-0.5, 0.5), linetype = "dashed", alpha = 0.7) +
-    theme_bw() +
-    labs(x = "Predictive component 1 (p1)", y = "Correlation with p1")
+.plot_oplsda_splot <- function(
+  object,
+  palette = c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00"),
+  ...
+) {
+  df <- object$tidy_result$variables
+  df$direction <- factor(
+    ifelse(
+      df$pcorr1 > 0.5,
+      "Positive",
+      ifelse(df$pcorr1 < -0.5, "Negative", "Other")
+    ),
+    levels = c("Negative", "Other", "Positive")
+  )
+  .glyvis_scatter(
+    df,
+    "p1",
+    "pcorr1",
+    "direction",
+    label_col = "variable",
+    palette = palette,
+    ...
+  ) |>
+    tidyplots::add_reference_lines(y = c(-0.5, 0.5), color = "grey60") |>
+    tidyplots::add(labs(x = "Predictive loading 1", y = "Correlation with p1"))
 }
 
 .assert_oplsda_o1_exist <- function(df) {
@@ -177,44 +215,4 @@ plot_oplsda.SummarizedExperiment <- function(
       "i" = "Did you forget to set {.arg pred_i} to 2 or higher in {.fn glystats::gly_oplsda}?"
     ))
   }
-}
-
-.plot_oplsda_scores_p1vo1 <- function(df, label_col, groups) {
-  .assert_oplsda_o1_exist(df)
-  if (!is.null(groups)) {
-    df$group <- groups
-  }
-  .glyvis_scatter(
-    df,
-    "p1",
-    "o1",
-    label = label_col,
-    group = "group",
-    add_ellipse = TRUE
-  )
-}
-
-.plot_oplsda_scores_p1vp2 <- function(df, label_col, groups) {
-  .assert_oplsda_p2_exist(df)
-  if (!is.null(groups)) {
-    df$group <- groups
-  }
-  .glyvis_scatter(
-    df,
-    "p1",
-    "p2",
-    label = label_col,
-    group = "group",
-    add_ellipse = TRUE
-  )
-}
-
-.plot_oplsda_loadings_p1vo1 <- function(df, label_col) {
-  .assert_oplsda_o1_exist(df)
-  .glyvis_loadings(df, "p1", "o1", label = label_col)
-}
-
-.plot_oplsda_loadings_p1vp2 <- function(df, label_col) {
-  .assert_oplsda_p2_exist(df)
-  .glyvis_loadings(df, "p1", "p2", label = label_col)
 }

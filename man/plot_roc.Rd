@@ -22,12 +22,12 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
 
 \item{auc_cutoff}{The AUC cutoff. Default is 0.5.}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_roc]{glystats::gly_roc()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw ROC curves.

@@ -8,9 +8,9 @@
 #' retained rows or columns, including their input order.
 #'
 #' @param x A supported Glycoverse data container.
-#' @param ... Other arguments passed to `pheatmap::pheatmap()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_heatmap <- function(x, ...) {
   UseMethod("plot_heatmap")
@@ -30,48 +30,117 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
 
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
-#' @param ... Other arguments passed to `pheatmap::pheatmap()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
-.plot_exp_heatmap <- function(exp, ...) {
-  mat <- log2(.get_expr_mat(exp) + 1)
-
-  # Filter out zero-variance rows and columns
-  filtered <- .filter_zero_variance(mat)
-  mat <- filtered$mat
-
-  overrides <- rlang::list2(...)
-  .validate_heatmap_tree(
-    overrides$cluster_rows,
-    rownames(mat),
-    nrow(mat),
-    "cluster_rows"
-  )
-  .validate_heatmap_tree(
-    overrides$cluster_cols,
-    colnames(mat),
-    ncol(mat),
-    "cluster_cols"
-  )
-  # Compute default clustering only when the caller has not supplied it.
-  row_clust <- if (!"cluster_rows" %in% names(overrides)) {
-    .robust_hclust(mat, by = "row")
+.plot_exp_heatmap <- function(
+  exp,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  palette = c("#2166AC", "#F7F7F7", "#B2182B"),
+  ...
+) {
+  checkmate::assert_choice(scale, c("row", "column", "none"))
+  checkmate::assert_flag(show_rownames)
+  checkmate::assert_flag(show_colnames, null.ok = TRUE)
+  mat <- .get_expr_mat(exp)
+  if (is.null(rownames(mat))) {
+    rownames(mat) <- paste0("Variable ", seq_len(nrow(mat)))
   }
-  col_clust <- if (!"cluster_cols" %in% names(overrides)) {
-    .robust_hclust(mat, by = "col")
+  if (is.null(colnames(mat))) {
+    colnames(mat) <- paste0("Sample ", seq_len(ncol(mat)))
   }
-
-  args <- list(
-    mat = mat,
-    scale = "row",
-    show_rownames = FALSE,
-    silent = TRUE,
-    cluster_rows = row_clust,
-    cluster_cols = col_clust,
-    na_col = "grey"
+  mat <- .filter_zero_variance(log2(mat + 1))$mat
+  if (!nrow(mat) || !ncol(mat)) {
+    cli::cli_abort(
+      "No variable rows or columns remain after zero-variance filtering."
+    )
+  }
+  row_tree <- .heatmap_tree(cluster_rows, mat, "row")
+  col_tree <- .heatmap_tree(cluster_cols, mat, "col")
+  if (scale == "row") {
+    mat <- t(.scale_heatmap_columns(t(mat)))
+  }
+  if (scale == "column") {
+    mat <- .scale_heatmap_columns(mat)
+  }
+  rows <- if (inherits(row_tree, "hclust")) {
+    row_tree$order
+  } else {
+    seq_len(nrow(mat))
+  }
+  cols <- if (inherits(col_tree, "hclust")) {
+    col_tree$order
+  } else {
+    seq_len(ncol(mat))
+  }
+  df <- data.frame(
+    sample = factor(
+      rep(colnames(mat), each = nrow(mat)),
+      levels = colnames(mat)[cols]
+    ),
+    variable = factor(
+      rep(rownames(mat), ncol(mat)),
+      levels = rev(rownames(mat)[rows])
+    ),
+    value = as.vector(mat)
   )
-  args <- c(args[!names(args) %in% names(overrides)], overrides)
-  p <- do.call(pheatmap::pheatmap, args)
-  ggplotify::as.ggplot(p)
+  p <- .glyvis_plot(
+    df,
+    "sample",
+    "variable",
+    "value",
+    palette = palette,
+    ...
+  ) |>
+    tidyplots::add_heatmap(rotate_labels = 90)
+  limits <- if (scale != "none") {
+    bound <- max(abs(mat), na.rm = TRUE)
+    if (!is.finite(bound) || bound == 0) {
+      bound <- 1
+    }
+    c(-bound, bound)
+  } else {
+    NULL
+  }
+  p <- tidyplots::adjust_colors(p, palette, limits = limits, na.value = na_col)
+  if (!show_rownames) {
+    p <- tidyplots::remove_y_axis_labels(p)
+  }
+  if (is.null(show_colnames)) {
+    show_colnames <- ncol(mat) <= 40
+  }
+  if (!show_colnames) {
+    p <- tidyplots::remove_x_axis_labels(p)
+  }
+  p +
+    labs(
+      x = NULL,
+      y = NULL,
+      fill = if (scale == "none") "log2(abundance + 1)" else "Z score",
+      color = if (scale == "none") "log2(abundance + 1)" else "Z score"
+    ) +
+    theme(axis.ticks = element_blank(), legend.position = "right")
+}
+
+.scale_heatmap_columns <- function(mat) {
+  center <- colMeans(mat, na.rm = TRUE)
+  spread <- apply(mat, 2, stats::sd, na.rm = TRUE)
+  sweep(sweep(mat, 2, center, "-"), 2, spread, "/")
+}
+
+.heatmap_tree <- function(tree, mat, by) {
+  arg <- if (by == "row") "cluster_rows" else "cluster_cols"
+  labels <- if (by == "row") rownames(mat) else colnames(mat)
+  .validate_heatmap_tree(tree, labels, length(labels), arg)
+  if (inherits(tree, "hclust")) {
+    return(tree)
+  }
+  checkmate::assert_flag(tree)
+  if (tree) .robust_hclust(mat, by) else FALSE
 }
 
 #' Filter out rows and columns with zero variance

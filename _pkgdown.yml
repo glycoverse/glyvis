@@ -12,3 +12,7 @@ reference:
 - title: "Direct Plot"
   contents:
   - starts_with("plot_")
+
+- title: "Customization"
+  contents:
+  - glyvis_plot_options

@@ -45,12 +45,12 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_plsda]{glystats::gly_plsda()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a PLS-DA scores plot.

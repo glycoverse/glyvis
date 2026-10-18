@@ -54,7 +54,7 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Other arguments passed to \code{\link[EnhancedVolcano:EnhancedVolcano]{EnhancedVolcano::EnhancedVolcano()}}.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
 
@@ -66,7 +66,7 @@ Must be one of the contrasts in the result.
 When there is only one contrast (two-group comparison), it can be NULL (default).}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a volcano plot.

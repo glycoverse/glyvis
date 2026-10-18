@@ -27,10 +27,10 @@ When there is only one contrast (two-group comparison), it can be NULL (default)
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Other arguments passed to underlying functions.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_limma]{glystats::gly_limma()}} (\code{glystats_limma_res} objects).

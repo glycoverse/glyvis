@@ -8,6 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  message = FALSE,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -27,7 +28,7 @@ Visualization is an essential part of data analysis.
 Human beings are more sensitive to visual information than text and numbers.
 Plotting helps us to understand the data better.
 `glyvis` provides a unified interface for visualizing `glycoverse` data,
-including statistical results, experiments, glycan biosynthesis pathways, and more.
+including statistical results and experimental data.
 It implements the `autoplot()` method for various `glycoverse` data structures.
 Just `autoplot()` it!
 
@@ -78,8 +79,9 @@ so that the users can visualize the results directly to get a quick overview.
 It also provides some other visualization functions for `glycoverse` data structures,
 such as `glyexp::GlycomicSE`, `glyexp::GlycoproteomicSE`,
 `glyrepr::glycan_structure()`, and others.
-This package is not intended to produce publication-quality figures,
-but to provide a quick exploration of the data.
+All plotting entry points use [tidyplots](https://tidyplots.org/) and return
+composable `tidyplot` objects. Defaults use a white background, restrained colors,
+and readable typography; adjust the returned plot for your output size and audience.
 
 ## Example
 
@@ -89,8 +91,40 @@ library(glyclean)
 library(glystats)
 library(glyvis)
 
+set.seed(42)
 exp <- auto_clean(real_experiment)
 
 pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
+
+## Customize and export
+
+```{r tidyplots, fig.width=6, fig.height=4}
+plot_pca(exp, title = "Sample PCA", fontsize = 9,
+         palette = c(C = "#0072B2", H = "#D55E00", M = "#009E73", Y = "#CC79A7")) |>
+  tidyplots::adjust_legend_title("Group")
+```
+
+All `plot_*()` and `autoplot()` entry points accept `title`, `fontsize`, `family`,
+`palette`, `width`, and `height`. Plot areas use tidyplots' default 50 by 50 mm
+size; set `width = NA, height = NA` to fill the graphics device instead.
+Use named palettes to keep group colors fixed
+across plots and subsets. Scatter plots show points without labels by default;
+set `label = TRUE` when individual identities matter. No observations are
+removed for presentation; ranked plots and loadings accept an explicit `top_n`.
+
+```r
+p <- plot_boxplot(exp[1:4, ], ncol = 2, scales = "fixed")
+tidyplots::save_plot(p, "boxplots.pdf")
+```
+
+Heatmaps preserve clustering order and missing values, with a symmetric color
+scale for standardized values. Dendrograms are available separately through
+`autoplot(glystats::gly_hclust(exp))`.
+
+The backend migration replaces options specific to factoextra, EnhancedVolcano,
+GGally, and pheatmap. Use `label` instead of PCA `geom`/`repel`, `point_size`
+instead of volcano `pointSize`, and pass sequence-logo geometry options in
+`logo_args`. Unsupported arguments produce an error. See
+`?glyvis_plot_options` for the complete options and migration guide.

@@ -14,10 +14,10 @@
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_cox]{glystats::gly_cox()}} (\code{glystats_cox_res} objects).

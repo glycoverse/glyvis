@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides a unified interface for visualizing glycomics data within the 'glycoverse' ecosystem. Implements 'autoplot()' methods for various data structures including statistical results from 'glystats', experimental data from 'glyexp', and glycan structures from 'glyrepr'. Designed for rapid data exploration and quality assessment rather than publication-quality figure generation.
+Provides a unified interface for visualizing glycomics data within the 'glycoverse' ecosystem. Implements 'autoplot()' methods for various data structures including statistical results from 'glystats', experimental data from 'glyexp', and glycan structures from 'glyrepr'. Uses 'tidyplots' for consistent, composable graphics for data exploration and scientific reporting.
 }
 \seealso{
 Useful links:

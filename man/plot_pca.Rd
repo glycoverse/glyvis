@@ -36,23 +36,20 @@ plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
 
 \item{groups}{A factor or character vector specifying group membership for each sample.
 If provided, the plot will be colored by group.
-Only applicable to "individual" and "biplot" types.
-Passed to the \code{habillage} paramter of \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}} or \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.}
+Only applicable to "individual" and "biplot" types.}
 
-\item{group_col}{A character string specifying where to find the group information.}
+\item{group_col}{A character string specifying where to find the group information.
+If the result was produced from a supported Glycoverse data container,
+sample information has already been added to the result.
+In this case, you can specify the column name in the sample information tibble
+to be used for coloring.}
 
-\item{...}{Additional arguments passed to underlying factoextra functions:
-\itemize{
-\item type = "screeplot": \code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}.
-\item type = "individual": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}}.
-\item type = "variables": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}.
-\item type = "biplot": \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}.
-}}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a PCA scores plot.
@@ -64,8 +61,4 @@ Currently supported data types:
 PCA analysis is first performed using \code{\link[glystats:gly_pca]{glystats::gly_pca()}},
 then the result is plotted.
 }
-}
-\seealso{
-\code{\link[factoextra:eigenvalue]{factoextra::fviz_screeplot()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_ind()}},
-\code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_var()}}, \code{\link[factoextra:fviz_pca]{factoextra::fviz_pca_biplot()}}
 }

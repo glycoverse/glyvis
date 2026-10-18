@@ -9,9 +9,9 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_ttest_res <- function(
   object,
@@ -44,8 +44,8 @@ autoplot.glystats_wilcox_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Other arguments passed to underlying functions.
-#' @returns A ggplot object.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_anova_res <- function(
   object,
@@ -80,9 +80,9 @@ autoplot.glystats_kruskal_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Other arguments passed to underlying functions.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_limma_res <- function(
   object,
@@ -101,7 +101,7 @@ autoplot.glystats_limma_res <- function(
 
   df <- object$tidy_result$main_test %>%
     dplyr::mutate(
-      neglog10p = -log10(.data[[p_col]]),
+      neglog10p = -log10(pmax(.data[[p_col]], .Machine$double.xmin)),
       candidate = .data[[p_col]] < p_cutoff,
       point_color = dplyr::if_else(
         .data$candidate,
@@ -110,7 +110,7 @@ autoplot.glystats_limma_res <- function(
       )
     )
 
-  .glyvis_dotchart(df, x = "variable", y = "neglog10p") +
+  .glyvis_dotchart(df, x = "variable", y = "neglog10p", ...) +
     geom_hline(
       yintercept = -log10(p_cutoff),
       linetype = "dashed",
@@ -118,6 +118,10 @@ autoplot.glystats_limma_res <- function(
     ) +
     labs(
       x = "Variable",
-      y = expression(-Log[10] ~ italic(P) ~ adjusted)
+      y = if (p_col == "p_adj") {
+        expression(-log[10] ~ italic(P) ~ adjusted)
+      } else {
+        expression(-log[10] ~ italic(P))
+      }
     )
 }

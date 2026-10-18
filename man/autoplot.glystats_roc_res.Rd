@@ -14,10 +14,10 @@ If "roc", at most 10 variables can be plotted.}
 
 \item{auc_cutoff}{The AUC cutoff. Defaults to 0.5. Only used if type is "dotplot".}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_roc]{glystats::gly_roc()}} (\code{glystats_roc_res} objects).

@@ -9,9 +9,9 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param ... Additional arguments passed to [GGally::ggcorr()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_corrplot <- function(x, ...) {
   UseMethod("plot_corrplot")
@@ -40,24 +40,61 @@ plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
 
 #' Internal function to plot correlation matrix
 #' @param cor_res A `glystats_cor_res` object.
-#' @param ... Other arguments passed to [GGally::ggcorr()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
-.plot_corrplot <- function(cor_res, ...) {
-  rlang::check_installed("GGally")
-
-  correlation <- cor_res$raw_result$r
-  feature_names <- colnames(correlation)
-  safe_feature_names <- make.names(feature_names, unique = TRUE)
-  dimnames(correlation) <- list(safe_feature_names, safe_feature_names)
-
-  plot <- GGally::ggcorr(data = NULL, cor_matrix = correlation, ...)
-  diagonal_layer <- length(plot$layers)
-  diagonal <- plot$layers[[diagonal_layer]]$data
-  diagonal$diagLabel <- feature_names[match(
-    diagonal$diagLabel,
-    safe_feature_names
-  )]
-  plot$layers[[diagonal_layer]]$data <- diagonal
-
-  plot
+.plot_corrplot <- function(
+  cor_res,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower",
+  palette = c("#2166AC", "#F7F7F7", "#B2182B"),
+  ...
+) {
+  checkmate::assert_choice(triangle, c("lower", "upper", "full"))
+  checkmate::assert_flag(label)
+  r <- cor_res$raw_result$r
+  n <- nrow(r)
+  ids <- colnames(r)
+  if (is.null(ids)) {
+    ids <- as.character(seq_len(n))
+  }
+  index <- which(
+    switch(
+      triangle,
+      lower = lower.tri(r),
+      upper = upper.tri(r),
+      full = matrix(TRUE, n, n)
+    ),
+    arr.ind = TRUE
+  )
+  if (!nrow(index)) {
+    cli::cli_abort(
+      "At least two variables are required for a triangular correlation plot."
+    )
+  }
+  df <- data.frame(
+    x = factor(ids[index[, 2]], levels = ids),
+    y = factor(ids[index[, 1]], levels = rev(ids)),
+    coefficient = r[index]
+  )
+  p <- .glyvis_plot(df, "x", "y", "coefficient", palette = palette, ...) |>
+    tidyplots::add_heatmap(rotate_labels = 45) |>
+    tidyplots::adjust_colors(palette, limits = c(-1, 1), na.value = "grey90")
+  p <- suppressMessages(
+    p +
+      labs(x = NULL, y = NULL, fill = "Correlation", color = "Correlation") +
+      coord_equal() +
+      theme(legend.position = "right", axis.ticks = element_blank())
+  )
+  if (label) {
+    p <- tidyplots::add(
+      p,
+      geom_text(
+        aes(label = round(.data$coefficient, digits)),
+        color = "black",
+        size = 2.6
+      )
+    )
+  }
+  p
 }
