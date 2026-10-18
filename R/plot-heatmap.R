@@ -42,16 +42,18 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
   row_clust <- .robust_hclust(mat, by = "row")
   col_clust <- .robust_hclust(mat, by = "col")
 
-  p <- pheatmap::pheatmap(
-    mat,
+  args <- list(
+    mat = mat,
     scale = "row",
     show_rownames = FALSE,
     silent = TRUE,
     cluster_rows = row_clust,
     cluster_cols = col_clust,
-    na_col = "grey",
-    ...
+    na_col = "grey"
   )
+  overrides <- rlang::list2(...)
+  args <- c(args[!names(args) %in% names(overrides)], overrides)
+  p <- do.call(pheatmap::pheatmap, args)
   ggplotify::as.ggplot(p)
 }
 

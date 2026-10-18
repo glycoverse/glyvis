@@ -1,5 +1,10 @@
 # glyvis (development version)
 
+* `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label.
+* `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options.
+* `plot_heatmap()` now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors.
+* `plot_pca()` now forwards explicit groups, group columns, and plotting options consistently across supported inputs.
+
 # glyvis 0.7.2
 
 * Documentation now recommends `GlycomicSE` and `GlycoproteomicSE` containers for Stage II of glycoverse/glyexp#15. (#6)
