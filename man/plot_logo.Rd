@@ -25,10 +25,10 @@ is \code{NULL}, UniProt.ws is used to fetch protein sequences automatically.}
 
 \item{tax_id}{The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.}
 
-\item{...}{Additional arguments passed to \code{\link[ggseqlogo:ggseqlogo]{ggseqlogo::ggseqlogo()}}.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a logo plot for all glycosites.
@@ -39,7 +39,4 @@ Currently supported data types:
 glycoproteomics container.
 Logo plot of glycosylation sites is plotted.
 }
-}
-\seealso{
-\code{\link[ggseqlogo:ggseqlogo]{ggseqlogo::ggseqlogo()}}
 }

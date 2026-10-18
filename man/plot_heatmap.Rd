@@ -15,10 +15,10 @@ plot_heatmap(x, ...)
 \arguments{
 \item{x}{A supported Glycoverse data container.}
 
-\item{...}{Other arguments passed to \code{pheatmap::pheatmap()}.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a heatmap from a \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},

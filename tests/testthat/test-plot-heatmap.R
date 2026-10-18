@@ -1,5 +1,4 @@
 test_that("custom trees are validated after zero-variance filtering", {
-  skip_if_not_installed("pheatmap")
   mat <- matrix(
     c(1, 1, 1, 1, 2, 4, 6, 8, 3, 5, 9, 12),
     3,
@@ -31,7 +30,6 @@ test_that("custom trees are validated after zero-variance filtering", {
 })
 
 test_that("heatmap clustering overrides skip default dendrogram computation", {
-  skip_if_not_installed("pheatmap")
   calls <- character()
   local_mocked_bindings(.robust_hclust = function(mat, by) {
     calls <<- c(calls, by)
@@ -57,15 +55,6 @@ test_that("heatmap clustering overrides skip default dendrogram computation", {
 })
 
 test_that("heatmap defaults can be overridden", {
-  skip_if_not_installed("pheatmap")
-  captured <- NULL
-  local_mocked_bindings(
-    pheatmap = function(...) {
-      captured <<- list(...)
-      grid::rectGrob()
-    },
-    .package = "pheatmap"
-  )
   p <- plot_heatmap(
     legacy_toy_experiment(),
     scale = "none",
@@ -75,11 +64,16 @@ test_that("heatmap defaults can be overridden", {
     na_col = "white"
   )
   expect_s3_class(p, "ggplot")
-  expect_equal(captured$scale, "none")
-  expect_identical(captured$show_rownames, TRUE)
-  expect_identical(captured$cluster_rows, FALSE)
-  expect_identical(captured$cluster_cols, FALSE)
-  expect_equal(captured$na_col, "white")
+  expect_equal(
+    p$data$value,
+    as.vector(log2(legacy_toy_experiment()$expr_mat + 1))
+  )
+  expect_equal(
+    levels(p$data$sample),
+    colnames(legacy_toy_experiment()$expr_mat)
+  )
+  expect_equal(p$scales$get_scales("fill")$na.value, "white")
+  expect_s3_class(p, "tidyplot")
 })
 
 skip_on_ci()

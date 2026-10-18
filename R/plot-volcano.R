@@ -17,9 +17,9 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Other arguments passed to [EnhancedVolcano::EnhancedVolcano()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_volcano <- function(
   x,

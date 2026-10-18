@@ -15,10 +15,9 @@
 #'   this argument can be omitted. When `site_sequence` is missing and `fasta`
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
-#' @param ... Additional arguments passed to [ggseqlogo::ggseqlogo()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
-#' @seealso [ggseqlogo::ggseqlogo()]
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_logo <- function(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...) {
   UseMethod("plot_logo")
@@ -57,9 +56,9 @@ plot_logo.GlycoproteomicSE <- function(
 #'   this argument can be omitted. When `site_sequence` is missing and `fasta`
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
-#' @param ... Other arguments passed to [ggseqlogo::ggseqlogo()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
-.plot_exp_logo <- function(exp, n_aa, fasta, tax_id, ...) {
+.plot_exp_logo <- function(exp, n_aa, fasta, tax_id, logo_args = list(), ...) {
   rlang::check_installed("ggseqlogo")
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
@@ -83,7 +82,31 @@ plot_logo.GlycoproteomicSE <- function(
   }
 
   seq <- unique(.get_var_info(exp)$site_sequence)
-  ggseqlogo::ggseqlogo(seq, ...)
+  positions <- seq_len(nchar(seq[[1]]))
+  canvas <- data.frame(position = positions, height = 0)
+  p <- .glyvis_plot(canvas, "position", "height", ...)
+  logo <- suppressWarnings(
+    rlang::exec(ggseqlogo::geom_logo, data = seq, !!!logo_args),
+    classes = "lifecycle_warning_deprecated"
+  )
+  # ggseqlogo supplies glyph geometry and amino-acid colors, not the canvas.
+  p <- suppressMessages(tidyplots::add(p, logo))
+  suppressMessages(
+    p +
+      labs(
+        x = "Position relative to glycosite",
+        y = if (identical(logo_args$method, "prob")) {
+          "Probability"
+        } else {
+          "Information (bits)"
+        }
+      ) +
+      scale_x_continuous(
+        breaks = positions,
+        labels = positions - (length(positions) + 1) / 2
+      ) +
+      theme(legend.position = "none")
+  )
 }
 
 .add_site_seq_uniprot <- function(exp, n_aa, tax_id) {

@@ -13,9 +13,9 @@
 #' @param x An object to be plotted.
 #' @param type The type of plot, one of "dotplot" or "roc". Default is "roc".
 #' @param auc_cutoff The AUC cutoff. Default is 0.5.
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_roc <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
   UseMethod("plot_roc")
@@ -24,7 +24,7 @@ plot_roc <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
 #' @rdname plot_roc
 #' @export
 plot_roc.glystats_roc_res <- function(x, type = "roc", auc_cutoff = 0.5, ...) {
-  .plot_roc(x, type = type, auc_cutoff = auc_cutoff)
+  .plot_roc(x, type = type, auc_cutoff = auc_cutoff, ...)
 }
 
 #' @rdname plot_roc
@@ -47,7 +47,7 @@ plot_roc.glyexp_experiment <- function(
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
-  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff)
+  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ...)
 }
 
 #' @rdname plot_roc
@@ -69,14 +69,14 @@ plot_roc.SummarizedExperiment <- function(
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
-  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff)
+  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ...)
 }
 
 #' Internal function to plot ROC plot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param type The type of plot, one of "dotplot" or "roc".
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Other arguments passed to `.glyvis_dotchart()` or `.glyvis_roc()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
 .plot_roc <- function(roc_res, type, auc_cutoff, ...) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
@@ -91,7 +91,7 @@ plot_roc.SummarizedExperiment <- function(
 #' Internal function to plot ROC dotplot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Other arguments passed to `.glyvis_dotchart()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
 .plot_roc_dotplot <- function(roc_res, auc_cutoff, ...) {
   df <- roc_res$tidy_result$auc %>%
@@ -103,14 +103,14 @@ plot_roc.SummarizedExperiment <- function(
         "lightgrey"
       )
     )
-  .glyvis_dotchart(df, x = "variable", y = "auc") +
+  .glyvis_dotchart(df, x = "variable", y = "auc", ...) +
     geom_hline(yintercept = auc_cutoff, linetype = "dashed", alpha = 0.7) +
     labs(x = "Variable", y = "ROC AUC")
 }
 
 #' Internal function to plot ROC curves
 #' @param roc_res A `glystats_roc_res` object.
-#' @param ... Other arguments passed to `.glyvis_roc()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
 .plot_roc_curves <- function(roc_res, ...) {
   if (nrow(roc_res$tidy_result$auc) > 10) {
@@ -120,5 +120,5 @@ plot_roc.SummarizedExperiment <- function(
       "i" = "Use {.arg type} = {.val dotplot}."
     ))
   }
-  .glyvis_roc(roc_res$tidy_result$coords)
+  .glyvis_roc(roc_res$tidy_result$coords, ...)
 }

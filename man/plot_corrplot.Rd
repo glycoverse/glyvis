@@ -18,12 +18,12 @@ plot_corrplot(x, ...)
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Additional arguments passed to \code{\link[GGally:ggcorr]{GGally::ggcorr()}}.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_cor]{glystats::gly_cor()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a correlation matrix heatmap.

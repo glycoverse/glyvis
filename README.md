@@ -19,9 +19,9 @@ ecosystem. Visualization is an essential part of data analysis. Human
 beings are more sensitive to visual information than text and numbers.
 Plotting helps us to understand the data better. `glyvis` provides a
 unified interface for visualizing `glycoverse` data, including
-statistical results, experiments, glycan biosynthesis pathways, and
-more. It implements the `autoplot()` method for various `glycoverse`
-data structures. Just `autoplot()` it!
+statistical results and experimental data. It implements the
+`autoplot()` method for various `glycoverse` data structures. Just
+`autoplot()` it!
 
 ## Installation
 
@@ -78,62 +78,57 @@ results. It implements `autoplot()` methods for each result class in
 a quick overview. It also provides some other visualization functions
 for `glycoverse` data structures, such as `glyexp::GlycomicSE`,
 `glyexp::GlycoproteomicSE`, `glyrepr::glycan_structure()`, and others.
-This package is not intended to produce publication-quality figures, but
-to provide a quick exploration of the data.
+All plotting entry points use [tidyplots](https://tidyplots.org/) and
+return composable `tidyplot` objects. Defaults use a white background,
+restrained colors, and readable typography; adjust the returned plot for
+your output size and audience.
 
 ## Example
 
 ``` r
 library(glyexp)
 library(glyclean)
-#> Warning: 程序包'glyclean'是用R版本4.5.2 来建造的
-#> 
-#> 载入程序包：'glyclean'
-#> The following object is masked from 'package:stats':
-#> 
-#>     aggregate
 library(glystats)
 library(glyvis)
 
+set.seed(42)
 exp <- auto_clean(real_experiment)
-#> 
-#> ── Normalizing data ──
-#> 
-#> ℹ No QC samples found. Using default normalization method based on experiment type.
-#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
-#> ✔ Normalization completed.
-#> 
-#> ── Removing variables with too many missing values ──
-#> 
-#> ℹ No QC samples found. Using all samples.
-#> ℹ Applying preset "discovery"...
-#> ℹ Total removed: 24 (0.56%) variables.
-#> ✔ Variable removal completed.
-#> 
-#> ── Imputing missing values ──
-#> 
-#> ℹ No QC samples found. Using default imputation method based on sample size.
-#> ℹ Sample size <= 30, using `impute_sample_min()`.
-#> ✔ Imputation completed.
-#> 
-#> ── Aggregating data ──
-#> 
-#> ℹ Aggregating to "gfs" level
-#> ✔ Aggregation completed.
-#> 
-#> ── Normalizing data again ──
-#> 
-#> ℹ No QC samples found. Using default normalization method based on experiment type.
-#> ℹ Experiment type is "glycoproteomics". Using `normalize_median()`.
-#> ✔ Normalization completed.
-#> 
-#> ── Correcting batch effects ──
-#> 
-#> ℹ Batch column  not found in sample_info. Skipping batch correction.
-#> ✔ Batch correction completed.
 
 pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" alt="" width="100%" />
+
+## Customize and export
+
+``` r
+plot_pca(exp, title = "Sample PCA", fontsize = 9,
+         palette = c(C = "#0072B2", H = "#D55E00", M = "#009E73", Y = "#CC79A7")) |>
+  tidyplots::adjust_legend_title("Group")
+```
+
+<img src="man/figures/README-tidyplots-1.png" alt="" width="100%" />
+
+All `plot_*()` and `autoplot()` entry points accept `title`, `fontsize`,
+`family`, `palette`, `width`, and `height`. Use named palettes to keep
+group colors fixed across plots and subsets. Scatter plots show points
+without labels by default; set `label = TRUE` when individual identities
+matter. No observations are removed for presentation; ranked plots and
+loadings accept an explicit `top_n`.
+
+``` r
+p <- plot_boxplot(exp[1:4, ], ncol = 2, scales = "fixed")
+ggplot2::ggsave("boxplots.pdf", p, width = 180, height = 120, units = "mm")
+```
+
+Heatmaps preserve clustering order and missing values, with a symmetric
+color scale for standardized values. Dendrograms are available
+separately through `autoplot(glystats::gly_hclust(exp))`.
+
+The backend migration replaces options specific to factoextra,
+EnhancedVolcano, GGally, and pheatmap. Use `label` instead of PCA
+`geom`/`repel`, `point_size` instead of volcano `pointSize`, and pass
+sequence-logo geometry options in `logo_args`. Unsupported arguments
+produce an error. See `?glyvis_plot_options` for the complete options
+and migration guide.

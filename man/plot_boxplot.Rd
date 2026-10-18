@@ -15,13 +15,13 @@ plot_boxplot(x, ...)
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a boxplot.

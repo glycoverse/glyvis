@@ -4,20 +4,20 @@
 \alias{autoplot.glystats_hclust_res}
 \title{Plots for Hierarchical Clustering}
 \usage{
-\method{autoplot}{glystats_hclust_res}(object, ...)
+\method{autoplot}{glystats_hclust_res}(object, rotate = FALSE, labels = TRUE, ...)
 }
 \arguments{
 \item{object}{A \code{glystats_hclust_res} object.}
 
-\item{...}{Additional arguments passed to \code{\link[ggdendro:ggdendrogram]{ggdendro::ggdendrogram()}}.}
+\item{rotate}{Display the dendrogram horizontally.}
+
+\item{labels}{Display leaf labels.}
+
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
-Visualization for results from \code{\link[glystats:gly_hclust]{glystats::gly_hclust()}} (\code{glystats_hclust_res} object).
-Draw a dendrogram.
-}
-\seealso{
-\code{\link[ggdendro:ggdendrogram]{ggdendro::ggdendrogram()}}
+Draw a dendrogram on a tidyplots canvas.
 }

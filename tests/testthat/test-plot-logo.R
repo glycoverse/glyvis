@@ -25,11 +25,19 @@ test_that("plot_logo works with custom n_aa", {
   vdiffr::expect_doppelganger("plot_logo_with_custom_n_aa", p)
 })
 
-test_that("plot_logo works with UniProt.ws fallback", {
-  skip_if_not_installed("UniProt.ws")
-  skip_if_offline()
-  exp <- test_gp_se
-  suppressMessages(p <- plot_logo(exp, tax_id = 9606))
+test_that("plot_logo uses fetched sequences on the tidyplots canvas", {
+  captured <- NULL
+  local_mocked_bindings(.add_site_seq_uniprot = function(exp, n_aa, tax_id) {
+    captured <<- list(n_aa = n_aa, tax_id = tax_id)
+    SummarizedExperiment::rowData(exp)$site_sequence <- rep(
+      c("AAAAANSTAAA", "GGGGGNSSGGG"),
+      length.out = nrow(exp)
+    )
+    exp
+  })
+  p <- plot_logo(test_gp_se, tax_id = 9606L, logo_args = list(method = "prob"))
+  expect_equal(captured, list(n_aa = 5L, tax_id = 9606L))
+  expect_s3_class(p, "tidyplot")
   vdiffr::expect_doppelganger("plot_logo_with_uniprot", p)
 })
 

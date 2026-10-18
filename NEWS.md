@@ -1,5 +1,19 @@
 # glyvis (development version)
 
+## Breaking changes
+
+* `plot_*()` and `autoplot()` now return composable `tidyplot` objects; arguments specific to the former plotting backends error, so use the common options in `?glyvis_plot_options` or tidyplots adjustment functions instead, and pass logo geometry options in `logo_args`.
+* `plot_heatmap()` retains clustering order but no longer embeds dendrograms; use the hierarchical-clustering `autoplot()` method to display a tree.
+
+## New features
+
+* `plot_*()` and `autoplot()` use tidyplots with consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets.
+* `plot_boxplot()` shows individual observations, removes redundant legends, wraps long facet labels, and accepts facet layout options.
+* `plot_heatmap()` uses symmetric color limits for standardized values, preserves missing cells, and hides column labels automatically above 40 samples.
+* `plot_pca()` and other score plots emphasize observations with optional labels and ellipses; loading and ranked plots retain all variables unless `top_n` is explicitly supplied.
+
+## Minor improvements and fixes
+
 * `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label. (#7)
 * `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options. (#7)
 * `plot_heatmap()` now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors. (#7)

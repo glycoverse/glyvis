@@ -1,5 +1,4 @@
 test_that("PCA methods forward groups and appearance options", {
-  skip_if_not_installed("factoextra")
   withr::local_seed(42)
   mat <- matrix(
     exp(rnorm(60)),
@@ -23,11 +22,11 @@ test_that("PCA methods forward groups and appearance options", {
     batch = rep(c("X", "Y"), 5)
   )
   for (x in list(result, se, legacy)) {
-    p <- plot_pca(x, groups = groups, title = "Custom PCA", geom = "point")
+    p <- plot_pca(x, groups = groups, title = "Custom PCA", label = FALSE)
     expect_equal(p$labels$title, "Custom PCA")
-    expect_setequal(as.character(p$data$Groups), groups)
+    expect_setequal(as.character(p$data$group), groups)
     p <- plot_pca(x, group_col = "batch", title = "Batch")
-    expect_setequal(as.character(p$data$Groups), c("X", "Y"))
+    expect_setequal(as.character(p$data$group), c("X", "Y"))
   }
 })
 

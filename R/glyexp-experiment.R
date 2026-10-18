@@ -11,9 +11,9 @@
 #' @param group_col A character string specifying where to find the group information.
 #'   It should be a column in the sample information tibble. Defaults to "group".
 #'   Only applicable to "boxplot".
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glyexp_experiment <- function(
   object,

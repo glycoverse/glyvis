@@ -8,8 +8,8 @@ Description: Provides a unified interface for visualizing glycomics data
     within the 'glycoverse' ecosystem. Implements 'autoplot()' methods for 
     various data structures including statistical results from 'glystats', 
     experimental data from 'glyexp', and glycan structures from 'glyrepr'. 
-    Designed for rapid data exploration and quality assessment rather than 
-    publication-quality figure generation.
+    Uses 'tidyplots' for consistent, composable graphics for data exploration
+    and scientific reporting.
 License: MIT + file LICENSE
 Suggests:
     testthat (>= 3.0.0),
@@ -18,12 +18,8 @@ Suggests:
     glystats (>= 0.10.1.9000),
     glyclean (>= 0.14.1.9000),
     ggdendro,
-    factoextra,
-    GGally,
-    EnhancedVolcano,
     ggseqlogo,
     UniProt.ws,
-    pheatmap,
     knitr,
     rmarkdown,
     patchwork,
@@ -38,8 +34,7 @@ Imports:
     cli,
     dplyr,
     ggplot2,
-    ggplotify,
-    ggrepel,
+    grid,
     glyexp (>= 0.16.0),
     magrittr,
     methods,
@@ -47,6 +42,8 @@ Imports:
     rlang,
     stringr,
     SummarizedExperiment,
-    tibble
+    tibble,
+    utils,
+    tidyplots (>= 0.4.0)
 Depends: R (>= 4.1)
 VignetteBuilder: knitr

@@ -9,10 +9,10 @@
 \arguments{
 \item{object}{A \code{glystats_cor_res} object.}
 
-\item{...}{Other arguments passed to \code{\link[GGally:ggcorr]{GGally::ggcorr()}}.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for \code{\link[glystats:gly_cor]{glystats::gly_cor()}} results (\code{glystats_cor_res} objects).

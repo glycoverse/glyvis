@@ -7,9 +7,9 @@
 #'   Boxplots of log2(expression + 1) values are plotted, grouped by the group column.
 #'
 #' @param x An object to be plotted.
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_boxplot <- function(x, ...) {
   UseMethod("plot_boxplot")
@@ -20,22 +20,29 @@ plot_boxplot <- function(x, ...) {
 #'   that contains group labels. Default is "group".
 #' @export
 plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
-  .plot_exp_boxplot(x, group_col)
+  .plot_exp_boxplot(x, group_col, ...)
 }
 
 #' @rdname plot_boxplot
 #' @export
 plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
-  .plot_exp_boxplot(x, group_col)
+  .plot_exp_boxplot(x, group_col, ...)
 }
 
 #' Internal function to plot boxplot
 #' @param exp A `glyexp_experiment` object.
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
-#' @param ... Other arguments passed to `.glyvis_boxplot()`.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #' @noRd
-.plot_exp_boxplot <- function(exp, group_col, ...) {
+.plot_exp_boxplot <- function(
+  exp,
+  group_col,
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  ...
+) {
   # We don't want to plot too many variables.
   if (nrow(exp) > 25) {
     cli::cli_abort(c(
@@ -57,7 +64,16 @@ plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
   df <- .fortify_experiment(exp) |>
     dplyr::mutate(value = log2(.data$value + 1))
 
-  .glyvis_boxplot(df, x = group_col, value = "value", group = group_col) +
+  if (is.null(ncol)) {
+    ncol <- min(3L, ceiling(sqrt(nrow(exp))))
+  }
+  checkmate::assert_count(label_width, positive = TRUE)
+  .glyvis_boxplot(df, x = group_col, value = "value", group = group_col, ...) +
     labs(x = "Group", y = expression(log[2]("Expr." + 1))) +
-    facet_wrap(~variable, scales = "free_y")
+    facet_wrap(
+      ~variable,
+      scales = scales,
+      ncol = ncol,
+      labeller = as_labeller(function(x) .glyvis_wrap(x, label_width))
+    )
 }

@@ -18,7 +18,7 @@ plot_umap(x, ...)
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{groups}{A factor or character vector specifying group membership for each sample.
 If provided, the plot will be colored by group.}
@@ -33,7 +33,7 @@ If not provided, this function will try "group".}
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_umap]{glystats::gly_umap()}}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Draw a UMAP scores plot.

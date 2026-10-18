@@ -13,21 +13,14 @@
 #' @param groups A factor or character vector specifying group membership for each sample.
 #'   If provided, the plot will be colored by group.
 #'   Only applicable to "individual" and "biplot" types.
-#'   Passed to the `habillage` paramter of [factoextra::fviz_pca_ind()] or [factoextra::fviz_pca_biplot()].
 #' @param group_col A character string specifying where to find the group information.
-#   If the result was produced from a supported Glycoverse data container,
-#   sample information has already been added to the result.
-#   In this case, you can specify the column name in the sample information tibble
-#   to be used for coloring.
-#' @param ... Additional arguments passed to underlying factoextra functions:
-#'   - type = "screeplot": [factoextra::fviz_screeplot()].
-#'   - type = "individual": [factoextra::fviz_pca_ind()].
-#'   - type = "variables": [factoextra::fviz_pca_var()].
-#'   - type = "biplot": [factoextra::fviz_pca_biplot()].
+#'   If the result was produced from a supported Glycoverse data container,
+#'   sample information has already been added to the result.
+#'   In this case, you can specify the column name in the sample information tibble
+#'   to be used for coloring.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
-#' @seealso [factoextra::fviz_screeplot()], [factoextra::fviz_pca_ind()],
-#'   [factoextra::fviz_pca_var()], [factoextra::fviz_pca_biplot()]
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_pca <- function(
   x,
@@ -85,48 +78,119 @@ plot_pca.SummarizedExperiment <- function(
   type = "individual",
   groups = NULL,
   group_col = NULL,
+  axes = c(1L, 2L),
+  label = FALSE,
+  top_n = NULL,
+  add_ellipse = FALSE,
   ...
 ) {
-  rlang::check_installed("factoextra")
   checkmate::assert_choice(
     type,
     c("screeplot", "individual", "variables", "biplot")
   )
+  model <- pca_res$raw_result
+  if (!inherits(model, "prcomp")) {
+    cli::cli_abort("PCA plotting requires a prcomp result.")
+  }
   .validate_group_args(groups, group_col)
-
-  groups <- .prepare_groups(pca_res, groups, group_col)
-  suppressWarnings(
-    switch(
-      type,
-      screeplot = .plot_pca_screeplot(pca_res, ...),
-      individual = .plot_pca_individual(pca_res, groups, ...),
-      variables = .plot_pca_variables(pca_res, ...),
-      biplot = .plot_pca_biplot(pca_res, groups, ...)
-    ),
-    classes = "lifecycle_warning_deprecated"
+  variance <- model$sdev^2 / sum(model$sdev^2) * 100
+  if (type == "screeplot") {
+    df <- data.frame(
+      component = factor(
+        paste0("PC", seq_along(variance)),
+        levels = paste0("PC", seq_along(variance))
+      ),
+      variance = variance
+    )
+    return(
+      .glyvis_barplot(df, "component", "variance", ...) +
+        labs(x = "Principal component", y = "Variance explained (%)")
+    )
+  }
+  checkmate::assert_integerish(
+    axes,
+    len = 2,
+    lower = 1,
+    upper = ncol(model$x),
+    any.missing = FALSE
   )
-}
-
-.plot_pca_screeplot <- function(pca_res, ...) {
-  factoextra::fviz_screeplot(pca_res$raw_result, ...)
-}
-
-.plot_pca_individual <- function(pca_res, groups, ...) {
-  if (is.null(groups)) {
-    factoextra::fviz_pca_ind(pca_res$raw_result, ...)
-  } else {
-    factoextra::fviz_pca_ind(pca_res$raw_result, habillage = groups, ...)
+  if (axes[1] == axes[2]) {
+    cli::cli_abort("{.arg axes} must select two different components.")
   }
-}
-
-.plot_pca_variables <- function(pca_res, ...) {
-  factoextra::fviz_pca_var(pca_res$raw_result, ...)
-}
-
-.plot_pca_biplot <- function(pca_res, groups, ...) {
-  if (is.null(groups)) {
-    factoextra::fviz_pca_biplot(pca_res$raw_result, ...)
-  } else {
-    factoextra::fviz_pca_biplot(pca_res$raw_result, habillage = groups, ...)
+  samples <- data.frame(
+    sample = rownames(model$x),
+    x = model$x[, axes[1]],
+    y = model$x[, axes[2]]
+  )
+  groups <- .prepare_groups(pca_res, groups, group_col)
+  if (!is.null(groups)) {
+    samples$group <- groups[samples$sample]
   }
+  variables <- data.frame(
+    variable = rownames(model$rotation),
+    x = model$rotation[, axes[1]],
+    y = model$rotation[, axes[2]]
+  )
+  if (type == "variables") {
+    p <- .glyvis_loadings(
+      variables,
+      "x",
+      "y",
+      "variable",
+      label = label,
+      top_n = top_n,
+      ...
+    )
+  } else {
+    p <- .glyvis_scatter(
+      samples,
+      "x",
+      "y",
+      if (is.null(groups)) NULL else "group",
+      label_col = "sample",
+      label = label,
+      add_ellipse = add_ellipse,
+      ...
+    )
+    if (type == "biplot") {
+      variables <- .glyvis_top(variables, variables$x^2 + variables$y^2, top_n)
+      # One common multiplier preserves loading angles and relative lengths.
+      extent <- max(sqrt(variables$x^2 + variables$y^2))
+      multiplier <- if (extent > 0) {
+        0.75 * max(sqrt(samples$x^2 + samples$y^2)) / extent
+      } else {
+        1
+      }
+      variables$x <- variables$x * multiplier
+      variables$y <- variables$y * multiplier
+      p <- tidyplots::add(
+        p,
+        geom_segment(
+          data = variables,
+          aes(x = 0, y = 0, xend = .data$x, yend = .data$y),
+          inherit.aes = FALSE,
+          arrow = grid::arrow(length = grid::unit(1.5, "mm")),
+          linewidth = 0.35,
+          color = "grey45"
+        )
+      )
+      if (label) {
+        p <- tidyplots::add_data_labels_repel(
+          p,
+          label = !!rlang::sym("variable"),
+          data = variables,
+          color = "grey35",
+          fontsize = 8,
+          max.overlaps = 20
+        )
+      }
+      p <- p + labs(caption = "Loading arrows use a common display multiplier.")
+    }
+  }
+  p +
+    labs(
+      x = sprintf("PC%d (%.1f%%)", axes[1], variance[axes[1]]),
+      y = sprintf("PC%d (%.1f%%)", axes[2], variance[axes[2]])
+    ) +
+    coord_equal()
 }

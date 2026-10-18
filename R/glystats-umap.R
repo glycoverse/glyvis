@@ -12,9 +12,9 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
-#' @param ... Ignored.
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_umap_res <- function(
   object,
@@ -22,5 +22,5 @@ autoplot.glystats_umap_res <- function(
   group_col = NULL,
   ...
 ) {
-  .plot_umap(object, groups = groups, group_col = group_col)
+  .plot_umap(object, groups = groups, group_col = group_col, ...)
 }

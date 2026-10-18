@@ -3,9 +3,9 @@
 #' Visualization for [glystats::gly_cor()] results (`glystats_cor_res` objects).
 #'
 #' @param object A `glystats_cor_res` object.
-#' @param ... Other arguments passed to [GGally::ggcorr()].
+#' @param ... Common and plot-specific options described in [glyvis_plot_options].
 #'
-#' @returns A ggplot object.
+#' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_cor_res <- function(object, ...) {
   .plot_corrplot(object, ...)

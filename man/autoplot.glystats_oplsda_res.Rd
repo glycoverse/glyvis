@@ -31,10 +31,10 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Ignored.}
+\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 }
 \value{
-A ggplot object.
+A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_oplsda]{glystats::gly_oplsda()}} (\code{glystats_oplsda_res} object).
