@@ -65,10 +65,10 @@ glycoverse](https://github.com/glycoverse/glycoverse#installation).
 
 ## Documentation
 
--   🚀 Get started:
-    [Here](https://glycoverse.github.io/glyvis/articles/glyvis.html)
--   📚 Reference:
-    [Here](https://glycoverse.github.io/glyvis/reference/index.html)
+- 🚀 Get started:
+  [Here](https://glycoverse.github.io/glyvis/articles/glyvis.html)
+- 📚 Reference:
+  [Here](https://glycoverse.github.io/glyvis/reference/index.html)
 
 ## Role in `glycoverse`
 
@@ -99,38 +99,3 @@ autoplot(pca_res)
 ```
 
 <img src="man/figures/README-pca.svg" alt="" width="450px" />
-
-## Customize and export
-
-``` r
-plot_pca(exp, title = "Sample PCA", fontsize = 9,
-         palette = c(C = "#0072B2", H = "#D55E00", M = "#009E73", Y = "#CC79A7")) |>
-  tidyplots::adjust_legend_title("Group")
-```
-
-<img src="man/figures/README-tidyplots.svg" alt="" width="450px" />
-
-All `plot_*()` and `autoplot()` entry points accept `title`, `fontsize`,
-`family`, `palette`, `width`, and `height`. Plot areas use tidyplots’
-default 50 by 50 mm size; set `width = NA, height = NA` to fill the
-graphics device instead. Use named palettes to keep group colors fixed
-across plots and subsets. Scatter plots show points without labels by
-default; set `label = TRUE` when individual identities matter. No
-observations are removed for presentation; ranked plots and loadings
-accept an explicit `top_n`.
-
-``` r
-p <- plot_boxplot(exp[1:4, ], ncol = 2, scales = "fixed")
-tidyplots::save_plot(p, "boxplots.pdf")
-```
-
-Heatmaps preserve clustering order and missing values, with a symmetric
-color scale for standardized values. Dendrograms are available
-separately through `autoplot(glystats::gly_hclust(exp))`.
-
-The backend migration replaces options specific to factoextra,
-EnhancedVolcano, GGally, and pheatmap. Use `label` instead of PCA
-`geom`/`repel`, `point_size` instead of volcano `pointSize`, and pass
-sequence-logo geometry options in `logo_args`. Unsupported arguments
-produce an error. See `?glyvis_plot_options` for the complete options
-and migration guide.
