@@ -38,9 +38,14 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
   filtered <- .filter_zero_variance(mat)
   mat <- filtered$mat
 
-  # Use robust clustering that handles NA values
-  row_clust <- .robust_hclust(mat, by = "row")
-  col_clust <- .robust_hclust(mat, by = "col")
+  overrides <- rlang::list2(...)
+  # Compute default clustering only when the caller has not supplied it.
+  row_clust <- if (!"cluster_rows" %in% names(overrides)) {
+    .robust_hclust(mat, by = "row")
+  }
+  col_clust <- if (!"cluster_cols" %in% names(overrides)) {
+    .robust_hclust(mat, by = "col")
+  }
 
   args <- list(
     mat = mat,
@@ -51,7 +56,6 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
     cluster_cols = col_clust,
     na_col = "grey"
   )
-  overrides <- rlang::list2(...)
   args <- c(args[!names(args) %in% names(overrides)], overrides)
   p <- do.call(pheatmap::pheatmap, args)
   ggplotify::as.ggplot(p)

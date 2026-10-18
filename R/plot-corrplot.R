@@ -52,7 +52,12 @@ plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
 
   plot <- GGally::ggcorr(data = NULL, cor_matrix = correlation, ...)
   diagonal_layer <- length(plot$layers)
-  plot$layers[[diagonal_layer]]$data$diagLabel <- feature_names
+  diagonal <- plot$layers[[diagonal_layer]]$data
+  diagonal$diagLabel <- feature_names[match(
+    diagonal$diagLabel,
+    safe_feature_names
+  )]
+  plot$layers[[diagonal_layer]]$data <- diagonal
 
   plot
 }
