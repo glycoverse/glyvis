@@ -98,7 +98,7 @@ pca_res <- gly_pca(exp)
 autoplot(pca_res)
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" alt="" width="100%" />
+<img src="man/figures/README-pca.svg" alt="" width="450px" />
 
 ## Customize and export
 
@@ -108,7 +108,7 @@ plot_pca(exp, title = "Sample PCA", fontsize = 9,
   tidyplots::adjust_legend_title("Group")
 ```
 
-<img src="man/figures/README-tidyplots-1.png" alt="" width="100%" />
+<img src="man/figures/README-tidyplots.svg" alt="" width="450px" />
 
 All `plot_*()` and `autoplot()` entry points accept `title`, `fontsize`,
 `family`, `palette`, `width`, and `height`. Plot areas use tidyplots’

@@ -10,8 +10,17 @@ knitr::opts_chunk$set(
   comment = "#>",
   message = FALSE,
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "450px"
 )
+
+# Size the complete SVG around tidyplots' fixed-size plotting area.
+knit_print.tidyplot <- function(x, options, ...) {
+  path <- paste0(options$fig.path, options$label, ".svg")
+  tidyplots::save_plot(x, path, padding = 0.02, view_plot = FALSE)
+  knitr::knit_print(knitr::include_graphics(path), options = options, ...)
+}
+registerS3method("knit_print", "tidyplot", knit_print.tidyplot,
+                envir = asNamespace("knitr"))
 ```
 
 # glyvis <a href="https://glycoverse.github.io/glyvis/"><img src="man/figures/logo.png" align="right" height="138" /></a>
@@ -85,7 +94,7 @@ and readable typography; adjust the returned plot for your output size and audie
 
 ## Example
 
-```{r}
+```{r pca}
 library(glyexp)
 library(glyclean)
 library(glystats)
@@ -100,7 +109,7 @@ autoplot(pca_res)
 
 ## Customize and export
 
-```{r tidyplots, fig.width=6, fig.height=4}
+```{r tidyplots}
 plot_pca(exp, title = "Sample PCA", fontsize = 9,
          palette = c(C = "#0072B2", H = "#D55E00", M = "#009E73", Y = "#CC79A7")) |>
   tidyplots::adjust_legend_title("Group")
