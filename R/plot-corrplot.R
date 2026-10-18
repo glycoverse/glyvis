@@ -20,7 +20,7 @@ plot_corrplot <- function(x, ...) {
 #' @rdname plot_corrplot
 #' @export
 plot_corrplot.glystats_cor_res <- function(x, ...) {
-  .plot_corrplot(x)
+  .plot_corrplot(x, ...)
 }
 
 #' @rdname plot_corrplot
@@ -28,14 +28,14 @@ plot_corrplot.glystats_cor_res <- function(x, ...) {
 #' @export
 plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
-  .plot_corrplot(cor_res)
+  .plot_corrplot(cor_res, ...)
 }
 
 #' @rdname plot_corrplot
 #' @export
 plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
-  .plot_corrplot(cor_res)
+  .plot_corrplot(cor_res, ...)
 }
 
 #' Internal function to plot correlation matrix
@@ -50,9 +50,14 @@ plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
   safe_feature_names <- make.names(feature_names, unique = TRUE)
   dimnames(correlation) <- list(safe_feature_names, safe_feature_names)
 
-  plot <- GGally::ggcorr(correlation, ...)
+  plot <- GGally::ggcorr(data = NULL, cor_matrix = correlation, ...)
   diagonal_layer <- length(plot$layers)
-  plot$layers[[diagonal_layer]]$data$diagLabel <- feature_names
+  diagonal <- plot$layers[[diagonal_layer]]$data
+  diagonal$diagLabel <- feature_names[match(
+    diagonal$diagLabel,
+    safe_feature_names
+  )]
+  plot$layers[[diagonal_layer]]$data <- diagonal
 
   plot
 }

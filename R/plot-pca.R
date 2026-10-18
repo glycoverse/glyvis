@@ -48,7 +48,7 @@ plot_pca.glystats_pca_res <- function(
   group_col = NULL,
   ...
 ) {
-  .plot_pca(x, type = type, ...)
+  .plot_pca(x, type = type, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_pca
@@ -63,7 +63,7 @@ plot_pca.glyexp_experiment <- function(
   ...
 ) {
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
-  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col)
+  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
 }
 
 #' @rdname plot_pca
@@ -77,7 +77,7 @@ plot_pca.SummarizedExperiment <- function(
   ...
 ) {
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
-  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col)
+  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
 }
 
 .plot_pca <- function(

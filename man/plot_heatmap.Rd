@@ -25,5 +25,6 @@ Draw a heatmap from a \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
 \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible \code{SummarizedExperiment}.
 Heatmap of log2-transformed expression values is plotted.
 Before plotting, zero-variance rows and columns are filtered out
-to ensure robust clustering.
+to ensure robust clustering. Supplied \code{hclust} objects must match the
+retained rows or columns, including their input order.
 }

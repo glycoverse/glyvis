@@ -4,7 +4,7 @@
 #' Currently supported data types:
 #' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
 #'   [glyexp::GlycoproteomicSE()], or other compatible container.
-#'   Boxplots of log2-transformed expression values are plotted, grouped by the group column.
+#'   Boxplots of log2(expression + 1) values are plotted, grouped by the group column.
 #'
 #' @param x An object to be plotted.
 #' @param ... Ignored.
@@ -54,9 +54,10 @@ plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
     ))
   }
 
-  df <- .fortify_experiment(exp)
+  df <- .fortify_experiment(exp) |>
+    dplyr::mutate(value = log2(.data$value + 1))
 
   .glyvis_boxplot(df, x = group_col, value = "value", group = group_col) +
-    labs(x = "Group", y = expression(log[2]("Expr."))) +
+    labs(x = "Group", y = expression(log[2]("Expr." + 1))) +
     facet_wrap(~variable, scales = "free_y")
 }

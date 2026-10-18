@@ -29,6 +29,6 @@ Currently supported data types:
 \itemize{
 \item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
 \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
-Boxplots of log2-transformed expression values are plotted, grouped by the group column.
+Boxplots of log2(expression + 1) values are plotted, grouped by the group column.
 }
 }

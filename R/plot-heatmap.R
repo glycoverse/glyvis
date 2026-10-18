@@ -4,7 +4,8 @@
 #' [glyexp::GlycoproteomicSE()], or other compatible `SummarizedExperiment`.
 #' Heatmap of log2-transformed expression values is plotted.
 #' Before plotting, zero-variance rows and columns are filtered out
-#' to ensure robust clustering.
+#' to ensure robust clustering. Supplied `hclust` objects must match the
+#' retained rows or columns, including their input order.
 #'
 #' @param x A supported Glycoverse data container.
 #' @param ... Other arguments passed to `pheatmap::pheatmap()`.
@@ -38,20 +39,38 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
   filtered <- .filter_zero_variance(mat)
   mat <- filtered$mat
 
-  # Use robust clustering that handles NA values
-  row_clust <- .robust_hclust(mat, by = "row")
-  col_clust <- .robust_hclust(mat, by = "col")
+  overrides <- rlang::list2(...)
+  .validate_heatmap_tree(
+    overrides$cluster_rows,
+    rownames(mat),
+    nrow(mat),
+    "cluster_rows"
+  )
+  .validate_heatmap_tree(
+    overrides$cluster_cols,
+    colnames(mat),
+    ncol(mat),
+    "cluster_cols"
+  )
+  # Compute default clustering only when the caller has not supplied it.
+  row_clust <- if (!"cluster_rows" %in% names(overrides)) {
+    .robust_hclust(mat, by = "row")
+  }
+  col_clust <- if (!"cluster_cols" %in% names(overrides)) {
+    .robust_hclust(mat, by = "col")
+  }
 
-  p <- pheatmap::pheatmap(
-    mat,
+  args <- list(
+    mat = mat,
     scale = "row",
     show_rownames = FALSE,
     silent = TRUE,
     cluster_rows = row_clust,
     cluster_cols = col_clust,
-    na_col = "grey",
-    ...
+    na_col = "grey"
   )
+  args <- c(args[!names(args) %in% names(overrides)], overrides)
+  p <- do.call(pheatmap::pheatmap, args)
   ggplotify::as.ggplot(p)
 }
 
@@ -139,4 +158,21 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
 
   # Perform hierarchical clustering
   stats::hclust(dist_mat, method = method)
+}
+
+.validate_heatmap_tree <- function(tree, labels, size, arg) {
+  if (!inherits(tree, "hclust")) {
+    return(invisible(NULL))
+  }
+  if (
+    !identical(sort(tree$order), seq_len(size)) ||
+      (!is.null(tree$labels) && !identical(tree$labels, labels))
+  ) {
+    cli::cli_abort(c(
+      "{.arg {arg}} must match the retained heatmap dimensions and their input order.",
+      "i" = "Zero-variance rows and columns are removed before plotting.",
+      "i" = "Rebuild the tree using the retained rows or columns in input order, or omit {.arg {arg}} to compute it automatically."
+    ))
+  }
+  invisible(NULL)
 }
