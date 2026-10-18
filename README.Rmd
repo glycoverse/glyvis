@@ -107,14 +107,16 @@ plot_pca(exp, title = "Sample PCA", fontsize = 9,
 ```
 
 All `plot_*()` and `autoplot()` entry points accept `title`, `fontsize`, `family`,
-`palette`, `width`, and `height`. Use named palettes to keep group colors fixed
+`palette`, `width`, and `height`. Plot areas use tidyplots' default 50 by 50 mm
+size; set `width = NA, height = NA` to fill the graphics device instead.
+Use named palettes to keep group colors fixed
 across plots and subsets. Scatter plots show points without labels by default;
 set `label = TRUE` when individual identities matter. No observations are
 removed for presentation; ranked plots and loadings accept an explicit `top_n`.
 
 ```r
 p <- plot_boxplot(exp[1:4, ], ncol = 2, scales = "fixed")
-ggplot2::ggsave("boxplots.pdf", p, width = 180, height = 120, units = "mm")
+tidyplots::save_plot(p, "boxplots.pdf")
 ```
 
 Heatmaps preserve clustering order and missing values, with a symmetric color

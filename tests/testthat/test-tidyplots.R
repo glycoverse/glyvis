@@ -1,3 +1,22 @@
+test_that("plot sizes inherit tidyplots defaults and allow explicit overrides", {
+  df <- tibble::tibble(sample = c("A", "B"), tsne1 = 1:2, tsne2 = 2:1)
+  object <- structure(list(tidy_result = df), class = "glystats_tsne_res")
+  reference <- tidyplots::tidyplot(df, x = tsne1, y = tsne2)
+  dimensions <- c("width", "height", "unit")
+  expect_equal(
+    plot_tsne(object)$tidyplot[dimensions],
+    reference$tidyplot[dimensions]
+  )
+  expect_equal(
+    plot_tsne(object, width = 80, height = 60)$tidyplot[dimensions],
+    list(width = 80, height = 60, unit = "mm")
+  )
+  expect_equal(
+    plot_tsne(object, width = NA, height = NA)$tidyplot[dimensions],
+    list(width = NA, height = NA, unit = "mm")
+  )
+})
+
 test_that("all result entry points return composable tidyplots and forward styling", {
   withr::local_seed(42)
   sample_names <- paste0("S", 1:8)

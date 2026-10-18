@@ -8,8 +8,9 @@
 #' @section Common options:
 #' Pass these named arguments through `...` in any plotting entry point:
 #' * `title`: optional plot title.
-#' * `width`, `height`: plot-area dimensions in millimetres; `NA` (default)
-#'   fills the available graphics device. These are not export-page dimensions.
+#' * `width`, `height`: plot-area dimensions in millimetres; `NULL` (default)
+#'   uses tidyplots defaults (50 by 50 mm). Set `NA` to fill the available
+#'   graphics device. These are not export-page dimensions.
 #' * `fontsize`: base text size in points, default 9.
 #' * `family`: font family, default `"sans"`.
 #' * `palette`: color vector. A named vector maps group names to fixed colors

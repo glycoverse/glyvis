@@ -7,7 +7,7 @@
 
 ## New features
 
-* `plot_*()` and `autoplot()` use tidyplots with consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets.
+* `plot_*()` and `autoplot()` use tidyplots with its default 50 by 50 mm plot areas, consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets.
 * `plot_boxplot()` shows individual observations, removes redundant legends, wraps long facet labels, and accepts facet layout options.
 * `plot_heatmap()` uses symmetric color limits for standardized values, preserves missing cells, and hides column labels automatically above 40 samples.
 * `plot_pca()` and other score plots emphasize observations with optional labels and ellipses; loading and ranked plots retain all variables unless `top_n` is explicitly supplied.

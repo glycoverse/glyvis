@@ -18,34 +18,43 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
-  <clipPath id='cpMzYuMjJ8NzEwLjA0fDcuOTd8NTQ0LjIz'>
-    <rect x='36.22' y='7.97' width='673.82' height='536.26' />
+  <clipPath id='cpMjY2LjA0fDQ1My45NnwxOTcuMjd8Mzc4Ljcz'>
+    <rect x='266.04' y='197.27' width='187.91' height='181.47' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMzYuMjJ8NzEwLjA0fDcuOTd8NTQ0LjIz)'>
-<rect x='36.22' y='7.97' width='673.82' height='536.26' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<rect x='128.10' y='33.51' width='183.77' height='510.73' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0072B2;' />
-<rect x='434.38' y='348.96' width='183.77' height='195.28' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0072B2;' />
+<g clip-path='url(#cpMjY2LjA0fDQ1My45NnwxOTcuMjd8Mzc4Ljcz)'>
+<rect x='266.04' y='197.27' width='187.91' height='181.47' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<polyline points='36.22,544.23 36.22,7.97 ' style='stroke-width: 0.53; stroke-linecap: square;' />
-<text x='31.28' y='547.33' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<text x='31.28' y='404.27' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.2</text>
-<text x='31.28' y='261.21' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.4</text>
-<text x='31.28' y='118.15' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.6</text>
-<polyline points='33.48,544.23 36.22,544.23 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='33.48,401.17 36.22,401.17 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='33.48,258.11 36.22,258.11 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='33.48,115.05 36.22,115.05 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='36.22,544.23 710.04,544.23 ' style='stroke-width: 0.53; stroke-linecap: square;' />
-<polyline points='219.98,546.97 219.98,544.23 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<polyline points='526.27,546.97 526.27,544.23 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
-<text x='219.98' y='555.36' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>p1</text>
-<text x='526.27' y='555.36' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>p2</text>
-<text x='373.13' y='566.16' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='46.54px' lengthAdjust='spacingAndGlyphs'>Component</text>
-<text transform='translate(14.16,276.10) rotate(-90)' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='129.09px' lengthAdjust='spacingAndGlyphs'>Proportion of variance explained</text>
+</g>
+<defs>
+  <clipPath id='cpMzAyLjI2fDQ0My45OXwyMDUuMjR8MzQ2Ljk3'>
+    <rect x='302.26' y='205.24' width='141.73' height='141.73' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMzAyLjI2fDQ0My45OXwyMDUuMjR8MzQ2Ljk3)'>
+<rect x='302.26' y='205.24' width='141.73' height='141.73' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<rect x='321.59' y='211.99' width='38.65' height='134.98' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0072B2;' />
+<rect x='386.01' y='295.36' width='38.65' height='51.61' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #0072B2;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+<polyline points='302.26,346.97 302.26,205.24 ' style='stroke-width: 0.53; stroke-linecap: square;' />
+<text x='297.33' y='350.07' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='297.33' y='312.25' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.2</text>
+<text x='297.33' y='274.44' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.4</text>
+<text x='297.33' y='236.63' text-anchor='end' style='font-size: 9.00px; font-family: sans;' textLength='12.51px' lengthAdjust='spacingAndGlyphs'>0.6</text>
+<polyline points='299.52,346.97 302.26,346.97 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='299.52,309.16 302.26,309.16 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='299.52,271.35 302.26,271.35 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='299.52,233.54 302.26,233.54 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='302.26,346.97 443.99,346.97 ' style='stroke-width: 0.53; stroke-linecap: square;' />
+<polyline points='340.91,349.71 340.91,346.97 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<polyline points='405.34,349.71 405.34,346.97 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
+<text x='340.91' y='358.09' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>p1</text>
+<text x='405.34' y='358.09' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>p2</text>
+<text x='373.13' y='368.90' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='46.54px' lengthAdjust='spacingAndGlyphs'>Component</text>
+<text transform='translate(280.21,276.10) rotate(-90)' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='129.09px' lengthAdjust='spacingAndGlyphs'>Proportion of variance explained</text>
 </g>
 </svg>

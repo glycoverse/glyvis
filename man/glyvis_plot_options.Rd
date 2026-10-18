@@ -14,8 +14,9 @@ or use ordinary ggplot2 layers. No global theme or options are changed.
 Pass these named arguments through \code{...} in any plotting entry point:
 \itemize{
 \item \code{title}: optional plot title.
-\item \code{width}, \code{height}: plot-area dimensions in millimetres; \code{NA} (default)
-fills the available graphics device. These are not export-page dimensions.
+\item \code{width}, \code{height}: plot-area dimensions in millimetres; \code{NULL} (default)
+uses tidyplots defaults (50 by 50 mm). Set \code{NA} to fill the available
+graphics device. These are not export-page dimensions.
 \item \code{fontsize}: base text size in points, default 9.
 \item \code{family}: font family, default \code{"sans"}.
 \item \code{palette}: color vector. A named vector maps group names to fixed colors
