@@ -1,3 +1,35 @@
+test_that("custom trees are validated after zero-variance filtering", {
+  skip_if_not_installed("pheatmap")
+  mat <- matrix(
+    c(1, 1, 1, 1, 2, 4, 6, 8, 3, 5, 9, 12),
+    3,
+    byrow = TRUE,
+    dimnames = list(c("constant", "A", "B"), paste0("S", 1:4))
+  )
+  for (by in c("row", "col")) {
+    values <- if (by == "row") mat else t(mat)
+    x <- SummarizedExperiment::SummarizedExperiment(assays = list(values))
+    tree <- stats::hclust(stats::dist(mat))
+    args <- if (by == "row") {
+      list(cluster_rows = tree)
+    } else {
+      list(cluster_cols = tree)
+    }
+    expect_snapshot(error = TRUE, do.call(plot_heatmap, c(list(x), args)))
+    retained <- mat[-1, , drop = FALSE]
+    tree <- stats::hclust(stats::dist(retained))
+    args <- if (by == "row") {
+      list(cluster_rows = tree)
+    } else {
+      list(cluster_cols = tree)
+    }
+    expect_s3_class(
+      suppressWarnings(do.call(plot_heatmap, c(list(x), args))),
+      "ggplot"
+    )
+  }
+})
+
 test_that("heatmap clustering overrides skip default dendrogram computation", {
   skip_if_not_installed("pheatmap")
   calls <- character()
