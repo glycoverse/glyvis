@@ -33,6 +33,26 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>
+<code>plot_*()</code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> now return composable <code>tidyplot</code> objects; arguments specific to the former plotting backends error, so use the common options in <code><a href="../reference/glyvis_plot_options.html">?glyvis_plot_options</a></code> or tidyplots adjustment functions instead, and pass logo geometry options in <code>logo_args</code>. (#8)</li>
+<li>
+<code><a href="../reference/plot_heatmap.html">plot_heatmap()</a></code> retains clustering order but no longer embeds dendrograms; use the hierarchical-clustering <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> method to display a tree. (#8)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li>
+<code>plot_*()</code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> use tidyplots with its default 50 by 50 mm plot areas, consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets. (#8)</li>
+<li>
+<code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> shows individual observations, removes redundant legends, wraps long facet labels, and accepts facet layout options. (#8)</li>
+<li>
+<code><a href="../reference/plot_heatmap.html">plot_heatmap()</a></code> uses symmetric color limits for standardized values, preserves missing cells, and hides column labels automatically above 40 samples. (#8)</li>
+<li>
+<code><a href="../reference/plot_pca.html">plot_pca()</a></code> and other score plots emphasize observations with optional labels and ellipses; loading and ranked plots retain all variables unless <code>top_n</code> is explicitly supplied. (#8)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-improvements-and-fixes-development-version">Minor improvements and fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-fixes-development-version"></a></h3>
 <ul><li>
 <code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> now plots log2(abundance + 1) values with a matching axis label. (#7)</li>
 <li>
@@ -42,6 +62,7 @@
 <li>
 <code><a href="../reference/plot_pca.html">plot_pca()</a></code> now forwards explicit groups, group columns, and plotting options consistently across supported inputs. (#7)</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.2" id="glyvis-072">glyvis 0.7.2<a class="anchor" aria-label="anchor" href="#glyvis-072"></a></h2>
 <ul><li>Documentation now recommends <code>GlycomicSE</code> and <code>GlycoproteomicSE</code> containers for Stage II of glycoverse/glyexp#15. (#6)</li>

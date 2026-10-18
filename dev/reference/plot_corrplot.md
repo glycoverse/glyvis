@@ -36,8 +36,8 @@ plot_corrplot(x, stats_args = list(), ...)
 
 - ...:
 
-  Additional arguments passed to
-  [`GGally::ggcorr()`](https://ggobi.github.io/ggally/reference/ggcorr.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 - stats_args:
 
@@ -46,4 +46,4 @@ plot_corrplot(x, stats_args = list(), ...)
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.

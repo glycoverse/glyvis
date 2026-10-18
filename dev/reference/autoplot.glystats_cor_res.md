@@ -19,9 +19,9 @@ autoplot(object, ...)
 
 - ...:
 
-  Other arguments passed to
-  [`GGally::ggcorr()`](https://ggobi.github.io/ggally/reference/ggcorr.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.

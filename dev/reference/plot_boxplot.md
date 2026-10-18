@@ -28,7 +28,8 @@ plot_boxplot(x, group_col = "group", ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 - group_col:
 
@@ -37,4 +38,4 @@ plot_boxplot(x, group_col = "group", ...)
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.

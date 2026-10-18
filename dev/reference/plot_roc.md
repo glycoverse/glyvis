@@ -44,7 +44,8 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 - stats_args:
 
@@ -53,4 +54,4 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.

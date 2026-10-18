@@ -56,3 +56,8 @@
   : UMAP Plot
 - [`plot_volcano()`](https://glycoverse.github.io/glyvis/dev/reference/plot_volcano.md)
   : Volcano Plot
+
+## Customization
+
+- [`glyvis_plot_options`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
+  : Customize glyvis plots with tidyplots

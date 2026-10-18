@@ -15,6 +15,8 @@ statistical results into clear, compelling visuals.
 
 library(glyvis)
 library(glyexp)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 library(glyclean)
 #> 
 #> Attaching package: 'glyclean'
@@ -123,29 +125,37 @@ discover the full spectrum of
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
 capabilities and specialized `plot_xxx()` functions.
 
-## A Philosophy on Aesthetics
+## Consistent graphics with tidyplots
 
-Let’s set expectations straight: `glyvis` isn’t your publication
-graphics department. Creating truly stunning, publication-ready figures
-is an art form that demands thoughtful customization. Every compelling
-visualization emerges from careful consideration of countless decisions:
+All entry points return a `tidyplot` that can be modified with tidyplots
+pipes or ggplot2 layers. White backgrounds, modest line widths, and a
+common font size keep emphasis on the observations. No global plotting
+options are changed.
 
-- **Focus**: What story does your data want to tell?
-- **Scale**: How much visual real estate will make your message shine
-  without overwhelming?
-- **Layout**: How can multiple plots dance together harmoniously?
-- **Palette**: Which colors will captivate while staying true to your
-  data?
-- **Annotation**: What labels and text will guide your reader’s eye?
-- **Polish**: The devil’s in the details—legends, fonts, ticks, axes,
-  grids…
+``` r
 
-These creative choices flow from your intimate knowledge of the data and
-its scientific context. `glyvis` doesn’t presume to make these artistic
-decisions for you.
+plot_pca(exp, title = "PCA", fontsize = 9) |>
+  tidyplots::adjust_legend_title("Group")
+```
 
-Instead, think of `glyvis` as your data exploration companion. It excels
-at what it was born to do: transforming `glystats` results into instant,
-informative visuals. It’s your first glimpse into the data’s soul,
-helping you spot patterns and generate hypotheses at the speed of
-thought.
+![](glyvis_files/figure-html/unnamed-chunk-5-1.png)
+
+Use `label = TRUE` to identify individual points and a named `palette`
+to preserve group colors across subsets. Boxplots show raw observations
+over quartile boxes; `scales = "fixed"` makes their axes comparable
+across facets. Heatmaps keep their clustering order but use a tidyplots
+heatmap without an embedded dendrogram. Use the hierarchical-clustering
+[`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+method when the tree itself is the question.
+
+Export with explicit physical dimensions using
+[`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
+or
+[`tidyplots::save_plot()`](https://jbengler.github.io/tidyplots/reference/save_plot.html).
+Inspect the result at that size, particularly for long glycopeptide
+identifiers and large numbers of categories. Choose a meaningful subset
+explicitly with `top_n` for ranked plots or loadings when appropriate.
+See
+[`?glyvis_plot_options`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
+for common options, plot-specific controls, and migration from the
+former plotting backends.

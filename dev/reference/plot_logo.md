@@ -47,13 +47,9 @@ plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
 - ...:
 
-  Additional arguments passed to
-  [`ggseqlogo::ggseqlogo()`](https://rdrr.io/pkg/ggseqlogo/man/ggseqlogo.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 ## Value
 
-A ggplot object.
-
-## See also
-
-[`ggseqlogo::ggseqlogo()`](https://rdrr.io/pkg/ggseqlogo/man/ggseqlogo.html)
+A `tidyplot` object, also inheriting from `ggplot`.

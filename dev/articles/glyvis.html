@@ -74,6 +74,8 @@ clear, compelling visuals.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyvis/">glyvis</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyexp/" class="external-link">glyexp</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
+<span><span class="co">#&gt; 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://glycoverse.github.io/glyclean/" class="external-link">glyclean</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'glyclean'</span></span>
@@ -163,40 +165,31 @@ complete reference</a> to discover the full spectrum of
 <code>plot_xxx()</code> functions.</p>
 </div>
 <div class="section level2">
-<h2 id="a-philosophy-on-aesthetics">A Philosophy on Aesthetics<a class="anchor" aria-label="anchor" href="#a-philosophy-on-aesthetics"></a>
+<h2 id="consistent-graphics-with-tidyplots">Consistent graphics with tidyplots<a class="anchor" aria-label="anchor" href="#consistent-graphics-with-tidyplots"></a>
 </h2>
-<p>Let’s set expectations straight: <code>glyvis</code> isn’t your
-publication graphics department. Creating truly stunning,
-publication-ready figures is an art form that demands thoughtful
-customization. Every compelling visualization emerges from careful
-consideration of countless decisions:</p>
-<ul>
-<li>
-<strong>Focus</strong>: What story does your data want to tell?</li>
-<li>
-<strong>Scale</strong>: How much visual real estate will make your
-message shine without overwhelming?</li>
-<li>
-<strong>Layout</strong>: How can multiple plots dance together
-harmoniously?</li>
-<li>
-<strong>Palette</strong>: Which colors will captivate while staying
-true to your data?</li>
-<li>
-<strong>Annotation</strong>: What labels and text will guide your
-reader’s eye?</li>
-<li>
-<strong>Polish</strong>: The devil’s in the details—legends, fonts,
-ticks, axes, grids…</li>
-</ul>
-<p>These creative choices flow from your intimate knowledge of the data
-and its scientific context. <code>glyvis</code> doesn’t presume to make
-these artistic decisions for you.</p>
-<p>Instead, think of <code>glyvis</code> as your data exploration
-companion. It excels at what it was born to do: transforming
-<code>glystats</code> results into instant, informative visuals. It’s
-your first glimpse into the data’s soul, helping you spot patterns and
-generate hypotheses at the speed of thought.</p>
+<p>All entry points return a <code>tidyplot</code> that can be modified
+with tidyplots pipes or ggplot2 layers. White backgrounds, modest line
+widths, and a common font size keep emphasis on the observations. No
+global plotting options are changed.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_pca.html">plot_pca</a></span><span class="op">(</span><span class="va">exp</span>, title <span class="op">=</span> <span class="st">"PCA"</span>, fontsize <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyplots</span><span class="fu">::</span><span class="fu"><a href="https://jbengler.github.io/tidyplots/reference/adjust_legend_title.html" class="external-link">adjust_legend_title</a></span><span class="op">(</span><span class="st">"Group"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="glyvis_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="700"></p>
+<p>Use <code>label = TRUE</code> to identify individual points and a
+named <code>palette</code> to preserve group colors across subsets.
+Boxplots show raw observations over quartile boxes;
+<code>scales = "fixed"</code> makes their axes comparable across facets.
+Heatmaps keep their clustering order but use a tidyplots heatmap without
+an embedded dendrogram. Use the hierarchical-clustering
+<code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> method when the tree itself is the question.</p>
+<p>Export with explicit physical dimensions using
+<code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code> or <code><a href="https://jbengler.github.io/tidyplots/reference/save_plot.html" class="external-link">tidyplots::save_plot()</a></code>.
+Inspect the result at that size, particularly for long glycopeptide
+identifiers and large numbers of categories. Choose a meaningful subset
+explicitly with <code>top_n</code> for ranked plots or loadings when
+appropriate. See <code><a href="../reference/glyvis_plot_options.html">?glyvis_plot_options</a></code> for common options,
+plot-specific controls, and migration from the former plotting
+backends.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

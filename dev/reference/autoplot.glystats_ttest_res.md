@@ -38,8 +38,9 @@ autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.

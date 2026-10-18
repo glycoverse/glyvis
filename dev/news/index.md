@@ -2,6 +2,41 @@
 
 ## glyvis (development version)
 
+### Breaking changes
+
+- `plot_*()` and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  now return composable `tidyplot` objects; arguments specific to the
+  former plotting backends error, so use the common options in
+  [`?glyvis_plot_options`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
+  or tidyplots adjustment functions instead, and pass logo geometry
+  options in `logo_args`. (#8)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
+  retains clustering order but no longer embeds dendrograms; use the
+  hierarchical-clustering
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  method to display a tree. (#8)
+
+### New features
+
+- `plot_*()` and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  use tidyplots with its default 50 by 50 mm plot areas, consistent
+  typography, palettes, white backgrounds, and common styling options;
+  named palettes preserve group colors across subsets. (#8)
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
+  shows individual observations, removes redundant legends, wraps long
+  facet labels, and accepts facet layout options. (#8)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
+  uses symmetric color limits for standardized values, preserves missing
+  cells, and hides column labels automatically above 40 samples. (#8)
+- [`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md)
+  and other score plots emphasize observations with optional labels and
+  ellipses; loading and ranked plots retain all variables unless `top_n`
+  is explicitly supplied. (#8)
+
+### Minor improvements and fixes
+
 - [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
   now plots log2(abundance + 1) values with a matching axis label. (#7)
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)

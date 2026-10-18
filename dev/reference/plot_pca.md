@@ -56,31 +56,20 @@ plot_pca(
 
   A factor or character vector specifying group membership for each
   sample. If provided, the plot will be colored by group. Only
-  applicable to "individual" and "biplot" types. Passed to the
-  `habillage` paramter of
-  [`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html)
-  or
-  [`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
+  applicable to "individual" and "biplot" types.
 
 - group_col:
 
-  A character string specifying where to find the group information.
+  A character string specifying where to find the group information. If
+  the result was produced from a supported Glycoverse data container,
+  sample information has already been added to the result. In this case,
+  you can specify the column name in the sample information tibble to be
+  used for coloring.
 
 - ...:
 
-  Additional arguments passed to underlying factoextra functions:
-
-  - type = "screeplot":
-    [`factoextra::fviz_screeplot()`](https://rpkgs.datanovia.com/factoextra/reference/eigenvalue.html).
-
-  - type = "individual":
-    [`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
-
-  - type = "variables":
-    [`factoextra::fviz_pca_var()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
-
-  - type = "biplot":
-    [`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 - stats_args:
 
@@ -89,11 +78,4 @@ plot_pca(
 
 ## Value
 
-A ggplot object.
-
-## See also
-
-[`factoextra::fviz_screeplot()`](https://rpkgs.datanovia.com/factoextra/reference/eigenvalue.html),
-[`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html),
-[`factoextra::fviz_pca_var()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html),
-[`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html)
+A `tidyplot` object, also inheriting from `ggplot`.

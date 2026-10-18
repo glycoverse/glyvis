@@ -34,11 +34,7 @@ autoplot(object, type = "individual", groups = NULL, group_col = NULL, ...)
 
   A factor or character vector specifying group membership for each
   sample. If provided, the plot will be colored by group. Only
-  applicable to "individual" and "biplot" types. Passed to the
-  `habillage` paramter of
-  [`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html)
-  or
-  [`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
+  applicable to "individual" and "biplot" types.
 
 - group_col:
 
@@ -50,27 +46,9 @@ autoplot(object, type = "individual", groups = NULL, group_col = NULL, ...)
 
 - ...:
 
-  Other arguments passed to factoextra functions.
-
-  - For "screeplot", see
-    [`factoextra::fviz_screeplot()`](https://rpkgs.datanovia.com/factoextra/reference/eigenvalue.html).
-
-  - For "individual", see
-    [`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
-
-  - For "variables", see
-    [`factoextra::fviz_pca_var()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
-
-  - For "biplot", see
-    [`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 ## Value
 
-A ggplot object.
-
-## See also
-
-[`factoextra::fviz_screeplot()`](https://rpkgs.datanovia.com/factoextra/reference/eigenvalue.html),
-[`factoextra::fviz_pca_ind()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html),
-[`factoextra::fviz_pca_var()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html),
-[`factoextra::fviz_pca_biplot()`](https://rpkgs.datanovia.com/factoextra/reference/fviz_pca.html)
+A `tidyplot` object, also inheriting from `ggplot`.

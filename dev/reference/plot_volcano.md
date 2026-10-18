@@ -88,8 +88,8 @@ plot_volcano(
 
 - ...:
 
-  Other arguments passed to
-  [`EnhancedVolcano::EnhancedVolcano()`](https://rdrr.io/pkg/EnhancedVolcano/man/EnhancedVolcano.html).
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
 
 - test:
 
@@ -112,4 +112,4 @@ plot_volcano(
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.
