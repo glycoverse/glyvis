@@ -48,8 +48,15 @@ pak::pkg_install("glyvis")
 
 Or from [GitHub](https://github.com/glycoverse/glyvis):
 
+Install the latest releases of this package and its required Glycoverse
+dependencies together from GitHub:
+
 ``` r
-pak::pkg_install("glycoverse/glyvis@*release")
+pak::pkg_install(c(
+  "glycoverse/glyrepr@*release",
+  "glycoverse/glyexp@*release",
+  "glycoverse/glyvis@*release"
+))
 ```
 
 Or install the development version (NOT recommended):
