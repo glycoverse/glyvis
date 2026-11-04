@@ -7,6 +7,7 @@ test_that("fortify preserves one row per value with duplicate or absent identifi
         rowData = S4Vectors::DataFrame(feature_position = 1:2),
         colData = S4Vectors::DataFrame(sample_position = 1:2, group = c("A", "B"))
       )
+      before <- SummarizedExperiment::assay(exp)
       result <- ggplot2::fortify(exp)
       expected_variables <- if (is.null(variable_names)) c("1", "2") else variable_names
       expected_samples <- if (is.null(sample_names)) c("1", "2") else sample_names
@@ -18,7 +19,7 @@ test_that("fortify preserves one row per value with duplicate or absent identifi
       expect_identical(result$feature_position, rep(1:2, each = 2))
       expect_identical(result$group, rep(c("A", "B"), times = 2))
       expect_equal(result$value, as.vector(t(mat)))
-      expect_identical(SummarizedExperiment::assay(exp), mat)
+      expect_identical(SummarizedExperiment::assay(exp), before)
     }
   }
 })
