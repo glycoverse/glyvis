@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.
+
 ## Breaking changes
 
 * `plot_*()` and `autoplot()` now return composable `tidyplot` objects; arguments specific to the former plotting backends error, so use the common options in `?glyvis_plot_options` or tidyplots adjustment functions instead, and pass logo geometry options in `logo_args`. (#8)
