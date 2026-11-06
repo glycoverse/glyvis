@@ -53,7 +53,7 @@ plot_volcano.glyexp_experiment <- function(
     "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
     "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
   )
-  .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
+  plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' @rdname plot_volcano
@@ -75,7 +75,7 @@ plot_volcano.SummarizedExperiment <- function(
     "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
     "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
   )
-  .plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
+  plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }
 
 #' @rdname plot_volcano
