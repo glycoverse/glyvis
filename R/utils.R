@@ -101,12 +101,21 @@
     samples <- as.character(seq_len(ncol(expr_mat)))
   }
 
-  tibble::tibble(sample = rep(samples, times = nrow(expr_mat))) |>
-    dplyr::left_join(.get_sample_info(exp), by = "sample") |>
+  # SE identifiers can be duplicated. Join annotations by their row/column
+  # positions, then restore display identifiers, without multiplying rows.
+  sample_info <- .get_sample_info(exp)
+  var_info <- .get_var_info(exp)
+  sample_info$sample <- seq_len(ncol(expr_mat))
+  var_info$variable <- seq_len(nrow(expr_mat))
+
+  tibble::tibble(sample = rep(seq_len(ncol(expr_mat)), times = nrow(expr_mat))) |>
+    dplyr::left_join(sample_info, by = "sample") |>
     dplyr::mutate(
-      variable = rep(variables, each = ncol(expr_mat)),
+      sample = rep(samples, times = nrow(expr_mat)),
+      variable = rep(seq_len(nrow(expr_mat)), each = ncol(expr_mat)),
       value = as.vector(t(expr_mat))
     ) |>
-    dplyr::left_join(.get_var_info(exp), by = "variable") |>
+    dplyr::left_join(var_info, by = "variable") |>
+    dplyr::mutate(variable = rep(variables, each = ncol(expr_mat))) |>
     dplyr::relocate("value", .after = dplyr::last_col())
 }
