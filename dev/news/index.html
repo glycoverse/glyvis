@@ -33,7 +33,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
-<div class="section level3">
+<ul><li>Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.</li>
+</ul><div class="section level3">
 <h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
 <ul><li>
 <code>plot_*()</code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> now return composable <code>tidyplot</code> objects; arguments specific to the former plotting backends error, so use the common options in <code><a href="../reference/glyvis_plot_options.html">?glyvis_plot_options</a></code> or tidyplots adjustment functions instead, and pass logo geometry options in <code>logo_args</code>. (#8)</li>

@@ -2,6 +2,10 @@
 
 ## glyvis (development version)
 
+- Fortifying experiment containers joins annotations by position,
+  avoiding row multiplication and metadata misalignment when sample or
+  feature names are duplicated.
+
 ### Breaking changes
 
 - `plot_*()` and
