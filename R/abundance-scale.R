@@ -35,8 +35,12 @@
 #' abundances compared with adding 1. Plots of statistical results do not
 #' transform their inputs again.
 #' For container plots that run a glystats analysis (for example,
-#' [plot_pca()]), set analysis options through `stats_args`, such as
-#' `stats_args = list(log_transform = FALSE)`.
+#' [plot_pca()]), install glystats 0.14.0 or later. This released version
+#' recognizes logged scale metadata and preserves the supplied coordinates;
+#' `log_transform = TRUE` warns instead of applying a second logarithm.
+#' Set analysis options through `stats_args`, such as
+#' `stats_args = list(log_transform = FALSE)`. Plotting precomputed results
+#' does not rerun statistical analysis.
 #'
 #' @examples
 #' values <- matrix(c(0, 2, 4, 8, 1, 3, 6, 9), nrow = 2,

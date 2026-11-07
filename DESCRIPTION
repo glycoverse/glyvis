@@ -15,7 +15,7 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr,
     withr,
-    glystats (>= 0.10.1.9000),
+    glystats (>= 0.14.0),
     glyclean (>= 0.14.1.9000),
     ggdendro,
     ggseqlogo,
