@@ -17,6 +17,7 @@
 
 ## Minor improvements and fixes
 
+* Volcano plots now fail clearly when the selected comparison has no available `log2fc` values, including `logx` results and raw-scale limma analyses, instead of returning an empty plot. Partially missing fold changes remain supported.
 * Container-based limma volcano plots now require a contrast when multiple comparisons are present and honor an explicit `contrast`, matching the result-based plotting method.
 * `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label. (#7)
 * `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options. (#7)

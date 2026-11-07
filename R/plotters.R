@@ -195,6 +195,17 @@ glyvis_colors <- c(
 ) {
   checkmate::assert_number(p_cutoff, lower = 0, upper = 1)
   checkmate::assert_number(log2fc_cutoff, lower = 0)
+  if (all(is.na(df[[log2fc_col]]))) {
+    cli::cli_abort(
+      c(
+        "Cannot draw a volcano plot without any available log2 fold changes.",
+        "i" = "The selected result has no non-missing {.field {log2fc_col}} values.",
+        "i" = "Fold changes are unavailable for {.val logx} results and unlogged raw-scale limma analyses.",
+        "i" = "Use differential results with valid log2 fold changes; native estimates cannot replace them."
+      ),
+      class = "glyvis_missing_log2fc"
+    )
+  }
   df$neglog10p <- -log10(pmax(df[[p_col]], .Machine$double.xmin))
   df$status <- ifelse(
     df[[p_col]] < p_cutoff & df[[log2fc_col]] > log2fc_cutoff,
