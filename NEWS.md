@@ -10,7 +10,6 @@
 ## New features
 
 * Boxplots, heatmaps, and their container `autoplot()` methods accept `log_transform = NULL`. Raw or legacy inputs retain `log2(x + 1)` by default; recorded `log`, `log2`, `log10`, and `logx` values are not logged twice. `FALSE` preserves input values, while `TRUE` warns and is ignored for already logged inputs. Labels now reflect the selected scale. The fixed +1 pseudocount is unchanged.
-
 * `plot_*()` and `autoplot()` use tidyplots with its default 50 by 50 mm plot areas, consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets. (#8)
 * `plot_boxplot()` shows individual observations, removes redundant legends, wraps long facet labels, and accepts facet layout options. (#8)
 * `plot_heatmap()` uses symmetric color limits for standardized values, preserves missing cells, and hides column labels automatically above 40 samples. (#8)
@@ -19,7 +18,6 @@
 ## Minor improvements and fixes
 
 * Container-based limma volcano plots now require a contrast when multiple comparisons are present and honor an explicit `contrast`, matching the result-based plotting method.
-
 * `plot_boxplot()` now plots log2(abundance + 1) values with a matching axis label. (#7)
 * `plot_corrplot()` and correlation `autoplot()` methods now display the supplied correlation coefficients without recomputing correlations; `plot_corrplot()` forwards plotting options. (#7)
 * `plot_heatmap()` now allows supplied options to override defaults, including row labels, scaling, clustering, and missing-value colors. (#7)
