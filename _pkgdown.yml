@@ -17,3 +17,4 @@ reference:
   contents:
   - glyvis_plot_options
   - glyvis_abundance_scale
+  - glyvis_analysis_dependencies
