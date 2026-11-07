@@ -55,7 +55,7 @@ plot_pca.glyexp_experiment <- function(
   stats_args = list(),
   ...
 ) {
-  pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
+  pca_res <- .run_glystats_analysis(x, "gly_pca", stats_args)
   .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
 }
 
@@ -69,7 +69,7 @@ plot_pca.SummarizedExperiment <- function(
   stats_args = list(),
   ...
 ) {
-  pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
+  pca_res <- .run_glystats_analysis(x, "gly_pca", stats_args)
   .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
 }
 

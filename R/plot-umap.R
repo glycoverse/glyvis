@@ -46,7 +46,7 @@ plot_umap.glyexp_experiment <- function(
   stats_args = list(),
   ...
 ) {
-  umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
+  umap_res <- .run_glystats_analysis(x, "gly_umap", stats_args)
   .plot_umap(umap_res, groups = groups, group_col = group_col, ...)
 }
 
@@ -59,7 +59,7 @@ plot_umap.SummarizedExperiment <- function(
   stats_args = list(),
   ...
 ) {
-  umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
+  umap_res <- .run_glystats_analysis(x, "gly_umap", stats_args)
   .plot_umap(umap_res, groups = groups, group_col = group_col, ...)
 }
 

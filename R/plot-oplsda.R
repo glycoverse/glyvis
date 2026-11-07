@@ -60,7 +60,7 @@ plot_oplsda.glyexp_experiment <- function(
   stats_args = list(),
   ...
 ) {
-  oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
+  oplsda_res <- .run_glystats_analysis(x, "gly_oplsda", stats_args)
   .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
 }
 
@@ -75,7 +75,7 @@ plot_oplsda.SummarizedExperiment <- function(
   stats_args = list(),
   ...
 ) {
-  oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
+  oplsda_res <- .run_glystats_analysis(x, "gly_oplsda", stats_args)
   .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
 }
 

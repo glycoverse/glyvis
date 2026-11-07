@@ -46,7 +46,7 @@ plot_tsne.glyexp_experiment <- function(
   stats_args = list(),
   ...
 ) {
-  tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
+  tsne_res <- .run_glystats_analysis(x, "gly_tsne", stats_args)
   .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
 }
 
@@ -59,7 +59,7 @@ plot_tsne.SummarizedExperiment <- function(
   stats_args = list(),
   ...
 ) {
-  tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
+  tsne_res <- .run_glystats_analysis(x, "gly_tsne", stats_args)
   .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
 }
 

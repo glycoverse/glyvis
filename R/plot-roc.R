@@ -46,7 +46,7 @@ plot_roc.glyexp_experiment <- function(
       "i" = "Try to filter the experiment before plotting."
     ))
   }
-  roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
+  roc_res <- .run_glystats_analysis(x, "gly_roc", stats_args)
   .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ...)
 }
 
@@ -68,7 +68,7 @@ plot_roc.SummarizedExperiment <- function(
       "i" = "Try to filter the experiment before plotting."
     ))
   }
-  roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
+  roc_res <- .run_glystats_analysis(x, "gly_roc", stats_args)
   .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ...)
 }
 

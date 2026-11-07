@@ -27,14 +27,14 @@ plot_corrplot.glystats_cor_res <- function(x, ...) {
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_cor()].
 #' @export
 plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
-  cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
+  cor_res <- .run_glystats_analysis(x, "gly_cor", stats_args)
   .plot_corrplot(cor_res, ...)
 }
 
 #' @rdname plot_corrplot
 #' @export
 plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
-  cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
+  cor_res <- .run_glystats_analysis(x, "gly_cor", stats_args)
   .plot_corrplot(cor_res, ...)
 }
 

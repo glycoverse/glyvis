@@ -56,7 +56,7 @@ plot_plsda.glyexp_experiment <- function(
   stats_args = list(),
   ...
 ) {
-  plsda_res <- rlang::exec(glystats::gly_plsda, x, !!!stats_args)
+  plsda_res <- .run_glystats_analysis(x, "gly_plsda", stats_args)
   .plot_plsda(plsda_res, type, groups, group_col, ...)
 }
 
@@ -70,7 +70,7 @@ plot_plsda.SummarizedExperiment <- function(
   stats_args = list(),
   ...
 ) {
-  plsda_res <- rlang::exec(glystats::gly_plsda, x, !!!stats_args)
+  plsda_res <- .run_glystats_analysis(x, "gly_plsda", stats_args)
   .plot_plsda(plsda_res, type, groups, group_col, ...)
 }
 

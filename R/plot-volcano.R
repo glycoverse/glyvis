@@ -49,9 +49,9 @@ plot_volcano.glyexp_experiment <- function(
 
   dea_res <- switch(
     test,
-    "ttest" = rlang::exec(glystats::gly_ttest, x, !!!stats_args),
-    "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
-    "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
+    "ttest" = .run_glystats_analysis(x, "gly_ttest", stats_args),
+    "wilcox" = .run_glystats_analysis(x, "gly_wilcox", stats_args),
+    "limma" = .run_glystats_analysis(x, "gly_limma", stats_args)
   )
   plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }
@@ -71,9 +71,9 @@ plot_volcano.SummarizedExperiment <- function(
 
   dea_res <- switch(
     test,
-    "ttest" = rlang::exec(glystats::gly_ttest, x, !!!stats_args),
-    "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
-    "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
+    "ttest" = .run_glystats_analysis(x, "gly_ttest", stats_args),
+    "wilcox" = .run_glystats_analysis(x, "gly_wilcox", stats_args),
+    "limma" = .run_glystats_analysis(x, "gly_limma", stats_args)
   )
   plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
 }

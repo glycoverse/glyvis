@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Container plots that run glystats analyses now reject incompatible glystats builds before analyzing logged input, preventing repeated log transformations. The suggested dependency is updated and a public-behavior check distinguishes development builds sharing the same version number. Raw inputs and plotting precomputed results keep their existing behavior.
+
 * Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.
 
 ## Breaking changes
