@@ -139,10 +139,11 @@ plot_pca(exp, title = "PCA", fontsize = 9) |>
 ![](glyvis_files/figure-html/unnamed-chunk-5-1.png)
 
 Use `label = TRUE` to identify individual points and a named `palette`
-to preserve group colors across subsets. Boxplots show raw observations
-over quartile boxes; `scales = "fixed"` makes their axes comparable
-across facets. Heatmaps keep their clustering order but use a tidyplots
-heatmap without an embedded dendrogram. Use the hierarchical-clustering
+to preserve group colors across subsets. Boxplots show individual
+observations over quartile boxes; `scales = "fixed"` makes their axes
+comparable across facets. Heatmaps keep their clustering order but use a
+tidyplots heatmap without an embedded dendrogram. Use the
+hierarchical-clustering
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
 method when the tree itself is the question.
 

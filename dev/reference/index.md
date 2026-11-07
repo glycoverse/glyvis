@@ -61,3 +61,5 @@
 
 - [`glyvis_plot_options`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
   : Customize glyvis plots with tidyplots
+- [`glyvis_abundance_scale`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
+  : Abundance scales in boxplots and heatmaps

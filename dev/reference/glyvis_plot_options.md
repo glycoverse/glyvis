@@ -46,6 +46,13 @@ Pass these named arguments through `...` in any plotting entry point:
   selects the largest plotted values. All variables are retained by
   default.
 
+- Boxplots and heatmaps: `log_transform = NULL` uses recorded scale
+  metadata to log raw values with `log2(x + 1)` and leave logged values
+  unchanged. `FALSE` preserves the supplied values; `TRUE` warns and is
+  ignored for already logged input. See
+  [glyvis_abundance_scale](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
+  for compatibility rules.
+
 - Boxplots: `points = TRUE`, `ncol = NULL`, `label_width = 24`, and
   `scales = "free_y"`. Long facet labels wrap without truncation. Points
   are observations; boxes show the median and quartiles with 1.5-IQR
@@ -55,8 +62,9 @@ Pass these named arguments through `...` in any plotting entry point:
   `cluster_rows = TRUE`, `cluster_cols = TRUE` (also `FALSE` or
   compatible `hclust` objects), `show_rownames = FALSE`,
   `show_colnames = NULL`, and `na_col = "grey90"`. Columns are labelled
-  automatically up to 40 samples. Values are log2(abundance + 1), then
-  optionally standardized. Clustering orders rows and columns;
+  automatically up to 40 samples. Values use the selected log
+  transformation, then are optionally standardized. `scale` is
+  independent of `log_transform`. Clustering orders rows and columns;
   dendrograms are not drawn inside the heatmap. Use the
   hierarchical-clustering
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
