@@ -16,3 +16,4 @@ reference:
 - title: "Customization"
   contents:
   - glyvis_plot_options
+  - glyvis_abundance_scale

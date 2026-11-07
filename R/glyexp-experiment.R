@@ -12,6 +12,8 @@
 #'   It should be a column in the sample information tibble. Defaults to "group".
 #'   Only applicable to "boxplot".
 #' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams glyvis_abundance_scale
+#' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -19,14 +21,20 @@ autoplot.glyexp_experiment <- function(
   object,
   type = "heatmap",
   group_col = "group",
-  ...
+  ...,
+  log_transform = NULL
 ) {
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
   switch(
     type,
-    heatmap = .plot_exp_heatmap(object, ...),
-    boxplot = .plot_exp_boxplot(object, group_col, ...)
+    heatmap = .plot_exp_heatmap(object, ..., log_transform = log_transform),
+    boxplot = .plot_exp_boxplot(
+      object,
+      group_col,
+      ...,
+      log_transform = log_transform
+    )
   )
 }
 
@@ -36,14 +44,20 @@ autoplot.SummarizedExperiment <- function(
   object,
   type = "heatmap",
   group_col = "group",
-  ...
+  ...,
+  log_transform = NULL
 ) {
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
   switch(
     type,
-    heatmap = .plot_exp_heatmap(object, ...),
-    boxplot = .plot_exp_boxplot(object, group_col, ...)
+    heatmap = .plot_exp_heatmap(object, ..., log_transform = log_transform),
+    boxplot = .plot_exp_boxplot(
+      object,
+      group_col,
+      ...,
+      log_transform = log_transform
+    )
   )
 }
 

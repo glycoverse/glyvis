@@ -39,6 +39,10 @@ display multiplier; scores and explained variance are unchanged.
 by default. An explicit \code{top_n} selects the largest squared loading norms.
 \item VIP and ranked dot plots: \code{top_n = NULL}; an explicit positive integer
 selects the largest plotted values. All variables are retained by default.
+\item Boxplots and heatmaps: \code{log_transform = NULL} uses recorded scale metadata
+to log raw values with \code{log2(x + 1)} and leave logged values unchanged.
+\code{FALSE} preserves the supplied values; \code{TRUE} warns and is ignored for
+already logged input. See \link{glyvis_abundance_scale} for compatibility rules.
 \item Boxplots: \code{points = TRUE}, \code{ncol = NULL}, \code{label_width = 24}, and
 \code{scales = "free_y"}. Long facet labels wrap without truncation.
 Points are observations; boxes show the median and quartiles with
@@ -47,7 +51,8 @@ Points are observations; boxes show the median and quartiles with
 \code{cluster_rows = TRUE}, \code{cluster_cols = TRUE} (also \code{FALSE} or compatible
 \code{hclust} objects), \code{show_rownames = FALSE}, \code{show_colnames = NULL}, and
 \code{na_col = "grey90"}. Columns are labelled automatically up to 40 samples.
-Values are log2(abundance + 1), then optionally standardized. Clustering
+Values use the selected log transformation, then are optionally
+standardized. \code{scale} is independent of \code{log_transform}. Clustering
 orders rows and columns; dendrograms are not drawn inside the heatmap.
 Use the hierarchical-clustering \code{autoplot()} method for a dendrogram.
 \item Correlation plots: \code{label = FALSE}, \code{digits = 2}, and

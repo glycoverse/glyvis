@@ -5,9 +5,21 @@
 \alias{autoplot.SummarizedExperiment}
 \title{Plots for Glycoverse Data Containers}
 \usage{
-\method{autoplot}{glyexp_experiment}(object, type = "heatmap", group_col = "group", ...)
+\method{autoplot}{glyexp_experiment}(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...,
+  log_transform = NULL
+)
 
-\method{autoplot}{SummarizedExperiment}(object, type = "heatmap", group_col = "group", ...)
+\method{autoplot}{SummarizedExperiment}(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...,
+  log_transform = NULL
+)
 }
 \arguments{
 \item{object}{A supported Glycoverse data container.}
@@ -19,6 +31,12 @@ It should be a column in the sample information tibble. Defaults to "group".
 Only applicable to "boxplot".}
 
 \item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+
+\item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
+raw values are transformed with \code{log2(x + 1)}, while already logged values
+are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
+requests the same transformation for raw values, but warns and is ignored
+for already logged values. This argument must be named after \code{...}.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -31,4 +49,7 @@ Possible \code{type}s of plots:
 \item "heatmap": (Default) Expression heatmap with columns as samples and rows as variables.
 \item "boxplot": Boxplot of expression values for each sample.
 }
+}
+\seealso{
+\link{glyvis_abundance_scale} for scale metadata and compatibility rules.
 }

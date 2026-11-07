@@ -2,30 +2,33 @@
 #'
 #' Draw a heatmap from a [glyexp::GlycomicSE()],
 #' [glyexp::GlycoproteomicSE()], or other compatible `SummarizedExperiment`.
-#' Heatmap of log2-transformed expression values is plotted.
+#' Expression values use scale-aware log transformation controlled by
+#' `log_transform`, followed by optional row or column standardization.
 #' Before plotting, zero-variance rows and columns are filtered out
 #' to ensure robust clustering. Supplied `hclust` objects must match the
 #' retained rows or columns, including their input order.
 #'
 #' @param x A supported Glycoverse data container.
 #' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams glyvis_abundance_scale
+#' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_heatmap <- function(x, ...) {
+plot_heatmap <- function(x, ..., log_transform = NULL) {
   UseMethod("plot_heatmap")
 }
 
 #' @rdname plot_heatmap
 #' @export
-plot_heatmap.glyexp_experiment <- function(x, ...) {
-  .plot_exp_heatmap(x, ...)
+plot_heatmap.glyexp_experiment <- function(x, ..., log_transform = NULL) {
+  .plot_exp_heatmap(x, ..., log_transform = log_transform)
 }
 
 #' @rdname plot_heatmap
 #' @export
-plot_heatmap.SummarizedExperiment <- function(x, ...) {
-  .plot_exp_heatmap(x, ...)
+plot_heatmap.SummarizedExperiment <- function(x, ..., log_transform = NULL) {
+  .plot_exp_heatmap(x, ..., log_transform = log_transform)
 }
 
 #' Internal function to plot heatmap
@@ -41,19 +44,24 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
   show_colnames = NULL,
   na_col = "grey90",
   palette = c("#2166AC", "#F7F7F7", "#B2182B"),
-  ...
+  ...,
+  log_transform = NULL
 ) {
   checkmate::assert_choice(scale, c("row", "column", "none"))
   checkmate::assert_flag(show_rownames)
   checkmate::assert_flag(show_colnames, null.ok = TRUE)
+  transformation <- .resolve_plot_transformation(exp, log_transform)
   mat <- .get_expr_mat(exp)
+  if (transformation$log_transform) {
+    mat <- log2(mat + 1)
+  }
   if (is.null(rownames(mat))) {
     rownames(mat) <- paste0("Variable ", seq_len(nrow(mat)))
   }
   if (is.null(colnames(mat))) {
     colnames(mat) <- paste0("Sample ", seq_len(ncol(mat)))
   }
-  mat <- .filter_zero_variance(log2(mat + 1))$mat
+  mat <- .filter_zero_variance(mat)$mat
   if (!nrow(mat) || !ncol(mat)) {
     cli::cli_abort(
       "No variable rows or columns remain after zero-variance filtering."
@@ -120,8 +128,16 @@ plot_heatmap.SummarizedExperiment <- function(x, ...) {
     labs(
       x = NULL,
       y = NULL,
-      fill = if (scale == "none") "log2(abundance + 1)" else "Z score",
-      color = if (scale == "none") "log2(abundance + 1)" else "Z score"
+      fill = if (scale == "none") {
+        .abundance_label(transformation)
+      } else {
+        "Z score"
+      },
+      color = if (scale == "none") {
+        .abundance_label(transformation)
+      } else {
+        "Z score"
+      }
     ) +
     theme(axis.ticks = element_blank(), legend.position = "right")
 }

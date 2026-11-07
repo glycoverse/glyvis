@@ -29,6 +29,10 @@
 #'   by default. An explicit `top_n` selects the largest squared loading norms.
 #' * VIP and ranked dot plots: `top_n = NULL`; an explicit positive integer
 #'   selects the largest plotted values. All variables are retained by default.
+#' * Boxplots and heatmaps: `log_transform = NULL` uses recorded scale metadata
+#'   to log raw values with `log2(x + 1)` and leave logged values unchanged.
+#'   `FALSE` preserves the supplied values; `TRUE` warns and is ignored for
+#'   already logged input. See [glyvis_abundance_scale] for compatibility rules.
 #' * Boxplots: `points = TRUE`, `ncol = NULL`, `label_width = 24`, and
 #'   `scales = "free_y"`. Long facet labels wrap without truncation.
 #'   Points are observations; boxes show the median and quartiles with
@@ -37,7 +41,8 @@
 #'   `cluster_rows = TRUE`, `cluster_cols = TRUE` (also `FALSE` or compatible
 #'   `hclust` objects), `show_rownames = FALSE`, `show_colnames = NULL`, and
 #'   `na_col = "grey90"`. Columns are labelled automatically up to 40 samples.
-#'   Values are log2(abundance + 1), then optionally standardized. Clustering
+#'   Values use the selected log transformation, then are optionally
+#'   standardized. `scale` is independent of `log_transform`. Clustering
 #'   orders rows and columns; dendrograms are not drawn inside the heatmap.
 #'   Use the hierarchical-clustering `autoplot()` method for a dendrogram.
 #' * Correlation plots: `label = FALSE`, `digits = 2`, and
