@@ -2,6 +2,13 @@
 
 ## glyvis (development version)
 
+- Boxplots, heatmaps, and their container
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods now use `log2(x + 1e-6)` instead of `log2(x + 1)` when
+  transforming raw abundances. Zero values remain finite, and labels
+  reflect the smaller pseudocount. Already logged inputs and
+  `log_transform = FALSE` remain unchanged.
+
 - Fortifying experiment containers joins annotations by position,
   avoiding row multiplication and metadata misalignment when sample or
   feature names are duplicated.
@@ -25,11 +32,11 @@
 
 - Boxplots, heatmaps, and their container
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-  methods accept `log_transform = NULL`. Raw or legacy inputs retain
-  `log2(x + 1)` by default; recorded `log`, `log2`, `log10`, and `logx`
-  values are not logged twice. `FALSE` preserves input values, while
-  `TRUE` warns and is ignored for already logged inputs. Labels now
-  reflect the selected scale. The fixed +1 pseudocount is unchanged.
+  methods accept `log_transform = NULL`. Raw or legacy inputs use
+  `log2(x + 1e-6)` by default; recorded `log`, `log2`, `log10`, and
+  `logx` values are not logged twice. `FALSE` preserves input values,
+  while `TRUE` warns and is ignored for already logged inputs. Labels
+  now reflect the selected scale.
 - `plot_*()` and
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
   use tidyplots with its default 50 by 50 mm plot areas, consistent
@@ -56,7 +63,8 @@
   multiple comparisons are present and honor an explicit `contrast`,
   matching the result-based plotting method.
 - [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
-  now plots log2(abundance + 1) values with a matching axis label. (#7)
+  now plots log2-transformed abundance values with a matching axis
+  label. (#7)
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   and correlation
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)

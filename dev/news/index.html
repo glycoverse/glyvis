@@ -33,7 +33,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
-<ul><li>Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.</li>
+<ul><li><p>Boxplots, heatmaps, and their container <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods now use <code>log2(x + 1e-6)</code> instead of <code>log2(x + 1)</code> when transforming raw abundances. Zero values remain finite, and labels reflect the smaller pseudocount. Already logged inputs and <code>log_transform = FALSE</code> remain unchanged.</p></li>
+<li><p>Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.</p></li>
 </ul><div class="section level3">
 <h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
 <ul><li>
@@ -43,7 +44,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>Boxplots, heatmaps, and their container <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods accept <code>log_transform = NULL</code>. Raw or legacy inputs retain <code>log2(x + 1)</code> by default; recorded <code>log</code>, <code>log2</code>, <code>log10</code>, and <code>logx</code> values are not logged twice. <code>FALSE</code> preserves input values, while <code>TRUE</code> warns and is ignored for already logged inputs. Labels now reflect the selected scale. The fixed +1 pseudocount is unchanged.</li>
+<ul><li>Boxplots, heatmaps, and their container <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods accept <code>log_transform = NULL</code>. Raw or legacy inputs use <code>log2(x + 1e-6)</code> by default; recorded <code>log</code>, <code>log2</code>, <code>log10</code>, and <code>logx</code> values are not logged twice. <code>FALSE</code> preserves input values, while <code>TRUE</code> warns and is ignored for already logged inputs. Labels now reflect the selected scale.</li>
 <li>
 <code>plot_*()</code> and <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> use tidyplots with its default 50 by 50 mm plot areas, consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets. (#8)</li>
 <li>
@@ -58,7 +59,7 @@
 <ul><li>Volcano plots now fail clearly when the selected comparison has no available <code>log2fc</code> values, including <code>logx</code> results and raw-scale limma analyses, instead of returning an empty plot. Partially missing fold changes remain supported.</li>
 <li>Container-based limma volcano plots now require a contrast when multiple comparisons are present and honor an explicit <code>contrast</code>, matching the result-based plotting method.</li>
 <li>
-<code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> now plots log2(abundance + 1) values with a matching axis label. (#7)</li>
+<code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> now plots log2-transformed abundance values with a matching axis label. (#7)</li>
 <li>
 <code><a href="../reference/plot_corrplot.html">plot_corrplot()</a></code> and correlation <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> methods now display the supplied correlation coefficients without recomputing correlations; <code><a href="../reference/plot_corrplot.html">plot_corrplot()</a></code> forwards plotting options. (#7)</li>
 <li>

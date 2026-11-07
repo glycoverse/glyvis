@@ -47,9 +47,9 @@ Pass these named arguments through `...` in any plotting entry point:
   default.
 
 - Boxplots and heatmaps: `log_transform = NULL` uses recorded scale
-  metadata to log raw values with `log2(x + 1)` and leave logged values
-  unchanged. `FALSE` preserves the supplied values; `TRUE` warns and is
-  ignored for already logged input. See
+  metadata to log raw values with `log2(x + 1e-6)` and leave logged
+  values unchanged. `FALSE` preserves the supplied values; `TRUE` warns
+  and is ignored for already logged input. See
   [glyvis_abundance_scale](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
   for compatibility rules.
 

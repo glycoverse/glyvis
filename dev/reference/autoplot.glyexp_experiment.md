@@ -57,7 +57,7 @@ autoplot(
 - log_transform:
 
   `NULL` (default) uses recorded abundance scale metadata: raw values
-  are transformed with `log2(x + 1)`, while already logged values are
+  are transformed with `log2(x + 1e-6)`, while already logged values are
   unchanged. `FALSE` always uses the supplied values unchanged. `TRUE`
   requests the same transformation for raw values, but warns and is
   ignored for already logged values. This argument must be named after

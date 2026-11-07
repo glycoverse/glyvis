@@ -7,7 +7,7 @@ Abundance scales in boxplots and heatmaps
 - log_transform:
 
   `NULL` (default) uses recorded abundance scale metadata: raw values
-  are transformed with `log2(x + 1)`, while already logged values are
+  are transformed with `log2(x + 1e-6)`, while already logged values are
   unchanged. `FALSE` always uses the supplied values unchanged. `TRUE`
   requests the same transformation for raw values, but warns and is
   ignored for already logged values. This argument must be named after
@@ -41,10 +41,11 @@ heatmaps use a Z-score legend; unstandardized heatmaps show the
 abundance scale.
 
 This selection follows the scale-aware `log_transform` convention in
-glystats, but preserves glyvis's historical `log2(x + 1)` formula for
-raw values. The fixed pseudocount and its effect on small abundances are
-unchanged. Plots of statistical results do not transform their inputs
-again. For container plots that run a glystats analysis (for example,
+glystats. Raw values use `log2(x + 1e-6)`: the small fixed pseudocount
+keeps zero abundances finite while reducing distortion of small positive
+abundances compared with adding 1. Plots of statistical results do not
+transform their inputs again. For container plots that run a glystats
+analysis (for example,
 [`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md)),
 set analysis options through `stats_args`, such as
 `stats_args = list(log_transform = FALSE)`.
@@ -59,11 +60,11 @@ exp <- SummarizedExperiment::SummarizedExperiment(
   colData = S4Vectors::DataFrame(group = c("A", "A", "B", "B")),
   metadata = list(scale = "raw")
 )
-plot_boxplot(exp) # log2(x + 1)
+plot_boxplot(exp) # log2(x + 1e-6)
 
 plot_boxplot(exp, log_transform = FALSE) # unchanged raw values
 
-SummarizedExperiment::assay(exp) <- log2(values + 1)
+SummarizedExperiment::assay(exp) <- log2(values + 1e-6)
 S4Vectors::metadata(exp)$scale <- "log2"
 plot_heatmap(exp, scale = "none") # no second logarithm
 ```

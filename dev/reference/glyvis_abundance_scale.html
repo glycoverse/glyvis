@@ -43,7 +43,7 @@
 
 <dl><dt id="arg-log-transform">log_transform<a class="anchor" aria-label="anchor" href="#arg-log-transform"></a></dt>
 <dd><p><code>NULL</code> (default) uses recorded abundance scale metadata:
-raw values are transformed with <code>log2(x + 1)</code>, while already logged values
+raw values are transformed with <code>log2(x + 1e-6)</code>, while already logged values
 are unchanged. <code>FALSE</code> always uses the supplied values unchanged. <code>TRUE</code>
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after <code>...</code>.</p></dd>
@@ -70,9 +70,10 @@ boxplot <code>scales</code> controls facet axes. Heatmap filtering and clusterin
 the selected values before optional standardization. Standardized heatmaps
 use a Z-score legend; unstandardized heatmaps show the abundance scale.</p>
 <p>This selection follows the scale-aware <code>log_transform</code> convention in
-glystats, but preserves glyvis's historical <code>log2(x + 1)</code> formula for raw
-values. The fixed pseudocount and its effect on small abundances are
-unchanged. Plots of statistical results do not transform their inputs again.
+glystats. Raw values use <code>log2(x + 1e-6)</code>: the small fixed pseudocount
+keeps zero abundances finite while reducing distortion of small positive
+abundances compared with adding 1. Plots of statistical results do not
+transform their inputs again.
 For container plots that run a glystats analysis (for example,
 <code><a href="plot_pca.html">plot_pca()</a></code>), set analysis options through <code>stats_args</code>, such as
 <code>stats_args = list(log_transform = FALSE)</code>.</p>
@@ -87,11 +88,11 @@ For container plots that run a glystats analysis (for example,
 <span class="r-in"><span>  colData <span class="op">=</span> <span class="fu">S4Vectors</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html" class="external-link">DataFrame</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  metadata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="st">"raw"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="plot_boxplot.html">plot_boxplot</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="co"># log2(x + 1)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="plot_boxplot.html">plot_boxplot</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="co"># log2(x + 1e-6)</span></span></span>
 <span class="r-plt img"><img src="glyvis_abundance_scale-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="plot_boxplot.html">plot_boxplot</a></span><span class="op">(</span><span class="va">exp</span>, log_transform <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># unchanged raw values</span></span></span>
 <span class="r-plt img"><img src="glyvis_abundance_scale-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">values</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log2</a></span><span class="op">(</span><span class="va">values</span> <span class="op">+</span> <span class="fl">1e-6</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">S4Vectors</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/S4Vectors/man/Annotated-class.html" class="external-link">metadata</a></span><span class="op">(</span><span class="va">exp</span><span class="op">)</span><span class="op">$</span><span class="va">scale</span> <span class="op">&lt;-</span> <span class="st">"log2"</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">exp</span>, scale <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="co"># no second logarithm</span></span></span>
 <span class="r-plt img"><img src="glyvis_abundance_scale-3.png" alt="" width="700" height="433"></span>

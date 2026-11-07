@@ -79,7 +79,7 @@ scale-aware log transformation controlled by <code>log_transform</code>.</p></li
 
 <dt id="arg-log-transform">log_transform<a class="anchor" aria-label="anchor" href="#arg-log-transform"></a></dt>
 <dd><p><code>NULL</code> (default) uses recorded abundance scale metadata:
-raw values are transformed with <code>log2(x + 1)</code>, while already logged values
+raw values are transformed with <code>log2(x + 1e-6)</code>, while already logged values
 are unchanged. <code>FALSE</code> always uses the supplied values unchanged. <code>TRUE</code>
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after <code>...</code>.</p></dd>

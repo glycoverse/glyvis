@@ -76,7 +76,7 @@ by default. An explicit <code>top_n</code> selects the largest squared loading n
 <li><p>VIP and ranked dot plots: <code>top_n = NULL</code>; an explicit positive integer
 selects the largest plotted values. All variables are retained by default.</p></li>
 <li><p>Boxplots and heatmaps: <code>log_transform = NULL</code> uses recorded scale metadata
-to log raw values with <code>log2(x + 1)</code> and leave logged values unchanged.
+to log raw values with <code>log2(x + 1e-6)</code> and leave logged values unchanged.
 <code>FALSE</code> preserves the supplied values; <code>TRUE</code> warns and is ignored for
 already logged input. See <a href="glyvis_abundance_scale.html">glyvis_abundance_scale</a> for compatibility rules.</p></li>
 <li><p>Boxplots: <code>points = TRUE</code>, <code>ncol = NULL</code>, <code>label_width = 24</code>, and
