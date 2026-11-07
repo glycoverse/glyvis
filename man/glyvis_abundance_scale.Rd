@@ -41,8 +41,12 @@ keeps zero abundances finite while reducing distortion of small positive
 abundances compared with adding 1. Plots of statistical results do not
 transform their inputs again.
 For container plots that run a glystats analysis (for example,
-\code{\link[=plot_pca]{plot_pca()}}), set analysis options through \code{stats_args}, such as
-\code{stats_args = list(log_transform = FALSE)}.
+\code{\link[=plot_pca]{plot_pca()}}), install glystats 0.14.0 or later. This released version
+recognizes logged scale metadata and preserves the supplied coordinates;
+\code{log_transform = TRUE} warns instead of applying a second logarithm.
+Set analysis options through \code{stats_args}, such as
+\code{stats_args = list(log_transform = FALSE)}. Plotting precomputed results
+does not rerun statistical analysis.
 }
 \examples{
 values <- matrix(c(0, 2, 4, 8, 1, 3, 6, 9), nrow = 2,

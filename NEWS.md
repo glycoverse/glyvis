@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* The suggested glystats dependency now requires version 0.14.0 or later, so container plots that run statistical analyses use the released scale-aware implementation and do not log already transformed values again.
+
 * Boxplots, heatmaps, and their container `autoplot()` methods now use `log2(x + 1e-6)` instead of `log2(x + 1)` when transforming raw abundances. Zero values remain finite, and labels reflect the smaller pseudocount. Already logged inputs and `log_transform = FALSE` remain unchanged.
 
 * Fortifying experiment containers joins annotations by position, avoiding row multiplication and metadata misalignment when sample or feature names are duplicated.

@@ -63,6 +63,14 @@ pak::pkg_install("glycoverse/glyvis")
 applicable here: [Installation of
 glycoverse](https://github.com/glycoverse/glycoverse#installation).
 
+Container plots that run statistical analyses require the optional
+`glystats` package, version **0.14.0 or later**. This version respects
+recorded `log`, `log2`, `log10`, and `logx` scales instead of logging
+transformed values again. If r-universe has not yet synchronized the
+release, install the released version from GitHub with
+`pak::pkg_install("glycoverse/glystats@v0.14.0")`. Restart R after
+updating a loaded package.
+
 ## Documentation
 
 - 🚀 Get started:
