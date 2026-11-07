@@ -6,16 +6,22 @@
 \alias{plot_heatmap.SummarizedExperiment}
 \title{Heatmap}
 \usage{
-plot_heatmap(x, ...)
+plot_heatmap(x, ..., log_transform = NULL)
 
-\method{plot_heatmap}{glyexp_experiment}(x, ...)
+\method{plot_heatmap}{glyexp_experiment}(x, ..., log_transform = NULL)
 
-\method{plot_heatmap}{SummarizedExperiment}(x, ...)
+\method{plot_heatmap}{SummarizedExperiment}(x, ..., log_transform = NULL)
 }
 \arguments{
 \item{x}{A supported Glycoverse data container.}
 
 \item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+
+\item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
+raw values are transformed with \code{log2(x + 1)}, while already logged values
+are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
+requests the same transformation for raw values, but warns and is ignored
+for already logged values. This argument must be named after \code{...}.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -23,8 +29,12 @@ A \code{tidyplot} object, also inheriting from \code{ggplot}.
 \description{
 Draw a heatmap from a \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
 \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible \code{SummarizedExperiment}.
-Heatmap of log2-transformed expression values is plotted.
+Expression values use scale-aware log transformation controlled by
+\code{log_transform}, followed by optional row or column standardization.
 Before plotting, zero-variance rows and columns are filtered out
 to ensure robust clustering. Supplied \code{hclust} objects must match the
 retained rows or columns, including their input order.
+}
+\seealso{
+\link{glyvis_abundance_scale} for scale metadata and compatibility rules.
 }

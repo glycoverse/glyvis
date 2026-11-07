@@ -6,16 +6,22 @@
 \alias{plot_boxplot.SummarizedExperiment}
 \title{Boxplot}
 \usage{
-plot_boxplot(x, ...)
+plot_boxplot(x, ..., log_transform = NULL)
 
-\method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ...)
+\method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ..., log_transform = NULL)
 
-\method{plot_boxplot}{SummarizedExperiment}(x, group_col = "group", ...)
+\method{plot_boxplot}{SummarizedExperiment}(x, group_col = "group", ..., log_transform = NULL)
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
 \item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+
+\item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
+raw values are transformed with \code{log2(x + 1)}, while already logged values
+are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
+requests the same transformation for raw values, but warns and is ignored
+for already logged values. This argument must be named after \code{...}.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
@@ -29,6 +35,10 @@ Currently supported data types:
 \itemize{
 \item \code{SummarizedExperiment}: A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}},
 \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}}, or other compatible container.
-Boxplots of log2(expression + 1) values are plotted, grouped by the group column.
+Expression values are plotted, grouped by the group column, with
+scale-aware log transformation controlled by \code{log_transform}.
 }
+}
+\seealso{
+\link{glyvis_abundance_scale} for scale metadata and compatibility rules.
 }

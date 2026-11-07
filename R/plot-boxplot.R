@@ -4,14 +4,17 @@
 #' Currently supported data types:
 #' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
 #'   [glyexp::GlycoproteomicSE()], or other compatible container.
-#'   Boxplots of log2(expression + 1) values are plotted, grouped by the group column.
+#'   Expression values are plotted, grouped by the group column, with
+#'   scale-aware log transformation controlled by `log_transform`.
 #'
 #' @param x An object to be plotted.
 #' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams glyvis_abundance_scale
+#' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_boxplot <- function(x, ...) {
+plot_boxplot <- function(x, ..., log_transform = NULL) {
   UseMethod("plot_boxplot")
 }
 
@@ -19,14 +22,24 @@ plot_boxplot <- function(x, ...) {
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
 #' @export
-plot_boxplot.glyexp_experiment <- function(x, group_col = "group", ...) {
-  .plot_exp_boxplot(x, group_col, ...)
+plot_boxplot.glyexp_experiment <- function(
+  x,
+  group_col = "group",
+  ...,
+  log_transform = NULL
+) {
+  .plot_exp_boxplot(x, group_col, ..., log_transform = log_transform)
 }
 
 #' @rdname plot_boxplot
 #' @export
-plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
-  .plot_exp_boxplot(x, group_col, ...)
+plot_boxplot.SummarizedExperiment <- function(
+  x,
+  group_col = "group",
+  ...,
+  log_transform = NULL
+) {
+  .plot_exp_boxplot(x, group_col, ..., log_transform = log_transform)
 }
 
 #' Internal function to plot boxplot
@@ -41,7 +54,8 @@ plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...
+  ...,
+  log_transform = NULL
 ) {
   # We don't want to plot too many variables.
   if (nrow(exp) > 25) {
@@ -61,15 +75,18 @@ plot_boxplot.SummarizedExperiment <- function(x, group_col = "group", ...) {
     ))
   }
 
-  df <- .fortify_experiment(exp) |>
-    dplyr::mutate(value = log2(.data$value + 1))
+  transformation <- .resolve_plot_transformation(exp, log_transform)
+  df <- .fortify_experiment(exp)
+  if (transformation$log_transform) {
+    df$value <- log2(df$value + 1)
+  }
 
   if (is.null(ncol)) {
     ncol <- min(3L, ceiling(sqrt(nrow(exp))))
   }
   checkmate::assert_count(label_width, positive = TRUE)
   .glyvis_boxplot(df, x = group_col, value = "value", group = group_col, ...) +
-    labs(x = "Group", y = expression(log[2]("Expr." + 1))) +
+    labs(x = "Group", y = .abundance_label(transformation, boxplot = TRUE)) +
     facet_wrap(
       ~variable,
       scales = scales,

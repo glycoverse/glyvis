@@ -84,7 +84,7 @@ plot_pca(exp, title = "PCA", fontsize = 9) |>
 ```
 
 Use `label = TRUE` to identify individual points and a named `palette` to
-preserve group colors across subsets. Boxplots show raw observations over
+preserve group colors across subsets. Boxplots show individual observations over
 quartile boxes; `scales = "fixed"` makes their axes comparable across facets.
 Heatmaps keep their clustering order but use a tidyplots heatmap without an
 embedded dendrogram. Use the hierarchical-clustering `autoplot()` method when
@@ -96,3 +96,30 @@ glycopeptide identifiers and large numbers of categories. Choose a meaningful
 subset explicitly with `top_n` for ranked plots or loadings when appropriate.
 See `?glyvis_plot_options` for common options, plot-specific controls, and
 migration from the former plotting backends.
+
+
+## Abundance scales
+
+Boxplots and heatmaps use `log_transform = NULL` by default. They apply
+`log2(x + 1)` to raw abundances, and keep values recorded as `log`, `log2`,
+`log10`, or `logx` unchanged. `log` means natural logarithms; `logx` includes
+logged coordinates such as centered log-ratios whose ordinary-log base is
+not established. The scale comes from `S4Vectors::metadata(exp)$scale`, not
+the range of the numbers. Older objects with no scale field are treated as raw;
+an explicitly invalid scale is an error.
+
+```{r}
+plot_boxplot(exp[1:4, ], log_transform = FALSE)
+plot_heatmap(exp[1:10, ], scale = "none")
+```
+
+Use `log_transform = FALSE` to preserve the supplied values. Setting `TRUE`
+for an already logged input warns and skips the second logarithm. Plot labels
+reflect the selected scale. Heatmap `scale` still controls standardization
+independently; `scale = "none"` alone does not disable log transformation.
+The fixed +1 pseudocount for raw inputs is unchanged, including its effect
+on small abundances. See `?glyvis_abundance_scale` for details.
+
+Statistical-result plots do not log their inputs again. For plots that run
+an analysis first, pass analysis options through `stats_args`, for example
+`plot_pca(exp, stats_args = list(log_transform = FALSE))`.

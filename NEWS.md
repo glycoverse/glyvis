@@ -9,6 +9,8 @@
 
 ## New features
 
+* Boxplots, heatmaps, and their container `autoplot()` methods accept `log_transform = NULL`. Raw or legacy inputs retain `log2(x + 1)` by default; recorded `log`, `log2`, `log10`, and `logx` values are not logged twice. `FALSE` preserves input values, while `TRUE` warns and is ignored for already logged inputs. Labels now reflect the selected scale. The fixed +1 pseudocount is unchanged.
+
 * `plot_*()` and `autoplot()` use tidyplots with its default 50 by 50 mm plot areas, consistent typography, palettes, white backgrounds, and common styling options; named palettes preserve group colors across subsets. (#8)
 * `plot_boxplot()` shows individual observations, removes redundant legends, wraps long facet labels, and accepts facet layout options. (#8)
 * `plot_heatmap()` uses symmetric color limits for standardized values, preserves missing cells, and hides column labels automatically above 40 samples. (#8)
