@@ -78,7 +78,7 @@ plot_boxplot.SummarizedExperiment <- function(
   transformation <- .resolve_plot_transformation(exp, log_transform)
   df <- .fortify_experiment(exp)
   if (transformation$log_transform) {
-    df$value <- log2(df$value + 1)
+    df$value <- log2(df$value + 1e-6)
   }
 
   if (is.null(ncol)) {

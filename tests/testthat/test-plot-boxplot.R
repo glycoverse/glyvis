@@ -1,8 +1,8 @@
-test_that("boxplots show log2 abundance plus one", {
+test_that("boxplots show log2 abundance plus a small pseudocount", {
   x <- legacy_toy_experiment()
   x$expr_mat[1, 1] <- 0
   p <- plot_boxplot(x)
-  expect_equal(p$data$value, log2(as.vector(t(x$expr_mat)) + 1))
+  expect_equal(p$data$value, log2(as.vector(t(x$expr_mat)) + 1e-6))
   se <- SummarizedExperiment::SummarizedExperiment(
     assays = list(abundance = x$expr_mat),
     colData = S4Vectors::DataFrame(group = x$sample_info$group)

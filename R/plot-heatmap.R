@@ -53,7 +53,7 @@ plot_heatmap.SummarizedExperiment <- function(x, ..., log_transform = NULL) {
   transformation <- .resolve_plot_transformation(exp, log_transform)
   mat <- .get_expr_mat(exp)
   if (transformation$log_transform) {
-    mat <- log2(mat + 1)
+    mat <- log2(mat + 1e-6)
   }
   if (is.null(rownames(mat))) {
     rownames(mat) <- paste0("Variable ", seq_len(nrow(mat)))
