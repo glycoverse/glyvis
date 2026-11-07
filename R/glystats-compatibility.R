@@ -21,7 +21,10 @@
 #'
 #' A compatible development version is available from
 #' `remotes::install_github("glycoverse/glystats")`. Restart R after updating
-#' a loaded package. Do not relabel logged data as `"raw"` to bypass the check.
+#' a loaded package. The suggested minimum remains the installable 0.13.0
+#' release for raw-data and precomputed-result workflows; logged-data analyses
+#' additionally require the behavioral contract above. Do not relabel logged
+#' data as `"raw"` to bypass the check.
 #' Raw inputs and older objects without scale metadata retain their existing
 #' analysis behavior. Plotting an already computed statistical result does
 #' not rerun analysis and does not require this compatibility check. The

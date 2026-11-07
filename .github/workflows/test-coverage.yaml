@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GLYVIS_REQUIRE_LOGGED_GLYSTATS: "true"
 
     steps:
       - uses: actions/checkout@v6
@@ -25,7 +26,12 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr, any::xml2
+          # Other checks use the released dependency. Coverage also exercises
+          # the scale-aware development contract, which is not released yet.
+          extra-packages: |
+            any::covr
+            any::xml2
+            github::glycoverse/glystats@ebbee160a34e0f34c957e734d465e0e7a217ccf4
           needs: coverage
 
       - name: Test coverage

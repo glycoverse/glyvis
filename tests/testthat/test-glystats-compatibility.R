@@ -146,11 +146,18 @@ test_that("precomputed results and abundance-only plots bypass analysis checks",
   expect_s3_class(plot_heatmap(compatibility_test_exp(), scale = "none"), "tidyplot")
 }))
 
-test_that("current glystats uses logged coordinates unchanged in real PCA", local({
+test_that("installed glystats is guarded or preserves logged coordinates in PCA", local({
   withr::local_options(lifecycle_verbosity = "quiet")
   skip_if_not_installed("glystats")
-  skip_if_not(.glystats_supports_logged_inputs(),
-              "Installed glystats predates the logged-input contract")
+  supported <- .glystats_supports_logged_inputs()
+  if (identical(Sys.getenv("GLYVIS_REQUIRE_LOGGED_GLYSTATS"), "true")) {
+    expect_true(supported)
+  }
+  if (!supported) {
+    expect_error(plot_pca(compatibility_test_exp()),
+                 class = "glyvis_incompatible_glystats")
+    return(invisible(NULL))
+  }
   withr::local_seed(859)
   seed <- .Random.seed
   expect_true(.glystats_supports_logged_inputs())
