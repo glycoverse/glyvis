@@ -4,6 +4,8 @@
 #' (`glystats_ttest_res` and `glystats_wilcox_res` objects).
 #' Draw a volcano plot.
 #'
+#' @inheritSection plot_volcano Fold-change availability
+#'
 #' @param object A `glystats_ttest_res` or `glystats_wilcox_res` object.
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
@@ -71,6 +73,8 @@ autoplot.glystats_kruskal_res <- function(
 #'
 #' Visualization for results from [glystats::gly_limma()] (`glystats_limma_res` objects).
 #' Only 2-group comparison is supported, and a volcano plot is drawn.
+#'
+#' @inheritSection plot_volcano Fold-change availability
 #'
 #' @param object A `glystats_limma_res` object.
 #' @param contrast A character string specifying the contrast to plot, in the format of "group1_vs_group2".

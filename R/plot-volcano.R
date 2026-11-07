@@ -12,6 +12,15 @@
 #'   [glystats::gly_wilcox()], or [glystats::gly_limma()]
 #'   (controlled by the `test` argument), then the result is plotted.
 #'
+#' @section Fold-change availability:
+#' A volcano plot requires at least one non-missing `log2fc` value in the
+#' selected comparison. Results with only missing fold changes produce an
+#' informative error rather than an empty plot. This includes `logx` results
+#' and unlogged raw-scale limma analyses, whose native estimates are not log2
+#' fold changes. Native estimates are never substituted for `log2fc`.
+#' When only some fold changes are missing, the available values are plotted
+#' without changing the supplied results.
+#'
 #' @param x An object to be plotted.
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.

@@ -36,3 +36,13 @@ A \code{tidyplot} object, also inheriting from \code{ggplot}.
 Visualization for results from \code{\link[glystats:gly_limma]{glystats::gly_limma()}} (\code{glystats_limma_res} objects).
 Only 2-group comparison is supported, and a volcano plot is drawn.
 }
+\section{Fold-change availability}{
+
+A volcano plot requires at least one non-missing \code{log2fc} value in the
+selected comparison. Results with only missing fold changes produce an
+informative error rather than an empty plot. This includes \code{logx} results
+and unlogged raw-scale limma analyses, whose native estimates are not log2
+fold changes. Native estimates are never substituted for \code{log2fc}.
+When only some fold changes are missing, the available values are plotted
+without changing the supplied results.
+}
