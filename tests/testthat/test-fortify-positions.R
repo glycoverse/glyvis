@@ -32,5 +32,5 @@ test_that("boxplots do not duplicate observations when feature names repeat", {
   )
   result <- plot_boxplot(exp)
   expect_equal(nrow(result$data), length(mat))
-  expect_equal(result$data$value, log2(as.vector(t(mat)) + 1))
+  expect_equal(result$data$value, log2(as.vector(t(mat)) + 1e-6))
 })

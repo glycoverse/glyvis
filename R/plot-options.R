@@ -30,7 +30,7 @@
 #' * VIP and ranked dot plots: `top_n = NULL`; an explicit positive integer
 #'   selects the largest plotted values. All variables are retained by default.
 #' * Boxplots and heatmaps: `log_transform = NULL` uses recorded scale metadata
-#'   to log raw values with `log2(x + 1)` and leave logged values unchanged.
+#'   to log raw values with `log2(x + 1e-6)` and leave logged values unchanged.
 #'   `FALSE` preserves the supplied values; `TRUE` warns and is ignored for
 #'   already logged input. See [glyvis_abundance_scale] for compatibility rules.
 #' * Boxplots: `points = TRUE`, `ncol = NULL`, `label_width = 24`, and

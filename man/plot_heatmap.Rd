@@ -18,7 +18,7 @@ plot_heatmap(x, ..., log_transform = NULL)
 \item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
-raw values are transformed with \code{log2(x + 1)}, while already logged values
+raw values are transformed with \code{log2(x + 1e-6)}, while already logged values
 are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after \code{...}.}

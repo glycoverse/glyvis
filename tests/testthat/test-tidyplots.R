@@ -145,7 +145,7 @@ test_that("heatmap scaling and clustering preserve values and missingness", {
     dimnames = list(c("A", "B", "C"), paste0("S", 1:4))
   )
   se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
-  logged <- log2(mat + 1)
+  logged <- log2(mat + 1e-6)
   p <- plot_heatmap(se, cluster_rows = FALSE, cluster_cols = FALSE)
   expected <- t(apply(logged, 1, function(x) {
     (x - mean(x, na.rm = TRUE)) / stats::sd(x, na.rm = TRUE)

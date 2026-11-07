@@ -40,7 +40,7 @@ by default. An explicit \code{top_n} selects the largest squared loading norms.
 \item VIP and ranked dot plots: \code{top_n = NULL}; an explicit positive integer
 selects the largest plotted values. All variables are retained by default.
 \item Boxplots and heatmaps: \code{log_transform = NULL} uses recorded scale metadata
-to log raw values with \code{log2(x + 1)} and leave logged values unchanged.
+to log raw values with \code{log2(x + 1e-6)} and leave logged values unchanged.
 \code{FALSE} preserves the supplied values; \code{TRUE} warns and is ignored for
 already logged input. See \link{glyvis_abundance_scale} for compatibility rules.
 \item Boxplots: \code{points = TRUE}, \code{ncol = NULL}, \code{label_width = 24}, and

@@ -66,7 +66,7 @@ test_that("heatmap defaults can be overridden", {
   expect_s3_class(p, "ggplot")
   expect_equal(
     p$data$value,
-    as.vector(log2(legacy_toy_experiment()$expr_mat + 1))
+    as.vector(log2(legacy_toy_experiment()$expr_mat + 1e-6))
   )
   expect_equal(
     levels(p$data$sample),
