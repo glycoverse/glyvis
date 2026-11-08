@@ -2,6 +2,10 @@
 
 ## glyvis (development version)
 
+- Statistical plots support glystats results with `.variable` and
+  `.sample` identity columns, retaining ordinary `variable`/`sample`
+  annotations and compatibility with saved legacy results. (#22)
+
 - Boxplots, heatmaps, and their container
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
   methods now use `log2(x + 1e-6)` instead of `log2(x + 1)` when

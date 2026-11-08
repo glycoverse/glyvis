@@ -189,6 +189,16 @@ appropriate. See <code><a href="../reference/glyvis_plot_options.html">?glyvis_p
 plot-specific controls, and migration from the former plotting
 backends.</p>
 </div>
+<div class="section level2">
+<h2 id="statistical-result-identifiers">Statistical result identifiers<a class="anchor" aria-label="anchor" href="#statistical-result-identifiers"></a>
+</h2>
+<p>Plots recognize the identity columns declared by
+<code>glystats</code> results in <code>identifiers$columns</code>. New
+SE results use <code>.variable</code> and <code>.sample</code>;
+annotations named <code>variable</code> or <code>sample</code> remain
+ordinary metadata, including when selected with <code>group_col</code>.
+Results saved with the earlier schema remain supported.</p>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

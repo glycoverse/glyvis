@@ -158,3 +158,11 @@ See
 [`?glyvis_plot_options`](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
 for common options, plot-specific controls, and migration from the
 former plotting backends.
+
+## Statistical result identifiers
+
+Plots recognize the identity columns declared by `glystats` results in
+`identifiers$columns`. New SE results use `.variable` and `.sample`;
+annotations named `variable` or `sample` remain ordinary metadata,
+including when selected with `group_col`. Results saved with the earlier
+schema remain supported.
