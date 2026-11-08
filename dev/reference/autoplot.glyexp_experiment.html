@@ -107,6 +107,15 @@ for already logged values. This argument must be named after <code>...</code>.</
     <p>A <code>tidyplot</code> object, also inheriting from <code>ggplot</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>For SE containers, <code>fortify()</code> returns <code>.sample</code> and <code>.variable</code>
+axis identifiers and an abundance <code>value</code> column. Ordinary <code>sample</code> and
+<code>variable</code> metadata are retained. Conflicting annotation names receive
+numeric suffixes, with sample metadata preceding variable metadata.
+Boxplot <code>group_col</code> always selects the original column in <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>.
+Legacy experiment fortification retains <code>sample</code> and <code>variable</code> identifiers.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="glyvis_abundance_scale.html">glyvis_abundance_scale</a> for scale metadata and compatibility rules.</p></div>
     </div>

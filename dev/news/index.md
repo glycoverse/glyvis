@@ -2,6 +2,11 @@
 
 ## glyvis (development version)
 
+- SE fortification uses `.sample` and `.variable` axis IDs and preserves
+  ordinary annotations. Direct boxplots select grouping values from
+  `colData`, including `sample` or columns that collide with plotting
+  fields; legacy experiment output is unchanged. (#23)
+
 - Statistical plots support glystats results with `.variable` and
   `.sample` identity columns, retaining ordinary `variable`/`sample`
   annotations and compatibility with saved legacy results. (#22)

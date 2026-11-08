@@ -67,6 +67,17 @@ autoplot(
 
 A `tidyplot` object, also inheriting from `ggplot`.
 
+## Details
+
+For SE containers, `fortify()` returns `.sample` and `.variable` axis
+identifiers and an abundance `value` column. Ordinary `sample` and
+`variable` metadata are retained. Conflicting annotation names receive
+numeric suffixes, with sample metadata preceding variable metadata.
+Boxplot `group_col` always selects the original column in
+[`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html).
+Legacy experiment fortification retains `sample` and `variable`
+identifiers.
+
 ## See also
 
 [glyvis_abundance_scale](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
