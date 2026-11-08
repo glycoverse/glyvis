@@ -1,22 +1,26 @@
 volcano_missing_result <- function(log2fc, cls = "glystats_ttest_res") {
   n <- length(log2fc)
   structure(
-    list(tidy_result = tibble::tibble(
-      variable = paste0("V", seq_len(n)),
-      log2fc = log2fc,
-      estimate = seq_len(n),
-      p_adj = rep(.01, n),
-      p_val = rep(.001, n),
-      ref_group = rep("A", n),
-      test_group = rep("B", n)
-    )),
+    list(
+      tidy_result = tibble::tibble(
+        variable = paste0("V", seq_len(n)),
+        log2fc = log2fc,
+        estimate = seq_len(n),
+        p_adj = rep(.01, n),
+        p_val = rep(.001, n),
+        ref_group = rep("A", n),
+        test_group = rep("B", n)
+      )
+    ),
     class = cls
   )
 }
 
 test_that("all-missing fold changes fail clearly at every result entry point", {
   for (cls in c(
-    "glystats_ttest_res", "glystats_wilcox_res", "glystats_limma_res"
+    "glystats_ttest_res",
+    "glystats_wilcox_res",
+    "glystats_limma_res"
   )) {
     for (values in list(c(NA_real_, NA_real_), c(NA_real_, NaN))) {
       result <- volcano_missing_result(values, cls)
@@ -30,7 +34,10 @@ test_that("all-missing fold changes fail clearly at every result entry point", {
           )
           expect_match(conditionMessage(error), "logx")
           expect_match(conditionMessage(error), "raw-scale limma")
-          expect_match(conditionMessage(error), "native estimates cannot replace")
+          expect_match(
+            conditionMessage(error),
+            "native estimates cannot replace"
+          )
         }
       }
       expect_identical(result, before)
@@ -41,7 +48,9 @@ test_that("all-missing fold changes fail clearly at every result entry point", {
 test_that("partially missing fold changes retain available points unchanged", {
   values <- c(-2, NA_real_, 0, 2, NaN)
   for (cls in c(
-    "glystats_ttest_res", "glystats_wilcox_res", "glystats_limma_res"
+    "glystats_ttest_res",
+    "glystats_wilcox_res",
+    "glystats_limma_res"
   )) {
     result <- volcano_missing_result(values, cls)
     before <- result

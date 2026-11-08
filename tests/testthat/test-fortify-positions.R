@@ -1,20 +1,35 @@
 test_that("fortify preserves one row per value with duplicate or absent identifiers", {
   for (variable_names in list(NULL, c("same", "same"), c("V1", "V2"))) {
     for (sample_names in list(NULL, c("sample", "sample"), c("S1", "S2"))) {
-      mat <- matrix(c(1, 3, 2, 4), nrow = 2, dimnames = list(variable_names, sample_names))
+      mat <- matrix(
+        c(1, 3, 2, 4),
+        nrow = 2,
+        dimnames = list(variable_names, sample_names)
+      )
       exp <- SummarizedExperiment::SummarizedExperiment(
         assays = list(abundance = mat),
         rowData = S4Vectors::DataFrame(feature_position = 1:2),
-        colData = S4Vectors::DataFrame(sample_position = 1:2, group = c("A", "B"))
+        colData = S4Vectors::DataFrame(
+          sample_position = 1:2,
+          group = c("A", "B")
+        )
       )
       before <- SummarizedExperiment::assay(exp)
       result <- ggplot2::fortify(exp)
-      expected_variables <- if (is.null(variable_names)) c("1", "2") else variable_names
-      expected_samples <- if (is.null(sample_names)) c("1", "2") else sample_names
+      expected_variables <- if (is.null(variable_names)) {
+        c("1", "2")
+      } else {
+        variable_names
+      }
+      expected_samples <- if (is.null(sample_names)) {
+        c("1", "2")
+      } else {
+        sample_names
+      }
 
       expect_equal(nrow(result), length(mat))
-      expect_identical(result$sample, rep(expected_samples, times = 2))
-      expect_identical(result$variable, rep(expected_variables, each = 2))
+      expect_identical(result$.sample, rep(expected_samples, times = 2))
+      expect_identical(result$.variable, rep(expected_variables, each = 2))
       expect_identical(result$sample_position, rep(1:2, times = 2))
       expect_identical(result$feature_position, rep(1:2, each = 2))
       expect_identical(result$group, rep(c("A", "B"), times = 2))
@@ -25,7 +40,11 @@ test_that("fortify preserves one row per value with duplicate or absent identifi
 })
 
 test_that("boxplots do not duplicate observations when feature names repeat", {
-  mat <- matrix(c(1, 3, 2, 4), nrow = 2, dimnames = list(c("same", "same"), c("S1", "S2")))
+  mat <- matrix(
+    c(1, 3, 2, 4),
+    nrow = 2,
+    dimnames = list(c("same", "same"), c("S1", "S2"))
+  )
   exp <- SummarizedExperiment::SummarizedExperiment(
     assays = list(abundance = mat),
     colData = S4Vectors::DataFrame(group = c("A", "B"))
@@ -33,4 +52,74 @@ test_that("boxplots do not duplicate observations when feature names repeat", {
   result <- plot_boxplot(exp)
   expect_equal(nrow(result$data), length(mat))
   expect_equal(result$data$value, log2(as.vector(t(mat)) + 1e-6))
+})
+
+test_that("SE annotations cannot mask fortification variables", {
+  annotation_names <- c(
+    "variables",
+    "expr_mat",
+    "variable_index",
+    "samples",
+    "sample_index",
+    "samples_info",
+    "variables_info",
+    "annotation_names",
+    "exp",
+    "t",
+    "as.vector",
+    ".env",
+    ".data",
+    ".sample",
+    ".variable",
+    "value"
+  )
+  mat <- matrix(
+    seq_len(6),
+    nrow = 2,
+    dimnames = list(c("V1", "V2"), c("S1", "S2", "S3"))
+  )
+  for (column in annotation_names) {
+    exp <- SummarizedExperiment::SummarizedExperiment(
+      assays = list(abundance = mat),
+      colData = S4Vectors::DataFrame(
+        annotation = c("sample A", "sample B", "sample C")
+      ),
+      rowData = S4Vectors::DataFrame(annotation = c("feature A", "feature B"))
+    )
+    names(SummarizedExperiment::colData(exp)) <- column
+    names(SummarizedExperiment::rowData(exp)) <- column
+    before <- exp
+    result <- ggplot2::fortify(exp)
+    repaired_names <- make.unique(c(
+      ".sample",
+      ".variable",
+      "value",
+      column,
+      column
+    ))
+    expect_identical(
+      result$.sample,
+      rep(colnames(mat), times = nrow(mat)),
+      info = column
+    )
+    expect_identical(
+      result$.variable,
+      rep(rownames(mat), each = ncol(mat)),
+      info = column
+    )
+    expect_identical(result$value, as.vector(t(mat)), info = column)
+    expect_identical(
+      result[[repaired_names[4]]],
+      rep(c("sample A", "sample B", "sample C"), times = 2),
+      info = column
+    )
+    expect_identical(
+      result[[repaired_names[5]]],
+      rep(c("feature A", "feature B"), each = 3),
+      info = column
+    )
+    expect_identical(nrow(result), length(mat), info = column)
+    expect_named(result, repaired_names[c(1, 4, 2, 5, 3)])
+    expect_identical(exp, before, info = column)
+  }
 })

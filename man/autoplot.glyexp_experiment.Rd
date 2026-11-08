@@ -50,6 +50,14 @@ Possible \code{type}s of plots:
 \item "boxplot": Boxplot of expression values for each sample.
 }
 }
+\details{
+For SE containers, \code{fortify()} returns \code{.sample} and \code{.variable}
+axis identifiers and an abundance \code{value} column. Ordinary \code{sample} and
+\code{variable} metadata are retained. Conflicting annotation names receive
+numeric suffixes, with sample metadata preceding variable metadata.
+Boxplot \code{group_col} always selects the original column in \code{colData()}.
+Legacy experiment fortification retains \code{sample} and \code{variable} identifiers.
+}
 \seealso{
 \link{glyvis_abundance_scale} for scale metadata and compatibility rules.
 }

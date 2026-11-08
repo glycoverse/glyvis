@@ -24,13 +24,13 @@
 #'
 #' @inheritParams .get_expr_mat
 #'
-#' @returns A tibble with a `sample` identifier column.
+#' @returns A tibble with a `.sample` (SE) or `sample` (legacy) identifier column.
 #' @noRd
 .get_sample_info <- function(exp) {
   if (methods::is(exp, "SummarizedExperiment")) {
     return(.as_info_tibble(
       SummarizedExperiment::colData(exp),
-      "sample",
+      ".sample",
       colnames(exp)
     ))
   }
@@ -41,13 +41,13 @@
 #'
 #' @inheritParams .get_expr_mat
 #'
-#' @returns A tibble with a `variable` identifier column.
+#' @returns A tibble with a `.variable` (SE) or `variable` (legacy) identifier column.
 #' @noRd
 .get_var_info <- function(exp) {
   if (methods::is(exp, "SummarizedExperiment")) {
     return(.as_info_tibble(
       SummarizedExperiment::rowData(exp),
-      "variable",
+      ".variable",
       rownames(exp)
     ))
   }
@@ -67,18 +67,7 @@
   if (is.null(ids)) {
     ids <- as.character(seq_len(nrow(info)))
   }
-  if (id %in% colnames(info)) {
-    id_col <- match(id, colnames(info))
-    if (identical(as.character(info[[id_col]]), ids)) {
-      info[[id_col]] <- NULL
-    } else {
-      metadata_id <- make.unique(c(
-        colnames(info),
-        paste0(id, "_metadata")
-      ))[[ncol(info) + 1]]
-      colnames(info)[[id_col]] <- metadata_id
-    }
-  }
+  colnames(info) <- make.unique(c(id, colnames(info)))[-1L]
   id_info <- tibble::tibble(ids)
   colnames(id_info) <- id
   dplyr::bind_cols(id_info, info)
@@ -101,14 +90,39 @@
     samples <- as.character(seq_len(ncol(expr_mat)))
   }
 
-  # SE identifiers can be duplicated. Join annotations by their row/column
-  # positions, then restore display identifiers, without multiplying rows.
+  if (methods::is(exp, "SummarizedExperiment")) {
+    samples_info <- tibble::as_tibble(SummarizedExperiment::colData(exp))
+    variables_info <- tibble::as_tibble(SummarizedExperiment::rowData(exp))
+    annotation_names <- make.unique(c(
+      ".sample",
+      ".variable",
+      "value",
+      names(samples_info),
+      names(variables_info)
+    ))[-seq_len(3)]
+    names(samples_info) <- utils::head(annotation_names, ncol(samples_info))
+    names(variables_info) <- utils::tail(annotation_names, ncol(variables_info))
+    sample_index <- rep(seq_len(ncol(expr_mat)), times = nrow(expr_mat))
+    variable_index <- rep(seq_len(nrow(expr_mat)), each = ncol(expr_mat))
+    # Bind evaluated columns without letting annotations mask local variables.
+    return(dplyr::bind_cols(
+      .sample = samples[sample_index],
+      samples_info[sample_index, , drop = FALSE],
+      .variable = variables[variable_index],
+      variables_info[variable_index, , drop = FALSE],
+      value = as.vector(t(expr_mat))
+    ))
+  }
+
+  # Preserve the legacy fortification schema and positional alignment.
   sample_info <- .get_sample_info(exp)
   var_info <- .get_var_info(exp)
   sample_info$sample <- seq_len(ncol(expr_mat))
   var_info$variable <- seq_len(nrow(expr_mat))
 
-  tibble::tibble(sample = rep(seq_len(ncol(expr_mat)), times = nrow(expr_mat))) |>
+  tibble::tibble(
+    sample = rep(seq_len(ncol(expr_mat)), times = nrow(expr_mat))
+  ) |>
     dplyr::left_join(sample_info, by = "sample") |>
     dplyr::mutate(
       sample = rep(samples, times = nrow(expr_mat)),
