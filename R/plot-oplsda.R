@@ -121,7 +121,7 @@ plot_oplsda.SummarizedExperiment <- function(
     "p1",
     y_type,
     if (is.null(groups)) NULL else "group",
-    label_col = "sample",
+    label_col = .result_id_column(object, "sample"),
     ...
   ) +
     labs(
@@ -141,7 +141,13 @@ plot_oplsda.SummarizedExperiment <- function(
   } else {
     .assert_oplsda_p2_exist(df)
   }
-  .glyvis_loadings(df, "p1", y_type, label_col = "variable", ...) +
+  .glyvis_loadings(
+    df,
+    "p1",
+    y_type,
+    label_col = .result_id_column(object, "variable"),
+    ...
+  ) +
     labs(
       x = "Predictive loading 1",
       y = if (y_type == "o1") "Orthogonal loading 1" else "Predictive loading 2"
@@ -152,7 +158,7 @@ plot_oplsda.SummarizedExperiment <- function(
 .plot_oplsda_vip <- function(object, top_n = NULL, ...) {
   .glyvis_barplot(
     object$tidy_result$vip,
-    "variable",
+    .result_id_column(object, "variable"),
     "vip",
     ordered = TRUE,
     top_n = top_n,
@@ -191,7 +197,7 @@ plot_oplsda.SummarizedExperiment <- function(
     "p1",
     "pcorr1",
     "direction",
-    label_col = "variable",
+    label_col = .result_id_column(object, "variable"),
     palette = palette,
     ...
   ) |>

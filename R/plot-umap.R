@@ -74,7 +74,7 @@ plot_umap.SummarizedExperiment <- function(
     "umap1",
     "umap2",
     group = if (is.null(groups)) NULL else "group",
-    label_col = "sample",
+    label_col = .result_id_column(umap_res, "sample"),
     ...
   )
 }

@@ -23,9 +23,11 @@ test_that("container volcano plots use the limma contrast-selection method", {
     class = "glyexp_experiment"
   )
 
-  result <- suppressMessages(glystats::gly_limma(se))
-  expected <- plot_volcano(result, contrast = "A_vs_C", title = "Selected")
   for (exp in list(se, legacy)) {
+    # Each input keeps its own result schema: new SE IDs are dot-prefixed,
+    # whereas deprecated experiment results retain their original columns.
+    result <- suppressMessages(glystats::gly_limma(exp))
+    expected <- plot_volcano(result, contrast = "A_vs_C", title = "Selected")
     expect_error(
       suppressMessages(plot_volcano(exp, test = "limma")),
       "contrast.*required"
@@ -37,6 +39,8 @@ test_that("container volcano plots use the limma contrast-selection method", {
       title = "Selected"
     ))
     expect_equal(selected$data, expected$data)
+    id_col <- .result_id_column(result, "variable")
+    expect_identical(selected$data[[id_col]], rownames(values))
     expect_equal(unique(selected$data$ref_group), "A")
     expect_equal(unique(selected$data$test_group), "C")
     expect_equal(nrow(selected$data), nrow(values))

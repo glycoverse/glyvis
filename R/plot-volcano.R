@@ -177,7 +177,15 @@ plot_volcano.glystats_limma_res <- function(
       .data$ref_group == .env$ref_group,
       .data$test_group == .env$test_group
     )
-  .glyvis_volcano(tidy_res, p_col, "log2fc", p_cutoff, log2fc_cutoff, ...)
+  .glyvis_volcano(
+    tidy_res,
+    p_col,
+    "log2fc",
+    p_cutoff,
+    log2fc_cutoff,
+    id_col = .result_id_column(x, "variable"),
+    ...
+  )
 }
 
 .plot_volcano <- function(dea_res, log2fc_cutoff, p_cutoff, p_col, ...) {
@@ -190,6 +198,7 @@ plot_volcano.glystats_limma_res <- function(
     "log2fc",
     p_cutoff,
     log2fc_cutoff,
+    id_col = .result_id_column(dea_res, "variable"),
     ...
   )
 }
