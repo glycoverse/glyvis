@@ -42,7 +42,9 @@ test_that("plot_logo uses fetched sequences on the tidyplots canvas", {
 })
 
 test_that("plot_logo fails when protein metadata is missing", {
-  exp <- test_gp_se
+  # GlycoproteomicSE now rejects invalid metadata at assignment. Exercise
+  # the plotting guard with a plain SE that legitimately lacks this column.
+  exp <- methods::as(test_gp_se, "SummarizedExperiment")
   SummarizedExperiment::rowData(exp)$protein <- NULL
   expect_error(plot_logo(exp), "protein")
 })
