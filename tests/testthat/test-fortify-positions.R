@@ -53,3 +53,73 @@ test_that("boxplots do not duplicate observations when feature names repeat", {
   expect_equal(nrow(result$data), length(mat))
   expect_equal(result$data$value, log2(as.vector(t(mat)) + 1e-6))
 })
+
+test_that("SE annotations cannot mask fortification variables", {
+  annotation_names <- c(
+    "variables",
+    "expr_mat",
+    "variable_index",
+    "samples",
+    "sample_index",
+    "samples_info",
+    "variables_info",
+    "annotation_names",
+    "exp",
+    "t",
+    "as.vector",
+    ".env",
+    ".data",
+    ".sample",
+    ".variable",
+    "value"
+  )
+  mat <- matrix(
+    seq_len(6),
+    nrow = 2,
+    dimnames = list(c("V1", "V2"), c("S1", "S2", "S3"))
+  )
+  for (column in annotation_names) {
+    exp <- SummarizedExperiment::SummarizedExperiment(
+      assays = list(abundance = mat),
+      colData = S4Vectors::DataFrame(
+        annotation = c("sample A", "sample B", "sample C")
+      ),
+      rowData = S4Vectors::DataFrame(annotation = c("feature A", "feature B"))
+    )
+    names(SummarizedExperiment::colData(exp)) <- column
+    names(SummarizedExperiment::rowData(exp)) <- column
+    before <- exp
+    result <- ggplot2::fortify(exp)
+    repaired_names <- make.unique(c(
+      ".sample",
+      ".variable",
+      "value",
+      column,
+      column
+    ))
+    expect_identical(
+      result$.sample,
+      rep(colnames(mat), times = nrow(mat)),
+      info = column
+    )
+    expect_identical(
+      result$.variable,
+      rep(rownames(mat), each = ncol(mat)),
+      info = column
+    )
+    expect_identical(result$value, as.vector(t(mat)), info = column)
+    expect_identical(
+      result[[repaired_names[4]]],
+      rep(c("sample A", "sample B", "sample C"), times = 2),
+      info = column
+    )
+    expect_identical(
+      result[[repaired_names[5]]],
+      rep(c("feature A", "feature B"), each = 3),
+      info = column
+    )
+    expect_identical(nrow(result), length(mat), info = column)
+    expect_named(result, repaired_names[c(1, 4, 2, 5, 3)])
+    expect_identical(exp, before, info = column)
+  }
+})

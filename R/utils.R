@@ -104,11 +104,12 @@
     names(variables_info) <- utils::tail(annotation_names, ncol(variables_info))
     sample_index <- rep(seq_len(ncol(expr_mat)), times = nrow(expr_mat))
     variable_index <- rep(seq_len(nrow(expr_mat)), each = ncol(expr_mat))
-    return(tibble::tibble(
+    # Bind evaluated columns without letting annotations mask local variables.
+    return(dplyr::bind_cols(
       .sample = samples[sample_index],
-      !!!samples_info[sample_index, , drop = FALSE],
+      samples_info[sample_index, , drop = FALSE],
       .variable = variables[variable_index],
-      !!!variables_info[variable_index, , drop = FALSE],
+      variables_info[variable_index, , drop = FALSE],
       value = as.vector(t(expr_mat))
     ))
   }
