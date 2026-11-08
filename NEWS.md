@@ -1,6 +1,6 @@
 # glyvis (development version)
 
-* Statistical plots support glystats results with `.variable` and `.sample` identity columns, retaining ordinary `variable`/`sample` annotations and compatibility with saved legacy results.
+* Statistical plots support glystats results with `.variable` and `.sample` identity columns, retaining ordinary `variable`/`sample` annotations and compatibility with saved legacy results. (#22)
 
 * Boxplots, heatmaps, and their container `autoplot()` methods now use `log2(x + 1e-6)` instead of `log2(x + 1)` when transforming raw abundances. Zero values remain finite, and labels reflect the smaller pseudocount. Already logged inputs and `log_transform = FALSE` remain unchanged.
 
