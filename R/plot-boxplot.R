@@ -67,7 +67,12 @@ plot_boxplot.SummarizedExperiment <- function(
   }
 
   # Check if the group column is in the sample information tibble.
-  sample_info <- .get_sample_info(exp)
+  is_se <- methods::is(exp, "SummarizedExperiment")
+  sample_info <- if (is_se) {
+    SummarizedExperiment::colData(exp)
+  } else {
+    .get_sample_info(exp)
+  }
   if (!group_col %in% colnames(sample_info)) {
     cli::cli_abort(c(
       "Can't find column {.field {group_col}} in the sample information tibble.",
@@ -77,6 +82,13 @@ plot_boxplot.SummarizedExperiment <- function(
 
   transformation <- .resolve_plot_transformation(exp, log_transform)
   df <- .fortify_experiment(exp)
+  variable_col <- if (is_se) ".variable" else "variable"
+  if (is_se) {
+    # Select from colData before fortification repairs annotation collisions.
+    plot_group <- make.unique(c(names(df), ".plot_group"))[[ncol(df) + 1L]]
+    df[[plot_group]] <- rep(sample_info[[group_col]], times = nrow(exp))
+    group_col <- plot_group
+  }
   if (transformation$log_transform) {
     df$value <- log2(df$value + 1e-6)
   }
@@ -88,7 +100,7 @@ plot_boxplot.SummarizedExperiment <- function(
   .glyvis_boxplot(df, x = group_col, value = "value", group = group_col, ...) +
     labs(x = "Group", y = .abundance_label(transformation, boxplot = TRUE)) +
     facet_wrap(
-      ~variable,
+      vars(!!rlang::sym(variable_col)),
       scales = scales,
       ncol = ncol,
       labeller = as_labeller(function(x) .glyvis_wrap(x, label_width))

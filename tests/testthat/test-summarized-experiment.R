@@ -43,9 +43,9 @@ test_that("fortify reads SummarizedExperiment components natively", {
   expect_named(
     fortified,
     c(
-      "sample",
+      ".sample",
       "group",
-      "variable",
+      ".variable",
       "glycan_composition",
       "glycan_structure",
       "value"
@@ -79,14 +79,14 @@ test_that("fortify uses dimnames when metadata contains conflicting identifiers"
   fortified <- ggplot2::fortify(se)
 
   expect_equal(nrow(fortified), prod(dim(se)))
-  expect_equal(fortified$sample, rep(colnames(se), times = nrow(se)))
-  expect_equal(fortified$variable, rep(rownames(se), each = ncol(se)))
+  expect_equal(fortified$.sample, rep(colnames(se), times = nrow(se)))
+  expect_equal(fortified$.variable, rep(rownames(se), each = ncol(se)))
   expect_equal(
-    fortified$sample_metadata,
+    fortified$sample,
     rep(c("duplicate", "duplicate", "stale"), times = nrow(se))
   )
   expect_equal(
-    fortified$variable_metadata,
+    fortified$variable,
     rep(c("stale", "stale"), each = ncol(se))
   )
 })
@@ -110,4 +110,37 @@ test_that("direct plots read plain SummarizedExperiment natively", {
   expect_s3_class(plot_heatmap(se), "ggplot")
   expect_s3_class(autoplot(se, type = "boxplot"), "ggplot")
   expect_s3_class(autoplot(se, type = "heatmap"), "ggplot")
+})
+
+test_that("SE boxplots use ordinary sample annotations, not axis IDs", {
+  se <- glyexp::as_glycomic_se(glyexp::real_experiment2)[1:2, 1:4]
+  SummarizedExperiment::colData(se)$sample <- c(
+    "case",
+    "case",
+    "control",
+    "control"
+  )
+  SummarizedExperiment::rowData(se)$variable <- c("feature A", "feature B")
+  SummarizedExperiment::rowData(se)$sample <- c("row A", "row B")
+  SummarizedExperiment::colData(se)$.sample <- c("A", "A", "B", "B")
+  SummarizedExperiment::colData(se)$value <- c("X", "X", "Y", "Y")
+  before <- se
+  for (column in c("sample", ".sample", "value")) {
+    p <- plot_boxplot(se, group_col = column, log_transform = FALSE)
+    built <- ggplot2::ggplot_build(p)
+    expect_equal(length(built$layout$panel_params[[1]]$x$get_labels()), 2L)
+    expect_identical(p$data$.variable, rep(rownames(se), each = ncol(se)))
+    expect_equal(p$data$value, as.vector(t(SummarizedExperiment::assay(se))))
+  }
+  fortified <- ggplot2::fortify(se)
+  expect_identical(
+    fortified$sample,
+    rep(c("case", "case", "control", "control"), 2)
+  )
+  expect_identical(
+    fortified$variable,
+    rep(c("feature A", "feature B"), each = 4)
+  )
+  expect_identical(fortified$sample.1, rep(c("row A", "row B"), each = 4))
+  expect_identical(se, before)
 })

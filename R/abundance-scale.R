@@ -96,7 +96,11 @@ NULL
 .abundance_label <- function(transformation, boxplot = FALSE) {
   if (transformation$log_transform) {
     return(
-      if (boxplot) expression(log[2]("Expr." + 1e-6)) else "log2(abundance + 1e-6)"
+      if (boxplot) {
+        expression(log[2]("Expr." + 1e-6))
+      } else {
+        "log2(abundance + 1e-6)"
+      }
     )
   }
   abundance <- if (boxplot) "Expr." else "Abundance"

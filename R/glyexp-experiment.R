@@ -15,6 +15,13 @@
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
+#' @details For SE containers, `fortify()` returns `.sample` and `.variable`
+#'   axis identifiers and an abundance `value` column. Ordinary `sample` and
+#'   `variable` metadata are retained. Conflicting annotation names receive
+#'   numeric suffixes, with sample metadata preceding variable metadata.
+#'   Boxplot `group_col` always selects the original column in `colData()`.
+#'   Legacy experiment fortification retains `sample` and `variable` identifiers.
+#'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glyexp_experiment <- function(
