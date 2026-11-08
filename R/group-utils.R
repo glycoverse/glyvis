@@ -86,22 +86,23 @@
     ))
   }
 
+  sample_col <- .result_id_column(object, "sample")
   tidy_result <- object$tidy_result
 
   # Case 1: `tidy_result` is a single tibble
   if (tibble::is_tibble(tidy_result)) {
-    samples <- unique(tidy_result$sample)
+    samples <- unique(tidy_result[[sample_col]])
     if (is.null(samples)) {
       abort_no_sample()
     }
     return(samples)
   }
   # Case 2: `tidy_result` is a list of tibbles
-  df <- purrr::detect(tidy_result, ~ "sample" %in% colnames(.x))
+  df <- purrr::detect(tidy_result, ~ sample_col %in% colnames(.x))
   if (is.null(df)) {
     abort_no_sample()
   }
-  return(unique(df$sample))
+  return(unique(df[[sample_col]]))
 }
 
 .prepare_groups_from_groups_arg <- function(groups, samples) {
@@ -148,13 +149,14 @@
 }
 
 .default_group_extractor <- function(object, group_col) {
+  sample_col <- .result_id_column(object, "sample")
   tibble_group_extractor <- function(df, group_col) {
-    if (!group_col %in% colnames(df)) {
+    if (!all(c(sample_col, group_col) %in% colnames(df))) {
       return(NULL)
     }
-    df <- dplyr::distinct(df, .data$sample, .data[[group_col]])
+    df <- dplyr::distinct(df, .data[[sample_col]], .data[[group_col]])
     groups <- df[[group_col]]
-    names(groups) <- df$sample
+    names(groups) <- df[[sample_col]]
     groups
   }
 

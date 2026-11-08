@@ -188,6 +188,7 @@ glyvis_colors <- c(
   p_cutoff,
   log2fc_cutoff,
   label = FALSE,
+  id_col = "variable",
   point_size = 1.5,
   alpha = 0.7,
   palette = c(Down = "#0072B2", Unchanged = "#B8BEC5", Up = "#D55E00"),
@@ -222,7 +223,7 @@ glyvis_colors <- c(
     log2fc_col,
     "neglog10p",
     "status",
-    label_col = "variable",
+    label_col = id_col,
     label = label,
     point_size = point_size,
     alpha = alpha,
@@ -252,9 +253,9 @@ glyvis_colors <- c(
     )
 }
 
-.glyvis_roc <- function(df, ...) {
+.glyvis_roc <- function(df, id_col = "variable", ...) {
   df$false_positive_rate <- 1 - df$specificity
-  .glyvis_plot(df, "false_positive_rate", "sensitivity", "variable", ...) |>
+  .glyvis_plot(df, "false_positive_rate", "sensitivity", id_col, ...) |>
     tidyplots::add(geom_path(linewidth = 0.65)) |>
     tidyplots::add(geom_abline(
       linetype = "dashed",

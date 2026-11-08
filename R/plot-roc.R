@@ -103,7 +103,12 @@ plot_roc.SummarizedExperiment <- function(
         "lightgrey"
       )
     )
-  .glyvis_dotchart(df, x = "variable", y = "auc", ...) +
+  .glyvis_dotchart(
+    df,
+    x = .result_id_column(roc_res, "variable"),
+    y = "auc",
+    ...
+  ) +
     geom_hline(yintercept = auc_cutoff, linetype = "dashed", alpha = 0.7) +
     labs(x = "Variable", y = "ROC AUC")
 }
@@ -120,5 +125,9 @@ plot_roc.SummarizedExperiment <- function(
       "i" = "Use {.arg type} = {.val dotplot}."
     ))
   }
-  .glyvis_roc(roc_res$tidy_result$coords, ...)
+  .glyvis_roc(
+    roc_res$tidy_result$coords,
+    id_col = .result_id_column(roc_res, "variable"),
+    ...
+  )
 }

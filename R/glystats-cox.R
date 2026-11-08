@@ -31,7 +31,12 @@ autoplot.glystats_cox_res <- function(
       )
     )
 
-  .glyvis_dotchart(df, x = "variable", y = "neglog10p", ...) +
+  .glyvis_dotchart(
+    df,
+    x = .result_id_column(object, "variable"),
+    y = "neglog10p",
+    ...
+  ) +
     geom_hline(
       yintercept = -log10(p_cutoff),
       linetype = "dashed",

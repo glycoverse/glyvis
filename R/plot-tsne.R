@@ -74,7 +74,7 @@ plot_tsne.SummarizedExperiment <- function(
     "tsne1",
     "tsne2",
     group = if (is.null(groups)) NULL else "group",
-    label_col = "sample",
+    label_col = .result_id_column(tsne_res, "sample"),
     ...
   )
 }
