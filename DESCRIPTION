@@ -34,7 +34,7 @@ Imports:
     dplyr,
     ggplot2,
     grid,
-    glyexp (>= 0.16.0),
+    glyexp (>= 0.19.0.9000),
     magrittr,
     methods,
     purrr,
