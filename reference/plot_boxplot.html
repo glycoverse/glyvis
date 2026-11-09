@@ -3,13 +3,15 @@
 Currently supported data types:
 SummarizedExperiment: A glyexp::GlycomicSE(),
 glyexp::GlycoproteomicSE(), or other compatible container.
-Boxplots of log2-transformed expression values are plotted, grouped by the group column.
+Expression values are plotted, grouped by the group column, with
+scale-aware log transformation controlled by log_transform.
 
 "><meta property="og:description" content="Draw a boxplot.
 Currently supported data types:
 SummarizedExperiment: A glyexp::GlycomicSE(),
 glyexp::GlycoproteomicSE(), or other compatible container.
-Boxplots of log2-transformed expression values are plotted, grouped by the group column.
+Expression values are plotted, grouped by the group column, with
+scale-aware log transformation controlled by log_transform.
 
 "><meta property="og:image" content="https://glycoverse.github.io/glyvis/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -19,7 +21,7 @@ Boxplots of log2-transformed expression values are plotted, grouped by the group
 
     <a class="navbar-brand me-2" href="../index.html">glyvis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,18 +50,19 @@ Boxplots of log2-transformed expression values are plotted, grouped by the group
     <p>Draw a boxplot.
 Currently supported data types:</p><ul><li><p><code>SummarizedExperiment</code>: A <code><a href="https://glycoverse.github.io/glyexp/reference/GlycomicSE.html" class="external-link">glyexp::GlycomicSE()</a></code>,
 <code><a href="https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html" class="external-link">glyexp::GlycoproteomicSE()</a></code>, or other compatible container.
-Boxplots of log2-transformed expression values are plotted, grouped by the group column.</p></li>
+Expression values are plotted, grouped by the group column, with
+scale-aware log transformation controlled by <code>log_transform</code>.</p></li>
 </ul></div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, log_transform <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'glyexp_experiment'</span></span>
-<span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, group_col <span class="op">=</span> <span class="st">"group"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, group_col <span class="op">=</span> <span class="st">"group"</span>, <span class="va">...</span>, log_transform <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'SummarizedExperiment'</span></span>
-<span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, group_col <span class="op">=</span> <span class="st">"group"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">plot_boxplot</span><span class="op">(</span><span class="va">x</span>, group_col <span class="op">=</span> <span class="st">"group"</span>, <span class="va">...</span>, log_transform <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -71,7 +74,15 @@ Boxplots of log2-transformed expression values are plotted, grouped by the group
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Ignored.</p></dd>
+<dd><p>Common and plot-specific options described in <a href="glyvis_plot_options.html">glyvis_plot_options</a>.</p></dd>
+
+
+<dt id="arg-log-transform">log_transform<a class="anchor" aria-label="anchor" href="#arg-log-transform"></a></dt>
+<dd><p><code>NULL</code> (default) uses recorded abundance scale metadata:
+raw values are transformed with <code>log2(x + 1e-6)</code>, while already logged values
+are unchanged. <code>FALSE</code> always uses the supplied values unchanged. <code>TRUE</code>
+requests the same transformation for raw values, but warns and is ignored
+for already logged values. This argument must be named after <code>...</code>.</p></dd>
 
 
 <dt id="arg-group-col">group_col<a class="anchor" aria-label="anchor" href="#arg-group-col"></a></dt>
@@ -81,7 +92,11 @@ that contains group labels. Default is "group".</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ggplot object.</p>
+    <p>A <code>tidyplot</code> object, also inheriting from <code>ggplot</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><a href="glyvis_abundance_scale.html">glyvis_abundance_scale</a> for scale metadata and compatibility rules.</p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

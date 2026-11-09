@@ -1,5 +1,83 @@
 # Changelog
 
+## glyvis 0.8.0
+
+### Breaking changes
+
+- `plot_*()` and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  now return composable `tidyplot` objects; arguments specific to the
+  former plotting backends error, so use the common options in
+  [`?glyvis_plot_options`](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md)
+  or tidyplots adjustment functions instead, and pass logo geometry
+  options in `logo_args`. (#8)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  retains clustering order but no longer embeds dendrograms; use the
+  hierarchical-clustering
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  method to display a tree. (#8)
+
+### New features
+
+- Boxplots, heatmaps, and their container
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods accept `log_transform = NULL`. Raw or legacy inputs use
+  `log2(x + 1e-6)` instead of `log2(x + 1)` by default; recorded `log`,
+  `log2`, `log10`, and `logx` values are not logged twice. `FALSE`
+  preserves input values, while `TRUE` warns and is ignored for already
+  logged inputs. Labels now reflect the selected scale.
+- `plot_*()` and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  use tidyplots with its default 50 by 50 mm plot areas, consistent
+  typography, palettes, white backgrounds, and common styling options;
+  named palettes preserve group colors across subsets. (#8)
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/reference/plot_boxplot.md)
+  shows individual observations, removes redundant legends, wraps long
+  facet labels, and accepts facet layout options. (#8)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  uses symmetric color limits for standardized values, preserves missing
+  cells, and hides column labels automatically above 40 samples. (#8)
+- [`plot_pca()`](https://glycoverse.github.io/glyvis/reference/plot_pca.md)
+  and other score plots emphasize observations with optional labels and
+  ellipses; loading and ranked plots retain all variables unless `top_n`
+  is explicitly supplied. (#8)
+
+### Minor improvements and bug fixes
+
+- SE fortification uses `.sample` and `.variable` axis IDs and preserves
+  ordinary annotations. Direct boxplots select grouping values from
+  `colData`, including `sample` or columns that collide with plotting
+  fields; legacy experiment output is unchanged. (#23)
+- Statistical plots support glystats results with `.variable` and
+  `.sample` identity columns, retaining ordinary `variable`/`sample`
+  annotations and compatibility with saved legacy results. (#22)
+- Fortifying experiment containers joins annotations by position,
+  avoiding row multiplication and metadata misalignment when sample or
+  feature names are duplicated.
+- Volcano plots now fail clearly when the selected comparison has no
+  available `log2fc` values, including `logx` results and raw-scale
+  limma analyses, instead of returning an empty plot. Partially missing
+  fold changes remain supported.
+- Container-based limma volcano plots now require a contrast when
+  multiple comparisons are present and honor an explicit `contrast`,
+  matching the result-based plotting method.
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/reference/plot_boxplot.md)
+  now plots log2-transformed abundance values with a matching axis
+  label. (#7)
+- [`plot_corrplot()`](https://glycoverse.github.io/glyvis/reference/plot_corrplot.md)
+  and correlation
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods now display the supplied correlation coefficients without
+  recomputing correlations;
+  [`plot_corrplot()`](https://glycoverse.github.io/glyvis/reference/plot_corrplot.md)
+  forwards plotting options. (#7)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  now allows supplied options to override defaults, including row
+  labels, scaling, clustering, and missing-value colors. (#7)
+- [`plot_pca()`](https://glycoverse.github.io/glyvis/reference/plot_pca.md)
+  now forwards explicit groups, group columns, and plotting options
+  consistently across supported inputs. (#7)
+
 ## glyvis 0.7.2
 
 - Documentation now recommends `GlycomicSE` and `GlycoproteomicSE`

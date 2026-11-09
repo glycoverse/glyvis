@@ -56,3 +56,10 @@
   : UMAP Plot
 - [`plot_volcano()`](https://glycoverse.github.io/glyvis/reference/plot_volcano.md)
   : Volcano Plot
+
+## Customization
+
+- [`glyvis_plot_options`](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md)
+  : Customize glyvis plots with tidyplots
+- [`glyvis_abundance_scale`](https://glycoverse.github.io/glyvis/reference/glyvis_abundance_scale.md)
+  : Abundance scales in boxplots and heatmaps

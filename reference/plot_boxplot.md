@@ -5,19 +5,20 @@ Draw a boxplot. Currently supported data types:
 - `SummarizedExperiment`: A
   [`glyexp::GlycomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycomicSE.html),
   [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html),
-  or other compatible container. Boxplots of log2-transformed expression
-  values are plotted, grouped by the group column.
+  or other compatible container. Expression values are plotted, grouped
+  by the group column, with scale-aware log transformation controlled by
+  `log_transform`.
 
 ## Usage
 
 ``` r
-plot_boxplot(x, ...)
+plot_boxplot(x, ..., log_transform = NULL)
 
 # S3 method for class 'glyexp_experiment'
-plot_boxplot(x, group_col = "group", ...)
+plot_boxplot(x, group_col = "group", ..., log_transform = NULL)
 
 # S3 method for class 'SummarizedExperiment'
-plot_boxplot(x, group_col = "group", ...)
+plot_boxplot(x, group_col = "group", ..., log_transform = NULL)
 ```
 
 ## Arguments
@@ -28,7 +29,17 @@ plot_boxplot(x, group_col = "group", ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md).
+
+- log_transform:
+
+  `NULL` (default) uses recorded abundance scale metadata: raw values
+  are transformed with `log2(x + 1e-6)`, while already logged values are
+  unchanged. `FALSE` always uses the supplied values unchanged. `TRUE`
+  requests the same transformation for raw values, but warns and is
+  ignored for already logged values. This argument must be named after
+  `...`.
 
 - group_col:
 
@@ -37,4 +48,9 @@ plot_boxplot(x, group_col = "group", ...)
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.
+
+## See also
+
+[glyvis_abundance_scale](https://glycoverse.github.io/glyvis/reference/glyvis_abundance_scale.md)
+for scale metadata and compatibility rules.

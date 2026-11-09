@@ -38,8 +38,19 @@ autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md).
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.
+
+## Fold-change availability
+
+A volcano plot requires at least one non-missing `log2fc` value in the
+selected comparison. Results with only missing fold changes produce an
+informative error rather than an empty plot. This includes `logx`
+results and unlogged raw-scale limma analyses, whose native estimates
+are not log2 fold changes. Native estimates are never substituted for
+`log2fc`. When only some fold changes are missing, the available values
+are plotted without changing the supplied results.

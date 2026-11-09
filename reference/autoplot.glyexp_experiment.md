@@ -15,10 +15,22 @@ plots:
 
 ``` r
 # S3 method for class 'glyexp_experiment'
-autoplot(object, type = "heatmap", group_col = "group", ...)
+autoplot(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...,
+  log_transform = NULL
+)
 
 # S3 method for class 'SummarizedExperiment'
-autoplot(object, type = "heatmap", group_col = "group", ...)
+autoplot(
+  object,
+  type = "heatmap",
+  group_col = "group",
+  ...,
+  log_transform = NULL
+)
 ```
 
 ## Arguments
@@ -39,8 +51,34 @@ autoplot(object, type = "heatmap", group_col = "group", ...)
 
 - ...:
 
-  Ignored.
+  Common and plot-specific options described in
+  [glyvis_plot_options](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md).
+
+- log_transform:
+
+  `NULL` (default) uses recorded abundance scale metadata: raw values
+  are transformed with `log2(x + 1e-6)`, while already logged values are
+  unchanged. `FALSE` always uses the supplied values unchanged. `TRUE`
+  requests the same transformation for raw values, but warns and is
+  ignored for already logged values. This argument must be named after
+  `...`.
 
 ## Value
 
-A ggplot object.
+A `tidyplot` object, also inheriting from `ggplot`.
+
+## Details
+
+For SE containers, `fortify()` returns `.sample` and `.variable` axis
+identifiers and an abundance `value` column. Ordinary `sample` and
+`variable` metadata are retained. Conflicting annotation names receive
+numeric suffixes, with sample metadata preceding variable metadata.
+Boxplot `group_col` always selects the original column in
+[`colData()`](https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html).
+Legacy experiment fortification retains `sample` and `variable`
+identifiers.
+
+## See also
+
+[glyvis_abundance_scale](https://glycoverse.github.io/glyvis/reference/glyvis_abundance_scale.md)
+for scale metadata and compatibility rules.
