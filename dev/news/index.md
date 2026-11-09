@@ -2,25 +2,7 @@
 
 ## glyvis (development version)
 
-- SE fortification uses `.sample` and `.variable` axis IDs and preserves
-  ordinary annotations. Direct boxplots select grouping values from
-  `colData`, including `sample` or columns that collide with plotting
-  fields; legacy experiment output is unchanged. (#23)
-
-- Statistical plots support glystats results with `.variable` and
-  `.sample` identity columns, retaining ordinary `variable`/`sample`
-  annotations and compatibility with saved legacy results. (#22)
-
-- Boxplots, heatmaps, and their container
-  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-  methods now use `log2(x + 1e-6)` instead of `log2(x + 1)` when
-  transforming raw abundances. Zero values remain finite, and labels
-  reflect the smaller pseudocount. Already logged inputs and
-  `log_transform = FALSE` remain unchanged.
-
-- Fortifying experiment containers joins annotations by position,
-  avoiding row multiplication and metadata misalignment when sample or
-  feature names are duplicated.
+## glyvis 0.8.0
 
 ### Breaking changes
 
@@ -42,10 +24,10 @@
 - Boxplots, heatmaps, and their container
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
   methods accept `log_transform = NULL`. Raw or legacy inputs use
-  `log2(x + 1e-6)` by default; recorded `log`, `log2`, `log10`, and
-  `logx` values are not logged twice. `FALSE` preserves input values,
-  while `TRUE` warns and is ignored for already logged inputs. Labels
-  now reflect the selected scale.
+  `log2(x + 1e-6)` instead of `log2(x + 1)` by default; recorded `log`,
+  `log2`, `log10`, and `logx` values are not logged twice. `FALSE`
+  preserves input values, while `TRUE` warns and is ignored for already
+  logged inputs. Labels now reflect the selected scale.
 - `plot_*()` and
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
   use tidyplots with its default 50 by 50 mm plot areas, consistent
@@ -62,8 +44,18 @@
   ellipses; loading and ranked plots retain all variables unless `top_n`
   is explicitly supplied. (#8)
 
-### Minor improvements and fixes
+### Minor improvements and bug fixes
 
+- SE fortification uses `.sample` and `.variable` axis IDs and preserves
+  ordinary annotations. Direct boxplots select grouping values from
+  `colData`, including `sample` or columns that collide with plotting
+  fields; legacy experiment output is unchanged. (#23)
+- Statistical plots support glystats results with `.variable` and
+  `.sample` identity columns, retaining ordinary `variable`/`sample`
+  annotations and compatibility with saved legacy results. (#22)
+- Fortifying experiment containers joins annotations by position,
+  avoiding row multiplication and metadata misalignment when sample or
+  feature names are duplicated.
 - Volcano plots now fail clearly when the selected comparison has no
   available `log2fc` values, including `logx` results and raw-scale
   limma analyses, instead of returning an empty plot. Partially missing
