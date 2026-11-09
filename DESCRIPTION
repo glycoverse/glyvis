@@ -1,6 +1,6 @@
 Package: glyvis
 Title: Fast Visualization For Glycoverse
-Version: 0.7.2.9000
+Version: 0.8.0
 Authors@R: 
     person("Bin", "Fu", , "23110220018@m.fudan.edu.cn", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8567-2997"))
@@ -15,8 +15,8 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr,
     withr,
-    glystats (>= 0.10.1.9000),
-    glyclean (>= 0.14.1.9000),
+    glystats (>= 0.15.0),
+    glyclean (>= 0.17.1),
     ggdendro,
     ggseqlogo,
     UniProt.ws,
@@ -34,7 +34,7 @@ Imports:
     dplyr,
     ggplot2,
     grid,
-    glyexp (>= 0.19.0.9000),
+    glyexp (>= 0.20.0),
     magrittr,
     methods,
     purrr,
@@ -47,6 +47,3 @@ Imports:
     tidyplots (>= 0.4.0)
 Depends: R (>= 4.1)
 VignetteBuilder: knitr
-Remotes:
-    glycoverse/glyexp@cb24f10236c3cb3cc56b762e77de5e2b3e54cd47,
-    glycoverse/glystats@028258d0a263c99841610710dbb869637c7fa32b
