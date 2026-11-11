@@ -22,7 +22,7 @@ infinite values and recorded non-raw scales are rejected.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}, with \code{category},
-\code{value}, and \code{proportion} in its \code{data}. All four categories are retained,
+\code{value}, \code{proportion}, and representative \code{glycan_structure} in its \code{data}. All four categories are retained,
 including zero-valued categories. Proportions use the total eligible
 count or abundance as the denominator.
 }
@@ -34,13 +34,17 @@ Categories are ordered as \verb{Fuc+, Sia+}, \verb{Fuc+, Sia-}, \verb{Fuc-, Sia+
 \verb{Fuc-, Sia-}. Fucose is inferred from \code{dHex} (including concrete Fuc);
 sialic acid includes both \code{NeuAc} and \code{NeuGc}. Counts greater than zero
 indicate presence. This does not distinguish core from antennal fucose.
+Representative LacNAc-based motif cartoons annotate each sector, using
+NeuAc to illustrate sialylation. They illustrate presence/absence only;
+their linkages and fucose position are not inferred from compositions.
 Missing compositions are excluded with a warning. Invalid compositions
 raise an error. Equal weighting counts annotations regardless of assay
 missingness. No sample-wise normalization is applied. Empty eligible input
 and non-positive total abundance raise an error.
 }
 \examples{
-if (requireNamespace("glyrepr", quietly = TRUE)) {
+if (all(vapply(c("glyrepr", "glydraw"), requireNamespace,
+               logical(1), quietly = TRUE))) {
   plot_fuc_sia_pie(glyexp::real_experiment2)
 }
 }

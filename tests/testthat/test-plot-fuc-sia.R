@@ -1,4 +1,5 @@
 skip_if_not_installed("glyrepr", "1.2.0")
+skip_if_not_installed("glydraw", "0.9.0")
 
 fuc_sia_fixture <- function(
   composition = c("H5N4F1S1", "H5N4F1", "H5N4G1", "H5N4"),
@@ -80,6 +81,16 @@ test_that("pies build with zero categories and common appearance options", {
     expect_equal(p$labels$title, "Fuc/Sia")
     expect_s3_class(ggplot2::ggplotGrob(p), "gtable")
     expect_equal(nrow(p$data), 4L)
+    cartoons <- glyrepr::as_glycan_composition(glyrepr::as_glycan_structure(
+      p$data$glycan_structure
+    ))
+    expect_equal(glyrepr::count_mono(cartoons, "dHex"), c(1L, 1L, 0L, 0L))
+    expect_equal(glyrepr::count_mono(cartoons, "NeuAc"), c(1L, 0L, 1L, 0L))
+    expect_true(any(vapply(
+      p$layers,
+      \(layer) inherits(layer$geom, "GeomGlycan"),
+      logical(1)
+    )))
     expect_error(plot_fuc_sia_pie(x, unsupported = TRUE), "must be empty")
   }
 })

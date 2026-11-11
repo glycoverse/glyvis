@@ -17,16 +17,20 @@
 #' `Fuc-, Sia-`. Fucose is inferred from `dHex` (including concrete Fuc);
 #' sialic acid includes both `NeuAc` and `NeuGc`. Counts greater than zero
 #' indicate presence. This does not distinguish core from antennal fucose.
+#' Representative LacNAc-based motif cartoons annotate each sector, using
+#' NeuAc to illustrate sialylation. They illustrate presence/absence only;
+#' their linkages and fucose position are not inferred from compositions.
 #' Missing compositions are excluded with a warning. Invalid compositions
 #' raise an error. Equal weighting counts annotations regardless of assay
 #' missingness. No sample-wise normalization is applied. Empty eligible input
 #' and non-positive total abundance raise an error.
 #' @returns A `tidyplot`, also inheriting from `ggplot`, with `category`,
-#'   `value`, and `proportion` in its `data`. All four categories are retained,
+#'   `value`, `proportion`, and representative `glycan_structure` in its `data`. All four categories are retained,
 #'   including zero-valued categories. Proportions use the total eligible
 #'   count or abundance as the denominator.
 #' @examples
-#' if (requireNamespace("glyrepr", quietly = TRUE)) {
+#' if (all(vapply(c("glyrepr", "glydraw"), requireNamespace,
+#'                logical(1), quietly = TRUE))) {
 #'   plot_fuc_sia_pie(glyexp::real_experiment2)
 #' }
 #' @export
@@ -36,7 +40,7 @@ plot_fuc_sia_pie <- function(x, weight = "equal", ...) {
     x,
     c("GlycomicSE", "GlycoproteomicSE", "glyexp_experiment")
   )
-  rlang::check_installed("glyrepr", version = "1.2.0")
+  rlang::check_installed(c("glyrepr", "glydraw"), version = c("1.2.0", "0.9.0"))
   info <- .get_var_info(x)
   proteomics <- if (inherits(x, "glyexp_experiment")) {
     meta <- glyexp::get_meta_data(x)
@@ -110,54 +114,13 @@ plot_fuc_sia_pie <- function(x, weight = "equal", ...) {
   df <- tibble::tibble(
     category = factor(labels, levels = labels),
     value = values,
-    proportion = values / total
+    proportion = values / total,
+    glycan_structure = c(
+      "Neu5Ac(a2-3)Gal(b1-4)[Fuc(a1-3)]GlcNAc(b1-",
+      "Gal(b1-4)[Fuc(a1-3)]GlcNAc(b1-",
+      "Neu5Ac(a2-3)Gal(b1-4)GlcNAc(b1-",
+      "Gal(b1-4)GlcNAc(b1-"
+    )
   )
-  .fuc_sia_pie(df, ...)
-}
-
-.fuc_sia_pie <- function(
-  df,
-  width = 50,
-  height = 50,
-  fontsize = 9,
-  family = "sans",
-  ...
-) {
-  df$x <- 1
-  df$label <- ifelse(df$value > 0, sprintf("%.1f%%", 100 * df$proportion), "")
-  p <- .glyvis_plot(
-    df,
-    "x",
-    "proportion",
-    "category",
-    width = width,
-    height = height,
-    fontsize = fontsize,
-    family = family,
-    ...
-  )
-  for (aesthetic in c("fill", "colour")) {
-    colour_scale <- p$scales$get_scales(aesthetic)
-    colour_scale$drop <- FALSE
-  }
-  y_scale <- p$scales$get_scales("y")
-  y_scale$expand <- c(0, 0)
-  p +
-    geom_col(aes(fill = .data$category), width = 1, colour = "white") +
-    geom_text(
-      aes(label = .data$label),
-      position = position_stack(vjust = 0.5),
-      colour = "black",
-      size = fontsize / .pt,
-      family = family
-    ) +
-    coord_polar(theta = "y") +
-    labs(x = NULL, y = NULL) +
-    theme(
-      axis.text = element_blank(),
-      axis.ticks = element_blank(),
-      axis.line = element_blank(),
-      panel.grid = element_blank()
-    ) +
-    guides(fill = guide_legend(ncol = 2), colour = "none")
+  .n_pie(df, ...)
 }
