@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet.
+
 * `plot_boxplot()` gains a `variables` argument to select SummarizedExperiment rows by name before applying the 25-variable limit. (#25)
 
 * `plot_logo()` now explains UniProt sequence lookup failures and suggests retrying or using a local FASTA, while retaining the original error for diagnosis.

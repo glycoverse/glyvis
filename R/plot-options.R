@@ -49,6 +49,10 @@
 #'   `triangle = "lower"` (also `"upper"` or `"full"`). Colors span -1 to 1.
 #' * Sequence logos: pass glyph options in `logo_args`, a named list passed
 #'   to [ggseqlogo::geom_logo()], e.g. `list(method = "prob")`.
+#' * N-glycan summaries: [plot_n_core_pie()], [plot_n_type_pie()], and
+#'   [plot_n_branch_bar()] accept `weight = "equal"` or `"abundance"` and pool
+#'   all samples. Their default plot areas are 120 by 90 mm for pies and
+#'   100 by 80 mm for bars, leaving room for glycan cartoons.
 #'
 #' @section Migration from earlier backends:
 #' Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and

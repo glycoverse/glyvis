@@ -1,0 +1,452 @@
+#' N-glycan core, type, and branch distributions
+#'
+#' Summarize an N-glycan experiment across all samples, with glycan cartoons
+#' drawn by [glydraw::geom_glycan()].
+#'
+#' @param x A [glyexp::GlycomicSE()] or [glyexp::GlycoproteomicSE()] with
+#'   `glycan_structure` in its row annotations and `glycan_type = "N"` in
+#'   its metadata. Legacy `glyexp_experiment` objects are also supported.
+#' @param weight Either `"equal"` (default) or `"abundance"`. Equal weighting
+#'   counts distinct glycan structures in glycomics, or distinct combinations
+#'   of `protein`, `protein_site`, and glycan structure in glycoproteomics.
+#'   Abundance weighting uses [glydet::wsum()] to sum the original linear-scale
+#'   abundances over all rows and samples. Duplicate measurements contribute
+#'   their summed abundance. Missing abundances are omitted; negative or
+#'   infinite values and recorded non-raw scales are rejected.
+#' @param ... Common appearance options described in [glyvis_plot_options].
+#'   The default plot area is 120 by 90 mm for pies and 100 by 80 mm for bars.
+#'
+#' @details
+#' `plot_n_core_pie()` separates core fucosylation and bisecting GlcNAc into
+#'   four combinations. Antennal fucose does not count as core fucose.
+#' `plot_n_type_pie()` uses [glydet::n_glycan_type()] with
+#'   `merge_mannose = TRUE`, labelled `oligomannose`, `hybrid`, and `complex`.
+#'   Thus oligomannose includes both paucimannose and high-mannose glycans.
+#'   Type cartoons are representative structures, not complete definitions.
+#' `plot_n_branch_bar()` extracts branch motifs through
+#'   [glymotif::extract_branch_motif()] and matches them with
+#'   [glymotif::branch_motifs()], preserving the distinction between antennal
+#'   and bisecting GlcNAc. Each glycan or site-specific glycoform contributes
+#'   at most once to each branch type, even if it has repeated identical arms.
+#'   Different branch types can overlap, so bar proportions need not sum to one.
+#'   Cartoons above the bars show the extracted branches, without the core.
+#'
+#' Missing structures and structures without the N-glycan core are excluded
+#' with a warning. Invalid structure strings raise an error. Reducing-end
+#' alditol status is ignored for classification, but retained when identifying
+#' distinct glycoforms. Equal weighting counts annotated glycoforms regardless
+#' of assay missingness or zero abundance. No sample-wise normalization is
+#' applied. All-zero or entirely missing total abundance raises an error.
+#'
+#' @returns A `tidyplot`, also inheriting from `ggplot`. Its `data` contains
+#'   `category`, `value`, `proportion`, and `glycan_structure`. Proportions use
+#'   the total count or abundance of eligible N-glycoforms as the denominator.
+#'   Pies retain zero-valued categories in `data` and in their cartoon labels.
+#' @examples
+#' if (all(vapply(c("glydet", "glydraw", "glymotif", "glyparse", "glyrepr"),
+#'                requireNamespace, logical(1), quietly = TRUE))) {
+#'   plot_n_core_pie(glyexp::real_experiment2)
+#'   plot_n_type_pie(glyexp::real_experiment2, weight = "abundance")
+#'   plot_n_branch_bar(glyexp::real_experiment2)
+#' }
+#' @export
+plot_n_core_pie <- function(x, weight = "equal", ...) {
+  input <- .n_plot_input(x, weight)
+  fuc <- glydet::n_core_fuc(input$glycans) > 0
+  bisect <- glydet::has_bisecting(input$glycans)
+  index <- ifelse(fuc, 0L, 2L) + ifelse(bisect, 1L, 2L)
+  labels <- c(
+    "Fuc+ / Bisection+",
+    "Fuc+ / Bisection-",
+    "Fuc- / Bisection+",
+    "Fuc- / Bisection-"
+  )
+  structures <- .n_core_cartoons()
+  membership <- outer(index, seq_along(labels), `==`)
+  df <- .n_plot_summary(input, membership, labels, structures)
+  .n_pie(df, ...)
+}
+
+#' @rdname plot_n_core_pie
+#' @export
+plot_n_type_pie <- function(x, weight = "equal", ...) {
+  input <- .n_plot_input(x, weight)
+  type <- as.character(glydet::n_glycan_type(
+    input$glycans,
+    merge_mannose = TRUE
+  ))
+  type[type == "oligo-mannose"] <- "oligomannose"
+  labels <- c("oligomannose", "hybrid", "complex")
+  structures <- c(
+    "Man(a1-3)[Man(a1-6)]Man(a1-6)[Man(a1-3)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-",
+    "GlcNAc(b1-2)Man(a1-3)[Man(a1-3)[Man(a1-6)]Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-",
+    "GlcNAc(b1-2)Man(a1-3)[GlcNAc(b1-2)Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
+  )
+  df <- .n_plot_summary(input, outer(type, labels, `==`), labels, structures)
+  .n_pie(df, ...)
+}
+
+#' @rdname plot_n_core_pie
+#' @export
+plot_n_branch_bar <- function(x, weight = "equal", ...) {
+  input <- .n_plot_input(x, weight)
+  branches <- glymotif::extract_branch_motif(input$glycans)
+  if (!length(branches)) {
+    cli::cli_abort("No N-glycan branch motifs were found.")
+  }
+  membership <- glymotif::have_motifs(input$glycans, glymotif::branch_motifs())
+  structures <- colnames(membership)
+  df <- .n_plot_summary(
+    input,
+    membership,
+    paste0("B", seq_along(structures)),
+    structures
+  )
+  .n_branch_plot(df, weight, ...)
+}
+
+.n_core_cartoons <- function() {
+  arms <- "Man(a1-3)"
+  bisect <- "[GlcNAc(b1-4)]"
+  stem <- "[Man(a1-6)]Man(b1-4)GlcNAc(b1-4)"
+  fuc <- "[Fuc(a1-6)]"
+  end <- "GlcNAc(b1-"
+  c(
+    paste0(arms, bisect, stem, fuc, end),
+    paste0(arms, stem, fuc, end),
+    paste0(arms, bisect, stem, end),
+    paste0(arms, stem, end)
+  )
+}
+
+.n_plot_input <- function(x, weight) {
+  checkmate::assert_choice(weight, c("equal", "abundance"))
+  rlang::check_installed(
+    c(
+      "glydet",
+      "glydraw",
+      "glymotif",
+      "glyparse",
+      "glyrepr"
+    ),
+    version = c("0.14.0", "0.9.0", "1.0.1", "1.0.1", "1.2.0")
+  )
+  checkmate::assert_multi_class(
+    x,
+    c("GlycomicSE", "GlycoproteomicSE", "glyexp_experiment")
+  )
+  legacy <- inherits(x, "glyexp_experiment")
+  meta <- if (legacy) glyexp::get_meta_data(x) else S4Vectors::metadata(x)
+  if (!identical(meta$glycan_type, "N")) {
+    cli::cli_abort("These plots require metadata {.code glycan_type = \"N\"}.")
+  }
+  proteomics <- if (legacy) {
+    checkmate::assert_choice(meta$exp_type, c("glycomics", "glycoproteomics"))
+    meta$exp_type == "glycoproteomics"
+  } else {
+    methods::is(x, "GlycoproteomicSE")
+  }
+  info <- .get_var_info(x)
+  if (!nrow(info)) {
+    cli::cli_abort("No eligible N-glycan structures remain.")
+  }
+  required <- c(
+    "glycan_structure",
+    if (proteomics) c("protein", "protein_site")
+  )
+  missing <- setdiff(required, names(info))
+  if (length(missing)) {
+    cli::cli_abort("Missing row annotations: {.field {missing}}.")
+  }
+  original <- if (glyrepr::is_glycan_structure(info$glycan_structure)) {
+    info$glycan_structure
+  } else {
+    glyparse::auto_parse(info$glycan_structure)
+  }
+  # The categories describe branching and substitution, independent of reduction.
+  glycans <- glyparse::auto_parse(sub(
+    "-ol\\(([^()]*)$",
+    "(\\1",
+    as.character(original)
+  ))
+  core <- "Hex(??-?)[Hex(??-?)]Hex(??-?)HexNAc(??-?)HexNAc(??-"
+  keep <- which(
+    glymotif::have_motif(
+      glycans,
+      core,
+      alignment = "core",
+      ignore_linkages = TRUE
+    ) %in%
+      TRUE
+  )
+  if (length(keep) < nrow(info)) {
+    cli::cli_warn(
+      "Excluded {nrow(info) - length(keep)} row{?s} with missing structures or without an N-glycan core."
+    )
+  }
+  if (!length(keep)) {
+    cli::cli_abort("No eligible N-glycan structures remain.")
+  }
+  info <- info[keep, , drop = FALSE]
+  glycans <- glycans[keep]
+  if (
+    proteomics &&
+      any(vapply(
+        info[c("protein", "protein_site")],
+        function(z) any(is.na(z) | trimws(as.character(z)) == ""),
+        logical(1)
+      ))
+  ) {
+    cli::cli_abort(
+      "Site-specific glycoforms require non-missing {.field protein} and {.field protein_site} annotations."
+    )
+  }
+  if (weight == "equal") {
+    keys <- data.frame(structure = as.character(original[keep]))
+    if (proteomics) {
+      keys <- cbind(keys, as.data.frame(info[c("protein", "protein_site")]))
+    }
+    unique_rows <- !duplicated(keys)
+    glycans <- glycans[unique_rows]
+    abundance <- matrix(1, nrow = length(glycans), ncol = 1)
+  } else {
+    if (.resolve_plot_transformation(x, FALSE)$input_scale != "raw") {
+      cli::cli_abort(
+        "Abundance weighting requires raw, linear-scale abundances."
+      )
+    }
+    abundance <- .get_expr_mat(x)[keep, , drop = FALSE]
+    if (any(is.infinite(abundance) | abundance < 0, na.rm = TRUE)) {
+      cli::cli_abort("Abundances must be non-negative and finite, or missing.")
+    }
+  }
+  total <- sum(abundance, na.rm = TRUE)
+  if (!is.finite(total) || total <= 0) {
+    cli::cli_abort(
+      "The total eligible count or abundance must be positive and finite."
+    )
+  }
+  list(glycans = glycans, abundance = abundance, total = total, weight = weight)
+}
+
+.n_plot_summary <- function(input, membership, labels, structures) {
+  if (anyNA(membership)) {
+    cli::cli_abort("Some N-glycans could not be classified unambiguously.")
+  }
+  weighted_sum <- glydet::wsum(.data$.present)
+  values <- vapply(
+    seq_len(ncol(membership)),
+    function(i) {
+      sum(weighted_sum(
+        input$abundance,
+        tibble::tibble(.present = as.numeric(membership[, i]))
+      ))
+    },
+    numeric(1)
+  )
+  tibble::tibble(
+    category = factor(labels, levels = labels),
+    value = values,
+    proportion = values / input$total,
+    glycan_structure = structures
+  )
+}
+
+.n_pie <- function(
+  df,
+  width = 120,
+  height = 90,
+  fontsize = 9,
+  family = "sans",
+  ...
+) {
+  ends <- cumsum(df$proportion)
+  starts <- c(0, utils::head(ends, -1))
+  angles <- 2 * pi * (starts + ends) / 2
+  df$x <- 0
+  df$y <- 0
+  polygons <- lapply(which(df$value > 0), function(i) {
+    theta <- seq(
+      2 * pi * starts[i],
+      2 * pi * ends[i],
+      length.out = max(3, ceiling(360 * df$proportion[i]))
+    )
+    data.frame(
+      category = df$category[i],
+      x = if (df$proportion[i] == 1) sin(theta) else c(0, sin(theta), 0),
+      y = if (df$proportion[i] == 1) cos(theta) else c(0, cos(theta), 0)
+    )
+  })
+  labels <- df
+  labels$side <- ifelse(sin(angles) >= 0, 1, -1)
+  # Empty categories have no angular position; balance their labels across sides.
+  empty <- which(df$value == 0)
+  labels$side[empty] <- NA_real_
+  for (i in empty) {
+    labels$side[i] <- if (
+      sum(labels$side == 1, na.rm = TRUE) > sum(labels$side == -1, na.rm = TRUE)
+    ) {
+      -1
+    } else {
+      1
+    }
+  }
+  labels$label_y <- cos(angles)
+  for (side in c(-1, 1)) {
+    rows <- which(labels$side == side)
+    rows <- rows[order(labels$label_y[rows])]
+    if (length(rows) > 1) {
+      labels$label_y[rows] <- seq(-1.25, 1.25, length.out = length(rows))
+    }
+  }
+  labels$label_x <- labels$side * 1.9
+  labels$anchor_x <- sin(angles)
+  labels$anchor_y <- cos(angles)
+  labels$text <- paste0(
+    labels$category,
+    "\n",
+    formatC(100 * labels$proportion, format = "f", digits = 1),
+    "%"
+  )
+  connectors <- do.call(
+    rbind,
+    lapply(which(df$value > 0), function(i) {
+      data.frame(
+        category = labels$category[i],
+        x = c(
+          labels$anchor_x[i],
+          labels$side[i] * 1.1,
+          labels$side[i] * 1.1,
+          labels$side[i] * 1.2
+        ),
+        y = c(
+          labels$anchor_y[i],
+          labels$anchor_y[i] * 1.08,
+          labels$label_y[i],
+          labels$label_y[i]
+        )
+      )
+    })
+  )
+  p <- .glyvis_plot(
+    df,
+    "x",
+    "y",
+    "category",
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    ...
+  )
+  # Keep the category-to-colour mapping even when some wedges have zero area.
+  for (aesthetic in c("fill", "colour")) {
+    colour_scale <- p$scales$get_scales(aesthetic)
+    colour_scale$drop <- FALSE
+  }
+  # tidyplots fixes physical panel dimensions, so match their aspect ratio.
+  panel_width <- if (is.null(width)) 50 else width
+  panel_height <- if (is.null(height)) 50 else height
+  extent <- c(3, 2.25)
+  if (is.finite(panel_width) && is.finite(panel_height)) {
+    extent <- c(
+      max(3, 2.25 * panel_width / panel_height),
+      max(2.25, 3 * panel_height / panel_width)
+    )
+  }
+  p +
+    geom_polygon(
+      data = do.call(rbind, polygons),
+      aes(
+        x = .data$x,
+        y = .data$y,
+        fill = .data$category,
+        group = .data$category
+      ),
+      inherit.aes = FALSE,
+      colour = "white",
+      linewidth = 0.4
+    ) +
+    geom_path(
+      data = connectors,
+      aes(
+        x = .data$x,
+        y = .data$y,
+        group = .data$category,
+        colour = .data$category
+      ),
+      inherit.aes = FALSE,
+      linewidth = 0.35
+    ) +
+    glydraw::geom_glycan(
+      data = labels,
+      aes(
+        x = .data$label_x,
+        y = .data$label_y + 0.2,
+        structure = .data$glycan_structure
+      ),
+      inherit.aes = FALSE,
+      size = 0.18,
+      show_linkage = FALSE
+    ) +
+    geom_text(
+      data = labels,
+      aes(x = .data$label_x, y = .data$label_y - 0.32, label = .data$text),
+      inherit.aes = FALSE,
+      size = fontsize / .pt,
+      family = family,
+      lineheight = 1.1
+    ) +
+    coord_fixed(
+      xlim = c(-1, 1) * extent[1],
+      ylim = c(-1, 1) * extent[2],
+      expand = FALSE,
+      clip = "off"
+    ) +
+    labs(x = NULL, y = NULL) +
+    theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      axis.line = element_blank(),
+      panel.grid = element_blank(),
+      legend.position = "none"
+    )
+}
+
+.n_branch_plot <- function(df, weight, width = 100, height = 80, ...) {
+  peak <- max(df$value)
+  if (peak == 0) {
+    peak <- 1
+  }
+  df$cartoon_y <- df$value + peak * 0.06
+  p <- .glyvis_plot(
+    df,
+    "category",
+    "value",
+    "category",
+    width = width,
+    height = height,
+    ...
+  )
+  y_scale <- p$scales$get_scales("y")
+  y_scale$expand <- expansion(mult = c(0, 0.45))
+  p +
+    geom_col(aes(fill = .data$category), width = 0.65, show.legend = FALSE) +
+    glydraw::geom_glycan(
+      aes(y = .data$cartoon_y, structure = .data$glycan_structure),
+      orient = "up",
+      vjust = 0,
+      size = min(0.22, 1 / nrow(df)),
+      show_linkage = FALSE,
+      show.legend = FALSE
+    ) +
+    labs(
+      x = "Branch motif",
+      y = if (weight == "equal") {
+        "Glycan / site-specific glycoform count"
+      } else {
+        "Pooled abundance"
+      }
+    ) +
+    theme(legend.position = "none")
+}
