@@ -87,6 +87,11 @@ Pass these named arguments through `...` in any plotting entry point:
   accept `weight = "equal"` or `"abundance"` and pool all samples. Their
   default plot areas are 50 by 50 mm.
 
+- O-GalNAc summaries:
+  [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md)
+  uses the same weighting and accepts `core_set = "4cores"` (Core 1-4)
+  or `"8cores"` (Core 1-8).
+
 - Glycoproteomic count distributions:
   [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
   and

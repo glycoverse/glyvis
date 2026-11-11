@@ -49,6 +49,8 @@
   [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
   [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
   : N-glycan core, type, and branch distributions
+- [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md)
+  : O-GalNAc core distribution
 - [`plot_oplsda()`](https://glycoverse.github.io/glyvis/dev/reference/plot_oplsda.md)
   : OPLS-DA Plot
 - [`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md)

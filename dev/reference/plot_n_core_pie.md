@@ -93,7 +93,7 @@ if (all(vapply(c("glydet", "glydraw", "glymotif", "glyparse", "glyrepr"),
   plot_n_type_pie(glyexp::real_experiment2, weight = "abundance")
   plot_n_branch_bar(glyexp::real_experiment2)
 }
-#> Warning: Excluded 1 row with missing structures or without an N-glycan core.
-#> Warning: Excluded 1 row with missing structures or without an N-glycan core.
-#> Warning: Excluded 1 row with missing structures or without an N-glycan core.
+#> Warning: Excluded 1 row with missing structures or without a selected N-glycan core.
+#> Warning: Excluded 1 row with missing structures or without a selected N-glycan core.
+#> Warning: Excluded 1 row with missing structures or without a selected N-glycan core.
 ```
