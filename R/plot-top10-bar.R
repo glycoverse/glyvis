@@ -116,8 +116,8 @@ plot_top10_bar <- function(x, weight = "equal", ...) {
   )
   cartoon_size <- min(
     0.3,
-    panel_height / (n + 2) * 0.72 / max(dimensions["height", ]),
-    panel_width * 0.22 / max(dimensions["width", ])
+    panel_height / (n + 2) * 0.9 / max(dimensions["height", ]),
+    panel_width * 0.28 / max(dimensions["width", ])
   )
   left <- df$side == levels(df$side)[1]
   gap_mm <- min(1.5, panel_width * 0.02)
