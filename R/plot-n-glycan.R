@@ -367,17 +367,19 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       inherit.aes = FALSE,
       linewidth = 0.35
     ) +
-    glydraw::geom_glycan(
-      data = labels,
-      aes(
-        x = .data$label_x,
-        y = .data$cartoon_y,
-        structure = .data$glycan_structure
-      ),
-      inherit.aes = FALSE,
-      size = cartoon_size,
-      show_linkage = FALSE
-    ) +
+    (if ("glycan_structure" %in% names(df)) {
+      glydraw::geom_glycan(
+        data = labels,
+        aes(
+          x = .data$label_x,
+          y = .data$cartoon_y,
+          structure = .data$glycan_structure
+        ),
+        inherit.aes = FALSE,
+        size = cartoon_size,
+        show_linkage = FALSE
+      )
+    }) +
     geom_text(
       data = labels,
       aes(x = .data$label_x, y = .data$text_y, label = .data$text),
@@ -420,11 +422,17 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
           lineheight = 1.1
         )
       )
-      cartoon <- glydraw::draw_cartoon(
-        df$glycan_structure[i],
-        show_linkage = FALSE
-      )
-      size <- attr(cartoon, "glydraw_panel_size_px") / 300 * 25.4 * cartoon_size
+      size <- c(width = 0, height = 0)
+      if ("glycan_structure" %in% names(df)) {
+        cartoon <- glydraw::draw_cartoon(
+          df$glycan_structure[i],
+          show_linkage = FALSE
+        )
+        size <- attr(cartoon, "glydraw_panel_size_px") /
+          300 *
+          25.4 *
+          cartoon_size
+      }
       c(
         width = max(
           size[["width"]],
@@ -459,7 +467,11 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   df$line_x <- df$label_x - edge * dx
   df$line_y <- df$label_y - edge * dy
   df$cartoon_y <- df$label_y + (dimensions["text_height", ] + 1) / (2 * unit_mm)
-  df$text_y <- df$label_y - (dimensions["cartoon_height", ] + 1) / (2 * unit_mm)
+  df$text_y <- if ("glycan_structure" %in% names(df)) {
+    df$label_y - (dimensions["cartoon_height", ] + 1) / (2 * unit_mm)
+  } else {
+    df$label_y
+  }
   df
 }
 
