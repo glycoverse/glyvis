@@ -59,7 +59,8 @@ Use the hierarchical-clustering \code{autoplot()} method for a dendrogram.
 \code{triangle = "lower"} (also \code{"upper"} or \code{"full"}). Colors span -1 to 1.
 \item Sequence logos: pass glyph options in \code{logo_args}, a named list passed
 to \code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, e.g. \code{list(method = "prob")}.
-\item N-glycan summaries: \code{\link[=plot_n_core_pie]{plot_n_core_pie()}}, \code{\link[=plot_n_type_pie]{plot_n_type_pie()}}, and
+\item N-glycan summaries: \code{\link[=plot_n_core_pie]{plot_n_core_pie()}}, \code{\link[=plot_n_type_pie]{plot_n_type_pie()}},
+\code{\link[=plot_n_branch_pie]{plot_n_branch_pie()}}, and
 \code{\link[=plot_n_branch_bar]{plot_n_branch_bar()}} accept \code{weight = "equal"} or \code{"abundance"} and pool
 all samples. Their default plot areas are 50 by 50 mm.
 \item Composition summaries: \code{\link[=plot_fuc_sia_pie]{plot_fuc_sia_pie()}} accepts \code{weight = "equal"}

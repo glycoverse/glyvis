@@ -192,7 +192,12 @@ test_that("legacy containers retain the same weighting semantics", {
 test_that("plots build with cartoons, zero categories, and common styling", {
   withr::local_pdf(file = tempfile(fileext = ".pdf"))
   x <- n_plot_fixture(n_plot_structures()[c("bare", "mixed")])
-  for (plot in list(plot_n_core_pie, plot_n_type_pie, plot_n_branch_bar)) {
+  for (plot in list(
+    plot_n_core_pie,
+    plot_n_type_pie,
+    plot_n_branch_pie,
+    plot_n_branch_bar
+  )) {
     p <- plot(x, title = "N glycans", fontsize = 10)
     expect_equal(p$labels$title, "N glycans")
     expect_true(any(vapply(
@@ -220,4 +225,60 @@ test_that("zero-abundance branches remain visible without a false positive bar",
   expect_equal(p$data$value, c(0, 0))
   expect_true(all(p$data$cartoon_y > 0))
   expect_s3_class(ggplot2::ggplotGrob(p), "gtable")
+})
+
+test_that("branch pies count antennae rather than distinct motifs or bisection", {
+  s <- n_plot_structures()
+  tri <- "GlcNAc(b1-2)[GlcNAc(b1-4)]Man(a1-3)[GlcNAc(b1-2)Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
+  tetra <- "GlcNAc(b1-2)[GlcNAc(b1-4)]Man(a1-3)[GlcNAc(b1-2)[GlcNAc(b1-6)]Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
+  x <- n_plot_fixture(c(
+    s[c("bare", "bisect", "arm_fuc", "complex")],
+    tri,
+    tetra
+  ))
+  p <- plot_n_branch_pie(x)
+  expect_equal(
+    as.character(p$data$category),
+    paste(0:4, c("antennae", "antenna", rep("antennae", 3)))
+  )
+  expect_equal(p$data$value, c(2, 1, 1, 1, 1))
+  expect_equal(p$data$proportion, c(2, 1, 1, 1, 1) / 6)
+  expect_equal(glydet::n_antennae(p$data$glycan_structure), 0:4)
+  expect_equal(
+    p$data$glycan_structure,
+    c(
+      "Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+      "GlcNAc(??-?)Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+      "GlcNAc(??-?)Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+      "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+      "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-"
+    )
+  )
+  withr::local_pdf(file = tempfile(fileext = ".pdf"))
+  expect_s3_class(ggplot2::ggplotGrob(p), "gtable")
+})
+
+test_that("branch pies share deduplication and abundance weighting semantics", {
+  s <- n_plot_structures()[c("bare", "complex", "complex")]
+  x <- n_plot_fixture(s, matrix(c(0, 2, 3, NA, 5, 7), 3))
+  expect_equal(plot_n_branch_pie(x)$data$value, c(1, 1))
+  p <- plot_n_branch_pie(x, "abundance")
+  expect_equal(p$data$value, c(0, 17))
+  expect_equal(p$data$proportion, c(0, 1))
+  gp <- n_plot_fixture(s, protein = rep("P1", 3), site = c(10, 10, 20))
+  expect_equal(plot_n_branch_pie(gp)$data$value, c(1, 2))
+  withr::local_pdf(file = tempfile(fileext = ".pdf"))
+  single <- plot_n_branch_pie(x[1, ])
+  expect_equal(single$data$proportion, 1)
+  expect_s3_class(ggplot2::ggplotGrob(single), "gtable")
+})
+
+test_that("crowded branch pie labels support more than four categories", {
+  positions <- .n_pie_label_layout(rep(0, 5), 1:5, rep(1, 5), rep(1, 5))
+  pairs <- utils::combn(1:5, 2)
+  for (i in seq_len(ncol(pairs))) {
+    expect_true(any(
+      abs(positions[pairs[1, i], ] - positions[pairs[2, i], ]) >= 2
+    ))
+  }
 })

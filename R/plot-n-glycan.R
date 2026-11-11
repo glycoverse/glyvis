@@ -24,6 +24,12 @@
 #'   `merge_mannose = TRUE`, labelled `oligomannose`, `hybrid`, and `complex`.
 #'   Thus oligomannose includes both paucimannose and high-mannose glycans.
 #'   Type cartoons are representative structures, not complete definitions.
+#' `plot_n_branch_pie()` groups glycans by [glydet::n_antennae()], counting
+#'   GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
+#'   Observed antenna counts (including zero) are ordered numerically. Each
+#'   cartoon for zero to four antennae is a fixed core-and-antenna motif with
+#'   unspecified linkages. Higher counts use the first input structure.
+#'   Observed categories with zero total abundance remain visible.
 #' `plot_n_branch_bar()` extracts branch motifs through
 #'   [glymotif::extract_branch_motif()] and matches them with
 #'   [glymotif::branch_motifs()], preserving the distinction between antennal
@@ -52,6 +58,7 @@
 #'                requireNamespace, logical(1), quietly = TRUE))) {
 #'   plot_n_core_pie(glyexp::real_experiment2)
 #'   plot_n_type_pie(glyexp::real_experiment2, weight = "abundance")
+#'   plot_n_branch_pie(glyexp::real_experiment2)
 #'   plot_n_branch_bar(glyexp::real_experiment2)
 #' }
 #' @export
@@ -88,6 +95,35 @@ plot_n_type_pie <- function(x, weight = "equal", ...) {
     "GlcNAc(b1-2)Man(a1-3)[GlcNAc(b1-2)Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
   )
   df <- .n_plot_summary(input, outer(type, labels, `==`), labels, structures)
+  .n_pie(df, ...)
+}
+
+#' @rdname plot_n_core_pie
+#' @export
+plot_n_branch_pie <- function(x, weight = "equal", ...) {
+  input <- .n_plot_input(x, weight)
+  antennae <- glydet::n_antennae(input$glycans)
+  if (anyNA(antennae)) {
+    cli::cli_abort("Some N-glycans could not be classified unambiguously.")
+  }
+  counts <- sort(unique(antennae))
+  labels <- paste(counts, ifelse(counts == 1, "antenna", "antennae"))
+  structures <- unname(as.character(input$glycans[match(counts, antennae)]))
+  motifs <- c(
+    "Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-"
+  )
+  fixed <- counts %in% 0:4
+  structures[fixed] <- motifs[counts[fixed] + 1L]
+  df <- .n_plot_summary(
+    input,
+    outer(antennae, counts, `==`),
+    labels,
+    structures
+  )
   .n_pie(df, ...)
 }
 
@@ -483,6 +519,9 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       half_width * abs(sin(theta)) +
       half_height * abs(cos(theta))
     cbind(x = radius * sin(theta), y = radius * cos(theta))
+  }
+  if (length(angles) == 1L) {
+    return(centres(label_angles))
   }
   pairs <- utils::combn(seq_along(angles), 2)
   for (iteration in seq_len(720)) {

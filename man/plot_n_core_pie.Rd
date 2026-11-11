@@ -3,12 +3,15 @@
 \name{plot_n_core_pie}
 \alias{plot_n_core_pie}
 \alias{plot_n_type_pie}
+\alias{plot_n_branch_pie}
 \alias{plot_n_branch_bar}
 \title{N-glycan core, type, and branch distributions}
 \usage{
 plot_n_core_pie(x, weight = "equal", ...)
 
 plot_n_type_pie(x, weight = "equal", ...)
+
+plot_n_branch_pie(x, weight = "equal", ...)
 
 plot_n_branch_bar(x, weight = "equal", ...)
 }
@@ -46,6 +49,12 @@ four combinations. Antennal fucose does not count as core fucose.
 \code{merge_mannose = TRUE}, labelled \code{oligomannose}, \code{hybrid}, and \code{complex}.
 Thus oligomannose includes both paucimannose and high-mannose glycans.
 Type cartoons are representative structures, not complete definitions.
+\code{plot_n_branch_pie()} groups glycans by \code{\link[glydet:n_glycan_type]{glydet::n_antennae()}}, counting
+GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
+Observed antenna counts (including zero) are ordered numerically. Each
+cartoon for zero to four antennae is a fixed core-and-antenna motif with
+unspecified linkages. Higher counts use the first input structure.
+Observed categories with zero total abundance remain visible.
 \code{plot_n_branch_bar()} extracts branch motifs through
 \code{\link[glymotif:extract_branch_motif]{glymotif::extract_branch_motif()}} and matches them with
 \code{\link[glymotif:branch_motifs]{glymotif::branch_motifs()}}, preserving the distinction between antennal
@@ -70,6 +79,7 @@ if (all(vapply(c("glydet", "glydraw", "glymotif", "glyparse", "glyrepr"),
                requireNamespace, logical(1), quietly = TRUE))) {
   plot_n_core_pie(glyexp::real_experiment2)
   plot_n_type_pie(glyexp::real_experiment2, weight = "abundance")
+  plot_n_branch_pie(glyexp::real_experiment2)
   plot_n_branch_bar(glyexp::real_experiment2)
 }
 }
