@@ -144,10 +144,17 @@ autoplot(pca_res)
   : Boxplot
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   : Correlation Plot
+- [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  : Distributions of glycans per site and sites per protein
 - [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
   : Heatmap
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
   : Logo Plot
+- [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  : N-glycan core, type, and branch distributions
 - [`plot_oplsda()`](https://glycoverse.github.io/glyvis/dev/reference/plot_oplsda.md)
   : OPLS-DA Plot
 - [`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md)

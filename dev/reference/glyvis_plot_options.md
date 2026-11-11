@@ -79,6 +79,22 @@ Pass these named arguments through `...` in any plotting entry point:
   [`ggseqlogo::geom_logo()`](https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html),
   e.g. `list(method = "prob")`.
 
+- N-glycan summaries:
+  [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+  and
+  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  accept `weight = "equal"` or `"abundance"` and pool all samples. Their
+  default plot areas are 50 by 50 mm.
+
+- Glycoproteomic count distributions:
+  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  and
+  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  use fixed bins `1` to `7` and `>=8`, one bar colour, and a 50 by 50 mm
+  plot area. `weight = "abundance"` pools measured glycoform abundances
+  across samples instead of counting entities.
+
 ## Migration from earlier backends
 
 Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and

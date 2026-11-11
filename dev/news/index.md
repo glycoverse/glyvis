@@ -2,6 +2,25 @@
 
 ## glyvis (development version)
 
+- New
+  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  and
+  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+  summarize GlycoproteomicSE glycan and site counts in fixed bins from 1
+  through 7 and \>=8, with optional pooled abundance weighting. Glycan
+  counts prefer structures and fall back to compositions with a message
+  when structural annotations are absent or incomplete. (#26)
+
+- New
+  [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+  and
+  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  summarize N-glycan core, type, and branch distributions with glydraw
+  cartoons, using distinct glycan/site-specific glycoform counts or
+  pooled abundances calculated with glydet. Branch bars use one colour
+  and are ordered from highest to lowest value. (#26)
+
 - [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
   gains a `variables` argument to select SummarizedExperiment rows by
   name before applying the 25-variable limit. (#25)

@@ -33,7 +33,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="glyvis-development-version">glyvis (development version)<a class="anchor" aria-label="anchor" href="#glyvis-development-version"></a></h2>
-<ul><li><p><code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> gains a <code>variables</code> argument to select SummarizedExperiment rows by name before applying the 25-variable limit. (#25)</p></li>
+<ul><li><p>New <code><a href="../reference/plot_glycans_per_site.html">plot_glycans_per_site()</a></code> and <code><a href="../reference/plot_glycans_per_site.html">plot_sites_per_protein()</a></code> summarize GlycoproteomicSE glycan and site counts in fixed bins from 1 through 7 and &gt;=8, with optional pooled abundance weighting. Glycan counts prefer structures and fall back to compositions with a message when structural annotations are absent or incomplete. (#26)</p></li>
+<li><p>New <code><a href="../reference/plot_n_core_pie.html">plot_n_core_pie()</a></code>, <code><a href="../reference/plot_n_core_pie.html">plot_n_type_pie()</a></code>, and <code><a href="../reference/plot_n_core_pie.html">plot_n_branch_bar()</a></code> summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet. Branch bars use one colour and are ordered from highest to lowest value. (#26)</p></li>
+<li><p><code><a href="../reference/plot_boxplot.html">plot_boxplot()</a></code> gains a <code>variables</code> argument to select SummarizedExperiment rows by name before applying the 25-variable limit. (#25)</p></li>
 <li><p><code><a href="../reference/plot_logo.html">plot_logo()</a></code> now explains UniProt sequence lookup failures and suggests retrying or using a local FASTA, while retaining the original error for diagnosis.</p></li>
 </ul></div>
     <div class="section level2">

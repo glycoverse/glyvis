@@ -95,6 +95,13 @@ Use the hierarchical-clustering <code><a href="https://ggplot2.tidyverse.org/ref
 <code>triangle = "lower"</code> (also <code>"upper"</code> or <code>"full"</code>). Colors span -1 to 1.</p></li>
 <li><p>Sequence logos: pass glyph options in <code>logo_args</code>, a named list passed
 to <code><a href="https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html" class="external-link">ggseqlogo::geom_logo()</a></code>, e.g. <code>list(method = "prob")</code>.</p></li>
+<li><p>N-glycan summaries: <code><a href="plot_n_core_pie.html">plot_n_core_pie()</a></code>, <code><a href="plot_n_core_pie.html">plot_n_type_pie()</a></code>, and
+<code><a href="plot_n_core_pie.html">plot_n_branch_bar()</a></code> accept <code>weight = "equal"</code> or <code>"abundance"</code> and pool
+all samples. Their default plot areas are 50 by 50 mm.</p></li>
+<li><p>Glycoproteomic count distributions: <code><a href="plot_glycans_per_site.html">plot_glycans_per_site()</a></code> and
+<code><a href="plot_glycans_per_site.html">plot_sites_per_protein()</a></code> use fixed bins <code>1</code> to <code>7</code> and <code>&gt;=8</code>, one bar
+colour, and a 50 by 50 mm plot area. <code>weight = "abundance"</code> pools
+measured glycoform abundances across samples instead of counting entities.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="migration-from-earlier-backends">Migration from earlier backends<a class="anchor" aria-label="anchor" href="#migration-from-earlier-backends"></a></h2>
