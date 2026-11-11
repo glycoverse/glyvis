@@ -160,7 +160,9 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   )
 }
 
-.n_plot_input <- function(x, weight) {
+.n_plot_input <- function(x, weight, core_set = NULL) {
+  glycan_type <- if (is.null(core_set)) "N" else "O"
+  description <- if (is.null(core_set)) "N-glycan" else "O-GalNAc"
   checkmate::assert_choice(weight, c("equal", "abundance"))
   rlang::check_installed(
     c(
@@ -178,8 +180,10 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   )
   legacy <- inherits(x, "glyexp_experiment")
   meta <- if (legacy) glyexp::get_meta_data(x) else S4Vectors::metadata(x)
-  if (!identical(meta$glycan_type, "N")) {
-    cli::cli_abort("These plots require metadata {.code glycan_type = \"N\"}.")
+  if (!identical(meta$glycan_type, glycan_type)) {
+    cli::cli_abort(
+      "These plots require metadata {.code glycan_type = {glycan_type}}."
+    )
   }
   proteomics <- if (legacy) {
     checkmate::assert_choice(meta$exp_type, c("glycomics", "glycoproteomics"))
@@ -189,7 +193,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   info <- .get_var_info(x)
   if (!nrow(info)) {
-    cli::cli_abort("No eligible N-glycan structures remain.")
+    cli::cli_abort("No eligible {description} structures remain.")
   }
   required <- c(
     "glycan_structure",
@@ -211,22 +215,28 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     as.character(original)
   ))
   core <- "Hex(??-?)[Hex(??-?)]Hex(??-?)HexNAc(??-?)HexNAc(??-"
-  keep <- which(
-    glymotif::have_motif(
-      glycans,
-      core,
-      alignment = "core",
-      ignore_linkages = TRUE
-    ) %in%
-      TRUE
-  )
+  keep <- if (!is.null(core_set)) {
+    which(
+      .o_core_index(glycans) %in% seq_len(if (core_set == "4cores") 4L else 8L)
+    )
+  } else {
+    which(
+      glymotif::have_motif(
+        glycans,
+        core,
+        alignment = "core",
+        ignore_linkages = TRUE
+      ) %in%
+        TRUE
+    )
+  }
   if (length(keep) < nrow(info)) {
     cli::cli_warn(
-      "Excluded {nrow(info) - length(keep)} row{?s} with missing structures or without an N-glycan core."
+      "Excluded {nrow(info) - length(keep)} row{?s} with missing structures or without a selected {description} core."
     )
   }
   if (!length(keep)) {
-    cli::cli_abort("No eligible N-glycan structures remain.")
+    cli::cli_abort("No eligible {description} structures remain.")
   }
   info <- info[keep, , drop = FALSE]
   glycans <- glycans[keep]
@@ -350,6 +360,16 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   # Keep the physical coordinate scale equal in both directions.
   extent <- c(panel_width, panel_height) / (2 * unit_mm)
+  if (nrow(df) > 4L) {
+    extent <- pmax(
+      extent,
+      c(
+        max(abs(labels$label_x) + labels$box_width / 2),
+        max(abs(labels$label_y) + labels$box_height / 2)
+      ) +
+        0.1
+    )
+  }
   p +
     geom_polygon(
       data = do.call(rbind, polygons),
@@ -375,17 +395,19 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       inherit.aes = FALSE,
       linewidth = 0.35
     ) +
-    glydraw::geom_glycan(
-      data = labels,
-      aes(
-        x = .data$label_x,
-        y = .data$cartoon_y,
-        structure = .data$glycan_structure
-      ),
-      inherit.aes = FALSE,
-      size = cartoon_size,
-      show_linkage = FALSE
-    ) +
+    (if ("glycan_structure" %in% names(df)) {
+      glydraw::geom_glycan(
+        data = labels,
+        aes(
+          x = .data$label_x,
+          y = .data$cartoon_y,
+          structure = .data$glycan_structure
+        ),
+        inherit.aes = FALSE,
+        size = cartoon_size,
+        show_linkage = FALSE
+      )
+    }) +
     geom_text(
       data = labels,
       aes(x = .data$label_x, y = .data$text_y, label = .data$text),
@@ -428,11 +450,17 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
           lineheight = 1.1
         )
       )
-      cartoon <- glydraw::draw_cartoon(
-        df$glycan_structure[i],
-        show_linkage = FALSE
-      )
-      size <- attr(cartoon, "glydraw_panel_size_px") / 300 * 25.4 * cartoon_size
+      size <- c(width = 0, height = 0)
+      if ("glycan_structure" %in% names(df)) {
+        cartoon <- glydraw::draw_cartoon(
+          df$glycan_structure[i],
+          show_linkage = FALSE
+        )
+        size <- attr(cartoon, "glydraw_panel_size_px") /
+          300 *
+          25.4 *
+          cartoon_size
+      }
       c(
         width = max(
           size[["width"]],
@@ -467,7 +495,11 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   df$line_x <- df$label_x - edge * dx
   df$line_y <- df$label_y - edge * dy
   df$cartoon_y <- df$label_y + (dimensions["text_height", ] + 1) / (2 * unit_mm)
-  df$text_y <- df$label_y - (dimensions["cartoon_height", ] + 1) / (2 * unit_mm)
+  df$text_y <- if ("glycan_structure" %in% names(df)) {
+    df$label_y - (dimensions["cartoon_height", ] + 1) / (2 * unit_mm)
+  } else {
+    df$label_y
+  }
   df
 }
 
@@ -533,17 +565,14 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   # A bounded relaxation must never return a still-overlapping arrangement.
   # Four exterior corners provide a collision-free fallback for three/four labels.
-  if (collides(positions) && length(angles) > 4L) {
-    # Stack labels outside the pie when more than four categories are crowded.
-    side <- ifelse(sin(label_angles) < 0, -1, 1)
-    for (s in c(-1, 1)) {
-      ids <- which(side == s)
-      ids <- ids[order(positions[ids, "y"])]
-      heights <- 2 * half_height[ids] + 0.06
-      positions[ids, "x"] <- s * (1.08 + half_width[ids])
-      positions[ids, "y"] <- cumsum(heights) - heights / 2 - sum(heights) / 2
+  if (length(angles) > 4L && collides(positions)) {
+    label_angles <- 2 * pi * (seq_along(angles) - 1) / length(angles)
+    positions <- centres(label_angles)
+    while (collides(positions)) {
+      positions <- positions * 1.05
     }
-  } else if (collides(positions)) {
+  }
+  if (collides(positions)) {
     corners <- cbind(
       x = c(-1, 1, -1, 1) * (max(half_width) + 0.8),
       y = c(-1, -1, 1, 1) * (max(half_height) + 0.8)

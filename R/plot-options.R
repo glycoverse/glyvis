@@ -53,6 +53,10 @@
 #'   [plot_n_branch_pie()], and
 #'   [plot_n_branch_bar()] accept `weight = "equal"` or `"abundance"` and pool
 #'   all samples. Their default plot areas are 50 by 50 mm.
+#' * Composition summaries: [plot_fuc_sia_pie()] accepts `weight = "equal"`
+#'   or `"abundance"` and classifies fucosylation and sialylation without structures.
+#' * O-GalNAc summaries: [plot_o_type_pie()] uses the same weighting and
+#'   accepts `core_set = "4cores"` (Core 1-4) or `"8cores"` (Core 1-8).
 #' * Glycoproteomic count distributions: [plot_glycans_per_site()] and
 #'   [plot_sites_per_protein()] use fixed bins `1` to `7` and `>=8`, one bar
 #'   colour, and a 50 by 50 mm plot area. `weight = "abundance"` pools
