@@ -2,6 +2,10 @@
 
 ## glyvis (development version)
 
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
+  gains a `variables` argument to select SummarizedExperiment rows by
+  name before applying the 25-variable limit. (#25)
+
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
   now explains UniProt sequence lookup failures and suggests retrying or
   using a local FASTA, while retaining the original error for diagnosis.
