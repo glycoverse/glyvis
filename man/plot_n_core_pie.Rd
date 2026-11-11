@@ -54,6 +54,8 @@ Different branch types can overlap, so bar proportions need not sum to one.
 Cartoons above the bars show the extracted branches, without the core.
 Bars are ordered from highest to lowest value and share one colour
 (the first colour in \code{palette}, when supplied).
+Pie annotations follow their sectors and move apart when crowded.
+Bar limits reserve space for the actual cartoon heights.
 
 Missing structures and structures without the N-glycan core are excluded
 with a warning. Invalid structure strings raise an error. Reducing-end

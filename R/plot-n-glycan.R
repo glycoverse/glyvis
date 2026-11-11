@@ -32,6 +32,8 @@
 #'   Cartoons above the bars show the extracted branches, without the core.
 #'   Bars are ordered from highest to lowest value and share one colour
 #'   (the first colour in `palette`, when supplied).
+#'   Pie annotations follow their sectors and move apart when crowded.
+#'   Bar limits reserve space for the actual cartoon heights.
 #'
 #' Missing structures and structures without the N-glycan core are excluded
 #' with a warning. Invalid structure strings raise an error. Reducing-end
@@ -279,57 +281,8 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       y = if (df$proportion[i] == 1) cos(theta) else c(0, cos(theta), 0)
     )
   })
-  labels <- df
-  labels$side <- ifelse(sin(angles) >= 0, 1, -1)
-  # Empty categories have no angular position; balance their labels across sides.
-  empty <- which(df$value == 0)
-  labels$side[empty] <- NA_real_
-  for (i in empty) {
-    labels$side[i] <- if (
-      sum(labels$side == 1, na.rm = TRUE) > sum(labels$side == -1, na.rm = TRUE)
-    ) {
-      -1
-    } else {
-      1
-    }
-  }
-  labels$label_y <- cos(angles)
-  for (side in c(-1, 1)) {
-    rows <- which(labels$side == side)
-    rows <- rows[order(labels$label_y[rows])]
-    if (length(rows) > 1) {
-      labels$label_y[rows] <- seq(-1.25, 1.25, length.out = length(rows))
-    }
-  }
-  labels$label_x <- labels$side * 1.9
-  labels$anchor_x <- sin(angles)
-  labels$anchor_y <- cos(angles)
-  labels$text <- paste0(
-    labels$category,
-    "\n",
-    formatC(100 * labels$proportion, format = "f", digits = 1),
-    "%"
-  )
-  connectors <- do.call(
-    rbind,
-    lapply(which(df$value > 0), function(i) {
-      data.frame(
-        category = labels$category[i],
-        x = c(
-          labels$anchor_x[i],
-          labels$side[i] * 1.1,
-          labels$side[i] * 1.1,
-          labels$side[i] * 1.2
-        ),
-        y = c(
-          labels$anchor_y[i],
-          labels$anchor_y[i] * 1.08,
-          labels$label_y[i],
-          labels$label_y[i]
-        )
-      )
-    })
-  )
+  labels <- .n_pie_labels(df, angles, fontsize)
+  connectors <- labels[labels$value > 0, , drop = FALSE]
   p <- .glyvis_plot(
     df,
     "x",
@@ -349,11 +302,11 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   # tidyplots fixes physical panel dimensions, so match their aspect ratio.
   panel_width <- if (is.null(width)) 50 else width
   panel_height <- if (is.null(height)) 50 else height
-  extent <- c(3, 2.25)
+  extent <- c(3, 2.45)
   if (is.finite(panel_width) && is.finite(panel_height)) {
     extent <- c(
-      max(3, 2.25 * panel_width / panel_height),
-      max(2.25, 3 * panel_height / panel_width)
+      max(3, 2.45 * panel_width / panel_height),
+      max(2.45, 3 * panel_height / panel_width)
     )
   }
   p +
@@ -369,12 +322,13 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       colour = "white",
       linewidth = 0.4
     ) +
-    geom_path(
+    geom_segment(
       data = connectors,
       aes(
-        x = .data$x,
-        y = .data$y,
-        group = .data$category,
+        x = .data$anchor_x,
+        y = .data$anchor_y,
+        xend = .data$line_x,
+        yend = .data$line_y,
         colour = .data$category
       ),
       inherit.aes = FALSE,
@@ -415,6 +369,70 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     )
 }
 
+.n_pie_labels <- function(df, angles, fontsize) {
+  label_angles <- angles
+  present <- which(df$value > 0)
+  # Zero-valued categories have no sector: place them in unused angular gaps.
+  for (i in which(df$value == 0)) {
+    occupied <- sort(label_angles[present] %% (2 * pi))
+    gaps <- diff(c(occupied, occupied[1] + 2 * pi))
+    gap <- which.max(gaps)
+    label_angles[i] <- (occupied[gap] + gaps[gap] / 2) %% (2 * pi)
+    present <- c(present, i)
+  }
+  half_width <- max(0.8, 0.65 * fontsize / 9)
+  half_height <- max(0.6, 0.5 * fontsize / 9)
+  centres <- function(theta) {
+    # Clear the circle's tangent with the complete cartoon-and-text box.
+    radius <- 1.08 +
+      half_width * abs(sin(theta)) +
+      half_height * abs(cos(theta))
+    cbind(x = radius * sin(theta), y = radius * cos(theta))
+  }
+  pairs <- utils::combn(seq_len(nrow(df)), 2)
+  for (iteration in seq_len(720)) {
+    moved <- FALSE
+    for (pair in seq_len(ncol(pairs))) {
+      i <- pairs[1, pair]
+      j <- pairs[2, pair]
+      positions <- centres(label_angles)
+      overlap <- abs(positions[i, ] - positions[j, ]) <
+        c(2 * half_width + 0.06, 2 * half_height + 0.06)
+      if (all(overlap)) {
+        direction <- sign(
+          (label_angles[j] - label_angles[i] + pi) %%
+            (2 * pi) -
+            pi
+        )
+        if (direction == 0) {
+          direction <- 1
+        }
+        label_angles[c(i, j)] <- label_angles[c(i, j)] +
+          c(-1, 1) * direction * 0.015
+        moved <- TRUE
+      }
+    }
+    if (!moved) break
+  }
+  positions <- centres(label_angles)
+  df$label_x <- positions[, "x"]
+  df$label_y <- positions[, "y"]
+  df$anchor_x <- sin(angles)
+  df$anchor_y <- cos(angles)
+  dx <- df$label_x - df$anchor_x
+  dy <- df$label_y - df$anchor_y
+  edge <- pmin(half_width / abs(dx), half_height / abs(dy))
+  df$line_x <- df$label_x - edge * dx
+  df$line_y <- df$label_y - edge * dy
+  df$text <- paste0(
+    df$category,
+    "\n",
+    formatC(100 * df$proportion, format = "f", digits = 1),
+    "%"
+  )
+  df
+}
+
 .n_branch_plot <- function(
   df,
   weight,
@@ -429,7 +447,34 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   if (peak == 0) {
     peak <- 1
   }
-  df$cartoon_y <- df$value + peak * 0.06
+  df$cartoon_y <- df$value + peak * 0.025
+  cartoon_size <- min(0.22, 1 / nrow(df))
+  # Use glydraw's native panel dimensions, excluding standalone export borders.
+  cartoon_height <- vapply(
+    df$glycan_structure,
+    function(structure) {
+      cartoon <- glydraw::draw_cartoon(
+        structure,
+        orient = "up",
+        show_linkage = FALSE
+      )
+      attr(cartoon, "glydraw_panel_size_px")[["height"]] / 300 * 25.4
+    },
+    numeric(1)
+  ) *
+    cartoon_size
+  panel_height <- if (is.null(height)) {
+    50
+  } else if (is.na(height)) {
+    80
+  } else {
+    height
+  }
+  shrink <- min(1, panel_height * 0.5 / max(cartoon_height))
+  cartoon_size <- cartoon_size * shrink
+  cartoon_height <- cartoon_height * shrink
+  top_gap <- min(2, panel_height * 0.05)
+  upper <- max(df$cartoon_y / (1 - (cartoon_height + top_gap) / panel_height))
   p <- .glyvis_plot(
     df,
     "category",
@@ -440,7 +485,8 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     ...
   )
   y_scale <- p$scales$get_scales("y")
-  y_scale$expand <- expansion(mult = c(0, 0.45))
+  y_scale$limits <- c(0, upper)
+  y_scale$expand <- expansion(mult = 0)
   p +
     geom_col(
       fill = if (is.null(palette)) glyvis_colors[1] else palette[[1]],
@@ -451,7 +497,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       aes(y = .data$cartoon_y, structure = .data$glycan_structure),
       orient = "up",
       vjust = 0,
-      size = min(0.22, 1 / nrow(df)),
+      size = cartoon_size,
       show_linkage = FALSE,
       show.legend = FALSE
     ) +
