@@ -134,13 +134,7 @@ plot_logo.GlycoproteomicSE <- function(
     any.missing = FALSE
   )
 
-  uniprot <- UniProt.ws::UniProt.ws(taxId = tax_id)
-  seq_tbl <- UniProt.ws::select(
-    uniprot,
-    keys = proteins,
-    columns = "sequence",
-    keytype = "UniProtKB"
-  )
+  seq_tbl <- .fetch_uniprot_sequences(proteins, tax_id)
   seq_tbl <- seq_tbl[!is.na(seq_tbl$Sequence), , drop = FALSE]
   seq_tbl <- seq_tbl[!duplicated(seq_tbl$From), , drop = FALSE]
   if (nrow(seq_tbl) == 0) {
@@ -169,6 +163,32 @@ plot_logo.GlycoproteomicSE <- function(
     exp$var_info$site_sequence <- site_sequence
   }
   exp
+}
+
+.fetch_uniprot_sequences <- function(proteins, tax_id) {
+  tryCatch(
+    {
+      uniprot <- UniProt.ws::UniProt.ws(taxId = tax_id)
+      UniProt.ws::select(
+        uniprot,
+        keys = proteins,
+        columns = "sequence",
+        keytype = "UniProtKB"
+      )
+    },
+    error = function(e) {
+      cli::cli_abort(
+        c(
+          "Failed to retrieve protein sequences from UniProt.",
+          "i" = "For temporary service or connection failures, try again later.",
+          "i" = 'To use local sequences, supply the search database FASTA: {.code plot_logo(x, fasta = "path/to/database.fasta")}.',
+          "i" = "Alternatively, precompute {.var site_sequence} with {.fn glyclean::add_site_seq}."
+        ),
+        class = "glyvis_uniprot_error",
+        parent = e
+      )
+    }
+  )
 }
 
 .build_site_seq <- function(seq, site, n_aa, protein) {
