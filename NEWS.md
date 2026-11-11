@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* New `plot_n_branch_pie()` summarizes N-glycans by antenna count using equal glycan/site-specific glycoform counts or pooled abundance weights, with fixed core-and-antenna cartoons for zero to four antennae. (#29)
+
 * New `plot_glycans_per_site()` and `plot_sites_per_protein()` summarize GlycoproteomicSE glycan and site counts in fixed bins from 1 through 7 and >=8, with optional pooled abundance weighting. Glycan counts prefer structures and fall back to compositions with a message when structural annotations are absent or incomplete. (#26)
 
 * New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet. Branch bars use one colour and are ordered from highest to lowest value. (#26)
