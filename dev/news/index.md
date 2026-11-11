@@ -3,6 +3,12 @@
 ## glyvis (development version)
 
 - New
+  [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
+  summarizes N-glycans by antenna count using equal glycan/site-specific
+  glycoform counts or pooled abundance weights, with fixed
+  core-and-antenna cartoons for zero to four antennae. (#29)
+
+- New
   [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)
   summarizes four fucosylation/sialylation categories from
   `glycan_composition`, with distinct composition or site-specific

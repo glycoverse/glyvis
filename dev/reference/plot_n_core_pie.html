@@ -45,6 +45,8 @@ drawn by <code><a href="https://glycoverse.github.io/glydraw/reference/geom_glyc
 <span></span>
 <span><span class="fu">plot_n_type_pie</span><span class="op">(</span><span class="va">x</span>, weight <span class="op">=</span> <span class="st">"equal"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">plot_n_branch_pie</span><span class="op">(</span><span class="va">x</span>, weight <span class="op">=</span> <span class="st">"equal"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">plot_n_branch_bar</span><span class="op">(</span><span class="va">x</span>, weight <span class="op">=</span> <span class="st">"equal"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -89,6 +91,12 @@ four combinations. Antennal fucose does not count as core fucose.
 <code>merge_mannose = TRUE</code>, labelled <code>oligomannose</code>, <code>hybrid</code>, and <code>complex</code>.
 Thus oligomannose includes both paucimannose and high-mannose glycans.
 Type cartoons are representative structures, not complete definitions.
+<code>plot_n_branch_pie()</code> groups glycans by <code><a href="https://glycoverse.github.io/glydet/reference/n_glycan_type.html" class="external-link">glydet::n_antennae()</a></code>, counting
+GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
+Observed antenna counts (including zero) are ordered numerically. Each
+cartoon for zero to four antennae is a fixed core-and-antenna motif with
+unspecified linkages. Higher counts use the first input structure.
+Observed categories with zero total abundance remain visible.
 <code>plot_n_branch_bar()</code> extracts branch motifs through
 <code><a href="https://glycoverse.github.io/glymotif/reference/extract_branch_motif.html" class="external-link">glymotif::extract_branch_motif()</a></code> and matches them with
 <code><a href="https://glycoverse.github.io/glymotif/reference/branch_motifs.html" class="external-link">glymotif::branch_motifs()</a></code>, preserving the distinction between antennal
@@ -114,8 +122,10 @@ applied. All-zero or entirely missing total abundance raises an error.</p>
 <span class="r-in"><span>               <span class="va">requireNamespace</span>, <span class="fu"><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_n_core_pie</span><span class="op">(</span><span class="fu">glyexp</span><span class="fu">::</span><span class="va"><a href="https://glycoverse.github.io/glyexp/reference/real_experiment2.html" class="external-link">real_experiment2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_n_type_pie</span><span class="op">(</span><span class="fu">glyexp</span><span class="fu">::</span><span class="va"><a href="https://glycoverse.github.io/glyexp/reference/real_experiment2.html" class="external-link">real_experiment2</a></span>, weight <span class="op">=</span> <span class="st">"abundance"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_n_branch_pie</span><span class="op">(</span><span class="fu">glyexp</span><span class="fu">::</span><span class="va"><a href="https://glycoverse.github.io/glyexp/reference/real_experiment2.html" class="external-link">real_experiment2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_n_branch_bar</span><span class="op">(</span><span class="fu">glyexp</span><span class="fu">::</span><span class="va"><a href="https://glycoverse.github.io/glyexp/reference/real_experiment2.html" class="external-link">real_experiment2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Excluded 1 row with missing structures or without a selected N-glycan core.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Excluded 1 row with missing structures or without a selected N-glycan core.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Excluded 1 row with missing structures or without a selected N-glycan core.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Excluded 1 row with missing structures or without a selected N-glycan core.</span>

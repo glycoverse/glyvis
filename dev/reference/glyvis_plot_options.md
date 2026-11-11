@@ -82,6 +82,7 @@ Pass these named arguments through `...` in any plotting entry point:
 - N-glycan summaries:
   [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
   [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+  [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
   and
   [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
   accept `weight = "equal"` or `"abundance"` and pool all samples. Their
