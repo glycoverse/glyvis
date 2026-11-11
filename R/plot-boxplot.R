@@ -32,13 +32,29 @@ plot_boxplot.glyexp_experiment <- function(
 }
 
 #' @rdname plot_boxplot
+#' @param variables A character vector of row names to plot from a
+#'   `SummarizedExperiment`. `NULL` (the default) plots all rows. Names must
+#'   exist in `rownames(x)`. Matching rows retain their original order;
+#'   repeated names in `variables` do not repeat rows. The 25-variable limit
+#'   applies after selection.
 #' @export
 plot_boxplot.SummarizedExperiment <- function(
   x,
   group_col = "group",
   ...,
-  log_transform = NULL
+  log_transform = NULL,
+  variables = NULL
 ) {
+  if (!is.null(variables)) {
+    checkmate::assert_character(variables, any.missing = FALSE, min.len = 1L)
+    missing_variables <- setdiff(variables, rownames(x))
+    if (length(missing_variables) > 0L) {
+      cli::cli_abort(
+        "Can't find variables in row names: {.val {missing_variables}}."
+      )
+    }
+    x <- x[rownames(x) %in% variables, , drop = FALSE]
+  }
   .plot_exp_boxplot(x, group_col, ..., log_transform = log_transform)
 }
 
