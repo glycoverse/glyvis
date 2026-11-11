@@ -124,7 +124,9 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   )
 }
 
-.n_plot_input <- function(x, weight) {
+.n_plot_input <- function(x, weight, core_set = NULL) {
+  glycan_type <- if (is.null(core_set)) "N" else "O"
+  description <- if (is.null(core_set)) "N-glycan" else "O-GalNAc"
   checkmate::assert_choice(weight, c("equal", "abundance"))
   rlang::check_installed(
     c(
@@ -142,8 +144,10 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   )
   legacy <- inherits(x, "glyexp_experiment")
   meta <- if (legacy) glyexp::get_meta_data(x) else S4Vectors::metadata(x)
-  if (!identical(meta$glycan_type, "N")) {
-    cli::cli_abort("These plots require metadata {.code glycan_type = \"N\"}.")
+  if (!identical(meta$glycan_type, glycan_type)) {
+    cli::cli_abort(
+      "These plots require metadata {.code glycan_type = {glycan_type}}."
+    )
   }
   proteomics <- if (legacy) {
     checkmate::assert_choice(meta$exp_type, c("glycomics", "glycoproteomics"))
@@ -153,7 +157,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   info <- .get_var_info(x)
   if (!nrow(info)) {
-    cli::cli_abort("No eligible N-glycan structures remain.")
+    cli::cli_abort("No eligible {description} structures remain.")
   }
   required <- c(
     "glycan_structure",
@@ -175,22 +179,28 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     as.character(original)
   ))
   core <- "Hex(??-?)[Hex(??-?)]Hex(??-?)HexNAc(??-?)HexNAc(??-"
-  keep <- which(
-    glymotif::have_motif(
-      glycans,
-      core,
-      alignment = "core",
-      ignore_linkages = TRUE
-    ) %in%
-      TRUE
-  )
+  keep <- if (!is.null(core_set)) {
+    which(
+      .o_core_index(glycans) %in% seq_len(if (core_set == "4cores") 4L else 8L)
+    )
+  } else {
+    which(
+      glymotif::have_motif(
+        glycans,
+        core,
+        alignment = "core",
+        ignore_linkages = TRUE
+      ) %in%
+        TRUE
+    )
+  }
   if (length(keep) < nrow(info)) {
     cli::cli_warn(
-      "Excluded {nrow(info) - length(keep)} row{?s} with missing structures or without an N-glycan core."
+      "Excluded {nrow(info) - length(keep)} row{?s} with missing structures or without a selected {description} core."
     )
   }
   if (!length(keep)) {
-    cli::cli_abort("No eligible N-glycan structures remain.")
+    cli::cli_abort("No eligible {description} structures remain.")
   }
   info <- info[keep, , drop = FALSE]
   glycans <- glycans[keep]
@@ -314,6 +324,16 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   # Keep the physical coordinate scale equal in both directions.
   extent <- c(panel_width, panel_height) / (2 * unit_mm)
+  if (nrow(df) > 4L) {
+    extent <- pmax(
+      extent,
+      c(
+        max(abs(labels$label_x) + labels$box_width / 2),
+        max(abs(labels$label_y) + labels$box_height / 2)
+      ) +
+        0.1
+    )
+  }
   p +
     geom_polygon(
       data = do.call(rbind, polygons),
@@ -506,6 +526,13 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   # A bounded relaxation must never return a still-overlapping arrangement.
   # Four exterior corners provide a collision-free fallback for three/four labels.
+  if (length(angles) > 4L && collides(positions)) {
+    label_angles <- 2 * pi * (seq_along(angles) - 1) / length(angles)
+    positions <- centres(label_angles)
+    while (collides(positions)) {
+      positions <- positions * 1.05
+    }
+  }
   if (collides(positions)) {
     corners <- cbind(
       x = c(-1, 1, -1, 1) * (max(half_width) + 0.8),

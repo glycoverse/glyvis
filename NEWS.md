@@ -1,6 +1,7 @@
 # glyvis (development version)
 
 * New `plot_fuc_sia_pie()` summarizes four fucosylation/sialylation categories from `glycan_composition`, with distinct composition or site-specific glycoform counts, optional pooled abundance weighting, and text annotations. Sialylation includes both NeuAc and NeuGc. (#28)
+* New `plot_o_type_pie()` plots O-GalNAc core distributions with glycan cartoons, equal or abundance weighting, and `core_set = "4cores"` (Core 1–4) or `"8cores"` (Core 1–8). (#27)
 
 * New `plot_glycans_per_site()` and `plot_sites_per_protein()` summarize GlycoproteomicSE glycan and site counts in fixed bins from 1 through 7 and >=8, with optional pooled abundance weighting. Glycan counts prefer structures and fall back to compositions with a message when structural annotations are absent or incomplete. (#26)
 
