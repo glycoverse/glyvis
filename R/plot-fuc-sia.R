@@ -17,20 +17,17 @@
 #' `Fuc-, Sia-`. Fucose is inferred from `dHex` (including concrete Fuc);
 #' sialic acid includes both `NeuAc` and `NeuGc`. Counts greater than zero
 #' indicate presence. This does not distinguish core from antennal fucose.
-#' Representative LacNAc-based motif cartoons annotate each sector, using
-#' NeuAc to illustrate sialylation. They illustrate presence/absence only;
-#' their linkages and fucose position are not inferred from compositions.
+#' Each sector is annotated with its Fuc/Sia category and percentage.
 #' Missing compositions are excluded with a warning. Invalid compositions
 #' raise an error. Equal weighting counts annotations regardless of assay
 #' missingness. No sample-wise normalization is applied. Empty eligible input
 #' and non-positive total abundance raise an error.
 #' @returns A `tidyplot`, also inheriting from `ggplot`, with `category`,
-#'   `value`, `proportion`, and representative `glycan_structure` in its `data`. All four categories are retained,
+#'   `value`, and `proportion` in its `data`. All four categories are retained,
 #'   including zero-valued categories. Proportions use the total eligible
 #'   count or abundance as the denominator.
 #' @examples
-#' if (all(vapply(c("glyrepr", "glydraw"), requireNamespace,
-#'                logical(1), quietly = TRUE))) {
+#' if (requireNamespace("glyrepr", quietly = TRUE)) {
 #'   plot_fuc_sia_pie(glyexp::real_experiment2)
 #' }
 #' @export
@@ -40,7 +37,7 @@ plot_fuc_sia_pie <- function(x, weight = "equal", ...) {
     x,
     c("GlycomicSE", "GlycoproteomicSE", "glyexp_experiment")
   )
-  rlang::check_installed(c("glyrepr", "glydraw"), version = c("1.2.0", "0.9.0"))
+  rlang::check_installed("glyrepr", version = "1.2.0")
   info <- .get_var_info(x)
   proteomics <- if (inherits(x, "glyexp_experiment")) {
     meta <- glyexp::get_meta_data(x)
@@ -114,13 +111,7 @@ plot_fuc_sia_pie <- function(x, weight = "equal", ...) {
   df <- tibble::tibble(
     category = factor(labels, levels = labels),
     value = values,
-    proportion = values / total,
-    glycan_structure = c(
-      "Neu5Ac(a2-3)Gal(b1-4)[Fuc(a1-3)]GlcNAc(b1-",
-      "Gal(b1-4)[Fuc(a1-3)]GlcNAc(b1-",
-      "Neu5Ac(a2-3)Gal(b1-4)GlcNAc(b1-",
-      "Gal(b1-4)GlcNAc(b1-"
-    )
+    proportion = values / total
   )
   .n_pie(df, ...)
 }
