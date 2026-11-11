@@ -4,6 +4,8 @@
 * New `plot_fuc_sia_pie()` summarizes four fucosylation/sialylation categories from `glycan_composition`, with distinct composition or site-specific glycoform counts, optional pooled abundance weighting, and text annotations. Sialylation includes both NeuAc and NeuGc. (#28)
 * New `plot_o_type_pie()` plots O-GalNAc core distributions with glycan cartoons, equal or abundance weighting, and `core_set = "4cores"` (Core 1–4) or `"8cores"` (Core 1–8). (#27)
 
+* New `plot_top10_bar()` shows the top ten N-glycans in glycoproteomic data by site-specific glycoform count or pooled abundance, with independently ranked mirrored bars including and excluding oligomannose, glycan cartoons, and the default glyvis colours. (#30)
+
 * New `plot_glycans_per_site()` and `plot_sites_per_protein()` summarize GlycoproteomicSE glycan and site counts in fixed bins from 1 through 7 and >=8, with optional pooled abundance weighting. Glycan counts prefer structures and fall back to compositions with a message when structural annotations are absent or incomplete. (#26)
 
 * New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet. Branch bars use one colour and are ordered from highest to lowest value. (#26)

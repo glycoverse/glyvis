@@ -240,6 +240,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   info <- info[keep, , drop = FALSE]
   glycans <- glycans[keep]
+  structures <- as.character(original[keep])
   if (
     proteomics &&
       any(vapply(
@@ -259,6 +260,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     }
     unique_rows <- !duplicated(keys)
     glycans <- glycans[unique_rows]
+    structures <- structures[unique_rows]
     abundance <- matrix(1, nrow = length(glycans), ncol = 1)
   } else {
     if (.resolve_plot_transformation(x, FALSE)$input_scale != "raw") {
@@ -277,7 +279,13 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       "The total eligible count or abundance must be positive and finite."
     )
   }
-  list(glycans = glycans, abundance = abundance, total = total, weight = weight)
+  list(
+    glycans = glycans,
+    structures = structures,
+    abundance = abundance,
+    total = total,
+    weight = weight
+  )
 }
 
 .n_plot_summary <- function(input, membership, labels, structures) {
