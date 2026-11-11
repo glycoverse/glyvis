@@ -10,7 +10,13 @@ plot_boxplot(x, ..., log_transform = NULL)
 
 \method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ..., log_transform = NULL)
 
-\method{plot_boxplot}{SummarizedExperiment}(x, group_col = "group", ..., log_transform = NULL)
+\method{plot_boxplot}{SummarizedExperiment}(
+  x,
+  group_col = "group",
+  ...,
+  log_transform = NULL,
+  variables = NULL
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
@@ -25,6 +31,12 @@ for already logged values. This argument must be named after \code{...}.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
+
+\item{variables}{A character vector of row names to plot from a
+\code{SummarizedExperiment}. \code{NULL} (the default) plots all rows. Names must
+exist in \code{rownames(x)}. Matching rows retain their original order;
+repeated names in \code{variables} do not repeat rows. The 25-variable limit
+applies after selection.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
