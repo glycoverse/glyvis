@@ -62,6 +62,8 @@
   : PLS-DA Plot
 - [`plot_roc()`](https://glycoverse.github.io/glyvis/dev/reference/plot_roc.md)
   : ROC plot
+- [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_top10_bar.md)
+  : Top ten glycans by site-specific glycoform count or abundance
 - [`plot_tsne()`](https://glycoverse.github.io/glyvis/dev/reference/plot_tsne.md)
   : t-SNE Plot
 - [`plot_umap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_umap.md)

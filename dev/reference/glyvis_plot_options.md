@@ -106,6 +106,12 @@ Pass these named arguments through `...` in any plotting entry point:
   plot area. `weight = "abundance"` pools measured glycoform abundances
   across samples instead of counting entities.
 
+- Top glycans:
+  [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_top10_bar.md)
+  independently ranks the ten most frequent or abundant glycans
+  including and excluding oligomannose in mirrored bars, with glycan
+  cartoons and the tidyplots default plot area of 50 by 50 mm.
+
 ## Migration from earlier backends
 
 Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and

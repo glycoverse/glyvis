@@ -22,6 +22,13 @@
   `"8cores"` (Core 1–8). (#27)
 
 - New
+  [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_top10_bar.md)
+  shows the top ten N-glycans in glycoproteomic data by site-specific
+  glycoform count or pooled abundance, with independently ranked
+  mirrored bars including and excluding oligomannose, glycan cartoons,
+  and the default glyvis colours. (#30)
+
+- New
   [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
   and
   [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
