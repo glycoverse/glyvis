@@ -111,11 +111,11 @@ test_that("branch bars count presence, exclude bisection, and allow overlaps", {
   )
   p <- plot_n_branch_bar(x)
   # Gal-GlcNAc occurs twice on the complex glycan, but contributes only once.
-  expect_equal(sort(p$data$value), c(1, 3))
-  expect_equal(sort(p$data$proportion), c(0.25, 0.75))
+  expect_equal(p$data$value, c(3, 1))
+  expect_equal(p$data$proportion, c(0.75, 0.25))
   q <- plot_n_branch_bar(x, "abundance")
-  expect_equal(sort(q$data$value), c(4, 7))
-  expect_equal(sort(q$data$proportion), c(4, 7) / 15)
+  expect_equal(q$data$value, c(7, 4))
+  expect_equal(q$data$proportion, c(7, 4) / 15)
   expect_true(all(q$data$cartoon_y > q$data$value))
   expect_setequal(
     as.character(glyparse::auto_parse(q$data$glycan_structure)),

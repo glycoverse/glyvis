@@ -1,6 +1,6 @@
 # glyvis (development version)
 
-* New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet.
+* New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet. Branch bars use one colour and are ordered from highest to lowest value.
 
 * `plot_boxplot()` gains a `variables` argument to select SummarizedExperiment rows by name before applying the 25-variable limit. (#25)
 

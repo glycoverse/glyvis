@@ -30,6 +30,8 @@
 #'   at most once to each branch type, even if it has repeated identical arms.
 #'   Different branch types can overlap, so bar proportions need not sum to one.
 #'   Cartoons above the bars show the extracted branches, without the core.
+#'   Bars are ordered from highest to lowest value and share one colour
+#'   (the first colour in `palette`, when supplied).
 #'
 #' Missing structures and structures without the N-glycan core are excluded
 #' with a warning. Invalid structure strings raise an error. Reducing-end
@@ -413,7 +415,16 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     )
 }
 
-.n_branch_plot <- function(df, weight, width = 100, height = 80, ...) {
+.n_branch_plot <- function(
+  df,
+  weight,
+  width = 100,
+  height = 80,
+  palette = NULL,
+  ...
+) {
+  df <- df[order(df$value, decreasing = TRUE), , drop = FALSE]
+  df$category <- factor(df$category, levels = as.character(df$category))
   peak <- max(df$value)
   if (peak == 0) {
     peak <- 1
@@ -423,15 +434,19 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     df,
     "category",
     "value",
-    "category",
     width = width,
     height = height,
+    palette = palette,
     ...
   )
   y_scale <- p$scales$get_scales("y")
   y_scale$expand <- expansion(mult = c(0, 0.45))
   p +
-    geom_col(aes(fill = .data$category), width = 0.65, show.legend = FALSE) +
+    geom_col(
+      fill = if (is.null(palette)) glyvis_colors[1] else palette[[1]],
+      width = 0.65,
+      show.legend = FALSE
+    ) +
     glydraw::geom_glycan(
       aes(y = .data$cartoon_y, structure = .data$glycan_structure),
       orient = "up",

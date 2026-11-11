@@ -52,6 +52,8 @@ and bisecting GlcNAc. Each glycan or site-specific glycoform contributes
 at most once to each branch type, even if it has repeated identical arms.
 Different branch types can overlap, so bar proportions need not sum to one.
 Cartoons above the bars show the extracted branches, without the core.
+Bars are ordered from highest to lowest value and share one colour
+(the first colour in \code{palette}, when supplied).
 
 Missing structures and structures without the N-glycan core are excluded
 with a warning. Invalid structure strings raise an error. Reducing-end
