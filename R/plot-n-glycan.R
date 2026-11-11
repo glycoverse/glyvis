@@ -27,7 +27,8 @@
 #' `plot_n_branch_pie()` groups glycans by [glydet::n_antennae()], counting
 #'   GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
 #'   Observed antenna counts (including zero) are ordered numerically. Each
-#'   cartoon is the first input structure in that category, not its definition.
+#'   cartoon for zero to four antennae is a fixed core-and-antenna motif with
+#'   unspecified linkages. Higher counts use the first input structure.
 #'   Observed categories with zero total abundance remain visible.
 #' `plot_n_branch_bar()` extracts branch motifs through
 #'   [glymotif::extract_branch_motif()] and matches them with
@@ -108,6 +109,15 @@ plot_n_branch_pie <- function(x, weight = "equal", ...) {
   counts <- sort(unique(antennae))
   labels <- paste(counts, ifelse(counts == 1, "antenna", "antennae"))
   structures <- unname(as.character(input$glycans[match(counts, antennae)]))
+  motifs <- c(
+    "Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)Man(??-?)[Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-",
+    "GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)[GlcNAc(??-?)[GlcNAc(??-?)]Man(??-?)]Man(??-?)GlcNAc(??-?)GlcNAc(??-"
+  )
+  fixed <- counts %in% 0:4
+  structures[fixed] <- motifs[counts[fixed] + 1L]
   df <- .n_plot_summary(
     input,
     outer(antennae, counts, `==`),

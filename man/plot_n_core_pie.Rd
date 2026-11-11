@@ -52,7 +52,8 @@ Type cartoons are representative structures, not complete definitions.
 \code{plot_n_branch_pie()} groups glycans by \code{\link[glydet:n_glycan_type]{glydet::n_antennae()}}, counting
 GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
 Observed antenna counts (including zero) are ordered numerically. Each
-cartoon is the first input structure in that category, not its definition.
+cartoon for zero to four antennae is a fixed core-and-antenna motif with
+unspecified linkages. Higher counts use the first input structure.
 Observed categories with zero total abundance remain visible.
 \code{plot_n_branch_bar()} extracts branch motifs through
 \code{\link[glymotif:extract_branch_motif]{glymotif::extract_branch_motif()}} and matches them with
