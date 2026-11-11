@@ -67,7 +67,7 @@ all samples. Their default plot areas are 50 by 50 mm.
 or \code{"abundance"} and classifies fucosylation and sialylation without structures.
 \item O-GalNAc summaries: \code{\link[=plot_o_type_pie]{plot_o_type_pie()}} uses the same weighting and
 accepts \code{core_set = "4cores"} (Core 1-4) or \code{"8cores"} (Core 1-8).
-\item Glycoproteomic count distributions: \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}} and
+\item Count distributions: \code{\link[=plot_isomers_per_comp]{plot_isomers_per_comp()}}, \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}}, and
 \code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}} use fixed bins \code{1} to \code{7} and \verb{>=8}, one bar
 colour, and a 50 by 50 mm plot area. \code{weight = "abundance"} pools
 measured glycoform abundances across samples instead of counting entities.
