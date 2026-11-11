@@ -14,7 +14,8 @@
 #'   their summed abundance. Missing abundances are omitted; negative or
 #'   infinite values and recorded non-raw scales are rejected.
 #' @param ... Common appearance options described in [glyvis_plot_options].
-#'   The default plot area is 120 by 90 mm for pies and 100 by 80 mm for bars.
+#'   The default plot area is 50 by 50 mm. Pie annotations scale with the
+#'   panel size; core labels are split across lines to avoid crowding.
 #'
 #' @details
 #' `plot_n_core_pie()` separates core fucosylation and bisecting GlcNAc into
@@ -258,8 +259,8 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
 
 .n_pie <- function(
   df,
-  width = 120,
-  height = 90,
+  width = 50,
+  height = 50,
   fontsize = 9,
   family = "sans",
   ...
@@ -281,7 +282,19 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       y = if (df$proportion[i] == 1) cos(theta) else c(0, cos(theta), 0)
     )
   })
-  labels <- .n_pie_labels(df, angles, fontsize)
+  panel_width <- if (is.null(width) || is.na(width)) 50 else width
+  panel_height <- if (is.null(height) || is.na(height)) 50 else height
+  unit_mm <- min(panel_width, panel_height) / 6.8
+  label_fontsize <- fontsize * min(1, min(panel_width, panel_height) / 70)
+  cartoon_size <- min(0.18, 0.08 * min(panel_width, panel_height) / 50)
+  labels <- .n_pie_labels(
+    df,
+    angles,
+    label_fontsize,
+    family,
+    cartoon_size,
+    unit_mm
+  )
   connectors <- labels[labels$value > 0, , drop = FALSE]
   p <- .glyvis_plot(
     df,
@@ -299,16 +312,8 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     colour_scale <- p$scales$get_scales(aesthetic)
     colour_scale$drop <- FALSE
   }
-  # tidyplots fixes physical panel dimensions, so match their aspect ratio.
-  panel_width <- if (is.null(width)) 50 else width
-  panel_height <- if (is.null(height)) 50 else height
-  extent <- c(3, 2.45)
-  if (is.finite(panel_width) && is.finite(panel_height)) {
-    extent <- c(
-      max(3, 2.45 * panel_width / panel_height),
-      max(2.45, 3 * panel_height / panel_width)
-    )
-  }
+  # Keep the physical coordinate scale equal in both directions.
+  extent <- c(panel_width, panel_height) / (2 * unit_mm)
   p +
     geom_polygon(
       data = do.call(rbind, polygons),
@@ -338,18 +343,18 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       data = labels,
       aes(
         x = .data$label_x,
-        y = .data$label_y + 0.2,
+        y = .data$cartoon_y,
         structure = .data$glycan_structure
       ),
       inherit.aes = FALSE,
-      size = 0.18,
+      size = cartoon_size,
       show_linkage = FALSE
     ) +
     geom_text(
       data = labels,
-      aes(x = .data$label_x, y = .data$label_y - 0.32, label = .data$text),
+      aes(x = .data$label_x, y = .data$text_y, label = .data$text),
       inherit.aes = FALSE,
-      size = fontsize / .pt,
+      size = label_fontsize / .pt,
       family = family,
       lineheight = 1.1
     ) +
@@ -369,19 +374,77 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     )
 }
 
-.n_pie_labels <- function(df, angles, fontsize) {
+.n_pie_labels <- function(df, angles, fontsize, family, cartoon_size, unit_mm) {
+  df$text <- paste0(
+    gsub(" / ", "\n", as.character(df$category), fixed = TRUE),
+    "\n",
+    formatC(100 * df$proportion, format = "f", digits = 1),
+    "%"
+  )
+  dimensions <- vapply(
+    seq_len(nrow(df)),
+    function(i) {
+      text <- grid::textGrob(
+        df$text[i],
+        gp = grid::gpar(
+          fontsize = fontsize,
+          fontfamily = family,
+          lineheight = 1.1
+        )
+      )
+      cartoon <- glydraw::draw_cartoon(
+        df$glycan_structure[i],
+        show_linkage = FALSE
+      )
+      size <- attr(cartoon, "glydraw_panel_size_px") / 300 * 25.4 * cartoon_size
+      c(
+        width = max(
+          size[["width"]],
+          grid::convertWidth(grid::grobWidth(text), "mm", TRUE)
+        ),
+        cartoon_height = size[["height"]],
+        text_height = grid::convertHeight(grid::grobHeight(text), "mm", TRUE)
+      )
+    },
+    numeric(3)
+  )
+  half_width <- (dimensions["width", ] + 1.5) / (2 * unit_mm)
+  half_height <- (dimensions["cartoon_height", ] +
+    dimensions["text_height", ] +
+    2.5) /
+    (2 * unit_mm)
+  positions <- .n_pie_label_layout(
+    angles,
+    which(df$value > 0),
+    half_width,
+    half_height
+  )
+  df$box_width <- 2 * half_width
+  df$box_height <- 2 * half_height
+  df$label_x <- positions[, "x"]
+  df$label_y <- positions[, "y"]
+  df$anchor_x <- sin(angles)
+  df$anchor_y <- cos(angles)
+  dx <- df$label_x - df$anchor_x
+  dy <- df$label_y - df$anchor_y
+  edge <- pmin(half_width / abs(dx), half_height / abs(dy))
+  df$line_x <- df$label_x - edge * dx
+  df$line_y <- df$label_y - edge * dy
+  df$cartoon_y <- df$label_y + (dimensions["text_height", ] + 1) / (2 * unit_mm)
+  df$text_y <- df$label_y - (dimensions["cartoon_height", ] + 1) / (2 * unit_mm)
+  df
+}
+
+.n_pie_label_layout <- function(angles, present, half_width, half_height) {
   label_angles <- angles
-  present <- which(df$value > 0)
   # Zero-valued categories have no sector: place them in unused angular gaps.
-  for (i in which(df$value == 0)) {
+  for (i in setdiff(seq_along(angles), present)) {
     occupied <- sort(label_angles[present] %% (2 * pi))
     gaps <- diff(c(occupied, occupied[1] + 2 * pi))
     gap <- which.max(gaps)
     label_angles[i] <- (occupied[gap] + gaps[gap] / 2) %% (2 * pi)
     present <- c(present, i)
   }
-  half_width <- max(0.8, 0.65 * fontsize / 9)
-  half_height <- max(0.6, 0.5 * fontsize / 9)
   centres <- function(theta) {
     # Clear the circle's tangent with the complete cartoon-and-text box.
     radius <- 1.08 +
@@ -389,7 +452,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       half_height * abs(cos(theta))
     cbind(x = radius * sin(theta), y = radius * cos(theta))
   }
-  pairs <- utils::combn(seq_len(nrow(df)), 2)
+  pairs <- utils::combn(seq_along(angles), 2)
   for (iteration in seq_len(720)) {
     moved <- FALSE
     for (pair in seq_len(ncol(pairs))) {
@@ -397,7 +460,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       j <- pairs[2, pair]
       positions <- centres(label_angles)
       overlap <- abs(positions[i, ] - positions[j, ]) <
-        c(2 * half_width + 0.06, 2 * half_height + 0.06)
+        c(sum(half_width[c(i, j)]) + 0.06, sum(half_height[c(i, j)]) + 0.06)
       if (all(overlap)) {
         direction <- sign(
           (label_angles[j] - label_angles[i] + pi) %%
@@ -415,29 +478,46 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     if (!moved) break
   }
   positions <- centres(label_angles)
-  df$label_x <- positions[, "x"]
-  df$label_y <- positions[, "y"]
-  df$anchor_x <- sin(angles)
-  df$anchor_y <- cos(angles)
-  dx <- df$label_x - df$anchor_x
-  dy <- df$label_y - df$anchor_y
-  edge <- pmin(half_width / abs(dx), half_height / abs(dy))
-  df$line_x <- df$label_x - edge * dx
-  df$line_y <- df$label_y - edge * dy
-  df$text <- paste0(
-    df$category,
-    "\n",
-    formatC(100 * df$proportion, format = "f", digits = 1),
-    "%"
-  )
-  df
+  collides <- function(positions) {
+    any(vapply(
+      seq_len(ncol(pairs)),
+      function(k) {
+        i <- pairs[1, k]
+        j <- pairs[2, k]
+        all(
+          abs(positions[i, ] - positions[j, ]) <
+            c(sum(half_width[c(i, j)]), sum(half_height[c(i, j)]))
+        )
+      },
+      logical(1)
+    ))
+  }
+  # A bounded relaxation must never return a still-overlapping arrangement.
+  # Four exterior corners provide a collision-free fallback for three/four labels.
+  if (collides(positions)) {
+    corners <- cbind(
+      x = c(-1, 1, -1, 1) * (max(half_width) + 0.8),
+      y = c(-1, -1, 1, 1) * (max(half_height) + 0.8)
+    )
+    assignments <- as.matrix(expand.grid(rep(list(1:4), length(angles))))
+    assignments <- assignments[
+      apply(assignments, 1, function(x) !anyDuplicated(x)),
+      ,
+      drop = FALSE
+    ]
+    costs <- apply(assignments, 1, function(x) {
+      sum((corners[x, ] - positions)^2)
+    })
+    positions <- corners[assignments[which.min(costs), ], , drop = FALSE]
+  }
+  positions
 }
 
 .n_branch_plot <- function(
   df,
   weight,
-  width = 100,
-  height = 80,
+  width = 50,
+  height = 50,
   palette = NULL,
   ...
 ) {
@@ -466,7 +546,7 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   panel_height <- if (is.null(height)) {
     50
   } else if (is.na(height)) {
-    80
+    50
   } else {
     height
   }

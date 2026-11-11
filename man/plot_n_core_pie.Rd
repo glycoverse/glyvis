@@ -26,7 +26,8 @@ their summed abundance. Missing abundances are omitted; negative or
 infinite values and recorded non-raw scales are rejected.}
 
 \item{...}{Common appearance options described in \link{glyvis_plot_options}.
-The default plot area is 120 by 90 mm for pies and 100 by 80 mm for bars.}
+The default plot area is 50 by 50 mm. Pie annotations scale with the
+panel size; core labels are split across lines to avoid crowding.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

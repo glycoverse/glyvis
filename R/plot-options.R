@@ -51,11 +51,10 @@
 #'   to [ggseqlogo::geom_logo()], e.g. `list(method = "prob")`.
 #' * N-glycan summaries: [plot_n_core_pie()], [plot_n_type_pie()], and
 #'   [plot_n_branch_bar()] accept `weight = "equal"` or `"abundance"` and pool
-#'   all samples. Their default plot areas are 120 by 90 mm for pies and
-#'   100 by 80 mm for bars, leaving room for glycan cartoons.
+#'   all samples. Their default plot areas are 50 by 50 mm.
 #' * Glycoproteomic count distributions: [plot_glycans_per_site()] and
 #'   [plot_sites_per_protein()] use fixed bins `1` to `7` and `>=8`, one bar
-#'   colour, and an 80 by 65 mm plot area. `weight = "abundance"` pools
+#'   colour, and a 50 by 50 mm plot area. `weight = "abundance"` pools
 #'   measured glycoform abundances across samples instead of counting entities.
 #'
 #' @section Migration from earlier backends:
