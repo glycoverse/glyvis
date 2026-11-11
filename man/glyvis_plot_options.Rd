@@ -62,6 +62,8 @@ to \code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, e.g. \code{list(me
 \item N-glycan summaries: \code{\link[=plot_n_core_pie]{plot_n_core_pie()}}, \code{\link[=plot_n_type_pie]{plot_n_type_pie()}}, and
 \code{\link[=plot_n_branch_bar]{plot_n_branch_bar()}} accept \code{weight = "equal"} or \code{"abundance"} and pool
 all samples. Their default plot areas are 50 by 50 mm.
+\item O-GalNAc summaries: \code{\link[=plot_o_type_pie]{plot_o_type_pie()}} uses the same weighting and
+accepts \code{core_set = "4cores"} (Core 1-4) or \code{"8cores"} (Core 1-8).
 \item Glycoproteomic count distributions: \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}} and
 \code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}} use fixed bins \code{1} to \code{7} and \verb{>=8}, one bar
 colour, and a 50 by 50 mm plot area. \code{weight = "abundance"} pools
