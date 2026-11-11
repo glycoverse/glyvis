@@ -56,6 +56,9 @@
 #'   [plot_sites_per_protein()] use fixed bins `1` to `7` and `>=8`, one bar
 #'   colour, and a 50 by 50 mm plot area. `weight = "abundance"` pools
 #'   measured glycoform abundances across samples instead of counting entities.
+#' * Top glycans: [plot_top10_bar()] independently ranks the ten most frequent
+#'   or abundant glycans including and excluding oligomannose in mirrored bars,
+#'   with glycan cartoons and the tidyplots default plot area of 50 by 50 mm.
 #'
 #' @section Migration from earlier backends:
 #' Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and

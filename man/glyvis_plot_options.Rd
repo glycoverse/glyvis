@@ -66,6 +66,9 @@ all samples. Their default plot areas are 50 by 50 mm.
 \code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}} use fixed bins \code{1} to \code{7} and \verb{>=8}, one bar
 colour, and a 50 by 50 mm plot area. \code{weight = "abundance"} pools
 measured glycoform abundances across samples instead of counting entities.
+\item Top glycans: \code{\link[=plot_top10_bar]{plot_top10_bar()}} independently ranks the ten most frequent
+or abundant glycans including and excluding oligomannose in mirrored bars,
+with glycan cartoons and the tidyplots default plot area of 50 by 50 mm.
 }
 }
 
