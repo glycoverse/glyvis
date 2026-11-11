@@ -2,6 +2,10 @@
 
 ## glyvis (development version)
 
+- [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
+  now explains UniProt sequence lookup failures and suggests retrying or
+  using a local FASTA, while retaining the original error for diagnosis.
+
 ## glyvis 0.8.0
 
 ### Breaking changes
