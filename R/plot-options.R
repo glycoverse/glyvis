@@ -49,7 +49,8 @@
 #'   `triangle = "lower"` (also `"upper"` or `"full"`). Colors span -1 to 1.
 #' * Sequence logos: pass glyph options in `logo_args`, a named list passed
 #'   to [ggseqlogo::geom_logo()], e.g. `list(method = "prob")`.
-#' * N-glycan summaries: [plot_n_core_pie()], [plot_n_type_pie()], and
+#' * N-glycan summaries: [plot_n_core_pie()], [plot_n_type_pie()],
+#'   [plot_n_branch_pie()], and
 #'   [plot_n_branch_bar()] accept `weight = "equal"` or `"abundance"` and pool
 #'   all samples. Their default plot areas are 50 by 50 mm.
 #' * Glycoproteomic count distributions: [plot_glycans_per_site()] and

@@ -24,6 +24,11 @@
 #'   `merge_mannose = TRUE`, labelled `oligomannose`, `hybrid`, and `complex`.
 #'   Thus oligomannose includes both paucimannose and high-mannose glycans.
 #'   Type cartoons are representative structures, not complete definitions.
+#' `plot_n_branch_pie()` groups glycans by [glydet::n_antennae()], counting
+#'   GlcNAc antennae attached to the core mannoses, excluding bisecting GlcNAc.
+#'   Observed antenna counts (including zero) are ordered numerically. Each
+#'   cartoon is the first input structure in that category, not its definition.
+#'   Observed categories with zero total abundance remain visible.
 #' `plot_n_branch_bar()` extracts branch motifs through
 #'   [glymotif::extract_branch_motif()] and matches them with
 #'   [glymotif::branch_motifs()], preserving the distinction between antennal
@@ -52,6 +57,7 @@
 #'                requireNamespace, logical(1), quietly = TRUE))) {
 #'   plot_n_core_pie(glyexp::real_experiment2)
 #'   plot_n_type_pie(glyexp::real_experiment2, weight = "abundance")
+#'   plot_n_branch_pie(glyexp::real_experiment2)
 #'   plot_n_branch_bar(glyexp::real_experiment2)
 #' }
 #' @export
@@ -88,6 +94,26 @@ plot_n_type_pie <- function(x, weight = "equal", ...) {
     "GlcNAc(b1-2)Man(a1-3)[GlcNAc(b1-2)Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
   )
   df <- .n_plot_summary(input, outer(type, labels, `==`), labels, structures)
+  .n_pie(df, ...)
+}
+
+#' @rdname plot_n_core_pie
+#' @export
+plot_n_branch_pie <- function(x, weight = "equal", ...) {
+  input <- .n_plot_input(x, weight)
+  antennae <- glydet::n_antennae(input$glycans)
+  if (anyNA(antennae)) {
+    cli::cli_abort("Some N-glycans could not be classified unambiguously.")
+  }
+  counts <- sort(unique(antennae))
+  labels <- paste(counts, ifelse(counts == 1, "antenna", "antennae"))
+  structures <- unname(as.character(input$glycans[match(counts, antennae)]))
+  df <- .n_plot_summary(
+    input,
+    outer(antennae, counts, `==`),
+    labels,
+    structures
+  )
   .n_pie(df, ...)
 }
 
@@ -452,6 +478,9 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
       half_height * abs(cos(theta))
     cbind(x = radius * sin(theta), y = radius * cos(theta))
   }
+  if (length(angles) == 1L) {
+    return(centres(label_angles))
+  }
   pairs <- utils::combn(seq_along(angles), 2)
   for (iteration in seq_len(720)) {
     moved <- FALSE
@@ -494,7 +523,17 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
   }
   # A bounded relaxation must never return a still-overlapping arrangement.
   # Four exterior corners provide a collision-free fallback for three/four labels.
-  if (collides(positions)) {
+  if (collides(positions) && length(angles) > 4L) {
+    # Stack labels outside the pie when more than four categories are crowded.
+    side <- ifelse(sin(label_angles) < 0, -1, 1)
+    for (s in c(-1, 1)) {
+      ids <- which(side == s)
+      ids <- ids[order(positions[ids, "y"])]
+      heights <- 2 * half_height[ids] + 0.06
+      positions[ids, "x"] <- s * (1.08 + half_width[ids])
+      positions[ids, "y"] <- cumsum(heights) - heights / 2 - sum(heights) / 2
+    }
+  } else if (collides(positions)) {
     corners <- cbind(
       x = c(-1, 1, -1, 1) * (max(half_width) + 0.8),
       y = c(-1, -1, 1, 1) * (max(half_height) + 0.8)
