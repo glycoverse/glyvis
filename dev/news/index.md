@@ -3,6 +3,13 @@
 ## glyvis (development version)
 
 - New
+  [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)
+  summarizes four fucosylation/sialylation categories from
+  `glycan_composition`, with distinct composition or site-specific
+  glycoform counts, optional pooled abundance weighting, and text
+  annotations. Sialylation includes both NeuAc and NeuGc. (#28)
+
+- New
   [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md)
   plots O-GalNAc core distributions with glycan cartoons, equal or
   abundance weighting, and `core_set = "4cores"` (Core 1–4) or

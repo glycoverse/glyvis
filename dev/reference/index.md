@@ -38,6 +38,8 @@
   : Boxplot
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   : Correlation Plot
+- [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)
+  : Fucosylation and sialylation distribution
 - [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
   [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
   : Distributions of glycans per site and sites per protein

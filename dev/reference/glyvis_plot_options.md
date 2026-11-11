@@ -87,6 +87,11 @@ Pass these named arguments through `...` in any plotting entry point:
   accept `weight = "equal"` or `"abundance"` and pool all samples. Their
   default plot areas are 50 by 50 mm.
 
+- Composition summaries:
+  [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)
+  accepts `weight = "equal"` or `"abundance"` and classifies
+  fucosylation and sialylation without structures.
+
 - O-GalNAc summaries:
   [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md)
   uses the same weighting and accepts `core_set = "4cores"` (Core 1-4)
