@@ -19,7 +19,7 @@ count once in equal mode and contribute their summed abundance otherwise.}
 \item{...}{Common appearance options in \link{glyvis_plot_options}. The plot area
 uses the tidyplots default (50 by 50 mm). The first two default glyvis
 colours identify the left and right sides. Cartoon sizes adapt to the
-plot dimensions supplied here.}
+plot dimensions supplied here. No title is added unless \code{title} is supplied.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

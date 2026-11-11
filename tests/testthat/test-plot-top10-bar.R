@@ -28,6 +28,7 @@ test_that("top ten counts deduplicate glycoforms and rank both sides independent
   x <- top10_fixture()
   p <- plot_top10_bar(x)
   expect_s3_class(p, "tidyplot")
+  expect_null(p$labels$title)
   expect_equal(p$data$value, c(3, 2, 1, 2, 1))
   expect_equal(p$data$rank, c(1L, 2L, 3L, 1L, 2L))
   expect_equal(p$data$signed_value, c(-3, -2, -1, 2, 1))

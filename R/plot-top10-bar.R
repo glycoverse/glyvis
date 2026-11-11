@@ -15,7 +15,7 @@
 #' @param ... Common appearance options in [glyvis_plot_options]. The plot area
 #'   uses the tidyplots default (50 by 50 mm). The first two default glyvis
 #'   colours identify the left and right sides. Cartoon sizes adapt to the
-#'   plot dimensions supplied here.
+#'   plot dimensions supplied here. No title is added unless `title` is supplied.
 #'
 #' @details
 #' Classification uses [glydet::n_glycan_type()] with `merge_mannose = TRUE`:
@@ -83,7 +83,7 @@ plot_top10_bar <- function(x, weight = "equal", ...) {
   weight,
   width = NULL,
   height = NULL,
-  title = "Top 10 glycans",
+  title = NULL,
   fontsize = 9,
   family = "sans",
   palette = NULL,
