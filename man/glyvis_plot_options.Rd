@@ -63,6 +63,10 @@ to \code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, e.g. \code{list(me
 \code{\link[=plot_n_branch_bar]{plot_n_branch_bar()}} accept \code{weight = "equal"} or \code{"abundance"} and pool
 all samples. Their default plot areas are 120 by 90 mm for pies and
 100 by 80 mm for bars, leaving room for glycan cartoons.
+\item Glycoproteomic count distributions: \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}} and
+\code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}} use fixed bins \code{1} to \code{7} and \verb{>=8}, one bar
+colour, and an 80 by 65 mm plot area. \code{weight = "abundance"} pools
+measured glycoform abundances across samples instead of counting entities.
 }
 }
 
