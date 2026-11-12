@@ -33,7 +33,11 @@
 #' @examples
 #' plot_isomers_per_comp(glyexp::real_experiment2)
 #' @export
-plot_isomers_per_comp <- function(x, weight = "equal", ...) {
+plot_isomers_per_comp <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   checkmate::assert_multi_class(x, c("GlycomicSE", "GlycoproteomicSE"))
   checkmate::assert_choice(weight, c("equal", "abundance"))
   info <- tibble::as_tibble(SummarizedExperiment::rowData(x))

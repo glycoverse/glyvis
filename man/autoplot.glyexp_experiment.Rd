@@ -7,9 +7,9 @@
 \usage{
 \method{autoplot}{glyexp_experiment}(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
   log_transform = NULL,
   scale = "row",
   cluster_rows = TRUE,
@@ -25,9 +25,9 @@
 
 \method{autoplot}{SummarizedExperiment}(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
   log_transform = NULL,
   scale = "row",
   cluster_rows = TRUE,
@@ -44,13 +44,13 @@
 \arguments{
 \item{object}{A supported Glycoverse data container.}
 
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
 \item{type}{The type of plot, one of "heatmap" (default) or "boxplot".}
 
 \item{group_col}{A character string specifying where to find the group information.
 It should be a column in the sample information tibble. Defaults to "group".
 Only applicable to "boxplot".}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values

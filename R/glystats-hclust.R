@@ -10,9 +10,9 @@
 #' @export
 autoplot.glystats_hclust_res <- function(
   object,
+  ...,
   rotate = FALSE,
-  labels = TRUE,
-  ...
+  labels = TRUE
 ) {
   rlang::check_installed("ggdendro")
   checkmate::assert_flag(rotate)

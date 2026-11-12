@@ -4,17 +4,17 @@
 \alias{autoplot.glystats_cox_res}
 \title{Plots for Cox Proportional Hazards Model}
 \usage{
-\method{autoplot}{glystats_cox_res}(object, p_cutoff = 0.05, p_col = "p_adj", ..., top_n = NULL)
+\method{autoplot}{glystats_cox_res}(object, ..., p_cutoff = 0.05, p_col = "p_adj", top_n = NULL)
 }
 \arguments{
 \item{object}{A \code{glystats_cox_res} object.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{p_cutoff}{The p-value cutoff. Defaults to 0.05.}
 
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{top_n}{Number of variables to retain. \code{NULL} retains all variables;
 a positive integer selects the smallest plotted p-values.}

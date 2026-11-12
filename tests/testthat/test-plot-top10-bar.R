@@ -125,19 +125,22 @@ test_that("only annotated N-glycoproteomic input and suitable abundances are acc
   )) {
     expect_error(plot_top10_bar(input), "GlycoproteomicSE")
   }
-  expect_error(plot_top10_bar(x, "invalid"), "weight")
+  expect_error(plot_top10_bar(x, weight = "invalid"), "weight")
   expect_error(plot_top10_bar(x[FALSE, ]), "No eligible")
   S4Vectors::metadata(x)$glycan_type <- "O"
   expect_error(plot_top10_bar(x), "glycan_type")
   S4Vectors::metadata(x)$glycan_type <- "N"
   S4Vectors::metadata(x)$scale <- "log2"
-  expect_error(plot_top10_bar(x, "abundance"), "linear-scale")
+  expect_error(plot_top10_bar(x, weight = "abundance"), "linear-scale")
   S4Vectors::metadata(x)$scale <- "raw"
   for (value in c(-1, Inf, NA_real_, 0)) {
     S4Vectors::metadata(x)$scale <- "log2"
     SummarizedExperiment::assay(x)[] <- value
     S4Vectors::metadata(x)$scale <- "raw"
-    expect_error(plot_top10_bar(x, "abundance"), "non-negative|positive")
+    expect_error(
+      plot_top10_bar(x, weight = "abundance"),
+      "non-negative|positive"
+    )
   }
   SummarizedExperiment::rowData(x)$protein[1] <- NA_character_
   expect_error(plot_top10_bar(x), "non-missing")

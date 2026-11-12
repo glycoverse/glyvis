@@ -9,10 +9,10 @@
 \usage{
 plot_pca(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -23,10 +23,10 @@ plot_pca(
 
 \method{plot_pca}{glystats_pca_res}(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -37,11 +37,11 @@ plot_pca(
 
 \method{plot_pca}{glyexp_experiment}(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -52,11 +52,11 @@ plot_pca(
 
 \method{plot_pca}{SummarizedExperiment}(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -67,6 +67,8 @@ plot_pca(
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
 
@@ -79,8 +81,6 @@ If the result was produced from a supported Glycoverse data container,
 sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{axes}{Integer vector selecting two distinct principal components.}
 

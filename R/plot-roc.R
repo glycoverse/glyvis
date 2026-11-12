@@ -20,7 +20,13 @@
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_roc <- function(x, type = "roc", auc_cutoff = 0.5, ..., top_n = NULL) {
+plot_roc <- function(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  top_n = NULL
+) {
   UseMethod("plot_roc")
 }
 
@@ -28,9 +34,9 @@ plot_roc <- function(x, type = "roc", auc_cutoff = 0.5, ..., top_n = NULL) {
 #' @export
 plot_roc.glystats_roc_res <- function(
   x,
+  ...,
   type = "roc",
   auc_cutoff = 0.5,
-  ...,
   top_n = NULL
 ) {
   .plot_roc(x, type = type, auc_cutoff = auc_cutoff, ..., top_n = top_n)
@@ -41,10 +47,10 @@ plot_roc.glystats_roc_res <- function(
 #' @export
 plot_roc.glyexp_experiment <- function(
   x,
+  ...,
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  ...,
   top_n = NULL
 ) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
@@ -64,10 +70,10 @@ plot_roc.glyexp_experiment <- function(
 #' @export
 plot_roc.SummarizedExperiment <- function(
   x,
+  ...,
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  ...,
   top_n = NULL
 ) {
   checkmate::assert_choice(type, c("dotplot", "roc"))

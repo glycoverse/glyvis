@@ -8,42 +8,44 @@
 \usage{
 plot_heatmap(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 )
 
 \method{plot_heatmap}{glyexp_experiment}(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 )
 
 \method{plot_heatmap}{SummarizedExperiment}(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 )
 }
 \arguments{
 \item{x}{A supported Glycoverse data container.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{scale}{Standardize rows (\code{"row"}, the default), columns (\code{"column"}),
 or neither (\code{"none"}). Applied after and independently of \code{log_transform}.}
@@ -58,8 +60,6 @@ drawn. Use \code{\link[=autoplot.glystats_hclust_res]{autoplot.glystats_hclust_r
 automatically for at most 40 samples.}
 
 \item{na_col}{Color for missing values.}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values

@@ -37,9 +37,9 @@ plot_umap <- function(
 #' @export
 plot_umap.glystats_umap_res <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -62,10 +62,10 @@ plot_umap.glystats_umap_res <- function(
 #' @export
 plot_umap.glyexp_experiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -88,10 +88,10 @@ plot_umap.glyexp_experiment <- function(
 #' @export
 plot_umap.SummarizedExperiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

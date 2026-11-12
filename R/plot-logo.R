@@ -23,10 +23,10 @@
 #' @export
 plot_logo <- function(
   x,
+  ...,
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  ...,
   logo_args = list()
 ) {
   UseMethod("plot_logo")
@@ -36,10 +36,10 @@ plot_logo <- function(
 #' @export
 plot_logo.glyexp_experiment <- function(
   x,
+  ...,
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  ...,
   logo_args = list()
 ) {
   .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)
@@ -49,10 +49,10 @@ plot_logo.glyexp_experiment <- function(
 #' @export
 plot_logo.GlycoproteomicSE <- function(
   x,
+  ...,
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  ...,
   logo_args = list()
 ) {
   .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)

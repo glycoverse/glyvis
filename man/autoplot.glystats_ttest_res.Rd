@@ -7,10 +7,10 @@
 \usage{
 \method{autoplot}{glystats_ttest_res}(
   object,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -18,10 +18,10 @@
 
 \method{autoplot}{glystats_wilcox_res}(
   object,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -30,14 +30,14 @@
 \arguments{
 \item{object}{A \code{glystats_ttest_res} or \code{glystats_wilcox_res} object.}
 
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
 \item{log2fc_cutoff}{The log2 fold change cutoff. Defaults to 1.}
 
 \item{p_cutoff}{The p-value cutoff. Defaults to 0.05.}
 
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{label}{Whether to label variables. Defaults to \code{FALSE}.}
 

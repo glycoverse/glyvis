@@ -4,19 +4,19 @@
 \alias{plot_isomers_per_comp}
 \title{Distribution of isomers per glycan composition}
 \usage{
-plot_isomers_per_comp(x, weight = "equal", ...)
+plot_isomers_per_comp(x, ..., weight = "equal")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_composition} and \code{glycan_structure} row annotations.}
 
+\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use
+the first colour in \code{palette}. The default plot area is 50 by 50 mm.}
+
 \item{weight}{Either \code{"equal"} (default), counting compositions in each
 bin, or \code{"abundance"}, summing their abundances across all eligible rows
 and samples using \code{\link[glydet:wsum]{glydet::wsum()}}. Abundance weighting requires finite,
 non-negative, raw linear-scale abundances; missing values are omitted.}
-
-\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use
-the first colour in \code{palette}. The default plot area is 50 by 50 mm.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

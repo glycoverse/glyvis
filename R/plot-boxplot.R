@@ -23,11 +23,11 @@
 #' @export
 plot_boxplot <- function(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   points = TRUE
 ) {
@@ -40,11 +40,11 @@ plot_boxplot <- function(
 #' @export
 plot_boxplot.glyexp_experiment <- function(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   points = TRUE
 ) {
@@ -69,11 +69,11 @@ plot_boxplot.glyexp_experiment <- function(
 #' @export
 plot_boxplot.SummarizedExperiment <- function(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   variables = NULL,
   points = TRUE

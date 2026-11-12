@@ -25,10 +25,10 @@
 #' @export
 autoplot.glystats_plsda_res <- function(
   object,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

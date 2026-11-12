@@ -4,12 +4,14 @@
 \alias{plot_fuc_sia_pie}
 \title{Fucosylation and sialylation distribution}
 \usage{
-plot_fuc_sia_pie(x, weight = "equal", ...)
+plot_fuc_sia_pie(x, ..., weight = "equal")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_composition} row annotations. Legacy \code{glyexp_experiment} objects
 are also supported. No structure or glycan-type metadata is required.}
+
+\item{...}{Common appearance options described in \link{glyvis_plot_options}.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct compositions, or distinct combinations of \code{protein},
@@ -17,8 +19,6 @@ counts distinct compositions, or distinct combinations of \code{protein},
 sums raw, linear-scale abundances across all rows and samples, including
 duplicate measurements. Missing abundances are omitted; negative and
 infinite values and recorded non-raw scales are rejected.}
-
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}, with \code{category},

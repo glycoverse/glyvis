@@ -19,10 +19,10 @@
 #' @export
 autoplot.glystats_ttest_res <- function(
   object,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -43,10 +43,10 @@ autoplot.glystats_ttest_res <- function(
 #' @export
 autoplot.glystats_wilcox_res <- function(
   object,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -79,9 +79,9 @@ autoplot.glystats_wilcox_res <- function(
 #' @export
 autoplot.glystats_anova_res <- function(
   object,
+  ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   top_n = NULL
 ) {
   .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
@@ -91,9 +91,9 @@ autoplot.glystats_anova_res <- function(
 #' @export
 autoplot.glystats_kruskal_res <- function(
   object,
+  ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   top_n = NULL
 ) {
   .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
@@ -122,11 +122,11 @@ autoplot.glystats_kruskal_res <- function(
 #' @export
 autoplot.glystats_limma_res <- function(
   object,
+  ...,
   contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7

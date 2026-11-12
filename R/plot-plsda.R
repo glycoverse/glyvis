@@ -32,10 +32,10 @@
 #' @export
 plot_plsda <- function(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -49,10 +49,10 @@ plot_plsda <- function(
 #' @export
 plot_plsda.glystats_plsda_res <- function(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -78,11 +78,11 @@ plot_plsda.glystats_plsda_res <- function(
 #' @export
 plot_plsda.glyexp_experiment <- function(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -108,11 +108,11 @@ plot_plsda.glyexp_experiment <- function(
 #' @export
 plot_plsda.SummarizedExperiment <- function(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

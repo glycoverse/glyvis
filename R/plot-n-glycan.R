@@ -62,7 +62,11 @@
 #'   plot_n_branch_bar(glyexp::real_experiment2)
 #' }
 #' @export
-plot_n_core_pie <- function(x, weight = "equal", ...) {
+plot_n_core_pie <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   input <- .n_plot_input(x, weight)
   fuc <- glydet::n_core_fuc(input$glycans) > 0
   bisect <- glydet::has_bisecting(input$glycans)
@@ -81,7 +85,11 @@ plot_n_core_pie <- function(x, weight = "equal", ...) {
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_type_pie <- function(x, weight = "equal", ...) {
+plot_n_type_pie <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   input <- .n_plot_input(x, weight)
   type <- as.character(glydet::n_glycan_type(
     input$glycans,
@@ -100,7 +108,11 @@ plot_n_type_pie <- function(x, weight = "equal", ...) {
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_branch_pie <- function(x, weight = "equal", ...) {
+plot_n_branch_pie <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   input <- .n_plot_input(x, weight)
   antennae <- glydet::n_antennae(input$glycans)
   if (anyNA(antennae)) {
@@ -129,7 +141,11 @@ plot_n_branch_pie <- function(x, weight = "equal", ...) {
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_branch_bar <- function(x, weight = "equal", ...) {
+plot_n_branch_bar <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   input <- .n_plot_input(x, weight)
   branches <- glymotif::extract_branch_motif(input$glycans)
   if (!length(branches)) {

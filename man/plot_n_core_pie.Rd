@@ -7,18 +7,22 @@
 \alias{plot_n_branch_bar}
 \title{N-glycan core, type, and branch distributions}
 \usage{
-plot_n_core_pie(x, weight = "equal", ...)
+plot_n_core_pie(x, ..., weight = "equal")
 
-plot_n_type_pie(x, weight = "equal", ...)
+plot_n_type_pie(x, ..., weight = "equal")
 
-plot_n_branch_pie(x, weight = "equal", ...)
+plot_n_branch_pie(x, ..., weight = "equal")
 
-plot_n_branch_bar(x, weight = "equal", ...)
+plot_n_branch_bar(x, ..., weight = "equal")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_structure} in its row annotations and \code{glycan_type = "N"} in
 its metadata. Legacy \code{glyexp_experiment} objects are also supported.}
+
+\item{...}{Common appearance options described in \link{glyvis_plot_options}.
+The default plot area is 50 by 50 mm. Pie annotations scale with the
+panel size; core labels are split across lines to avoid crowding.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct glycan structures in glycomics, or distinct combinations
@@ -27,10 +31,6 @@ Abundance weighting uses \code{\link[glydet:wsum]{glydet::wsum()}} to sum the or
 abundances over all rows and samples. Duplicate measurements contribute
 their summed abundance. Missing abundances are omitted; negative or
 infinite values and recorded non-raw scales are rejected.}
-
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.
-The default plot area is 50 by 50 mm. Pie annotations scale with the
-panel size; core labels are split across lines to avoid crowding.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

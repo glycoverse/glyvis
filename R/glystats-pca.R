@@ -25,10 +25,10 @@
 #' @export
 autoplot.glystats_pca_res <- function(
   object,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,

@@ -6,14 +6,16 @@
 \alias{plot_logo.GlycoproteomicSE}
 \title{Logo Plot}
 \usage{
-plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
+plot_logo(x, ..., n_aa = 5L, fasta = NULL, tax_id = 9606L, logo_args = list())
 
-\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
+\method{plot_logo}{glyexp_experiment}(x, ..., n_aa = 5L, fasta = NULL, tax_id = 9606L, logo_args = list())
 
-\method{plot_logo}{GlycoproteomicSE}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
+\method{plot_logo}{GlycoproteomicSE}(x, ..., n_aa = 5L, fasta = NULL, tax_id = 9606L, logo_args = list())
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{n_aa}{The number of amino acids to the left and right of the glycosylation site.
 For example, if \code{n_aa = 5}, the resulting sequence will contain 11 amino acids.}
@@ -24,8 +26,6 @@ this argument can be omitted. When \code{site_sequence} is missing and \code{fas
 is \code{NULL}, UniProt.ws is used to fetch protein sequences automatically.}
 
 \item{tax_id}{The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{logo_args}{Named list of glyph options passed to
 \code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, for example \code{list(method = "prob")}.}

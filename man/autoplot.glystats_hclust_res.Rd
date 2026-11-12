@@ -4,16 +4,16 @@
 \alias{autoplot.glystats_hclust_res}
 \title{Plots for Hierarchical Clustering}
 \usage{
-\method{autoplot}{glystats_hclust_res}(object, rotate = FALSE, labels = TRUE, ...)
+\method{autoplot}{glystats_hclust_res}(object, ..., rotate = FALSE, labels = TRUE)
 }
 \arguments{
 \item{object}{A \code{glystats_hclust_res} object.}
 
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
 \item{rotate}{Display the dendrogram horizontally.}
 
 \item{labels}{Display leaf labels.}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

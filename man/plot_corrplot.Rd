@@ -13,8 +13,8 @@ plot_corrplot(x, ..., label = FALSE, digits = 2, triangle = "lower")
 
 \method{plot_corrplot}{glyexp_experiment}(
   x,
-  stats_args = list(),
   ...,
+  stats_args = list(),
   label = FALSE,
   digits = 2,
   triangle = "lower"
@@ -22,8 +22,8 @@ plot_corrplot(x, ..., label = FALSE, digits = 2, triangle = "lower")
 
 \method{plot_corrplot}{SummarizedExperiment}(
   x,
-  stats_args = list(),
   ...,
+  stats_args = list(),
   label = FALSE,
   digits = 2,
   triangle = "lower"

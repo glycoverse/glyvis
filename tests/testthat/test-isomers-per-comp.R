@@ -53,16 +53,19 @@ test_that("missing identities are excluded without composition fallback", {
 test_that("abundance weighting pools duplicates and omits missing values", {
   skip_if_not_installed("glydet", "0.14.0")
   x <- isomer_count_fixture()
-  p <- plot_isomers_per_comp(x, "abundance")
+  p <- plot_isomers_per_comp(x, weight = "abundance")
   expect_equal(p$data$value, c(1, 3, rep(0, 5), 17) * ncol(x))
   expect_equal(p$data$count, c(1, 1, rep(0, 5), 2))
   SummarizedExperiment::rowData(x)$glycan_structure[2] <- NA_character_
   SummarizedExperiment::assay(x)[1, 1] <- NA_real_
-  expect_warning(p <- plot_isomers_per_comp(x, "abundance"), "Excluded 1 row")
+  expect_warning(
+    p <- plot_isomers_per_comp(x, weight = "abundance"),
+    "Excluded 1 row"
+  )
   expect_equal(p$data$value, c(3 * ncol(x) - 1, rep(0, 6), 17 * ncol(x)))
   x <- isomer_count_fixture()
   S4Vectors::metadata(x)$scale <- "log2"
-  expect_error(plot_isomers_per_comp(x, "abundance"), "linear-scale")
+  expect_error(plot_isomers_per_comp(x, weight = "abundance"), "linear-scale")
 })
 
 test_that("isomer plots validate inputs and support common appearance options", {
@@ -73,7 +76,7 @@ test_that("isomer plots validate inputs and support common appearance options", 
     "GlycomicSE"
   )
   expect_error(plot_isomers_per_comp(x[FALSE, ]), "No glycan rows")
-  expect_error(plot_isomers_per_comp(x, "invalid"), "weight")
+  expect_error(plot_isomers_per_comp(x, weight = "invalid"), "weight")
   p <- plot_isomers_per_comp(x, title = "Isomers", palette = "#123456")
   expect_equal(p$labels$title, "Isomers")
   expect_equal(unique(ggplot2::ggplot_build(p)$data[[1]]$fill), "#123456")

@@ -47,7 +47,12 @@
 #'   plot_sites_per_protein(glyexp::real_experiment, weight = "abundance")
 #' }
 #' @export
-plot_glycans_per_site <- function(x, weight = "equal", glycan_col = NULL, ...) {
+plot_glycans_per_site <- function(
+  x,
+  ...,
+  weight = "equal",
+  glycan_col = NULL
+) {
   input <- .glycoproteomic_count_input(x, weight)
   info <- input$info
   if (is.null(glycan_col)) {
@@ -101,7 +106,11 @@ plot_glycans_per_site <- function(x, weight = "equal", glycan_col = NULL, ...) {
 
 #' @rdname plot_glycans_per_site
 #' @export
-plot_sites_per_protein <- function(x, weight = "equal", ...) {
+plot_sites_per_protein <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   input <- .glycoproteomic_count_input(x, weight)
   entities <- input$rows |>
     dplyr::distinct(.data$protein, .data$protein_site) |>

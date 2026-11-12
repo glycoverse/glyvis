@@ -9,6 +9,10 @@ All \verb{plot_*()} functions and statistical \code{autoplot()} methods return a
 \verb{tidyplots::adjust_*()} functions, add components with \verb{tidyplots::add_*()},
 or use ordinary ggplot2 layers. No global theme or options are changed.
 }
+\details{
+All plotting controls follow \code{...} in public function signatures. Supply
+their full argument names; only the input object is positional.
+}
 \section{Common options}{
 
 Pass these named arguments through \code{...} in any plotting entry point:

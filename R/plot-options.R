@@ -5,6 +5,9 @@
 #' `tidyplots::adjust_*()` functions, add components with `tidyplots::add_*()`,
 #' or use ordinary ggplot2 layers. No global theme or options are changed.
 #'
+#' All plotting controls follow `...` in public function signatures. Supply
+#' their full argument names; only the input object is positional.
+#'
 #' @section Common options:
 #' Pass these named arguments through `...` in any plotting entry point:
 #' * `title`: optional plot title.

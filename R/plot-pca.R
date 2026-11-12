@@ -32,10 +32,10 @@
 #' @export
 plot_pca <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -50,10 +50,10 @@ plot_pca <- function(
 #' @export
 plot_pca.glystats_pca_res <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -81,11 +81,11 @@ plot_pca.glystats_pca_res <- function(
 #' @export
 plot_pca.glyexp_experiment <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -113,11 +113,11 @@ plot_pca.glyexp_experiment <- function(
 #' @export
 plot_pca.SummarizedExperiment <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,

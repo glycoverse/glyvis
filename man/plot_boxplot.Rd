@@ -8,33 +8,33 @@
 \usage{
 plot_boxplot(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   points = TRUE
 )
 
 \method{plot_boxplot}{glyexp_experiment}(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   points = TRUE
 )
 
 \method{plot_boxplot}{SummarizedExperiment}(
   x,
+  ...,
   group_col = "group",
   ncol = NULL,
   label_width = 24,
   scales = "free_y",
-  ...,
   log_transform = NULL,
   variables = NULL,
   points = TRUE
@@ -42,6 +42,8 @@ plot_boxplot(
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
@@ -52,8 +54,6 @@ that contains group labels. Default is "group".}
 
 \item{scales}{Facet axis scales, passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. Defaults
 to \code{"free_y"}; use \code{"fixed"} for comparisons across facets.}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values

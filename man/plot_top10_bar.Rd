@@ -4,22 +4,22 @@
 \alias{plot_top10_bar}
 \title{Top ten glycans by site-specific glycoform count or abundance}
 \usage{
-plot_top10_bar(x, weight = "equal", ...)
+plot_top10_bar(x, ..., weight = "equal")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with \code{glycan_structure}, \code{protein},
 and \code{protein_site} row annotations and \code{glycan_type = "N"} in metadata.
 Glycomics, plain \code{SummarizedExperiment}, and legacy containers are rejected.}
 
-\item{weight}{Either \code{"equal"} (default), counting distinct combinations of
-protein, site, and glycan structure, or \code{"abundance"}, summing linear-scale
-glycoform abundances across all rows and samples. Duplicate measurements
-count once in equal mode and contribute their summed abundance otherwise.}
-
 \item{...}{Common appearance options in \link{glyvis_plot_options}. The plot area
 uses the tidyplots default (50 by 50 mm). The first two default glyvis
 colours identify the left and right sides. Cartoon sizes adapt to the
 plot dimensions supplied here. No title is added unless \code{title} is supplied.}
+
+\item{weight}{Either \code{"equal"} (default), counting distinct combinations of
+protein, site, and glycan structure, or \code{"abundance"}, summing linear-scale
+glycoform abundances across all rows and samples. Duplicate measurements
+count once in equal mode and contribute their summed abundance otherwise.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

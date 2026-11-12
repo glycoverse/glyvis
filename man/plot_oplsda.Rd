@@ -9,11 +9,11 @@
 \usage{
 plot_oplsda(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -23,11 +23,11 @@ plot_oplsda(
 
 \method{plot_oplsda}{glystats_oplsda_res}(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -37,12 +37,12 @@ plot_oplsda(
 
 \method{plot_oplsda}{glyexp_experiment}(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -52,12 +52,12 @@ plot_oplsda(
 
 \method{plot_oplsda}{SummarizedExperiment}(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -67,6 +67,8 @@ plot_oplsda(
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{type}{The type of plot, one of "loadings", "scores", "vip", "variance", or "s-plot". Defaults to "scores".}
 
@@ -82,8 +84,6 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{label}{Whether to label samples in scores plots or variables in loadings
 and S-plots. Defaults to \code{FALSE}.}

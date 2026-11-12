@@ -6,11 +6,11 @@
 \usage{
 \method{autoplot}{glystats_limma_res}(
   object,
+  ...,
   contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -18,6 +18,8 @@
 }
 \arguments{
 \item{object}{A \code{glystats_limma_res} object.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".
 Must be one of the contrasts in the result.
@@ -29,8 +31,6 @@ When there is only one contrast (two-group comparison), it can be NULL (default)
 
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{label}{Whether to label variables. Defaults to \code{FALSE}.}
 

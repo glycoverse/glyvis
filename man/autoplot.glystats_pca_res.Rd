@@ -6,10 +6,10 @@
 \usage{
 \method{autoplot}{glystats_pca_res}(
   object,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...,
   axes = c(1L, 2L),
   label = FALSE,
   add_ellipse = FALSE,
@@ -20,6 +20,8 @@
 }
 \arguments{
 \item{object}{A \code{glystats_pca_res} object.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
 
@@ -33,8 +35,6 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{axes}{Integer vector selecting two distinct principal components.}
 

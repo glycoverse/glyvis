@@ -4,12 +4,16 @@
 \alias{plot_o_type_pie}
 \title{O-GalNAc core distribution}
 \usage{
-plot_o_type_pie(x, weight = "equal", core_set = "4cores", ...)
+plot_o_type_pie(x, ..., weight = "equal", core_set = "4cores")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_structure} row annotations and \code{glycan_type = "O"} metadata.
 Legacy \code{glyexp_experiment} objects are also supported.}
+
+\item{...}{Common appearance options described in \link{glyvis_plot_options}.
+The default plot area is 50 by 50 mm. Pie annotations scale with the
+panel size; core labels are split across lines to avoid crowding.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct glycan structures in glycomics, or distinct combinations
@@ -21,10 +25,6 @@ infinite values and recorded non-raw scales are rejected.}
 
 \item{core_set}{Either \code{"4cores"} (default), showing Core 1-4, or
 \code{"8cores"}, showing Core 1-8.}
-
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.
-The default plot area is 50 by 50 mm. Pie annotations scale with the
-panel size; core labels are split across lines to avoid crowding.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

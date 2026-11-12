@@ -45,11 +45,20 @@ test_that("weighting deduplicates compositions or pools all measurements", {
   expect_equal(plot_fuc_sia_pie(x)$data$value, c(0, 0, 0, 1))
   gp <- fuc_sia_fixture(rep("H3N2", 3), c("P1", "P1", "P2"))
   expect_equal(plot_fuc_sia_pie(gp)$data$value, c(0, 0, 0, 2))
-  expect_equal(plot_fuc_sia_pie(gp, "abundance")$data$value, c(0, 0, 0, 6))
+  expect_equal(
+    plot_fuc_sia_pie(gp, weight = "abundance")$data$value,
+    c(0, 0, 0, 6)
+  )
   x <- fuc_sia_fixture()
-  expect_equal(plot_fuc_sia_pie(x, "abundance")$data$proportion, (1:4) / 10)
+  expect_equal(
+    plot_fuc_sia_pie(x, weight = "abundance")$data$proportion,
+    (1:4) / 10
+  )
   SummarizedExperiment::assay(x)[1, ] <- NA_real_
-  expect_equal(plot_fuc_sia_pie(x, "abundance")$data$value, c(0, 2, 3, 4))
+  expect_equal(
+    plot_fuc_sia_pie(x, weight = "abundance")$data$value,
+    c(0, 2, 3, 4)
+  )
 })
 
 test_that("missing input and invalid abundances are handled explicitly", {
@@ -62,15 +71,18 @@ test_that("missing input and invalid abundances are handled explicitly", {
   )
   expect_error(plot_fuc_sia_pie(x[FALSE, ]), "No eligible")
   x <- fuc_sia_fixture()
-  expect_error(plot_fuc_sia_pie(x, "invalid"), "weight")
+  expect_error(plot_fuc_sia_pie(x, weight = "invalid"), "weight")
   for (value in c(-1, Inf, 0, NA_real_)) {
     S4Vectors::metadata(x)$scale <- "log2"
     SummarizedExperiment::assay(x)[] <- value
     S4Vectors::metadata(x)$scale <- "raw"
-    expect_error(plot_fuc_sia_pie(x, "abundance"), "non-negative|positive")
+    expect_error(
+      plot_fuc_sia_pie(x, weight = "abundance"),
+      "non-negative|positive"
+    )
   }
   S4Vectors::metadata(x)$scale <- "log2"
-  expect_error(plot_fuc_sia_pie(x, "abundance"), "linear-scale")
+  expect_error(plot_fuc_sia_pie(x, weight = "abundance"), "linear-scale")
 })
 
 test_that("pies build with zero categories and common appearance options", {

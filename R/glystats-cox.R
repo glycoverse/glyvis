@@ -14,9 +14,9 @@
 #' @export
 autoplot.glystats_cox_res <- function(
   object,
+  ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   top_n = NULL
 ) {
   checkmate::assert_number(p_cutoff, lower = 0)

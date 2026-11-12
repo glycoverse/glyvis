@@ -18,9 +18,9 @@ plot_umap(
 
 \method{plot_umap}{glystats_umap_res}(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -29,10 +29,10 @@ plot_umap(
 
 \method{plot_umap}{glyexp_experiment}(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -41,10 +41,10 @@ plot_umap(
 
 \method{plot_umap}{SummarizedExperiment}(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

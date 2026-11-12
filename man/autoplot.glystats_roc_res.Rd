@@ -4,17 +4,17 @@
 \alias{autoplot.glystats_roc_res}
 \title{Plots for ROC Analysis}
 \usage{
-\method{autoplot}{glystats_roc_res}(object, type = "dotplot", auc_cutoff = 0.5, ..., top_n = NULL)
+\method{autoplot}{glystats_roc_res}(object, ..., type = "dotplot", auc_cutoff = 0.5, top_n = NULL)
 }
 \arguments{
 \item{object}{A \code{glystats_roc_res} object.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{type}{"dotplot" or "roc". Defaults to "dotplot".
 If "roc", at most 10 variables can be plotted.}
 
 \item{auc_cutoff}{The AUC cutoff. Defaults to 0.5. Only used if type is "dotplot".}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{top_n}{Number of variables to retain when \code{type = "dotplot"}. \code{NULL}
 retains all variables; a positive integer selects the largest AUC values.

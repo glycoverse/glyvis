@@ -27,11 +27,11 @@
 #' @export
 autoplot.glystats_oplsda_res <- function(
   object,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

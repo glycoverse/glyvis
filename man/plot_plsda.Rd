@@ -9,10 +9,10 @@
 \usage{
 plot_plsda(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -22,10 +22,10 @@ plot_plsda(
 
 \method{plot_plsda}{glystats_plsda_res}(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -35,11 +35,11 @@ plot_plsda(
 
 \method{plot_plsda}{glyexp_experiment}(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -49,11 +49,11 @@ plot_plsda(
 
 \method{plot_plsda}{SummarizedExperiment}(
   x,
+  ...,
   type = "scores",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -63,6 +63,8 @@ plot_plsda(
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{type}{The type of plot, one of "loadings", "scores", "vip", or "variance". Defaults to "scores".}
 
@@ -76,8 +78,6 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
-
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{label}{Whether to label samples in scores plots or variables in loadings
 plots. Defaults to \code{FALSE}.}

@@ -31,7 +31,11 @@
 #'   plot_fuc_sia_pie(glyexp::real_experiment2)
 #' }
 #' @export
-plot_fuc_sia_pie <- function(x, weight = "equal", ...) {
+plot_fuc_sia_pie <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   checkmate::assert_choice(weight, c("equal", "abundance"))
   checkmate::assert_multi_class(
     x,

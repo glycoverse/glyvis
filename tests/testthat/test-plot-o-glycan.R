@@ -35,7 +35,10 @@ test_that("core sets classify mutually exclusively with matching cartoons", {
     unname(.o_core_index(glyparse::auto_parse(q$data$glycan_structure))),
     1:8
   )
-  expect_equal(plot_o_type_pie(x, "abundance", "8cores")$data$value, 2 * (1:8))
+  expect_equal(
+    plot_o_type_pie(x, weight = "abundance", core_set = "8cores")$data$value,
+    2 * (1:8)
+  )
 })
 
 test_that("extensions and reduction preserve classification and identity", {

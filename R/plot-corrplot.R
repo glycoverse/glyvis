@@ -44,8 +44,8 @@ plot_corrplot.glystats_cor_res <- function(
 #' @export
 plot_corrplot.glyexp_experiment <- function(
   x,
-  stats_args = list(),
   ...,
+  stats_args = list(),
   label = FALSE,
   digits = 2,
   triangle = "lower"
@@ -64,8 +64,8 @@ plot_corrplot.glyexp_experiment <- function(
 #' @export
 plot_corrplot.SummarizedExperiment <- function(
   x,
-  stats_args = list(),
   ...,
+  stats_args = list(),
   label = FALSE,
   digits = 2,
   triangle = "lower"

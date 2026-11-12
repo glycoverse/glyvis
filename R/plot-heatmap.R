@@ -26,13 +26,13 @@
 #' @export
 plot_heatmap <- function(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 ) {
   UseMethod("plot_heatmap")
@@ -42,13 +42,13 @@ plot_heatmap <- function(
 #' @export
 plot_heatmap.glyexp_experiment <- function(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 ) {
   .plot_exp_heatmap(
@@ -68,13 +68,13 @@ plot_heatmap.glyexp_experiment <- function(
 #' @export
 plot_heatmap.SummarizedExperiment <- function(
   x,
+  ...,
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  ...,
   log_transform = NULL
 ) {
   .plot_exp_heatmap(

@@ -35,10 +35,10 @@
 #' @export
 plot_volcano <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -53,12 +53,12 @@ plot_volcano <- function(
 #' @export
 plot_volcano.glyexp_experiment <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -73,9 +73,9 @@ plot_volcano.glyexp_experiment <- function(
   )
   plot_volcano(
     dea_res,
-    log2fc_cutoff,
-    p_cutoff,
-    p_col,
+    log2fc_cutoff = log2fc_cutoff,
+    p_cutoff = p_cutoff,
+    p_col = p_col,
     ...,
     label = label,
     point_size = point_size,
@@ -87,12 +87,12 @@ plot_volcano.glyexp_experiment <- function(
 #' @export
 plot_volcano.SummarizedExperiment <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
@@ -107,9 +107,9 @@ plot_volcano.SummarizedExperiment <- function(
   )
   plot_volcano(
     dea_res,
-    log2fc_cutoff,
-    p_cutoff,
-    p_col,
+    log2fc_cutoff = log2fc_cutoff,
+    p_cutoff = p_cutoff,
+    p_col = p_col,
     ...,
     label = label,
     point_size = point_size,
@@ -121,19 +121,19 @@ plot_volcano.SummarizedExperiment <- function(
 #' @export
 plot_volcano.glystats_ttest_res <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
 ) {
   .plot_volcano(
     x,
-    log2fc_cutoff,
-    p_cutoff,
-    p_col,
+    log2fc_cutoff = log2fc_cutoff,
+    p_cutoff = p_cutoff,
+    p_col = p_col,
     ...,
     label = label,
     point_size = point_size,
@@ -145,19 +145,19 @@ plot_volcano.glystats_ttest_res <- function(
 #' @export
 plot_volcano.glystats_wilcox_res <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7
 ) {
   .plot_volcano(
     x,
-    log2fc_cutoff,
-    p_cutoff,
-    p_col,
+    log2fc_cutoff = log2fc_cutoff,
+    p_cutoff = p_cutoff,
+    p_col = p_col,
     ...,
     label = label,
     point_size = point_size,
@@ -172,11 +172,11 @@ plot_volcano.glystats_wilcox_res <- function(
 #' @export
 plot_volcano.glystats_limma_res <- function(
   x,
+  ...,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
   contrast = NULL,
-  ...,
   label = FALSE,
   point_size = 1.5,
   alpha = 0.7

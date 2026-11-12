@@ -41,7 +41,11 @@
 #'   plot_top10_bar(glyexp::real_experiment, weight = "abundance")
 #' }
 #' @export
-plot_top10_bar <- function(x, weight = "equal", ...) {
+plot_top10_bar <- function(
+  x,
+  ...,
+  weight = "equal"
+) {
   checkmate::assert_class(x, "GlycoproteomicSE")
   input <- .n_plot_input(x, weight)
   structures <- unique(input$structures)

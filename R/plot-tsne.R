@@ -39,9 +39,9 @@ plot_tsne <- function(
 #' @export
 plot_tsne.glystats_tsne_res <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -64,10 +64,10 @@ plot_tsne.glystats_tsne_res <- function(
 #' @export
 plot_tsne.glyexp_experiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -90,10 +90,10 @@ plot_tsne.glyexp_experiment <- function(
 #' @export
 plot_tsne.SummarizedExperiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

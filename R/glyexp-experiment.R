@@ -33,9 +33,9 @@
 #' @export
 autoplot.glyexp_experiment <- function(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
   log_transform = NULL,
   scale = "row",
   cluster_rows = TRUE,
@@ -67,8 +67,6 @@ autoplot.glyexp_experiment <- function(
       scales = scales
     )
   )
-  # Unspecified controls retain renderer defaults, preserving positional ... calls.
-  plot_args <- plot_args[intersect(names(plot_args), names(match.call()))]
   switch(
     type,
     heatmap = rlang::exec(
@@ -93,9 +91,9 @@ autoplot.glyexp_experiment <- function(
 #' @export
 autoplot.SummarizedExperiment <- function(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
   log_transform = NULL,
   scale = "row",
   cluster_rows = TRUE,
@@ -127,8 +125,6 @@ autoplot.SummarizedExperiment <- function(
       scales = scales
     )
   )
-  # Unspecified controls retain renderer defaults, preserving positional ... calls.
-  plot_args <- plot_args[intersect(names(plot_args), names(match.call()))]
   switch(
     type,
     heatmap = rlang::exec(

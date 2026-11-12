@@ -36,7 +36,12 @@
 #'   plot_o_type_pie(x, core_set = "8cores")
 #' }
 #' @export
-plot_o_type_pie <- function(x, weight = "equal", core_set = "4cores", ...) {
+plot_o_type_pie <- function(
+  x,
+  ...,
+  weight = "equal",
+  core_set = "4cores"
+) {
   checkmate::assert_choice(core_set, c("4cores", "8cores"))
   input <- .n_plot_input(x, weight, core_set = core_set)
   n <- if (core_set == "4cores") 4L else 8L

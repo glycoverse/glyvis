@@ -33,11 +33,11 @@
 #' @export
 plot_oplsda <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -51,11 +51,11 @@ plot_oplsda <- function(
 #' @export
 plot_oplsda.glystats_oplsda_res <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -82,12 +82,12 @@ plot_oplsda.glystats_oplsda_res <- function(
 #' @export
 plot_oplsda.glyexp_experiment <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
@@ -114,12 +114,12 @@ plot_oplsda.glyexp_experiment <- function(
 #' @export
 plot_oplsda.SummarizedExperiment <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...,
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,

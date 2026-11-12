@@ -5,13 +5,16 @@
 \alias{plot_sites_per_protein}
 \title{Distributions of glycans per site and sites per protein}
 \usage{
-plot_glycans_per_site(x, weight = "equal", glycan_col = NULL, ...)
+plot_glycans_per_site(x, ..., weight = "equal", glycan_col = NULL)
 
-plot_sites_per_protein(x, weight = "equal", ...)
+plot_sites_per_protein(x, ..., weight = "equal")
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} object. Other containers, including
 plain \code{SummarizedExperiment} and legacy experiments, are not accepted.}
+
+\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use the
+first colour in \code{palette}. The default plot area is 50 by 50 mm.}
 
 \item{weight}{Either \code{"equal"} (default), counting sites or proteins in each
 bin, or \code{"abundance"}, summing their glycoform abundances over all rows and
@@ -24,9 +27,6 @@ describe measured glycoforms, not independently measured protein abundance.}
 are absent or incomplete, a message is printed and \code{glycan_composition}
 is used for the whole experiment, so structure and composition identifiers
 are never mixed. Supply a column name to select it explicitly.}
-
-\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use the
-first colour in \code{palette}. The default plot area is 50 by 50 mm.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

@@ -157,21 +157,40 @@ test_that("container controls survive dispatch for both heatmaps and boxplots", 
 })
 
 
-test_that("positional facet controls retain their meaning", {
+test_that("named facet controls retain their meaning", {
   withr::local_options(lifecycle_verbosity = "quiet")
   object <- legacy_toy_experiment()
-  p <- plot_boxplot(object, "group", 1, 12, "fixed", log_transform = FALSE)
-  expect_equal(p$facet$params$ncol, 1)
-  expect_equal(p$facet$params$free, list(x = FALSE, y = FALSE))
-  p <- autoplot(
+  p <- plot_boxplot(
     object,
-    "boxplot",
-    "group",
-    1,
-    12,
-    "fixed",
+    group_col = "group",
+    ncol = 1,
+    label_width = 12,
+    scales = "fixed",
     log_transform = FALSE
   )
   expect_equal(p$facet$params$ncol, 1)
   expect_equal(p$facet$params$free, list(x = FALSE, y = FALSE))
+  p <- autoplot(
+    object,
+    type = "boxplot",
+    group_col = "group",
+    ncol = 1,
+    label_width = 12,
+    scales = "fixed",
+    log_transform = FALSE
+  )
+  expect_equal(p$facet$params$ncol, 1)
+  expect_equal(p$facet$params$free, list(x = FALSE, y = FALSE))
+})
+
+
+test_that("all public plotting controls follow dots", {
+  ns <- asNamespace("glyvis")
+  entries <- grep("^(plot_|autoplot[.])", ls(ns), value = TRUE)
+  expect_gt(length(entries), 0)
+  for (entry in entries) {
+    args <- names(formals(get(entry, ns)))
+    expect_identical(args[[2]], "...", info = entry)
+    expect_true(args[[1]] %in% c("x", "object"), info = entry)
+  }
 })
