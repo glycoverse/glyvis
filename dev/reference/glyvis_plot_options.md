@@ -98,8 +98,9 @@ Pass these named arguments through `...` in any plotting entry point:
   uses the same weighting and accepts `core_set = "4cores"` (Core 1-4)
   or `"8cores"` (Core 1-8).
 
-- Glycoproteomic count distributions:
-  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
+- Count distributions:
+  [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/dev/reference/plot_isomers_per_comp.md),
+  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md),
   and
   [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
   use fixed bins `1` to `7` and `>=8`, one bar colour, and a 50 by 50 mm

@@ -3,6 +3,12 @@
 ## glyvis (development version)
 
 - New
+  [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/dev/reference/plot_isomers_per_comp.md)
+  counts distinct annotated structures per composition across samples,
+  proteins, and sites, using fixed bins from 1 through 7 and \>=8 with
+  optional pooled abundance weighting. (#31)
+
+- New
   [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
   summarizes N-glycans by antenna count using equal glycan/site-specific
   glycoform counts or pooled abundance weights, with fixed

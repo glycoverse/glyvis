@@ -45,6 +45,8 @@
   : Distributions of glycans per site and sites per protein
 - [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
   : Heatmap
+- [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/dev/reference/plot_isomers_per_comp.md)
+  : Distribution of isomers per glycan composition
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
   : Logo Plot
 - [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
