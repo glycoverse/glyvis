@@ -194,3 +194,53 @@ test_that("all public plotting controls follow dots", {
     expect_true(args[[1]] %in% c("x", "object"), info = entry)
   }
 })
+
+
+test_that("public plotting entry points expose styles and reject unused dots early", {
+  ns <- asNamespace("glyvis")
+  entries <- grep("^(plot_|autoplot[.])", ls(ns), value = TRUE)
+  common <- c("title", "width", "height", "fontsize", "family", "palette")
+  for (entry in entries) {
+    draw <- get(entry, ns)
+    expect_true(all(common %in% names(formals(draw))), info = entry)
+    expect_error(draw(NULL, typo = TRUE), class = "rlib_error_dots_nonempty")
+    expect_error(draw(NULL, "positional"), class = "rlib_error_dots_nonempty")
+  }
+})
+
+test_that("explicit common styles reach the canvas", {
+  object <- structure(
+    list(
+      tidy_result = tibble::tibble(
+        sample = c("S1", "S2"),
+        tsne1 = 1:2,
+        tsne2 = 2:1,
+        group = c("A", "B")
+      )
+    ),
+    class = "glystats_tsne_res"
+  )
+  for (draw in list(plot_tsne, ggplot2::autoplot)) {
+    p <- draw(
+      object,
+      title = "Styled",
+      width = 80,
+      height = 60,
+      fontsize = 12,
+      family = "serif",
+      palette = c(A = "red", B = "blue")
+    )
+    expect_equal(p$labels$title, "Styled")
+    expect_equal(p$tidyplot$width, 80)
+    expect_equal(p$tidyplot$height, 60)
+    expect_equal(p$theme$text$family, "serif")
+    expect_equal(p$theme$text$size, 12)
+    expect_equal(
+      ggplot2::ggplot_build(p)$plot$scales$get_scales("colour")$map(c(
+        "A",
+        "B"
+      )),
+      c("red", "blue")
+    )
+  }
+})

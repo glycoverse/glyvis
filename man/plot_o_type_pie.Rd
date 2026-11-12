@@ -4,16 +4,25 @@
 \alias{plot_o_type_pie}
 \title{O-GalNAc core distribution}
 \usage{
-plot_o_type_pie(x, ..., weight = "equal", core_set = "4cores")
+plot_o_type_pie(
+  x,
+  ...,
+  weight = "equal",
+  core_set = "4cores",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_structure} row annotations and \code{glycan_type = "O"} metadata.
 Legacy \code{glyexp_experiment} objects are also supported.}
 
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.
-The default plot area is 50 by 50 mm. Pie annotations scale with the
-panel size; core labels are split across lines to avoid crowding.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct glycan structures in glycomics, or distinct combinations
@@ -25,6 +34,22 @@ infinite values and recorded non-raw scales are rejected.}
 
 \item{core_set}{Either \code{"4cores"} (default), showing Core 1-4, or
 \code{"8cores"}, showing Core 1-8.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains

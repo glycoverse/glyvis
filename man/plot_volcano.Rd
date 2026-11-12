@@ -17,7 +17,16 @@ plot_volcano(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  test = "limma",
+  stats_args = list(),
+  contrast = NULL
 )
 
 \method{plot_volcano}{glyexp_experiment}(
@@ -30,7 +39,14 @@ plot_volcano(
   stats_args = list(),
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  contrast = NULL
 )
 
 \method{plot_volcano}{SummarizedExperiment}(
@@ -43,7 +59,14 @@ plot_volcano(
   stats_args = list(),
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  contrast = NULL
 )
 
 \method{plot_volcano}{glystats_ttest_res}(
@@ -54,7 +77,13 @@ plot_volcano(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 
 \method{plot_volcano}{glystats_wilcox_res}(
@@ -65,7 +94,13 @@ plot_volcano(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 
 \method{plot_volcano}{glystats_limma_res}(
@@ -77,13 +112,19 @@ plot_volcano(
   contrast = NULL,
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{log2fc_cutoff}{The log2 fold change cutoff. Defaults to 1.}
 
@@ -95,6 +136,22 @@ Can also be "p_val" (raw p-values without multiple testing correction).}
 \item{label}{Whether to label variables. Defaults to \code{FALSE}.}
 
 \item{point_size, alpha}{Point size and opacity.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
 

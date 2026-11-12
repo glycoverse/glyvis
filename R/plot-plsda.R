@@ -26,7 +26,7 @@
 #' @param top_n Number of variables to retain in loadings or VIP plots. `NULL`
 #'   retains all variables; a positive integer selects the largest squared
 #'   loading norms or VIP scores, respectively.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -40,8 +40,16 @@ plot_plsda <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_plsda")
 }
 
@@ -57,14 +65,27 @@ plot_plsda.glystats_plsda_res <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_plsda(
     x,
     type,
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -87,8 +108,15 @@ plot_plsda.glyexp_experiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   plsda_res <- rlang::exec(glystats::gly_plsda, x, !!!stats_args)
   .plot_plsda(
     plsda_res,
@@ -96,6 +124,12 @@ plot_plsda.glyexp_experiment <- function(
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -117,8 +151,15 @@ plot_plsda.SummarizedExperiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   plsda_res <- rlang::exec(glystats::gly_plsda, x, !!!stats_args)
   .plot_plsda(
     plsda_res,
@@ -126,6 +167,12 @@ plot_plsda.SummarizedExperiment <- function(
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,

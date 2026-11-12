@@ -15,7 +15,7 @@
 #' @param label_width Width used to wrap facet labels without truncation.
 #' @param scales Facet axis scales, passed to [ggplot2::facet_wrap()]. Defaults
 #'   to `"free_y"`; use `"fixed"` for comparisons across facets.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
@@ -29,8 +29,16 @@ plot_boxplot <- function(
   label_width = 24,
   scales = "free_y",
   log_transform = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  variables = NULL
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_boxplot")
 }
 
@@ -46,12 +54,25 @@ plot_boxplot.glyexp_experiment <- function(
   label_width = 24,
   scales = "free_y",
   log_transform = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_exp_boxplot(
     x,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     points = points,
     ncol = ncol,
     label_width = label_width,
@@ -76,8 +97,15 @@ plot_boxplot.SummarizedExperiment <- function(
   scales = "free_y",
   log_transform = NULL,
   variables = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   if (!is.null(variables)) {
     checkmate::assert_character(variables, any.missing = FALSE, min.len = 1L)
     missing_variables <- setdiff(variables, rownames(x))
@@ -92,6 +120,12 @@ plot_boxplot.SummarizedExperiment <- function(
     x,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     points = points,
     ncol = ncol,
     label_width = label_width,
@@ -104,7 +138,7 @@ plot_boxplot.SummarizedExperiment <- function(
 #' @param exp A `glyexp_experiment` object.
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_exp_boxplot <- function(
   exp,

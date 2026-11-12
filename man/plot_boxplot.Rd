@@ -14,7 +14,14 @@ plot_boxplot(
   label_width = 24,
   scales = "free_y",
   log_transform = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  variables = NULL
 )
 
 \method{plot_boxplot}{glyexp_experiment}(
@@ -25,7 +32,13 @@ plot_boxplot(
   label_width = 24,
   scales = "free_y",
   log_transform = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 
 \method{plot_boxplot}{SummarizedExperiment}(
@@ -37,13 +50,19 @@ plot_boxplot(
   scales = "free_y",
   log_transform = NULL,
   variables = NULL,
-  points = TRUE
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{group_col}{A character string specifying the column name in sample information
 that contains group labels. Default is "group".}
@@ -64,6 +83,22 @@ for already logged values. This argument must be named after \code{...}.}
 \item{points}{Whether to show observations as jittered points. Boxes show
 medians and quartiles with 1.5-IQR whiskers. Outliers are drawn separately
 only when \code{points = FALSE}.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{variables}{A character vector of row names to plot from a
 \code{SummarizedExperiment}. \code{NULL} (the default) plots all rows. Names must

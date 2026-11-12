@@ -16,7 +16,7 @@
 #' @param top_n Number of variables to retain when `type = "dotplot"`. `NULL`
 #'   retains all variables; a positive integer selects the largest AUC values.
 #'   Does not affect ROC curves.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -25,8 +25,16 @@ plot_roc <- function(
   ...,
   type = "roc",
   auc_cutoff = 0.5,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_roc")
 }
 
@@ -37,9 +45,28 @@ plot_roc.glystats_roc_res <- function(
   ...,
   type = "roc",
   auc_cutoff = 0.5,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_roc(x, type = type, auc_cutoff = auc_cutoff, ..., top_n = top_n)
+  rlang::check_dots_empty()
+  .plot_roc(
+    x,
+    type = type,
+    auc_cutoff = auc_cutoff,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_roc
@@ -51,8 +78,15 @@ plot_roc.glyexp_experiment <- function(
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
   if (nrow(x) > 10) {
@@ -63,7 +97,19 @@ plot_roc.glyexp_experiment <- function(
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
-  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ..., top_n = top_n)
+  .plot_roc(
+    roc_res,
+    type = type,
+    auc_cutoff = auc_cutoff,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_roc
@@ -74,8 +120,15 @@ plot_roc.SummarizedExperiment <- function(
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
   if (nrow(x) > 10) {
@@ -86,14 +139,26 @@ plot_roc.SummarizedExperiment <- function(
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
-  .plot_roc(roc_res, type = type, auc_cutoff = auc_cutoff, ..., top_n = top_n)
+  .plot_roc(
+    roc_res,
+    type = type,
+    auc_cutoff = auc_cutoff,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
+  )
 }
 
 #' Internal function to plot ROC plot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param type The type of plot, one of "dotplot" or "roc".
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_roc <- function(roc_res, type, auc_cutoff, ..., top_n = NULL) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
@@ -108,7 +173,7 @@ plot_roc.SummarizedExperiment <- function(
 #' Internal function to plot ROC dotplot
 #' @param roc_res A `glystats_roc_res` object.
 #' @param auc_cutoff The AUC cutoff.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_roc_dotplot <- function(roc_res, auc_cutoff, ...) {
   df <- roc_res$tidy_result$auc %>%
@@ -132,7 +197,7 @@ plot_roc.SummarizedExperiment <- function(
 
 #' Internal function to plot ROC curves
 #' @param roc_res A `glystats_roc_res` object.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_roc_curves <- function(roc_res, ...) {
   if (nrow(roc_res$tidy_result$auc) > 10) {

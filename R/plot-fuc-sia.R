@@ -11,7 +11,7 @@
 #'   sums raw, linear-scale abundances across all rows and samples, including
 #'   duplicate measurements. Missing abundances are omitted; negative and
 #'   infinite values and recorded non-raw scales are rejected.
-#' @param ... Common appearance options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @details
 #' Categories are ordered as `Fuc+, Sia+`, `Fuc+, Sia-`, `Fuc-, Sia+`, and
 #' `Fuc-, Sia-`. Fucose is inferred from `dHex` (including concrete Fuc);
@@ -34,8 +34,15 @@
 plot_fuc_sia_pie <- function(
   x,
   ...,
-  weight = "equal"
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(weight, c("equal", "abundance"))
   checkmate::assert_multi_class(
     x,
@@ -117,5 +124,14 @@ plot_fuc_sia_pie <- function(
     value = values,
     proportion = values / total
   )
-  .n_pie(df, ...)
+  .n_pie(
+    df,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }

@@ -4,7 +4,7 @@
 #'
 #' @param object A `glystats_cor_res` object.
 #' @inheritParams plot_corrplot
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -13,11 +13,24 @@ autoplot.glystats_cor_res <- function(
   ...,
   label = FALSE,
   digits = 2,
-  triangle = "lower"
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_corrplot(
     object,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     digits = digits,
     triangle = triangle

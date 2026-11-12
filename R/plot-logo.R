@@ -17,7 +17,7 @@
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 #' @param logo_args Named list of glyph options passed to
 #'   [ggseqlogo::geom_logo()], for example `list(method = "prob")`.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -27,8 +27,15 @@ plot_logo <- function(
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  logo_args = list()
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_logo")
 }
 
@@ -40,9 +47,29 @@ plot_logo.glyexp_experiment <- function(
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  logo_args = list()
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)
+  rlang::check_dots_empty()
+  .plot_exp_logo(
+    x,
+    n_aa,
+    fasta,
+    tax_id,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    logo_args = logo_args
+  )
 }
 
 #' @rdname plot_logo
@@ -53,9 +80,29 @@ plot_logo.GlycoproteomicSE <- function(
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  logo_args = list()
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)
+  rlang::check_dots_empty()
+  .plot_exp_logo(
+    x,
+    n_aa,
+    fasta,
+    tax_id,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    logo_args = logo_args
+  )
 }
 
 #' Internal function to plot logo plot
@@ -67,7 +114,7 @@ plot_logo.GlycoproteomicSE <- function(
 #'   this argument can be omitted. When `site_sequence` is missing and `fasta`
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_exp_logo <- function(exp, n_aa, fasta, tax_id, logo_args = list(), ...) {
   rlang::check_installed("ggseqlogo")

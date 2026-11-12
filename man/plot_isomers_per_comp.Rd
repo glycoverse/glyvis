@@ -4,19 +4,44 @@
 \alias{plot_isomers_per_comp}
 \title{Distribution of isomers per glycan composition}
 \usage{
-plot_isomers_per_comp(x, ..., weight = "equal")
+plot_isomers_per_comp(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_composition} and \code{glycan_structure} row annotations.}
 
-\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use
-the first colour in \code{palette}. The default plot area is 50 by 50 mm.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{weight}{Either \code{"equal"} (default), counting compositions in each
 bin, or \code{"abundance"}, summing their abundances across all eligible rows
 and samples using \code{\link[glydet:wsum]{glydet::wsum()}}. Abundance weighting requires finite,
 non-negative, raw linear-scale abundances; missing values are omitted.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains
@@ -28,6 +53,8 @@ Count distinct annotated structures within each glycan composition across
 all samples and draw a single-colour bar plot with bins \code{1} to \code{7} and \verb{>=8}.
 }
 \details{
+Bars use the first colour in \code{palette}. The default plot area is 50 by 50 mm.
+
 The bar at \code{2} counts compositions with exactly two distinct annotated
 structures. Structure identity uses the character representation of
 \code{glycan_structure}, as in \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}}. Counts are pooled

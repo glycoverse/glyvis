@@ -10,7 +10,7 @@
 #'
 #' @param x An object to be plotted.
 #' @inheritParams plot_tsne
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -20,8 +20,18 @@ plot_umap <- function(
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
-  alpha = 0.8
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_umap")
 }
 
@@ -43,13 +53,26 @@ plot_umap.glystats_umap_res <- function(
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
-  alpha = 0.8
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_umap(
     x,
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -69,14 +92,27 @@ plot_umap.glyexp_experiment <- function(
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
-  alpha = 0.8
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
   .plot_umap(
     umap_res,
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -95,14 +131,27 @@ plot_umap.SummarizedExperiment <- function(
   label = FALSE,
   add_ellipse = FALSE,
   point_size = 2,
-  alpha = 0.8
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   umap_res <- rlang::exec(glystats::gly_umap, x, !!!stats_args)
   .plot_umap(
     umap_res,
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,

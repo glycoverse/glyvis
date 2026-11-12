@@ -27,7 +27,7 @@
 #' @param top_n Number of variables to retain in loadings or VIP plots. `NULL`
 #'   retains all variables; a positive integer selects the largest squared
 #'   loading norms or VIP scores, respectively.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -42,8 +42,16 @@ plot_oplsda <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_oplsda")
 }
 
@@ -60,8 +68,15 @@ plot_oplsda.glystats_oplsda_res <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_oplsda(
     x,
     type,
@@ -69,6 +84,12 @@ plot_oplsda.glystats_oplsda_res <- function(
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -92,8 +113,15 @@ plot_oplsda.glyexp_experiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
   .plot_oplsda(
     oplsda_res,
@@ -102,6 +130,12 @@ plot_oplsda.glyexp_experiment <- function(
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -124,8 +158,15 @@ plot_oplsda.SummarizedExperiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
   .plot_oplsda(
     oplsda_res,
@@ -134,6 +175,12 @@ plot_oplsda.SummarizedExperiment <- function(
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,
@@ -272,6 +319,9 @@ plot_oplsda.SummarizedExperiment <- function(
   palette = c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00"),
   ...
 ) {
+  if (is.null(palette)) {
+    palette <- c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00")
+  }
   df <- object$tidy_result$variables
   df$direction <- factor(
     ifelse(

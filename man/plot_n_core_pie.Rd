@@ -7,22 +7,60 @@
 \alias{plot_n_branch_bar}
 \title{N-glycan core, type, and branch distributions}
 \usage{
-plot_n_core_pie(x, ..., weight = "equal")
+plot_n_core_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_type_pie(x, ..., weight = "equal")
+plot_n_type_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_branch_pie(x, ..., weight = "equal")
+plot_n_branch_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_branch_bar(x, ..., weight = "equal")
+plot_n_branch_bar(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_structure} in its row annotations and \code{glycan_type = "N"} in
 its metadata. Legacy \code{glyexp_experiment} objects are also supported.}
 
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.
-The default plot area is 50 by 50 mm. Pie annotations scale with the
-panel size; core labels are split across lines to avoid crowding.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct glycan structures in glycomics, or distinct combinations
@@ -31,6 +69,22 @@ Abundance weighting uses \code{\link[glydet:wsum]{glydet::wsum()}} to sum the or
 abundances over all rows and samples. Duplicate measurements contribute
 their summed abundance. Missing abundances are omitted; negative or
 infinite values and recorded non-raw scales are rejected.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains
@@ -43,6 +97,9 @@ Summarize an N-glycan experiment across all samples, with glycan cartoons
 drawn by \code{\link[glydraw:geom_glycan]{glydraw::geom_glycan()}}.
 }
 \details{
+The default plot area is 50 by 50 mm. Pie annotations scale with the
+panel size; core labels are split across lines to avoid crowding.
+
 \code{plot_n_core_pie()} separates core fucosylation and bisecting GlcNAc into
 four combinations. Antennal fucose does not count as core fucose.
 \code{plot_n_type_pie()} uses \code{\link[glydet:n_glycan_type]{glydet::n_glycan_type()}} with

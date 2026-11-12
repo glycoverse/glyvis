@@ -13,7 +13,7 @@
 #' @param digits Number of decimal places for coefficient labels.
 #' @param triangle Part of the matrix to display: `"lower"` (default), `"upper"`,
 #'   or `"full"`. Colors always span -1 to 1.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -22,8 +22,16 @@ plot_corrplot <- function(
   ...,
   label = FALSE,
   digits = 2,
-  triangle = "lower"
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_corrplot")
 }
 
@@ -34,9 +42,28 @@ plot_corrplot.glystats_cor_res <- function(
   ...,
   label = FALSE,
   digits = 2,
-  triangle = "lower"
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_corrplot(x, ..., label = label, digits = digits, triangle = triangle)
+  rlang::check_dots_empty()
+  .plot_corrplot(
+    x,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    digits = digits,
+    triangle = triangle
+  )
 }
 
 #' @rdname plot_corrplot
@@ -48,12 +75,25 @@ plot_corrplot.glyexp_experiment <- function(
   stats_args = list(),
   label = FALSE,
   digits = 2,
-  triangle = "lower"
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
   .plot_corrplot(
     cor_res,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     digits = digits,
     triangle = triangle
@@ -68,12 +108,25 @@ plot_corrplot.SummarizedExperiment <- function(
   stats_args = list(),
   label = FALSE,
   digits = 2,
-  triangle = "lower"
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
   .plot_corrplot(
     cor_res,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     digits = digits,
     triangle = triangle
@@ -82,7 +135,7 @@ plot_corrplot.SummarizedExperiment <- function(
 
 #' Internal function to plot correlation matrix
 #' @param cor_res A `glystats_cor_res` object.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_corrplot <- function(
   cor_res,
@@ -92,6 +145,9 @@ plot_corrplot.SummarizedExperiment <- function(
   palette = c("#2166AC", "#F7F7F7", "#B2182B"),
   ...
 ) {
+  if (is.null(palette)) {
+    palette <- c("#2166AC", "#F7F7F7", "#B2182B")
+  }
   checkmate::assert_choice(triangle, c("lower", "upper", "full"))
   checkmate::assert_flag(label)
   r <- cor_res$raw_result$r

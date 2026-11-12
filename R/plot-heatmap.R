@@ -18,7 +18,7 @@
 #' @param show_colnames Whether to display column labels. `NULL` displays them
 #'   automatically for at most 40 samples.
 #' @param na_col Color for missing values.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
@@ -33,8 +33,15 @@ plot_heatmap <- function(
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  log_transform = NULL
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_heatmap")
 }
 
@@ -49,11 +56,24 @@ plot_heatmap.glyexp_experiment <- function(
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  log_transform = NULL
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_exp_heatmap(
     x,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     scale = scale,
     cluster_rows = cluster_rows,
     cluster_cols = cluster_cols,
@@ -75,11 +95,24 @@ plot_heatmap.SummarizedExperiment <- function(
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  log_transform = NULL
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_exp_heatmap(
     x,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     scale = scale,
     cluster_rows = cluster_rows,
     cluster_cols = cluster_cols,
@@ -92,7 +125,7 @@ plot_heatmap.SummarizedExperiment <- function(
 
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @noRd
 .plot_exp_heatmap <- function(
   exp,
@@ -106,6 +139,9 @@ plot_heatmap.SummarizedExperiment <- function(
   ...,
   log_transform = NULL
 ) {
+  if (is.null(palette)) {
+    palette <- c("#2166AC", "#F7F7F7", "#B2182B")
+  }
   checkmate::assert_choice(scale, c("row", "column", "none"))
   checkmate::assert_flag(show_rownames)
   checkmate::assert_flag(show_colnames, null.ok = TRUE)

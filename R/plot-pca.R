@@ -26,7 +26,7 @@
 #'   `NULL` retains all arrows; a positive integer selects the largest squared
 #'   loading norms. Biplots rescale arrows by a common display multiplier without
 #'   changing scores or explained variance.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -41,8 +41,16 @@ plot_pca <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_pca")
 }
 
@@ -59,14 +67,27 @@ plot_pca.glystats_pca_res <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_pca(
     x,
     type = type,
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     axes = axes,
     label = label,
     add_ellipse = add_ellipse,
@@ -91,8 +112,15 @@ plot_pca.glyexp_experiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
   .plot_pca(
     pca_res,
@@ -100,6 +128,12 @@ plot_pca.glyexp_experiment <- function(
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     axes = axes,
     label = label,
     add_ellipse = add_ellipse,
@@ -123,8 +157,15 @@ plot_pca.SummarizedExperiment <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
   .plot_pca(
     pca_res,
@@ -132,6 +173,12 @@ plot_pca.SummarizedExperiment <- function(
     groups = groups,
     group_col = group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     axes = axes,
     label = label,
     add_ellipse = add_ellipse,

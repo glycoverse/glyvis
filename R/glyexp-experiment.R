@@ -13,7 +13,7 @@
 #'   Only applicable to "boxplot".
 #' @inheritParams plot_heatmap
 #' @inheritParams plot_boxplot
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
@@ -46,8 +46,15 @@ autoplot.glyexp_experiment <- function(
   points = TRUE,
   ncol = NULL,
   label_width = 24,
-  scales = "free_y"
+  scales = "free_y",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
   plot_args <- switch(
@@ -73,6 +80,12 @@ autoplot.glyexp_experiment <- function(
       .plot_exp_heatmap,
       object,
       ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
       log_transform = log_transform,
       !!!plot_args
     ),
@@ -81,6 +94,12 @@ autoplot.glyexp_experiment <- function(
       object,
       group_col,
       ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
       log_transform = log_transform,
       !!!plot_args
     )
@@ -104,8 +123,15 @@ autoplot.SummarizedExperiment <- function(
   points = TRUE,
   ncol = NULL,
   label_width = 24,
-  scales = "free_y"
+  scales = "free_y",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
   plot_args <- switch(
@@ -131,6 +157,12 @@ autoplot.SummarizedExperiment <- function(
       .plot_exp_heatmap,
       object,
       ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
       log_transform = log_transform,
       !!!plot_args
     ),
@@ -139,6 +171,12 @@ autoplot.SummarizedExperiment <- function(
       object,
       group_col,
       ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
       log_transform = log_transform,
       !!!plot_args
     )

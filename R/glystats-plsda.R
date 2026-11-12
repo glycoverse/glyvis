@@ -19,7 +19,7 @@
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
 #' @inheritParams plot_plsda
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -33,14 +33,27 @@ autoplot.glystats_plsda_res <- function(
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_plsda(
     object,
     type,
     groups,
     group_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     add_ellipse = add_ellipse,
     point_size = point_size,

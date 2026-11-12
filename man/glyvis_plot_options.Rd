@@ -3,6 +3,25 @@
 \name{glyvis_plot_options}
 \alias{glyvis_plot_options}
 \title{Customize glyvis plots with tidyplots}
+\arguments{
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
+}
 \description{
 All \verb{plot_*()} functions and statistical \code{autoplot()} methods return a
 \code{tidyplot}, which also inherits from \code{ggplot}. Continue styling with
@@ -12,22 +31,6 @@ or use ordinary ggplot2 layers. No global theme or options are changed.
 \details{
 All plotting controls follow \code{...} in public function signatures. Supply
 their full argument names; only the input object is positional.
-}
-\section{Common options}{
-
-Pass these named arguments through \code{...} in any plotting entry point:
-\itemize{
-\item \code{title}: optional plot title.
-\item \code{width}, \code{height}: plot-area dimensions in millimetres; \code{NULL} (default)
-uses tidyplots defaults (50 by 50 mm). Set \code{NA} to fill the available
-graphics device. These are not export-page dimensions.
-\item \code{fontsize}: base text size in points, default 9.
-\item \code{family}: font family, default \code{"sans"}.
-\item \code{palette}: color vector. A named vector maps group names to fixed colors
-across different plots and subsets. Unnamed palettes follow factor order;
-use the same factor levels or a named palette for consistent group colors.
-Continuous heatmaps use blue-white-red; other plots use distinct hues.
-}
 
 Plot-specific controls are explicit named arguments of the corresponding
 plotting functions and their \code{autoplot()} methods. See \code{\link[=plot_pca]{plot_pca()}},
@@ -39,7 +42,6 @@ Glycan summaries document their controls in \code{\link[=plot_n_core_pie]{plot_n
 \code{\link[=plot_fuc_sia_pie]{plot_fuc_sia_pie()}}, \code{\link[=plot_o_type_pie]{plot_o_type_pie()}}, \code{\link[=plot_isomers_per_comp]{plot_isomers_per_comp()}},
 \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}}, \code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}}, and \code{\link[=plot_top10_bar]{plot_top10_bar()}}.
 }
-
 \section{Migration from earlier backends}{
 
 Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and

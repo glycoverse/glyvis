@@ -7,9 +7,34 @@
 \alias{plot_roc.SummarizedExperiment}
 \title{ROC plot}
 \usage{
-plot_roc(x, ..., type = "roc", auc_cutoff = 0.5, top_n = NULL)
+plot_roc(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
+)
 
-\method{plot_roc}{glystats_roc_res}(x, ..., type = "roc", auc_cutoff = 0.5, top_n = NULL)
+\method{plot_roc}{glystats_roc_res}(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 \method{plot_roc}{glyexp_experiment}(
   x,
@@ -17,7 +42,13 @@ plot_roc(x, ..., type = "roc", auc_cutoff = 0.5, top_n = NULL)
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 
 \method{plot_roc}{SummarizedExperiment}(
@@ -26,13 +57,19 @@ plot_roc(x, ..., type = "roc", auc_cutoff = 0.5, top_n = NULL)
   type = "roc",
   auc_cutoff = 0.5,
   stats_args = list(),
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{type}{The type of plot, one of "dotplot" or "roc". Default is "roc".}
 
@@ -41,6 +78,22 @@ plot_roc(x, ..., type = "roc", auc_cutoff = 0.5, top_n = NULL)
 \item{top_n}{Number of variables to retain when \code{type = "dotplot"}. \code{NULL}
 retains all variables; a positive integer selects the largest AUC values.
 Does not affect ROC curves.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_roc]{glystats::gly_roc()}}.}
 }

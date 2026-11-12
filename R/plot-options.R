@@ -8,19 +8,20 @@
 #' All plotting controls follow `...` in public function signatures. Supply
 #' their full argument names; only the input object is positional.
 #'
-#' @section Common options:
-#' Pass these named arguments through `...` in any plotting entry point:
-#' * `title`: optional plot title.
-#' * `width`, `height`: plot-area dimensions in millimetres; `NULL` (default)
-#'   uses tidyplots defaults (50 by 50 mm). Set `NA` to fill the available
-#'   graphics device. These are not export-page dimensions.
-#' * `fontsize`: base text size in points, default 9.
-#' * `family`: font family, default `"sans"`.
-#' * `palette`: color vector. A named vector maps group names to fixed colors
-#'   across different plots and subsets. Unnamed palettes follow factor order;
-#'   use the same factor levels or a named palette for consistent group colors.
-#'   Continuous heatmaps use blue-white-red; other plots use distinct hues.
+#' @param ... Must be empty. Supply plotting controls by their full argument names.
+#' @param title Optional plot title. Defaults to `NULL`.
+#' @param width,height Plot-area dimensions in millimetres. `NULL` uses the
+#'   tidyplots defaults (50 by 50 mm); `NA` fills the available graphics device.
+#'   These are not export-page dimensions.
+#' @param fontsize Base text size in points. Defaults to 9.
+#' @param family Font family. Defaults to `"sans"`.
+#' @param palette Color vector. A named vector maps group names to fixed colors
+#'   across plots and subsets; unnamed palettes follow factor order. `NULL`
+#'   selects the plot-specific default: blue-white-red for continuous heatmaps,
+#'   directional colors for volcano and S-plots, selection colors for ranked
+#'   dot plots, and distinct hues for other plots.
 #'
+#' @details
 #' Plot-specific controls are explicit named arguments of the corresponding
 #' plotting functions and their `autoplot()` methods. See [plot_pca()],
 #' [plot_plsda()], [plot_oplsda()], [plot_tsne()], [plot_umap()],

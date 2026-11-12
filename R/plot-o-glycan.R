@@ -40,8 +40,15 @@ plot_o_type_pie <- function(
   x,
   ...,
   weight = "equal",
-  core_set = "4cores"
+  core_set = "4cores",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(core_set, c("4cores", "8cores"))
   input <- .n_plot_input(x, weight, core_set = core_set)
   n <- if (core_set == "4cores") 4L else 8L
@@ -51,7 +58,16 @@ plot_o_type_pie <- function(
     paste("Core", seq_len(n)),
     .o_core_cartoons()[seq_len(n)]
   )
-  .n_pie(df, ...)
+  .n_pie(
+    df,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 .o_core_cartoons <- function() {

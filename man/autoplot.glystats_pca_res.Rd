@@ -15,13 +15,19 @@
   add_ellipse = FALSE,
   point_size = 2,
   alpha = 0.8,
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{object}{A \code{glystats_pca_res} object.}
 
-\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
 
@@ -48,6 +54,22 @@ If not provided, this function will try "group".}
 \code{NULL} retains all arrows; a positive integer selects the largest squared
 loading norms. Biplots rescale arrows by a common display multiplier without
 changing scores or explained variance.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

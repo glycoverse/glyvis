@@ -13,7 +13,7 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -25,14 +25,27 @@ autoplot.glystats_ttest_res <- function(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_volcano(
     object,
     log2fc_cutoff,
     p_cutoff,
     p_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     point_size = point_size,
     alpha = alpha
@@ -49,14 +62,27 @@ autoplot.glystats_wilcox_res <- function(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_volcano(
     object,
     log2fc_cutoff,
     p_cutoff,
     p_col,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     point_size = point_size,
     alpha = alpha
@@ -74,7 +100,7 @@ autoplot.glystats_wilcox_res <- function(
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
 #' @param top_n Number of variables to retain. `NULL` retains all variables;
 #'   a positive integer selects the smallest plotted p-values.
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_anova_res <- function(
@@ -82,9 +108,28 @@ autoplot.glystats_anova_res <- function(
   ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
+  rlang::check_dots_empty()
+  .plot_multigroup_dea(
+    object,
+    p_cutoff,
+    p_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
+  )
 }
 
 #' @rdname autoplot.glystats_anova_res
@@ -94,9 +139,28 @@ autoplot.glystats_kruskal_res <- function(
   ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  top_n = NULL
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
+  rlang::check_dots_empty()
+  .plot_multigroup_dea(
+    object,
+    p_cutoff,
+    p_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
+  )
 }
 
 #' Plots for Limma Result
@@ -116,7 +180,7 @@ autoplot.glystats_kruskal_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common styling options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -129,8 +193,15 @@ autoplot.glystats_limma_res <- function(
   p_col = "p_adj",
   label = FALSE,
   point_size = 1.5,
-  alpha = 0.7
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   .plot_volcano_limma(
     object,
     log2fc_cutoff,
@@ -138,6 +209,12 @@ autoplot.glystats_limma_res <- function(
     p_col,
     contrast,
     ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
     label = label,
     point_size = point_size,
     alpha = alpha
