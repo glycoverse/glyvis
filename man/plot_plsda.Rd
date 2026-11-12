@@ -7,9 +7,31 @@
 \alias{plot_plsda.SummarizedExperiment}
 \title{PLS-DA Plot}
 \usage{
-plot_plsda(x, type = "scores", groups = NULL, group_col = NULL, ...)
+plot_plsda(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
+)
 
-\method{plot_plsda}{glystats_plsda_res}(x, type = "scores", groups = NULL, group_col = NULL, ...)
+\method{plot_plsda}{glystats_plsda_res}(
+  x,
+  type = "scores",
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
+)
 
 \method{plot_plsda}{glyexp_experiment}(
   x,
@@ -17,7 +39,12 @@ plot_plsda(x, type = "scores", groups = NULL, group_col = NULL, ...)
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 )
 
 \method{plot_plsda}{SummarizedExperiment}(
@@ -26,7 +53,12 @@ plot_plsda(x, type = "scores", groups = NULL, group_col = NULL, ...)
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 )
 }
 \arguments{
@@ -45,7 +77,18 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label samples in scores plots or variables in loadings
+plots. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses to scores plots.}
+
+\item{point_size, alpha}{Point size and opacity for scores plots.}
+
+\item{top_n}{Number of variables to retain in loadings or VIP plots. \code{NULL}
+retains all variables; a positive integer selects the largest squared
+loading norms or VIP scores, respectively.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_plsda]{glystats::gly_plsda()}}.}
 }

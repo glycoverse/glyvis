@@ -9,31 +9,90 @@
 #' retained rows or columns, including their input order.
 #'
 #' @param x A supported Glycoverse data container.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param scale Standardize rows (`"row"`, the default), columns (`"column"`),
+#'   or neither (`"none"`). Applied after and independently of `log_transform`.
+#' @param cluster_rows,cluster_cols Whether to cluster rows or columns, or
+#'   compatible `hclust` objects. Clustering controls order; dendrograms are not
+#'   drawn. Use [autoplot.glystats_hclust_res()] to draw a dendrogram.
+#' @param show_rownames Whether to display row labels. Defaults to `FALSE`.
+#' @param show_colnames Whether to display column labels. `NULL` displays them
+#'   automatically for at most 40 samples.
+#' @param na_col Color for missing values.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_heatmap <- function(x, ..., log_transform = NULL) {
+plot_heatmap <- function(
+  x,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  ...,
+  log_transform = NULL
+) {
   UseMethod("plot_heatmap")
 }
 
 #' @rdname plot_heatmap
 #' @export
-plot_heatmap.glyexp_experiment <- function(x, ..., log_transform = NULL) {
-  .plot_exp_heatmap(x, ..., log_transform = log_transform)
+plot_heatmap.glyexp_experiment <- function(
+  x,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  ...,
+  log_transform = NULL
+) {
+  .plot_exp_heatmap(
+    x,
+    ...,
+    scale = scale,
+    cluster_rows = cluster_rows,
+    cluster_cols = cluster_cols,
+    show_rownames = show_rownames,
+    show_colnames = show_colnames,
+    na_col = na_col,
+    log_transform = log_transform
+  )
 }
 
 #' @rdname plot_heatmap
 #' @export
-plot_heatmap.SummarizedExperiment <- function(x, ..., log_transform = NULL) {
-  .plot_exp_heatmap(x, ..., log_transform = log_transform)
+plot_heatmap.SummarizedExperiment <- function(
+  x,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  ...,
+  log_transform = NULL
+) {
+  .plot_exp_heatmap(
+    x,
+    ...,
+    scale = scale,
+    cluster_rows = cluster_rows,
+    cluster_cols = cluster_cols,
+    show_rownames = show_rownames,
+    show_colnames = show_colnames,
+    na_col = na_col,
+    log_transform = log_transform
+  )
 }
 
 #' Internal function to plot heatmap
 #' @param exp A `glyexp_experiment` object.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @noRd
 .plot_exp_heatmap <- function(
   exp,

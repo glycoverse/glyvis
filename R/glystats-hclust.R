@@ -5,7 +5,7 @@
 #' @param object A `glystats_hclust_res` object.
 #' @param rotate Display the dendrogram horizontally.
 #' @param labels Display leaf labels.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_hclust_res <- function(

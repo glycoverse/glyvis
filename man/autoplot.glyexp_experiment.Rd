@@ -10,7 +10,17 @@
   type = "heatmap",
   group_col = "group",
   ...,
-  log_transform = NULL
+  log_transform = NULL,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  points = TRUE,
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y"
 )
 
 \method{autoplot}{SummarizedExperiment}(
@@ -18,7 +28,17 @@
   type = "heatmap",
   group_col = "group",
   ...,
-  log_transform = NULL
+  log_transform = NULL,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  points = TRUE,
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y"
 )
 }
 \arguments{
@@ -30,13 +50,38 @@
 It should be a column in the sample information tibble. Defaults to "group".
 Only applicable to "boxplot".}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values
 are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after \code{...}.}
+
+\item{scale}{Standardize rows (\code{"row"}, the default), columns (\code{"column"}),
+or neither (\code{"none"}). Applied after and independently of \code{log_transform}.}
+
+\item{cluster_rows, cluster_cols}{Whether to cluster rows or columns, or
+compatible \code{hclust} objects. Clustering controls order; dendrograms are not
+drawn. Use \code{\link[=autoplot.glystats_hclust_res]{autoplot.glystats_hclust_res()}} to draw a dendrogram.}
+
+\item{show_rownames}{Whether to display row labels. Defaults to \code{FALSE}.}
+
+\item{show_colnames}{Whether to display column labels. \code{NULL} displays them
+automatically for at most 40 samples.}
+
+\item{na_col}{Color for missing values.}
+
+\item{points}{Whether to show observations as jittered points. Boxes show
+medians and quartiles with 1.5-IQR whiskers. Outliers are drawn separately
+only when \code{points = FALSE}.}
+
+\item{ncol}{Number of facet columns. \code{NULL} chooses up to three columns.}
+
+\item{label_width}{Width used to wrap facet labels without truncation.}
+
+\item{scales}{Facet axis scales, passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. Defaults
+to \code{"free_y"}; use \code{"fixed"} for comparisons across facets.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -51,6 +96,11 @@ Possible \code{type}s of plots:
 }
 }
 \details{
+Heatmap options (\code{scale}, \code{cluster_rows}, \code{cluster_cols},
+\code{show_rownames}, \code{show_colnames}, \code{na_col}) apply only to \code{type = "heatmap"}.
+Boxplot options (\code{points}, \code{ncol}, \code{label_width}, \code{scales}) apply only to
+\code{type = "boxplot"}.
+
 For SE containers, \code{fortify()} returns \code{.sample} and \code{.variable}
 axis identifiers and an abundance \code{value} column. Ordinary \code{sample} and
 \code{variable} metadata are retained. Conflicting annotation names receive

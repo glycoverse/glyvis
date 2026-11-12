@@ -18,57 +18,20 @@
 #'   use the same factor levels or a named palette for consistent group colors.
 #'   Continuous heatmaps use blue-white-red; other plots use distinct hues.
 #'
-#' @section Plot-specific options:
-#' * PCA: `axes = c(1, 2)`, `label = FALSE`, `add_ellipse = FALSE`,
-#'   and `top_n = NULL` for loading arrows. Biplots rescale arrows by a common
-#'   display multiplier; scores and explained variance are unchanged.
-#' * PCA, PLS-DA, OPLS-DA, t-SNE, UMAP and volcano scatter plots:
-#'   `point_size = 2` (volcano: 1.5), `alpha = 0.8` (volcano: 0.7), and
-#'   `label = FALSE`. Embedding score plots also accept `add_ellipse = FALSE`.
-#' * Loading plots: `label = FALSE`, `top_n = NULL`. All arrows are retained
-#'   by default. An explicit `top_n` selects the largest squared loading norms.
-#' * VIP and ranked dot plots: `top_n = NULL`; an explicit positive integer
-#'   selects the largest plotted values. All variables are retained by default.
-#' * Boxplots and heatmaps: `log_transform = NULL` uses recorded scale metadata
-#'   to log raw values with `log2(x + 1e-6)` and leave logged values unchanged.
-#'   `FALSE` preserves the supplied values; `TRUE` warns and is ignored for
-#'   already logged input. See [glyvis_abundance_scale] for compatibility rules.
-#' * Boxplots: `points = TRUE`, `ncol = NULL`, `label_width = 24`, and
-#'   `scales = "free_y"`. Long facet labels wrap without truncation.
-#'   Points are observations; boxes show the median and quartiles with
-#'   1.5-IQR whiskers. Use `scales = "fixed"` for comparisons across facets.
-#' * Heatmaps: `scale = "row"` (also `"column"` or `"none"`),
-#'   `cluster_rows = TRUE`, `cluster_cols = TRUE` (also `FALSE` or compatible
-#'   `hclust` objects), `show_rownames = FALSE`, `show_colnames = NULL`, and
-#'   `na_col = "grey90"`. Columns are labelled automatically up to 40 samples.
-#'   Values use the selected log transformation, then are optionally
-#'   standardized. `scale` is independent of `log_transform`. Clustering
-#'   orders rows and columns; dendrograms are not drawn inside the heatmap.
-#'   Use the hierarchical-clustering `autoplot()` method for a dendrogram.
-#' * Correlation plots: `label = FALSE`, `digits = 2`, and
-#'   `triangle = "lower"` (also `"upper"` or `"full"`). Colors span -1 to 1.
-#' * Sequence logos: pass glyph options in `logo_args`, a named list passed
-#'   to [ggseqlogo::geom_logo()], e.g. `list(method = "prob")`.
-#' * N-glycan summaries: [plot_n_core_pie()], [plot_n_type_pie()],
-#'   [plot_n_branch_pie()], and
-#'   [plot_n_branch_bar()] accept `weight = "equal"` or `"abundance"` and pool
-#'   all samples. Their default plot areas are 50 by 50 mm.
-#' * Composition summaries: [plot_fuc_sia_pie()] accepts `weight = "equal"`
-#'   or `"abundance"` and classifies fucosylation and sialylation without structures.
-#' * O-GalNAc summaries: [plot_o_type_pie()] uses the same weighting and
-#'   accepts `core_set = "4cores"` (Core 1-4) or `"8cores"` (Core 1-8).
-#' * Count distributions: [plot_isomers_per_comp()], [plot_glycans_per_site()], and
-#'   [plot_sites_per_protein()] use fixed bins `1` to `7` and `>=8`, one bar
-#'   colour, and a 50 by 50 mm plot area. `weight = "abundance"` pools
-#'   measured glycoform abundances across samples instead of counting entities.
-#' * Top glycans: [plot_top10_bar()] independently ranks the ten most frequent
-#'   or abundant glycans including and excluding oligomannose in mirrored bars,
-#'   with glycan cartoons and the tidyplots default plot area of 50 by 50 mm.
+#' Plot-specific controls are explicit named arguments of the corresponding
+#' plotting functions and their `autoplot()` methods. See [plot_pca()],
+#' [plot_plsda()], [plot_oplsda()], [plot_tsne()], [plot_umap()],
+#' [plot_volcano()], [plot_roc()], [plot_boxplot()], [plot_heatmap()],
+#' [plot_corrplot()], and [plot_logo()] for defaults and details.
+#' Glycan summaries document their controls in [plot_n_core_pie()],
+#' [plot_n_type_pie()], [plot_n_branch_pie()], [plot_n_branch_bar()],
+#' [plot_fuc_sia_pie()], [plot_o_type_pie()], [plot_isomers_per_comp()],
+#' [plot_glycans_per_site()], [plot_sites_per_protein()], and [plot_top10_bar()].
 #'
 #' @section Migration from earlier backends:
 #' Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and
 #' ggdendrogram are no longer forwarded. Unsupported arguments error instead
-#' of being ignored. Use the options above or modify the returned tidyplot.
+#' of being ignored. Use the documented arguments or modify the returned tidyplot.
 #' Replace PCA `geom = "point"` with the default `label = FALSE`,
 #' `repel = TRUE` with `label = TRUE`, and volcano `pointSize` with `point_size`.
 #' Move ggseqlogo arguments from `...` into `logo_args`.
@@ -86,7 +49,7 @@
 #'   mat <- matrix(c(3, 8, 5, 9, 2, 7, 6, 4, 1, 5, 6, 2), nrow = 3,
 #'     dimnames = list(paste0("V", 1:3), paste0("S", 1:4)))
 #'   se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
-#'   p <- plot_pca(se, title = "PCA", fontsize = 9)
+#'   p <- plot_pca(se, label = TRUE, point_size = 2.5, title = "PCA")
 #'   p |> tidyplots::adjust_size(width = 80, height = 60)
 #' }
 #' @name glyvis_plot_options

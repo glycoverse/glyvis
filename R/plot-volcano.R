@@ -26,8 +26,11 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param label Whether to label variables. Defaults to `FALSE`.
+#' @param point_size,alpha Point size and opacity.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
+#' @seealso [glyvis_plot_options] for common styling options.
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_volcano <- function(
@@ -35,7 +38,10 @@ plot_volcano <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
   UseMethod("plot_volcano")
 }
@@ -52,7 +58,10 @@ plot_volcano.glyexp_experiment <- function(
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
   checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
 
@@ -62,7 +71,16 @@ plot_volcano.glyexp_experiment <- function(
     "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
     "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
   )
-  plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
+  plot_volcano(
+    dea_res,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_volcano
@@ -74,7 +92,10 @@ plot_volcano.SummarizedExperiment <- function(
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
   checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
 
@@ -84,7 +105,16 @@ plot_volcano.SummarizedExperiment <- function(
     "wilcox" = rlang::exec(glystats::gly_wilcox, x, !!!stats_args),
     "limma" = rlang::exec(glystats::gly_limma, x, !!!stats_args)
   )
-  plot_volcano(dea_res, log2fc_cutoff, p_cutoff, p_col, ...)
+  plot_volcano(
+    dea_res,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_volcano
@@ -94,9 +124,21 @@ plot_volcano.glystats_ttest_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano(x, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(
+    x,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_volcano
@@ -106,9 +148,21 @@ plot_volcano.glystats_wilcox_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano(x, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(
+    x,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_volcano
@@ -122,9 +176,22 @@ plot_volcano.glystats_limma_res <- function(
   p_cutoff = 0.05,
   p_col = "p_adj",
   contrast = NULL,
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano_limma(x, log2fc_cutoff, p_cutoff, p_col, contrast, ...)
+  .plot_volcano_limma(
+    x,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    contrast,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 .plot_volcano_limma <- function(

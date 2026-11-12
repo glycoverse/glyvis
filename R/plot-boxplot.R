@@ -8,13 +8,29 @@
 #'   scale-aware log transformation controlled by `log_transform`.
 #'
 #' @param x An object to be plotted.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param points Whether to show observations as jittered points. Boxes show
+#'   medians and quartiles with 1.5-IQR whiskers. Outliers are drawn separately
+#'   only when `points = FALSE`.
+#' @param ncol Number of facet columns. `NULL` chooses up to three columns.
+#' @param label_width Width used to wrap facet labels without truncation.
+#' @param scales Facet axis scales, passed to [ggplot2::facet_wrap()]. Defaults
+#'   to `"free_y"`; use `"fixed"` for comparisons across facets.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_boxplot <- function(x, ..., log_transform = NULL) {
+plot_boxplot <- function(
+  x,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  ...,
+  log_transform = NULL,
+  points = TRUE
+) {
   UseMethod("plot_boxplot")
 }
 
@@ -25,10 +41,23 @@ plot_boxplot <- function(x, ..., log_transform = NULL) {
 plot_boxplot.glyexp_experiment <- function(
   x,
   group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
   ...,
-  log_transform = NULL
+  log_transform = NULL,
+  points = TRUE
 ) {
-  .plot_exp_boxplot(x, group_col, ..., log_transform = log_transform)
+  .plot_exp_boxplot(
+    x,
+    group_col,
+    ...,
+    points = points,
+    ncol = ncol,
+    label_width = label_width,
+    scales = scales,
+    log_transform = log_transform
+  )
 }
 
 #' @rdname plot_boxplot
@@ -41,9 +70,13 @@ plot_boxplot.glyexp_experiment <- function(
 plot_boxplot.SummarizedExperiment <- function(
   x,
   group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
   ...,
   log_transform = NULL,
-  variables = NULL
+  variables = NULL,
+  points = TRUE
 ) {
   if (!is.null(variables)) {
     checkmate::assert_character(variables, any.missing = FALSE, min.len = 1L)
@@ -55,14 +88,23 @@ plot_boxplot.SummarizedExperiment <- function(
     }
     x <- x[rownames(x) %in% variables, , drop = FALSE]
   }
-  .plot_exp_boxplot(x, group_col, ..., log_transform = log_transform)
+  .plot_exp_boxplot(
+    x,
+    group_col,
+    ...,
+    points = points,
+    ncol = ncol,
+    label_width = label_width,
+    scales = scales,
+    log_transform = log_transform
+  )
 }
 
 #' Internal function to plot boxplot
 #' @param exp A `glyexp_experiment` object.
 #' @param group_col A character string specifying the column name in sample information
 #'   that contains group labels. Default is "group".
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @noRd
 .plot_exp_boxplot <- function(
   exp,

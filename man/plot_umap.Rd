@@ -7,18 +7,60 @@
 \alias{plot_umap.SummarizedExperiment}
 \title{UMAP Plot}
 \usage{
-plot_umap(x, ...)
+plot_umap(
+  x,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8
+)
 
-\method{plot_umap}{glystats_umap_res}(x, groups = NULL, group_col = NULL, ...)
+\method{plot_umap}{glystats_umap_res}(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8
+)
 
-\method{plot_umap}{glyexp_experiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+\method{plot_umap}{glyexp_experiment}(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8
+)
 
-\method{plot_umap}{SummarizedExperiment}(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+\method{plot_umap}{SummarizedExperiment}(
+  x,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label samples. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses. Requires sample groups.}
+
+\item{point_size, alpha}{Point size and opacity.}
 
 \item{groups}{A factor or character vector specifying group membership for each sample.
 If provided, the plot will be colored by group.}

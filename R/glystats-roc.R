@@ -7,7 +7,8 @@
 #' @param type "dotplot" or "roc". Defaults to "dotplot".
 #'   If "roc", at most 10 variables can be plotted.
 #' @param auc_cutoff The AUC cutoff. Defaults to 0.5. Only used if type is "dotplot".
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams plot_roc
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -15,7 +16,8 @@ autoplot.glystats_roc_res <- function(
   object,
   type = "dotplot",
   auc_cutoff = 0.5,
-  ...
+  ...,
+  top_n = NULL
 ) {
-  .plot_roc(object, type, auc_cutoff, ...)
+  .plot_roc(object, type, auc_cutoff, ..., top_n = top_n)
 }

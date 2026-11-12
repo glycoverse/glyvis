@@ -6,11 +6,11 @@
 \alias{plot_logo.GlycoproteomicSE}
 \title{Logo Plot}
 \usage{
-plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
 
-\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+\method{plot_logo}{glyexp_experiment}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
 
-\method{plot_logo}{GlycoproteomicSE}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+\method{plot_logo}{GlycoproteomicSE}(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ..., logo_args = list())
 }
 \arguments{
 \item{x}{An object to be plotted.}
@@ -25,7 +25,10 @@ is \code{NULL}, UniProt.ws is used to fetch protein sequences automatically.}
 
 \item{tax_id}{The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{logo_args}{Named list of glyph options passed to
+\code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, for example \code{list(method = "prob")}.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

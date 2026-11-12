@@ -4,7 +4,16 @@
 \alias{autoplot.glystats_tsne_res}
 \title{Plots for t-SNE}
 \usage{
-\method{autoplot}{glystats_tsne_res}(object, groups = NULL, group_col = NULL, ...)
+\method{autoplot}{glystats_tsne_res}(
+  object,
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8
+)
 }
 \arguments{
 \item{object}{A \code{glystats_tsne_res} object.}
@@ -19,7 +28,13 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label samples. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses. Requires sample groups.}
+
+\item{point_size, alpha}{Point size and opacity.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

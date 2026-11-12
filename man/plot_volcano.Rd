@@ -9,7 +9,16 @@
 \alias{plot_volcano.glystats_limma_res}
 \title{Volcano Plot}
 \usage{
-plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+plot_volcano(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
+)
 
 \method{plot_volcano}{glyexp_experiment}(
   x,
@@ -18,7 +27,10 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 )
 
 \method{plot_volcano}{SummarizedExperiment}(
@@ -28,12 +40,33 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   p_col = "p_adj",
   test = "limma",
   stats_args = list(),
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 )
 
-\method{plot_volcano}{glystats_ttest_res}(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+\method{plot_volcano}{glystats_ttest_res}(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
+)
 
-\method{plot_volcano}{glystats_wilcox_res}(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+\method{plot_volcano}{glystats_wilcox_res}(
+  x,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
+)
 
 \method{plot_volcano}{glystats_limma_res}(
   x,
@@ -41,7 +74,10 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   p_cutoff = 0.05,
   p_col = "p_adj",
   contrast = NULL,
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 )
 }
 \arguments{
@@ -54,7 +90,11 @@ plot_volcano(x, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label variables. Defaults to \code{FALSE}.}
+
+\item{point_size, alpha}{Point size and opacity.}
 
 \item{test}{"ttest", "wilcox", or "limma". Default is "limma".}
 
@@ -92,4 +132,8 @@ and unlogged raw-scale limma analyses, whose native estimates are not log2
 fold changes. Native estimates are never substituted for \code{log2fc}.
 When only some fold changes are missing, the available values are plotted
 without changing the supplied results.
+}
+
+\seealso{
+\link{glyvis_plot_options} for common styling options.
 }

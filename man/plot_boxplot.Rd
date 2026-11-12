@@ -6,22 +6,54 @@
 \alias{plot_boxplot.SummarizedExperiment}
 \title{Boxplot}
 \usage{
-plot_boxplot(x, ..., log_transform = NULL)
+plot_boxplot(
+  x,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  ...,
+  log_transform = NULL,
+  points = TRUE
+)
 
-\method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ..., log_transform = NULL)
+\method{plot_boxplot}{glyexp_experiment}(
+  x,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  ...,
+  log_transform = NULL,
+  points = TRUE
+)
 
 \method{plot_boxplot}{SummarizedExperiment}(
   x,
   group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
   ...,
   log_transform = NULL,
-  variables = NULL
+  variables = NULL,
+  points = TRUE
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{group_col}{A character string specifying the column name in sample information
+that contains group labels. Default is "group".}
+
+\item{ncol}{Number of facet columns. \code{NULL} chooses up to three columns.}
+
+\item{label_width}{Width used to wrap facet labels without truncation.}
+
+\item{scales}{Facet axis scales, passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. Defaults
+to \code{"free_y"}; use \code{"fixed"} for comparisons across facets.}
+
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values
@@ -29,8 +61,9 @@ are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRU
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after \code{...}.}
 
-\item{group_col}{A character string specifying the column name in sample information
-that contains group labels. Default is "group".}
+\item{points}{Whether to show observations as jittered points. Boxes show
+medians and quartiles with 1.5-IQR whiskers. Outliers are drawn separately
+only when \code{points = FALSE}.}
 
 \item{variables}{A character vector of row names to plot from a
 \code{SummarizedExperiment}. \code{NULL} (the default) plots all rows. Names must

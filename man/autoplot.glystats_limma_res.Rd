@@ -10,7 +10,10 @@
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 )
 }
 \arguments{
@@ -27,7 +30,11 @@ When there is only one contrast (two-group comparison), it can be NULL (default)
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label variables. Defaults to \code{FALSE}.}
+
+\item{point_size, alpha}{Point size and opacity.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -45,4 +52,8 @@ and unlogged raw-scale limma analyses, whose native estimates are not log2
 fold changes. Native estimates are never substituted for \code{log2fc}.
 When only some fold changes are missing, the available values are plotted
 without changing the supplied results.
+}
+
+\seealso{
+\link{glyvis_plot_options} for common styling options.
 }

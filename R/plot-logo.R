@@ -15,11 +15,20 @@
 #'   this argument can be omitted. When `site_sequence` is missing and `fasta`
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param logo_args Named list of glyph options passed to
+#'   [ggseqlogo::geom_logo()], for example `list(method = "prob")`.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_logo <- function(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...) {
+plot_logo <- function(
+  x,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  ...,
+  logo_args = list()
+) {
   UseMethod("plot_logo")
 }
 
@@ -30,9 +39,10 @@ plot_logo.glyexp_experiment <- function(
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  ...
+  ...,
+  logo_args = list()
 ) {
-  .plot_exp_logo(x, n_aa, fasta, tax_id, ...)
+  .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)
 }
 
 #' @rdname plot_logo
@@ -42,9 +52,10 @@ plot_logo.GlycoproteomicSE <- function(
   n_aa = 5L,
   fasta = NULL,
   tax_id = 9606L,
-  ...
+  ...,
+  logo_args = list()
 ) {
-  .plot_exp_logo(x, n_aa, fasta, tax_id, ...)
+  .plot_exp_logo(x, n_aa, fasta, tax_id, ..., logo_args = logo_args)
 }
 
 #' Internal function to plot logo plot
@@ -56,7 +67,7 @@ plot_logo.GlycoproteomicSE <- function(
 #'   this argument can be omitted. When `site_sequence` is missing and `fasta`
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @noRd
 .plot_exp_logo <- function(exp, n_aa, fasta, tax_id, logo_args = list(), ...) {
   rlang::check_installed("ggseqlogo")

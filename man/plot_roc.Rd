@@ -7,13 +7,27 @@
 \alias{plot_roc.SummarizedExperiment}
 \title{ROC plot}
 \usage{
-plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
+plot_roc(x, type = "roc", auc_cutoff = 0.5, ..., top_n = NULL)
 
-\method{plot_roc}{glystats_roc_res}(x, type = "roc", auc_cutoff = 0.5, ...)
+\method{plot_roc}{glystats_roc_res}(x, type = "roc", auc_cutoff = 0.5, ..., top_n = NULL)
 
-\method{plot_roc}{glyexp_experiment}(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+\method{plot_roc}{glyexp_experiment}(
+  x,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  ...,
+  top_n = NULL
+)
 
-\method{plot_roc}{SummarizedExperiment}(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+\method{plot_roc}{SummarizedExperiment}(
+  x,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  ...,
+  top_n = NULL
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
@@ -22,7 +36,11 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
 
 \item{auc_cutoff}{The AUC cutoff. Default is 0.5.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{top_n}{Number of variables to retain when \code{type = "dotplot"}. \code{NULL}
+retains all variables; a positive integer selects the largest AUC values.
+Does not affect ROC curves.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_roc]{glystats::gly_roc()}}.}
 }

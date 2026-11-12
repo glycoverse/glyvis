@@ -4,14 +4,16 @@
 #' (`glystats_ttest_res` and `glystats_wilcox_res` objects).
 #' Draw a volcano plot.
 #'
+#' @seealso [glyvis_plot_options] for common styling options.
 #' @inheritSection plot_volcano Fold-change availability
+#' @inheritParams plot_volcano
 #'
 #' @param object A `glystats_ttest_res` or `glystats_wilcox_res` object.
 #' @param log2fc_cutoff The log2 fold change cutoff. Defaults to 1.
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -20,9 +22,21 @@ autoplot.glystats_ttest_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano(object, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(
+    object,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname autoplot.glystats_ttest_res
@@ -32,9 +46,21 @@ autoplot.glystats_wilcox_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano(object, log2fc_cutoff, p_cutoff, p_col, ...)
+  .plot_volcano(
+    object,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' Plots for Multi-Group Differential Expression Analysis (DEA)
@@ -46,16 +72,19 @@ autoplot.glystats_wilcox_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param top_n Number of variables to retain. `NULL` retains all variables;
+#'   a positive integer selects the smallest plotted p-values.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_anova_res <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  top_n = NULL
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, ...)
+  .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
 }
 
 #' @rdname autoplot.glystats_anova_res
@@ -64,9 +93,10 @@ autoplot.glystats_kruskal_res <- function(
   object,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  top_n = NULL
 ) {
-  .plot_multigroup_dea(object, p_cutoff, p_col, ...)
+  .plot_multigroup_dea(object, p_cutoff, p_col, ..., top_n = top_n)
 }
 
 #' Plots for Limma Result
@@ -74,7 +104,9 @@ autoplot.glystats_kruskal_res <- function(
 #' Visualization for results from [glystats::gly_limma()] (`glystats_limma_res` objects).
 #' Only 2-group comparison is supported, and a volcano plot is drawn.
 #'
+#' @seealso [glyvis_plot_options] for common styling options.
 #' @inheritSection plot_volcano Fold-change availability
+#' @inheritParams plot_volcano
 #'
 #' @param object A `glystats_limma_res` object.
 #' @param contrast A character string specifying the contrast to plot, in the format of "group1_vs_group2".
@@ -84,7 +116,7 @@ autoplot.glystats_kruskal_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -94,9 +126,22 @@ autoplot.glystats_limma_res <- function(
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  ...,
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7
 ) {
-  .plot_volcano_limma(object, log2fc_cutoff, p_cutoff, p_col, contrast, ...)
+  .plot_volcano_limma(
+    object,
+    log2fc_cutoff,
+    p_cutoff,
+    p_col,
+    contrast,
+    ...,
+    label = label,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 .plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {

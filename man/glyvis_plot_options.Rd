@@ -24,64 +24,23 @@ across different plots and subsets. Unnamed palettes follow factor order;
 use the same factor levels or a named palette for consistent group colors.
 Continuous heatmaps use blue-white-red; other plots use distinct hues.
 }
-}
 
-\section{Plot-specific options}{
-
-\itemize{
-\item PCA: \code{axes = c(1, 2)}, \code{label = FALSE}, \code{add_ellipse = FALSE},
-and \code{top_n = NULL} for loading arrows. Biplots rescale arrows by a common
-display multiplier; scores and explained variance are unchanged.
-\item PCA, PLS-DA, OPLS-DA, t-SNE, UMAP and volcano scatter plots:
-\code{point_size = 2} (volcano: 1.5), \code{alpha = 0.8} (volcano: 0.7), and
-\code{label = FALSE}. Embedding score plots also accept \code{add_ellipse = FALSE}.
-\item Loading plots: \code{label = FALSE}, \code{top_n = NULL}. All arrows are retained
-by default. An explicit \code{top_n} selects the largest squared loading norms.
-\item VIP and ranked dot plots: \code{top_n = NULL}; an explicit positive integer
-selects the largest plotted values. All variables are retained by default.
-\item Boxplots and heatmaps: \code{log_transform = NULL} uses recorded scale metadata
-to log raw values with \code{log2(x + 1e-6)} and leave logged values unchanged.
-\code{FALSE} preserves the supplied values; \code{TRUE} warns and is ignored for
-already logged input. See \link{glyvis_abundance_scale} for compatibility rules.
-\item Boxplots: \code{points = TRUE}, \code{ncol = NULL}, \code{label_width = 24}, and
-\code{scales = "free_y"}. Long facet labels wrap without truncation.
-Points are observations; boxes show the median and quartiles with
-1.5-IQR whiskers. Use \code{scales = "fixed"} for comparisons across facets.
-\item Heatmaps: \code{scale = "row"} (also \code{"column"} or \code{"none"}),
-\code{cluster_rows = TRUE}, \code{cluster_cols = TRUE} (also \code{FALSE} or compatible
-\code{hclust} objects), \code{show_rownames = FALSE}, \code{show_colnames = NULL}, and
-\code{na_col = "grey90"}. Columns are labelled automatically up to 40 samples.
-Values use the selected log transformation, then are optionally
-standardized. \code{scale} is independent of \code{log_transform}. Clustering
-orders rows and columns; dendrograms are not drawn inside the heatmap.
-Use the hierarchical-clustering \code{autoplot()} method for a dendrogram.
-\item Correlation plots: \code{label = FALSE}, \code{digits = 2}, and
-\code{triangle = "lower"} (also \code{"upper"} or \code{"full"}). Colors span -1 to 1.
-\item Sequence logos: pass glyph options in \code{logo_args}, a named list passed
-to \code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, e.g. \code{list(method = "prob")}.
-\item N-glycan summaries: \code{\link[=plot_n_core_pie]{plot_n_core_pie()}}, \code{\link[=plot_n_type_pie]{plot_n_type_pie()}},
-\code{\link[=plot_n_branch_pie]{plot_n_branch_pie()}}, and
-\code{\link[=plot_n_branch_bar]{plot_n_branch_bar()}} accept \code{weight = "equal"} or \code{"abundance"} and pool
-all samples. Their default plot areas are 50 by 50 mm.
-\item Composition summaries: \code{\link[=plot_fuc_sia_pie]{plot_fuc_sia_pie()}} accepts \code{weight = "equal"}
-or \code{"abundance"} and classifies fucosylation and sialylation without structures.
-\item O-GalNAc summaries: \code{\link[=plot_o_type_pie]{plot_o_type_pie()}} uses the same weighting and
-accepts \code{core_set = "4cores"} (Core 1-4) or \code{"8cores"} (Core 1-8).
-\item Count distributions: \code{\link[=plot_isomers_per_comp]{plot_isomers_per_comp()}}, \code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}}, and
-\code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}} use fixed bins \code{1} to \code{7} and \verb{>=8}, one bar
-colour, and a 50 by 50 mm plot area. \code{weight = "abundance"} pools
-measured glycoform abundances across samples instead of counting entities.
-\item Top glycans: \code{\link[=plot_top10_bar]{plot_top10_bar()}} independently ranks the ten most frequent
-or abundant glycans including and excluding oligomannose in mirrored bars,
-with glycan cartoons and the tidyplots default plot area of 50 by 50 mm.
-}
+Plot-specific controls are explicit named arguments of the corresponding
+plotting functions and their \code{autoplot()} methods. See \code{\link[=plot_pca]{plot_pca()}},
+\code{\link[=plot_plsda]{plot_plsda()}}, \code{\link[=plot_oplsda]{plot_oplsda()}}, \code{\link[=plot_tsne]{plot_tsne()}}, \code{\link[=plot_umap]{plot_umap()}},
+\code{\link[=plot_volcano]{plot_volcano()}}, \code{\link[=plot_roc]{plot_roc()}}, \code{\link[=plot_boxplot]{plot_boxplot()}}, \code{\link[=plot_heatmap]{plot_heatmap()}},
+\code{\link[=plot_corrplot]{plot_corrplot()}}, and \code{\link[=plot_logo]{plot_logo()}} for defaults and details.
+Glycan summaries document their controls in \code{\link[=plot_n_core_pie]{plot_n_core_pie()}},
+\code{\link[=plot_n_type_pie]{plot_n_type_pie()}}, \code{\link[=plot_n_branch_pie]{plot_n_branch_pie()}}, \code{\link[=plot_n_branch_bar]{plot_n_branch_bar()}},
+\code{\link[=plot_fuc_sia_pie]{plot_fuc_sia_pie()}}, \code{\link[=plot_o_type_pie]{plot_o_type_pie()}}, \code{\link[=plot_isomers_per_comp]{plot_isomers_per_comp()}},
+\code{\link[=plot_glycans_per_site]{plot_glycans_per_site()}}, \code{\link[=plot_sites_per_protein]{plot_sites_per_protein()}}, and \code{\link[=plot_top10_bar]{plot_top10_bar()}}.
 }
 
 \section{Migration from earlier backends}{
 
 Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and
 ggdendrogram are no longer forwarded. Unsupported arguments error instead
-of being ignored. Use the options above or modify the returned tidyplot.
+of being ignored. Use the documented arguments or modify the returned tidyplot.
 Replace PCA \code{geom = "point"} with the default \code{label = FALSE},
 \code{repel = TRUE} with \code{label = TRUE}, and volcano \code{pointSize} with \code{point_size}.
 Move ggseqlogo arguments from \code{...} into \code{logo_args}.
@@ -102,7 +61,7 @@ if (requireNamespace("glystats", quietly = TRUE)) {
   mat <- matrix(c(3, 8, 5, 9, 2, 7, 6, 4, 1, 5, 6, 2), nrow = 3,
     dimnames = list(paste0("V", 1:3), paste0("S", 1:4)))
   se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
-  p <- plot_pca(se, title = "PCA", fontsize = 9)
+  p <- plot_pca(se, label = TRUE, point_size = 2.5, title = "PCA")
   p |> tidyplots::adjust_size(width = 80, height = 60)
 }
 }

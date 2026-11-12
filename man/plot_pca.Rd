@@ -7,9 +7,33 @@
 \alias{plot_pca.SummarizedExperiment}
 \title{PCA Plot}
 \usage{
-plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
+plot_pca(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
+)
 
-\method{plot_pca}{glystats_pca_res}(x, type = "individual", groups = NULL, group_col = NULL, ...)
+\method{plot_pca}{glystats_pca_res}(
+  x,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
+)
 
 \method{plot_pca}{glyexp_experiment}(
   x,
@@ -17,7 +41,13 @@ plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  ...,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 )
 
 \method{plot_pca}{SummarizedExperiment}(
@@ -26,7 +56,13 @@ plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  ...,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 )
 }
 \arguments{
@@ -44,7 +80,20 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{axes}{Integer vector selecting two distinct principal components.}
+
+\item{label}{Whether to label samples and loading arrows. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses to individual and biplot scores.}
+
+\item{point_size, alpha}{Point size and opacity for individual and biplot scores.}
+
+\item{top_n}{Number of loading arrows to retain in variables and biplot views.
+\code{NULL} retains all arrows; a positive integer selects the largest squared
+loading norms. Biplots rescale arrows by a common display multiplier without
+changing scores or explained variance.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
 }

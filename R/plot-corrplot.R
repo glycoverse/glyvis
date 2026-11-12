@@ -9,38 +9,80 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param label Whether to display correlation coefficients in cells.
+#' @param digits Number of decimal places for coefficient labels.
+#' @param triangle Part of the matrix to display: `"lower"` (default), `"upper"`,
+#'   or `"full"`. Colors always span -1 to 1.
+#' @param ... Common styling options described in [glyvis_plot_options].
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_corrplot <- function(x, ...) {
+plot_corrplot <- function(
+  x,
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+) {
   UseMethod("plot_corrplot")
 }
 
 #' @rdname plot_corrplot
 #' @export
-plot_corrplot.glystats_cor_res <- function(x, ...) {
-  .plot_corrplot(x, ...)
+plot_corrplot.glystats_cor_res <- function(
+  x,
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+) {
+  .plot_corrplot(x, ..., label = label, digits = digits, triangle = triangle)
 }
 
 #' @rdname plot_corrplot
 #' @param stats_args A list of keyword arguments to pass to [glystats::gly_cor()].
 #' @export
-plot_corrplot.glyexp_experiment <- function(x, stats_args = list(), ...) {
+plot_corrplot.glyexp_experiment <- function(
+  x,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+) {
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
-  .plot_corrplot(cor_res, ...)
+  .plot_corrplot(
+    cor_res,
+    ...,
+    label = label,
+    digits = digits,
+    triangle = triangle
+  )
 }
 
 #' @rdname plot_corrplot
 #' @export
-plot_corrplot.SummarizedExperiment <- function(x, stats_args = list(), ...) {
+plot_corrplot.SummarizedExperiment <- function(
+  x,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+) {
   cor_res <- rlang::exec(glystats::gly_cor, x, !!!stats_args)
-  .plot_corrplot(cor_res, ...)
+  .plot_corrplot(
+    cor_res,
+    ...,
+    label = label,
+    digits = digits,
+    triangle = triangle
+  )
 }
 
 #' Internal function to plot correlation matrix
 #' @param cor_res A `glystats_cor_res` object.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param ... Common styling options described in [glyvis_plot_options].
 #' @noRd
 .plot_corrplot <- function(
   cor_res,

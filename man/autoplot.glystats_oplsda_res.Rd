@@ -10,7 +10,12 @@
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 )
 }
 \arguments{
@@ -31,7 +36,18 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to label samples in scores plots or variables in loadings
+and S-plots. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses to scores plots.}
+
+\item{point_size, alpha}{Point size and opacity for scores and S-plots.}
+
+\item{top_n}{Number of variables to retain in loadings or VIP plots. \code{NULL}
+retains all variables; a positive integer selects the largest squared
+loading norms or VIP scores, respectively.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

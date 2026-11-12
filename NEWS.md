@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Plot-specific options are now explicit named arguments in `plot_*()` functions and their `autoplot()` methods, with defaults and descriptions in each help page. Common styling options remain available through `...`.
+
 * New `plot_isomers_per_comp()` counts distinct annotated structures per composition across samples, proteins, and sites, using fixed bins from 1 through 7 and >=8 with optional pooled abundance weighting. (#31)
 
 * New `plot_n_branch_pie()` summarizes N-glycans by antenna count using equal glycan/site-specific glycoform counts or pooled abundance weights, with fixed core-and-antenna cartoons for zero to four antennae. (#29)

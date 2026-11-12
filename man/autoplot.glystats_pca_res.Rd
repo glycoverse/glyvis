@@ -4,7 +4,19 @@
 \alias{autoplot.glystats_pca_res}
 \title{Plots for Principal Component Analysis (PCA)}
 \usage{
-\method{autoplot}{glystats_pca_res}(object, type = "individual", groups = NULL, group_col = NULL, ...)
+\method{autoplot}{glystats_pca_res}(
+  object,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  ...,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
+)
 }
 \arguments{
 \item{object}{A \code{glystats_pca_res} object.}
@@ -22,7 +34,20 @@ In this case, you can specify the column name in the sample information tibble
 to be used for coloring.
 If not provided, this function will try "group".}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{axes}{Integer vector selecting two distinct principal components.}
+
+\item{label}{Whether to label samples and loading arrows. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses to individual and biplot scores.}
+
+\item{point_size, alpha}{Point size and opacity for individual and biplot scores.}
+
+\item{top_n}{Number of loading arrows to retain in variables and biplot views.
+\code{NULL} retains all arrows; a positive integer selects the largest squared
+loading norms. Biplots rescale arrows by a common display multiplier without
+changing scores or explained variance.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

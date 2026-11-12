@@ -13,7 +13,7 @@
 
 \item{labels}{Display leaf labels.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

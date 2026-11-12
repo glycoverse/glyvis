@@ -4,12 +4,19 @@
 \alias{autoplot.glystats_cor_res}
 \title{Plots for Correlation Analysis}
 \usage{
-\method{autoplot}{glystats_cor_res}(object, ...)
+\method{autoplot}{glystats_cor_res}(object, ..., label = FALSE, digits = 2, triangle = "lower")
 }
 \arguments{
 \item{object}{A \code{glystats_cor_res} object.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to display correlation coefficients in cells.}
+
+\item{digits}{Number of decimal places for coefficient labels.}
+
+\item{triangle}{Part of the matrix to display: \code{"lower"} (default), \code{"upper"},
+or \code{"full"}. Colors always span -1 to 1.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

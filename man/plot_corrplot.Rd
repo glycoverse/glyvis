@@ -7,18 +7,39 @@
 \alias{plot_corrplot.SummarizedExperiment}
 \title{Correlation Plot}
 \usage{
-plot_corrplot(x, ...)
+plot_corrplot(x, ..., label = FALSE, digits = 2, triangle = "lower")
 
-\method{plot_corrplot}{glystats_cor_res}(x, ...)
+\method{plot_corrplot}{glystats_cor_res}(x, ..., label = FALSE, digits = 2, triangle = "lower")
 
-\method{plot_corrplot}{glyexp_experiment}(x, stats_args = list(), ...)
+\method{plot_corrplot}{glyexp_experiment}(
+  x,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+)
 
-\method{plot_corrplot}{SummarizedExperiment}(x, stats_args = list(), ...)
+\method{plot_corrplot}{SummarizedExperiment}(
+  x,
+  stats_args = list(),
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower"
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Common styling options described in \link{glyvis_plot_options}.}
+
+\item{label}{Whether to display correlation coefficients in cells.}
+
+\item{digits}{Number of decimal places for coefficient labels.}
+
+\item{triangle}{Part of the matrix to display: \code{"lower"} (default), \code{"upper"},
+or \code{"full"}. Colors always span -1 to 1.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_cor]{glystats::gly_cor()}}.}
 }
