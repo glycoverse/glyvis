@@ -20,11 +20,22 @@ Visualization for results from
 # S3 method for class 'glystats_oplsda_res'
 autoplot(
   object,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 ```
 
@@ -33,6 +44,10 @@ autoplot(
 - object:
 
   A `glystats_oplsda_res` object.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - type:
 
@@ -58,10 +73,50 @@ autoplot(
   you can specify the column name in the sample information tibble to be
   used for coloring. If not provided, this function will try "group".
 
-- ...:
+- label:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
+  Whether to label samples in scores plots or variables in loadings and
+  S-plots. Defaults to `FALSE`.
+
+- add_ellipse:
+
+  Whether to add group ellipses to scores plots.
+
+- point_size, alpha:
+
+  Point size and opacity for scores and S-plots.
+
+- top_n:
+
+  Number of variables to retain in loadings or VIP plots. `NULL` retains
+  all variables; a positive integer selects the largest squared loading
+  norms or VIP scores, respectively.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 

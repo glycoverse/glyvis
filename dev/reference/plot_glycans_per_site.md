@@ -6,9 +6,30 @@ Draw single-colour bar plots with fixed bins `1`, `2`, `3`, `4`, `5`,
 ## Usage
 
 ``` r
-plot_glycans_per_site(x, weight = "equal", glycan_col = NULL, ...)
+plot_glycans_per_site(
+  x,
+  ...,
+  weight = "equal",
+  glycan_col = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_sites_per_protein(x, weight = "equal", ...)
+plot_sites_per_protein(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -19,6 +40,10 @@ plot_sites_per_protein(x, weight = "equal", ...)
   [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html)
   object. Other containers, including plain `SummarizedExperiment` and
   legacy experiments, are not accepted.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - weight:
 
@@ -39,12 +64,31 @@ plot_sites_per_protein(x, weight = "equal", ...)
   identifiers are never mixed. Supply a column name to select it
   explicitly.
 
-- ...:
+- title:
 
-  Common appearance options in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
-  Bars use the first colour in `palette`. The default plot area is 50 by
-  50 mm.
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 
@@ -53,6 +97,9 @@ A `tidyplot`, also inheriting from `ggplot`. Its `data` contains ordered
 plotted count or pooled abundance).
 
 ## Details
+
+Bars use the first colour in `palette`. The default plot area is 50 by
+50 mm.
 
 `plot_glycans_per_site()` counts distinct glycans at each combination of
 `protein` and `protein_site`. In equal mode, the bar at `2` is the

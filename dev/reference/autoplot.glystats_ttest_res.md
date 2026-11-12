@@ -11,10 +11,40 @@ plot.
 
 ``` r
 # S3 method for class 'glystats_ttest_res'
-autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+autoplot(
+  object,
+  ...,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'glystats_wilcox_res'
-autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
+autoplot(
+  object,
+  ...,
+  log2fc_cutoff = 1,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -22,6 +52,10 @@ autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
 - object:
 
   A `glystats_ttest_res` or `glystats_wilcox_res` object.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - log2fc_cutoff:
 
@@ -36,10 +70,39 @@ autoplot(object, log2fc_cutoff = 1, p_cutoff = 0.05, p_col = "p_adj", ...)
   The column name for p-value. Defaults to "p_adj". Can also be "p_val"
   (raw p-values without multiple testing correction).
 
-- ...:
+- label:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
+  Whether to label variables. Defaults to `FALSE`.
+
+- point_size, alpha:
+
+  Point size and opacity.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 
@@ -54,3 +117,8 @@ results and unlogged raw-scale limma analyses, whose native estimates
 are not log2 fold changes. Native estimates are never substituted for
 `log2fc`. When only some fold changes are missing, the available values
 are plotted without changing the supplied results.
+
+## See also
+
+[glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md)
+for common styling options.

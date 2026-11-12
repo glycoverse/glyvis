@@ -12,13 +12,52 @@ types:
 ## Usage
 
 ``` r
-plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+plot_logo(
+  x,
+  ...,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'glyexp_experiment'
-plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+plot_logo(
+  x,
+  ...,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'GlycoproteomicSE'
-plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
+plot_logo(
+  x,
+  ...,
+  n_aa = 5L,
+  fasta = NULL,
+  tax_id = 9606L,
+  logo_args = list(),
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -26,6 +65,10 @@ plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 - x:
 
   An object to be plotted.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - n_aa:
 
@@ -45,10 +88,37 @@ plot_logo(x, n_aa = 5L, fasta = NULL, tax_id = 9606L, ...)
 
   The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 
-- ...:
+- logo_args:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
+  Named list of glyph options passed to
+  [`ggseqlogo::geom_logo()`](https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html),
+  for example `list(method = "prob")`.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 

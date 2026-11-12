@@ -16,7 +16,25 @@ results (`glystats_pca_res` object). Possible `type`s of plots:
 
 ``` r
 # S3 method for class 'glystats_pca_res'
-autoplot(object, type = "individual", groups = NULL, group_col = NULL, ...)
+autoplot(
+  object,
+  ...,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -24,6 +42,10 @@ autoplot(object, type = "individual", groups = NULL, group_col = NULL, ...)
 - object:
 
   A `glystats_pca_res` object.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - type:
 
@@ -44,10 +66,54 @@ autoplot(object, type = "individual", groups = NULL, group_col = NULL, ...)
   you can specify the column name in the sample information tibble to be
   used for coloring. If not provided, this function will try "group".
 
-- ...:
+- axes:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
+  Integer vector selecting two distinct principal components.
+
+- label:
+
+  Whether to label samples and loading arrows. Defaults to `FALSE`.
+
+- add_ellipse:
+
+  Whether to add group ellipses to individual and biplot scores.
+
+- point_size, alpha:
+
+  Point size and opacity for individual and biplot scores.
+
+- top_n:
+
+  Number of loading arrows to retain in variables and biplot views.
+  `NULL` retains all arrows; a positive integer selects the largest
+  squared loading norms. Biplots rescale arrows by a common display
+  multiplier without changing scores or explained variance.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 

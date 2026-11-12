@@ -7,7 +7,17 @@ across all samples and draw a single-colour bar plot with bins `1` to
 ## Usage
 
 ``` r
-plot_isomers_per_comp(x, weight = "equal", ...)
+plot_isomers_per_comp(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -20,6 +30,10 @@ plot_isomers_per_comp(x, weight = "equal", ...)
   [`glyexp::GlycoproteomicSE()`](https://glycoverse.github.io/glyexp/reference/GlycoproteomicSE.html)
   with `glycan_composition` and `glycan_structure` row annotations.
 
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
+
 - weight:
 
   Either `"equal"` (default), counting compositions in each bin, or
@@ -29,12 +43,31 @@ plot_isomers_per_comp(x, weight = "equal", ...)
   Abundance weighting requires finite, non-negative, raw linear-scale
   abundances; missing values are omitted.
 
-- ...:
+- title:
 
-  Common appearance options in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
-  Bars use the first colour in `palette`. The default plot area is 50 by
-  50 mm.
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 
@@ -43,6 +76,9 @@ A `tidyplot`, also inheriting from `ggplot`. Its `data` contains ordered
 plotted count or pooled abundance).
 
 ## Details
+
+Bars use the first colour in `palette`. The default plot area is 50 by
+50 mm.
 
 The bar at `2` counts compositions with exactly two distinct annotated
 structures. Structure identity uses the character representation of

@@ -8,7 +8,17 @@ lowest from top to bottom, on a shared quantitative scale.
 ## Usage
 
 ``` r
-plot_top10_bar(x, weight = "equal", ...)
+plot_top10_bar(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -21,6 +31,10 @@ plot_top10_bar(x, weight = "equal", ...)
   and `glycan_type = "N"` in metadata. Glycomics, plain
   `SummarizedExperiment`, and legacy containers are rejected.
 
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
+
 - weight:
 
   Either `"equal"` (default), counting distinct combinations of protein,
@@ -29,14 +43,31 @@ plot_top10_bar(x, weight = "equal", ...)
   measurements count once in equal mode and contribute their summed
   abundance otherwise.
 
-- ...:
+- title:
 
-  Common appearance options in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
-  The plot area uses the tidyplots default (50 by 50 mm). The first two
-  default glyvis colours identify the left and right sides. Cartoon
-  sizes adapt to the plot dimensions supplied here. No title is added
-  unless `title` is supplied.
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 
@@ -46,6 +77,11 @@ always non-negative; `signed_value` gives their mirrored plotting
 coordinates.
 
 ## Details
+
+The plot area uses the tidyplots default (50 by 50 mm). The first two
+default glyvis colours identify the left and right sides. Cartoon sizes
+adapt to the plot dimensions supplied here. No title is added unless
+`title` is supplied.
 
 Classification uses
 [`glydet::n_glycan_type()`](https://glycoverse.github.io/glydet/reference/n_glycan_type.html)

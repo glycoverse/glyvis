@@ -7,13 +7,53 @@ cartoons drawn by
 ## Usage
 
 ``` r
-plot_n_core_pie(x, weight = "equal", ...)
+plot_n_core_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_type_pie(x, weight = "equal", ...)
+plot_n_type_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_branch_pie(x, weight = "equal", ...)
+plot_n_branch_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_n_branch_bar(x, weight = "equal", ...)
+plot_n_branch_bar(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -28,6 +68,10 @@ plot_n_branch_bar(x, weight = "equal", ...)
   in its metadata. Legacy `glyexp_experiment` objects are also
   supported.
 
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
+
 - weight:
 
   Either `"equal"` (default) or `"abundance"`. Equal weighting counts
@@ -40,12 +84,31 @@ plot_n_branch_bar(x, weight = "equal", ...)
   abundances are omitted; negative or infinite values and recorded
   non-raw scales are rejected.
 
-- ...:
+- title:
 
-  Common appearance options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
-  The default plot area is 50 by 50 mm. Pie annotations scale with the
-  panel size; core labels are split across lines to avoid crowding.
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 ## Value
 
@@ -56,6 +119,9 @@ denominator. Pies retain zero-valued categories in `data` and in their
 cartoon labels.
 
 ## Details
+
+The default plot area is 50 by 50 mm. Pie annotations scale with the
+panel size; core labels are split across lines to avoid crowding.
 
 `plot_n_core_pie()` separates core fucosylation and bisecting GlcNAc
 into four combinations. Antennal fucose does not count as core fucose.

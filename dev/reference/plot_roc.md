@@ -16,16 +16,67 @@ be plotted. Currently supported data types:
 ## Usage
 
 ``` r
-plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
+plot_roc(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
+)
 
 # S3 method for class 'glystats_roc_res'
-plot_roc(x, type = "roc", auc_cutoff = 0.5, ...)
+plot_roc(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'glyexp_experiment'
-plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+plot_roc(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'SummarizedExperiment'
-plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
+plot_roc(
+  x,
+  ...,
+  type = "roc",
+  auc_cutoff = 0.5,
+  stats_args = list(),
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -33,6 +84,10 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 - x:
 
   An object to be plotted.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - type:
 
@@ -42,10 +97,37 @@ plot_roc(x, type = "roc", auc_cutoff = 0.5, stats_args = list(), ...)
 
   The AUC cutoff. Default is 0.5.
 
-- ...:
+- top_n:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/dev/reference/glyvis_plot_options.md).
+  Number of variables to retain when `type = "dotplot"`. `NULL` retains
+  all variables; a positive integer selects the largest AUC values. Does
+  not affect ROC curves.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
 - stats_args:
 

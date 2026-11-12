@@ -7,120 +7,81 @@ styling with `tidyplots::adjust_*()` functions, add components with
 `tidyplots::add_*()`, or use ordinary ggplot2 layers. No global theme or
 options are changed.
 
-## Common options
+## Arguments
 
-Pass these named arguments through `...` in any plotting entry point:
+- ...:
 
-- `title`: optional plot title.
+  Must be empty. Supply plotting controls by their full argument names.
 
-- `width`, `height`: plot-area dimensions in millimetres; `NULL`
-  (default) uses tidyplots defaults (50 by 50 mm). Set `NA` to fill the
-  available graphics device. These are not export-page dimensions.
+- title:
 
-- `fontsize`: base text size in points, default 9.
+  Optional plot title. Defaults to `NULL`.
 
-- `family`: font family, default `"sans"`.
+- width, height:
 
-- `palette`: color vector. A named vector maps group names to fixed
-  colors across different plots and subsets. Unnamed palettes follow
-  factor order; use the same factor levels or a named palette for
-  consistent group colors. Continuous heatmaps use blue-white-red; other
-  plots use distinct hues.
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
 
-## Plot-specific options
+- fontsize:
 
-- PCA: `axes = c(1, 2)`, `label = FALSE`, `add_ellipse = FALSE`, and
-  `top_n = NULL` for loading arrows. Biplots rescale arrows by a common
-  display multiplier; scores and explained variance are unchanged.
+  Base text size in points. Defaults to 9.
 
-- PCA, PLS-DA, OPLS-DA, t-SNE, UMAP and volcano scatter plots:
-  `point_size = 2` (volcano: 1.5), `alpha = 0.8` (volcano: 0.7), and
-  `label = FALSE`. Embedding score plots also accept
-  `add_ellipse = FALSE`.
+- family:
 
-- Loading plots: `label = FALSE`, `top_n = NULL`. All arrows are
-  retained by default. An explicit `top_n` selects the largest squared
-  loading norms.
+  Font family. Defaults to `"sans"`.
 
-- VIP and ranked dot plots: `top_n = NULL`; an explicit positive integer
-  selects the largest plotted values. All variables are retained by
-  default.
+- palette:
 
-- Boxplots and heatmaps: `log_transform = NULL` uses recorded scale
-  metadata to log raw values with `log2(x + 1e-6)` and leave logged
-  values unchanged. `FALSE` preserves the supplied values; `TRUE` warns
-  and is ignored for already logged input. See
-  [glyvis_abundance_scale](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
-  for compatibility rules.
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL`
+  selects the plot-specific default: blue-white-red for continuous
+  heatmaps, directional colors for volcano and S-plots, selection colors
+  for ranked dot plots, and distinct hues for other plots.
 
-- Boxplots: `points = TRUE`, `ncol = NULL`, `label_width = 24`, and
-  `scales = "free_y"`. Long facet labels wrap without truncation. Points
-  are observations; boxes show the median and quartiles with 1.5-IQR
-  whiskers. Use `scales = "fixed"` for comparisons across facets.
+## Details
 
-- Heatmaps: `scale = "row"` (also `"column"` or `"none"`),
-  `cluster_rows = TRUE`, `cluster_cols = TRUE` (also `FALSE` or
-  compatible `hclust` objects), `show_rownames = FALSE`,
-  `show_colnames = NULL`, and `na_col = "grey90"`. Columns are labelled
-  automatically up to 40 samples. Values use the selected log
-  transformation, then are optionally standardized. `scale` is
-  independent of `log_transform`. Clustering orders rows and columns;
-  dendrograms are not drawn inside the heatmap. Use the
-  hierarchical-clustering
-  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
-  method for a dendrogram.
+All plotting controls follow `...` in public function signatures. Supply
+their full argument names; only the input object is positional.
 
-- Correlation plots: `label = FALSE`, `digits = 2`, and
-  `triangle = "lower"` (also `"upper"` or `"full"`). Colors span -1 to
-  1.
-
-- Sequence logos: pass glyph options in `logo_args`, a named list passed
-  to
-  [`ggseqlogo::geom_logo()`](https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html),
-  e.g. `list(method = "prob")`.
-
-- N-glycan summaries:
-  [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
-  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
-  [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
-  and
-  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md)
-  accept `weight = "equal"` or `"abundance"` and pool all samples. Their
-  default plot areas are 50 by 50 mm.
-
-- Composition summaries:
-  [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)
-  accepts `weight = "equal"` or `"abundance"` and classifies
-  fucosylation and sialylation without structures.
-
-- O-GalNAc summaries:
-  [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md)
-  uses the same weighting and accepts `core_set = "4cores"` (Core 1-4)
-  or `"8cores"` (Core 1-8).
-
-- Count distributions:
-  [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/dev/reference/plot_isomers_per_comp.md),
-  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md),
-  and
-  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md)
-  use fixed bins `1` to `7` and `>=8`, one bar colour, and a 50 by 50 mm
-  plot area. `weight = "abundance"` pools measured glycoform abundances
-  across samples instead of counting entities.
-
-- Top glycans:
-  [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_top10_bar.md)
-  independently ranks the ten most frequent or abundant glycans
-  including and excluding oligomannose in mirrored bars, with glycan
-  cartoons and the tidyplots default plot area of 50 by 50 mm.
+Plot-specific controls are explicit named arguments of the corresponding
+plotting functions and their
+[`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+methods. See
+[`plot_pca()`](https://glycoverse.github.io/glyvis/dev/reference/plot_pca.md),
+[`plot_plsda()`](https://glycoverse.github.io/glyvis/dev/reference/plot_plsda.md),
+[`plot_oplsda()`](https://glycoverse.github.io/glyvis/dev/reference/plot_oplsda.md),
+[`plot_tsne()`](https://glycoverse.github.io/glyvis/dev/reference/plot_tsne.md),
+[`plot_umap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_umap.md),
+[`plot_volcano()`](https://glycoverse.github.io/glyvis/dev/reference/plot_volcano.md),
+[`plot_roc()`](https://glycoverse.github.io/glyvis/dev/reference/plot_roc.md),
+[`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md),
+[`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md),
+[`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md),
+and
+[`plot_logo()`](https://glycoverse.github.io/glyvis/dev/reference/plot_logo.md)
+for defaults and details. Glycan summaries document their controls in
+[`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+[`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+[`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+[`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_n_core_pie.md),
+[`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md),
+[`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_o_type_pie.md),
+[`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/dev/reference/plot_isomers_per_comp.md),
+[`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md),
+[`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/dev/reference/plot_glycans_per_site.md),
+and
+[`plot_top10_bar()`](https://glycoverse.github.io/glyvis/dev/reference/plot_top10_bar.md).
 
 ## Migration from earlier backends
 
 Arguments specific to factoextra, EnhancedVolcano, GGally, pheatmap, and
 ggdendrogram are no longer forwarded. Unsupported arguments error
-instead of being ignored. Use the options above or modify the returned
-tidyplot. Replace PCA `geom = "point"` with the default `label = FALSE`,
-`repel = TRUE` with `label = TRUE`, and volcano `pointSize` with
-`point_size`. Move ggseqlogo arguments from `...` into `logo_args`.
+instead of being ignored. Use the documented arguments or modify the
+returned tidyplot. Replace PCA `geom = "point"` with the default
+`label = FALSE`, `repel = TRUE` with `label = TRUE`, and volcano
+`pointSize` with `point_size`. Move ggseqlogo arguments from `...` into
+`logo_args`.
 
 ## Export
 
@@ -141,7 +102,7 @@ if (requireNamespace("glystats", quietly = TRUE)) {
   mat <- matrix(c(3, 8, 5, 9, 2, 7, 6, 4, 1, 5, 6, 2), nrow = 3,
     dimnames = list(paste0("V", 1:3), paste0("S", 1:4)))
   se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
-  p <- plot_pca(se, title = "PCA", fontsize = 9)
+  p <- plot_pca(se, label = TRUE, point_size = 2.5, title = "PCA")
   p |> tidyplots::adjust_size(width = 80, height = 60)
 }
 ```
