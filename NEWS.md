@@ -1,8 +1,8 @@
 # glyvis (development version)
 
-* All public plotting controls now follow `...` and must be supplied by their full argument names; replace positional calls such as `plot_pca(x, "biplot")` with `plot_pca(x, type = "biplot")`.
+* All public plotting controls now follow `...` and must be supplied by their full argument names; replace positional calls such as `plot_pca(x, "biplot")` with `plot_pca(x, type = "biplot")`. (#32)
 
-* Plot-specific options are now explicit named arguments in `plot_*()` functions and their `autoplot()` methods, with defaults and descriptions in each help page. Common styling options are also explicit arguments, share documentation via `@inheritParams`, and unused arguments in `...` now error at the plotting entry point.
+* Plot-specific options are now explicit named arguments in `plot_*()` functions and their `autoplot()` methods, with defaults and descriptions in each help page. Common styling options are also explicit arguments, share documentation via `@inheritParams`, and unused arguments in `...` now error at the plotting entry point. (#32)
 
 * New `plot_isomers_per_comp()` counts distinct annotated structures per composition across samples, proteins, and sites, using fixed bins from 1 through 7 and >=8 with optional pooled abundance weighting. (#31)
 
