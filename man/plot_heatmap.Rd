@@ -6,22 +6,100 @@
 \alias{plot_heatmap.SummarizedExperiment}
 \title{Heatmap}
 \usage{
-plot_heatmap(x, ..., log_transform = NULL)
+plot_heatmap(
+  x,
+  ...,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-\method{plot_heatmap}{glyexp_experiment}(x, ..., log_transform = NULL)
+\method{plot_heatmap}{glyexp_experiment}(
+  x,
+  ...,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-\method{plot_heatmap}{SummarizedExperiment}(x, ..., log_transform = NULL)
+\method{plot_heatmap}{SummarizedExperiment}(
+  x,
+  ...,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  log_transform = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A supported Glycoverse data container.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
+
+\item{scale}{Standardize rows (\code{"row"}, the default), columns (\code{"column"}),
+or neither (\code{"none"}). Applied after and independently of \code{log_transform}.}
+
+\item{cluster_rows, cluster_cols}{Whether to cluster rows or columns, or
+compatible \code{hclust} objects. Clustering controls order; dendrograms are not
+drawn. Use \code{\link[=autoplot.glystats_hclust_res]{autoplot.glystats_hclust_res()}} to draw a dendrogram.}
+
+\item{show_rownames}{Whether to display row labels. Defaults to \code{FALSE}.}
+
+\item{show_colnames}{Whether to display column labels. \code{NULL} displays them
+automatically for at most 40 samples.}
+
+\item{na_col}{Color for missing values.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values
 are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRUE}
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after \code{...}.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

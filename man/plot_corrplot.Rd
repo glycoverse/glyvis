@@ -7,18 +7,92 @@
 \alias{plot_corrplot.SummarizedExperiment}
 \title{Correlation Plot}
 \usage{
-plot_corrplot(x, ...)
+plot_corrplot(
+  x,
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
+)
 
-\method{plot_corrplot}{glystats_cor_res}(x, ...)
+\method{plot_corrplot}{glystats_cor_res}(
+  x,
+  ...,
+  label = FALSE,
+  digits = 2,
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-\method{plot_corrplot}{glyexp_experiment}(x, stats_args = list(), ...)
+\method{plot_corrplot}{glyexp_experiment}(
+  x,
+  ...,
+  stats_args = list(),
+  label = FALSE,
+  digits = 2,
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-\method{plot_corrplot}{SummarizedExperiment}(x, stats_args = list(), ...)
+\method{plot_corrplot}{SummarizedExperiment}(
+  x,
+  ...,
+  stats_args = list(),
+  label = FALSE,
+  digits = 2,
+  triangle = "lower",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
+
+\item{label}{Whether to display correlation coefficients in cells.}
+
+\item{digits}{Number of decimal places for coefficient labels.}
+
+\item{triangle}{Part of the matrix to display: \code{"lower"} (default), \code{"upper"},
+or \code{"full"}. Colors always span -1 to 1.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_cor]{glystats::gly_cor()}}.}
 }

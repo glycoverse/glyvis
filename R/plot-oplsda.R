@@ -20,18 +20,38 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param label Whether to label samples in scores plots or variables in loadings
+#'   and S-plots. Defaults to `FALSE`.
+#' @param add_ellipse Whether to add group ellipses to scores plots.
+#' @param point_size,alpha Point size and opacity for scores and S-plots.
+#' @param top_n Number of variables to retain in loadings or VIP plots. `NULL`
+#'   retains all variables; a positive integer selects the largest squared
+#'   loading norms or VIP scores, respectively.
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_oplsda <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_oplsda")
 }
 
@@ -39,13 +59,43 @@ plot_oplsda <- function(
 #' @export
 plot_oplsda.glystats_oplsda_res <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_oplsda(x, type, y_type, groups, group_col, ...)
+  rlang::check_dots_empty()
+  .plot_oplsda(
+    x,
+    type,
+    y_type,
+    groups,
+    group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_oplsda
@@ -53,30 +103,90 @@ plot_oplsda.glystats_oplsda_res <- function(
 #' @export
 plot_oplsda.glyexp_experiment <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
-  .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
+  .plot_oplsda(
+    oplsda_res,
+    type,
+    y_type,
+    groups,
+    group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_oplsda
 #' @export
 plot_oplsda.SummarizedExperiment <- function(
   x,
+  ...,
   type = "scores",
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   oplsda_res <- rlang::exec(glystats::gly_oplsda, x, !!!stats_args)
-  .plot_oplsda(oplsda_res, type, y_type, groups, group_col, ...)
+  .plot_oplsda(
+    oplsda_res,
+    type,
+    y_type,
+    groups,
+    group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 .plot_oplsda <- function(
@@ -85,7 +195,12 @@ plot_oplsda.SummarizedExperiment <- function(
   y_type = "o1",
   groups = NULL,
   group_col = NULL,
-  ...
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL
 ) {
   checkmate::assert_choice(
     type,
@@ -100,11 +215,32 @@ plot_oplsda.SummarizedExperiment <- function(
 
   switch(
     type,
-    scores = .plot_oplsda_scores(object, y_type, groups, ...),
-    loadings = .plot_oplsda_loadings(object, y_type, ...),
-    vip = .plot_oplsda_vip(object, ...),
+    scores = .plot_oplsda_scores(
+      object,
+      y_type,
+      groups,
+      ...,
+      label = label,
+      add_ellipse = add_ellipse,
+      point_size = point_size,
+      alpha = alpha
+    ),
+    loadings = .plot_oplsda_loadings(
+      object,
+      y_type,
+      ...,
+      label = label,
+      top_n = top_n
+    ),
+    vip = .plot_oplsda_vip(object, ..., top_n = top_n),
     variance = .plot_oplsda_variance(object, ...),
-    "s-plot" = .plot_oplsda_splot(object, ...)
+    "s-plot" = .plot_oplsda_splot(
+      object,
+      ...,
+      label = label,
+      point_size = point_size,
+      alpha = alpha
+    )
   )
 }
 
@@ -183,6 +319,9 @@ plot_oplsda.SummarizedExperiment <- function(
   palette = c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00"),
   ...
 ) {
+  if (is.null(palette)) {
+    palette <- c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00")
+  }
   df <- object$tidy_result$variables
   df$direction <- factor(
     ifelse(

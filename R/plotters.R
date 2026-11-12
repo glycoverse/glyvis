@@ -194,6 +194,9 @@ glyvis_colors <- c(
   palette = c(Down = "#0072B2", Unchanged = "#B8BEC5", Up = "#D55E00"),
   ...
 ) {
+  if (is.null(palette)) {
+    palette <- c(Down = "#0072B2", Unchanged = "#B8BEC5", Up = "#D55E00")
+  }
   checkmate::assert_number(p_cutoff, lower = 0, upper = 1)
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   if (all(is.na(df[[log2fc_col]]))) {

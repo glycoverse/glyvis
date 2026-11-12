@@ -271,21 +271,27 @@ test_that("container autoplot applies the small pseudocount to raw values", {
   }
 })
 
-test_that("existing positional plotting arguments keep their meaning", {
+test_that("named plotting arguments control facets and transformation", {
   mat <- legacy_toy_experiment()$expr_mat
   x <- scale_plot_input(mat, "raw")
-  p <- plot_boxplot(x, "group", 2, log_transform = FALSE)
+  p <- plot_boxplot(x, group_col = "group", ncol = 2, log_transform = FALSE)
   expect_equal(p$data$value, as.vector(t(mat)))
   expect_equal(p$facet$params$ncol, 2)
-  p <- plot_heatmap(x, "none", FALSE, FALSE, log_transform = FALSE)
+  p <- plot_heatmap(
+    x,
+    scale = "none",
+    cluster_rows = FALSE,
+    cluster_cols = FALSE,
+    log_transform = FALSE
+  )
   expect_equal(p$data$value, as.vector(mat))
   p <- ggplot2::autoplot(
     x,
-    "heatmap",
-    "group",
-    "none",
-    FALSE,
-    FALSE,
+    type = "heatmap",
+    group_col = "group",
+    scale = "none",
+    cluster_rows = FALSE,
+    cluster_cols = FALSE,
     log_transform = FALSE
   )
   expect_equal(p$data$value, as.vector(mat))

@@ -4,12 +4,24 @@
 \alias{plot_fuc_sia_pie}
 \title{Fucosylation and sialylation distribution}
 \usage{
-plot_fuc_sia_pie(x, weight = "equal", ...)
+plot_fuc_sia_pie(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycomicSE]{glyexp::GlycomicSE()}} or \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with
 \code{glycan_composition} row annotations. Legacy \code{glyexp_experiment} objects
 are also supported. No structure or glycan-type metadata is required.}
+
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{weight}{Either \code{"equal"} (default) or \code{"abundance"}. Equal weighting
 counts distinct compositions, or distinct combinations of \code{protein},
@@ -18,7 +30,21 @@ sums raw, linear-scale abundances across all rows and samples, including
 duplicate measurements. Missing abundances are omitted; negative and
 infinite values and recorded non-raw scales are rejected.}
 
-\item{...}{Common appearance options described in \link{glyvis_plot_options}.}
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}, with \code{category},

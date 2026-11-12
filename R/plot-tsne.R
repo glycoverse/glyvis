@@ -9,11 +9,31 @@
 #'   then the result is plotted.
 #'
 #' @param x An object to be plotted.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param label Whether to label samples. Defaults to `FALSE`.
+#' @param add_ellipse Whether to add group ellipses. Requires sample groups.
+#' @param point_size,alpha Point size and opacity.
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
-plot_tsne <- function(x, ...) {
+plot_tsne <- function(
+  x,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list()
+) {
+  rlang::check_dots_empty()
   UseMethod("plot_tsne")
 }
 
@@ -29,11 +49,37 @@ plot_tsne <- function(x, ...) {
 #' @export
 plot_tsne.glystats_tsne_res <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_tsne(x, groups = groups, group_col = group_col, ...)
+  rlang::check_dots_empty()
+  .plot_tsne(
+    x,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_tsne
@@ -41,26 +87,78 @@ plot_tsne.glystats_tsne_res <- function(
 #' @export
 plot_tsne.glyexp_experiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
-  .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
+  .plot_tsne(
+    tsne_res,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 #' @rdname plot_tsne
 #' @export
 plot_tsne.SummarizedExperiment <- function(
   x,
+  ...,
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   tsne_res <- rlang::exec(glystats::gly_tsne, x, !!!stats_args)
-  .plot_tsne(tsne_res, groups = groups, group_col = group_col, ...)
+  .plot_tsne(
+    tsne_res,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha
+  )
 }
 
 .plot_tsne <- function(tsne_res, groups = NULL, group_col = NULL, ...) {

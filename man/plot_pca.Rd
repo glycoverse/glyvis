@@ -7,30 +7,93 @@
 \alias{plot_pca.SummarizedExperiment}
 \title{PCA Plot}
 \usage{
-plot_pca(x, type = "individual", groups = NULL, group_col = NULL, ...)
+plot_pca(
+  x,
+  ...,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
+)
 
-\method{plot_pca}{glystats_pca_res}(x, type = "individual", groups = NULL, group_col = NULL, ...)
+\method{plot_pca}{glystats_pca_res}(
+  x,
+  ...,
+  type = "individual",
+  groups = NULL,
+  group_col = NULL,
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 \method{plot_pca}{glyexp_experiment}(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 
 \method{plot_pca}{SummarizedExperiment}(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
+
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{type}{The type of plot, one of "screeplot", "individual", "variables", or "biplot".}
 
@@ -44,7 +107,34 @@ sample information has already been added to the result.
 In this case, you can specify the column name in the sample information tibble
 to be used for coloring.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{axes}{Integer vector selecting two distinct principal components.}
+
+\item{label}{Whether to label samples and loading arrows. Defaults to \code{FALSE}.}
+
+\item{add_ellipse}{Whether to add group ellipses to individual and biplot scores.}
+
+\item{point_size, alpha}{Point size and opacity for individual and biplot scores.}
+
+\item{top_n}{Number of loading arrows to retain in variables and biplot views.
+\code{NULL} retains all arrows; a positive integer selects the largest squared
+loading norms. Biplots rescale arrows by a common display multiplier without
+changing scores or explained variance.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_pca]{glystats::gly_pca()}}.}
 }

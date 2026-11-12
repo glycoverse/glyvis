@@ -12,8 +12,9 @@
 #'   protein, site, and glycan structure, or `"abundance"`, summing linear-scale
 #'   glycoform abundances across all rows and samples. Duplicate measurements
 #'   count once in equal mode and contribute their summed abundance otherwise.
-#' @param ... Common appearance options in [glyvis_plot_options]. The plot area
-#'   uses the tidyplots default (50 by 50 mm). The first two default glyvis
+#' @inheritParams glyvis_plot_options
+#' @details
+#'   The plot area uses the tidyplots default (50 by 50 mm). The first two default glyvis
 #'   colours identify the left and right sides. Cartoon sizes adapt to the
 #'   plot dimensions supplied here. No title is added unless `title` is supplied.
 #'
@@ -41,7 +42,18 @@
 #'   plot_top10_bar(glyexp::real_experiment, weight = "abundance")
 #' }
 #' @export
-plot_top10_bar <- function(x, weight = "equal", ...) {
+plot_top10_bar <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   checkmate::assert_class(x, "GlycoproteomicSE")
   input <- .n_plot_input(x, weight)
   structures <- unique(input$structures)
@@ -75,7 +87,17 @@ plot_top10_bar <- function(x, weight = "equal", ...) {
   df <- dplyr::bind_rows(left, right)
   df$side <- factor(df$side, levels = sides)
   df$signed_value <- ifelse(df$side == sides[1], -df$value, df$value)
-  .top10_bar_plot(df, weight, ...)
+  .top10_bar_plot(
+    df,
+    weight,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 .top10_bar_plot <- function(

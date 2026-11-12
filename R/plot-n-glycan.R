@@ -13,7 +13,8 @@
 #'   abundances over all rows and samples. Duplicate measurements contribute
 #'   their summed abundance. Missing abundances are omitted; negative or
 #'   infinite values and recorded non-raw scales are rejected.
-#' @param ... Common appearance options described in [glyvis_plot_options].
+#' @inheritParams glyvis_plot_options
+#' @details
 #'   The default plot area is 50 by 50 mm. Pie annotations scale with the
 #'   panel size; core labels are split across lines to avoid crowding.
 #'
@@ -62,7 +63,18 @@
 #'   plot_n_branch_bar(glyexp::real_experiment2)
 #' }
 #' @export
-plot_n_core_pie <- function(x, weight = "equal", ...) {
+plot_n_core_pie <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .n_plot_input(x, weight)
   fuc <- glydet::n_core_fuc(input$glycans) > 0
   bisect <- glydet::has_bisecting(input$glycans)
@@ -76,12 +88,32 @@ plot_n_core_pie <- function(x, weight = "equal", ...) {
   structures <- .n_core_cartoons()
   membership <- outer(index, seq_along(labels), `==`)
   df <- .n_plot_summary(input, membership, labels, structures)
-  .n_pie(df, ...)
+  .n_pie(
+    df,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_type_pie <- function(x, weight = "equal", ...) {
+plot_n_type_pie <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .n_plot_input(x, weight)
   type <- as.character(glydet::n_glycan_type(
     input$glycans,
@@ -95,12 +127,32 @@ plot_n_type_pie <- function(x, weight = "equal", ...) {
     "GlcNAc(b1-2)Man(a1-3)[GlcNAc(b1-2)Man(a1-6)]Man(b1-4)GlcNAc(b1-4)GlcNAc(b1-"
   )
   df <- .n_plot_summary(input, outer(type, labels, `==`), labels, structures)
-  .n_pie(df, ...)
+  .n_pie(
+    df,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_branch_pie <- function(x, weight = "equal", ...) {
+plot_n_branch_pie <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .n_plot_input(x, weight)
   antennae <- glydet::n_antennae(input$glycans)
   if (anyNA(antennae)) {
@@ -124,12 +176,32 @@ plot_n_branch_pie <- function(x, weight = "equal", ...) {
     labels,
     structures
   )
-  .n_pie(df, ...)
+  .n_pie(
+    df,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 #' @rdname plot_n_core_pie
 #' @export
-plot_n_branch_bar <- function(x, weight = "equal", ...) {
+plot_n_branch_bar <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .n_plot_input(x, weight)
   branches <- glymotif::extract_branch_motif(input$glycans)
   if (!length(branches)) {
@@ -143,7 +215,17 @@ plot_n_branch_bar <- function(x, weight = "equal", ...) {
     paste0("B", seq_along(structures)),
     structures
   )
-  .n_branch_plot(df, weight, ...)
+  .n_branch_plot(
+    df,
+    weight,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
+  )
 }
 
 .n_core_cartoons <- function() {

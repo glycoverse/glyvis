@@ -5,13 +5,36 @@
 \alias{plot_sites_per_protein}
 \title{Distributions of glycans per site and sites per protein}
 \usage{
-plot_glycans_per_site(x, weight = "equal", glycan_col = NULL, ...)
+plot_glycans_per_site(
+  x,
+  ...,
+  weight = "equal",
+  glycan_col = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
-plot_sites_per_protein(x, weight = "equal", ...)
+plot_sites_per_protein(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} object. Other containers, including
 plain \code{SummarizedExperiment} and legacy experiments, are not accepted.}
+
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{weight}{Either \code{"equal"} (default), counting sites or proteins in each
 bin, or \code{"abundance"}, summing their glycoform abundances over all rows and
@@ -25,8 +48,21 @@ are absent or incomplete, a message is printed and \code{glycan_composition}
 is used for the whole experiment, so structure and composition identifiers
 are never mixed. Supply a column name to select it explicitly.}
 
-\item{...}{Common appearance options in \link{glyvis_plot_options}. Bars use the
-first colour in \code{palette}. The default plot area is 50 by 50 mm.}
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains
@@ -38,6 +74,8 @@ Draw single-colour bar plots with fixed bins \code{1}, \code{2}, \code{3}, \code
 \code{6}, \code{7}, and \verb{>=8}, pooling the annotations across all samples.
 }
 \details{
+Bars use the first colour in \code{palette}. The default plot area is 50 by 50 mm.
+
 \code{plot_glycans_per_site()} counts distinct glycans at each combination of
 \code{protein} and \code{protein_site}. In equal mode, the bar at \code{2} is the number
 of sites carrying exactly two distinct glycans.

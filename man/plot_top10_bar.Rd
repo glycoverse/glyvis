@@ -4,22 +4,45 @@
 \alias{plot_top10_bar}
 \title{Top ten glycans by site-specific glycoform count or abundance}
 \usage{
-plot_top10_bar(x, weight = "equal", ...)
+plot_top10_bar(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 }
 \arguments{
 \item{x}{A \code{\link[glyexp:GlycoproteomicSE]{glyexp::GlycoproteomicSE()}} with \code{glycan_structure}, \code{protein},
 and \code{protein_site} row annotations and \code{glycan_type = "N"} in metadata.
 Glycomics, plain \code{SummarizedExperiment}, and legacy containers are rejected.}
 
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
+
 \item{weight}{Either \code{"equal"} (default), counting distinct combinations of
 protein, site, and glycan structure, or \code{"abundance"}, summing linear-scale
 glycoform abundances across all rows and samples. Duplicate measurements
 count once in equal mode and contribute their summed abundance otherwise.}
 
-\item{...}{Common appearance options in \link{glyvis_plot_options}. The plot area
-uses the tidyplots default (50 by 50 mm). The first two default glyvis
-colours identify the left and right sides. Cartoon sizes adapt to the
-plot dimensions supplied here. No title is added unless \code{title} is supplied.}
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains
@@ -33,6 +56,10 @@ independently selects up to ten glycans, ranked from highest to lowest
 from top to bottom, on a shared quantitative scale.
 }
 \details{
+The plot area uses the tidyplots default (50 by 50 mm). The first two default glyvis
+colours identify the left and right sides. Cartoon sizes adapt to the
+plot dimensions supplied here. No title is added unless \code{title} is supplied.
+
 Classification uses \code{\link[glydet:n_glycan_type]{glydet::n_glycan_type()}} with \code{merge_mannose = TRUE}:
 oligomannose includes paucimannose and high-mannose. Missing structures and
 structures without an N-glycan core are excluded with a warning; invalid

@@ -53,17 +53,23 @@ test_that("glycan and site distributions deduplicate entities and retain all bin
 test_that("abundance weighting pools all samples and duplicate measurements", {
   skip_if_not_installed("glydet", "0.14.0")
   x <- gp_count_bins_fixture()
-  p <- suppressMessages(plot_glycans_per_site(x, "abundance"))
-  q <- plot_sites_per_protein(x, "abundance")
+  p <- suppressMessages(plot_glycans_per_site(x, weight = "abundance"))
+  q <- plot_sites_per_protein(x, weight = "abundance")
   expect_equal(p$data$value, c(60, 12, 0, 0, 0, 0, 0, 68))
   expect_equal(q$data$value, c(68, 0, 0, 0, 0, 0, 28, 44))
   expect_equal(sum(p$data$value), sum(SummarizedExperiment::assay(x)))
   expect_equal(sum(q$data$value), sum(SummarizedExperiment::assay(x)))
   expect_equal(q$data$count, c(2L, 0L, 0L, 0L, 0L, 0L, 1L, 1L))
   SummarizedExperiment::assay(x)[1, 1] <- NA_real_
-  expect_equal(sum(plot_sites_per_protein(x, "abundance")$data$value), 139)
+  expect_equal(
+    sum(plot_sites_per_protein(x, weight = "abundance")$data$value),
+    139
+  )
   SummarizedExperiment::assay(x)[] <- NA_real_
-  expect_equal(plot_sites_per_protein(x, "abundance")$data$value, rep(0, 8))
+  expect_equal(
+    plot_sites_per_protein(x, weight = "abundance")$data$value,
+    rep(0, 8)
+  )
 })
 
 test_that("structure annotations take priority and incomplete structures trigger fallback", {
@@ -133,12 +139,12 @@ test_that("invalid annotations and unsuitable abundance scales fail clearly", {
   skip_if_not_installed("glydet", "0.14.0")
   x <- gp_count_bins_fixture()
   S4Vectors::metadata(x)$scale <- "log2"
-  expect_error(plot_sites_per_protein(x, "abundance"), "linear-scale")
+  expect_error(plot_sites_per_protein(x, weight = "abundance"), "linear-scale")
   SummarizedExperiment::assay(x)[1, 1] <- -1
   S4Vectors::metadata(x)$scale <- "raw"
-  expect_error(plot_sites_per_protein(x, "abundance"), "non-negative")
+  expect_error(plot_sites_per_protein(x, weight = "abundance"), "non-negative")
   SummarizedExperiment::assay(x)[1, 1] <- Inf
-  expect_error(plot_sites_per_protein(x, "abundance"), "finite")
+  expect_error(plot_sites_per_protein(x, weight = "abundance"), "finite")
 })
 
 test_that("bars preserve numeric bin order and use one colour", {

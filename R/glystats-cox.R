@@ -7,16 +7,25 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams autoplot.glystats_anova_res
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_cox_res <- function(
   object,
+  ...,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
 
@@ -35,7 +44,14 @@ autoplot.glystats_cox_res <- function(
     df,
     x = .result_id_column(object, "variable"),
     y = "neglog10p",
-    ...
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    top_n = top_n
   ) +
     geom_hline(
       yintercept = -log10(p_cutoff),

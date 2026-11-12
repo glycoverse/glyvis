@@ -12,15 +12,42 @@
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
 #'   If not provided, this function will try "group".
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams plot_umap
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 autoplot.glystats_umap_res <- function(
   object,
+  ...,
   groups = NULL,
   group_col = NULL,
-  ...
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_umap(object, groups = groups, group_col = group_col, ...)
+  rlang::check_dots_empty()
+  .plot_umap(
+    object,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha
+  )
 }

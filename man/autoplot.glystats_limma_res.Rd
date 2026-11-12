@@ -6,15 +6,26 @@
 \usage{
 \method{autoplot}{glystats_limma_res}(
   object,
+  ...,
   contrast = NULL,
   log2fc_cutoff = 1,
   p_cutoff = 0.05,
   p_col = "p_adj",
-  ...
+  label = FALSE,
+  point_size = 1.5,
+  alpha = 0.7,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{object}{A \code{glystats_limma_res} object.}
+
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
 
 \item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".
 Must be one of the contrasts in the result.
@@ -27,7 +38,25 @@ When there is only one contrast (two-group comparison), it can be NULL (default)
 \item{p_col}{The column name for p-value. Defaults to "p_adj".
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{label}{Whether to label variables. Defaults to \code{FALSE}.}
+
+\item{point_size, alpha}{Point size and opacity.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -45,4 +74,8 @@ and unlogged raw-scale limma analyses, whose native estimates are not log2
 fold changes. Native estimates are never substituted for \code{log2fc}.
 When only some fold changes are missing, the available values are plotted
 without changing the supplied results.
+}
+
+\seealso{
+\link{glyvis_plot_options} for common styling options.
 }

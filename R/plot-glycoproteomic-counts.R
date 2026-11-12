@@ -15,8 +15,9 @@
 #'   are absent or incomplete, a message is printed and `glycan_composition`
 #'   is used for the whole experiment, so structure and composition identifiers
 #'   are never mixed. Supply a column name to select it explicitly.
-#' @param ... Common appearance options in [glyvis_plot_options]. Bars use the
-#'   first colour in `palette`. The default plot area is 50 by 50 mm.
+#' @inheritParams glyvis_plot_options
+#' @details
+#'   Bars use the first colour in `palette`. The default plot area is 50 by 50 mm.
 #'
 #' @details
 #' `plot_glycans_per_site()` counts distinct glycans at each combination of
@@ -47,7 +48,19 @@
 #'   plot_sites_per_protein(glyexp::real_experiment, weight = "abundance")
 #' }
 #' @export
-plot_glycans_per_site <- function(x, weight = "equal", glycan_col = NULL, ...) {
+plot_glycans_per_site <- function(
+  x,
+  ...,
+  weight = "equal",
+  glycan_col = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .glycoproteomic_count_input(x, weight)
   info <- input$info
   if (is.null(glycan_col)) {
@@ -95,13 +108,30 @@ plot_glycans_per_site <- function(x, weight = "equal", glycan_col = NULL, ...) {
     weight,
     "Glycans per site",
     "Number of sites",
-    ...
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
   )
 }
 
 #' @rdname plot_glycans_per_site
 #' @export
-plot_sites_per_protein <- function(x, weight = "equal", ...) {
+plot_sites_per_protein <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   input <- .glycoproteomic_count_input(x, weight)
   entities <- input$rows |>
     dplyr::distinct(.data$protein, .data$protein_site) |>
@@ -118,7 +148,13 @@ plot_sites_per_protein <- function(x, weight = "equal", ...) {
     weight,
     "Sites per protein",
     "Number of proteins",
-    ...
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
   )
 }
 

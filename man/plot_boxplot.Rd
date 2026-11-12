@@ -6,22 +6,73 @@
 \alias{plot_boxplot.SummarizedExperiment}
 \title{Boxplot}
 \usage{
-plot_boxplot(x, ..., log_transform = NULL)
+plot_boxplot(
+  x,
+  ...,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  log_transform = NULL,
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  variables = NULL
+)
 
-\method{plot_boxplot}{glyexp_experiment}(x, group_col = "group", ..., log_transform = NULL)
+\method{plot_boxplot}{glyexp_experiment}(
+  x,
+  ...,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  log_transform = NULL,
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 \method{plot_boxplot}{SummarizedExperiment}(
   x,
-  group_col = "group",
   ...,
+  group_col = "group",
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
   log_transform = NULL,
-  variables = NULL
+  variables = NULL,
+  points = TRUE,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 )
 }
 \arguments{
 \item{x}{An object to be plotted.}
 
-\item{...}{Common and plot-specific options described in \link{glyvis_plot_options}.}
+\item{...}{Must be empty. Supply plotting controls by their full argument names.}
+
+\item{group_col}{A character string specifying the column name in sample information
+that contains group labels. Default is "group".}
+
+\item{ncol}{Number of facet columns. \code{NULL} chooses up to three columns.}
+
+\item{label_width}{Width used to wrap facet labels without truncation.}
+
+\item{scales}{Facet axis scales, passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. Defaults
+to \code{"free_y"}; use \code{"fixed"} for comparisons across facets.}
 
 \item{log_transform}{\code{NULL} (default) uses recorded abundance scale metadata:
 raw values are transformed with \code{log2(x + 1e-6)}, while already logged values
@@ -29,8 +80,25 @@ are unchanged. \code{FALSE} always uses the supplied values unchanged. \code{TRU
 requests the same transformation for raw values, but warns and is ignored
 for already logged values. This argument must be named after \code{...}.}
 
-\item{group_col}{A character string specifying the column name in sample information
-that contains group labels. Default is "group".}
+\item{points}{Whether to show observations as jittered points. Boxes show
+medians and quartiles with 1.5-IQR whiskers. Outliers are drawn separately
+only when \code{points = FALSE}.}
+
+\item{title}{Optional plot title. Defaults to \code{NULL}.}
+
+\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
+tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
+These are not export-page dimensions.}
+
+\item{fontsize}{Base text size in points. Defaults to 9.}
+
+\item{family}{Font family. Defaults to \code{"sans"}.}
+
+\item{palette}{Color vector. A named vector maps group names to fixed colors
+across plots and subsets; unnamed palettes follow factor order. \code{NULL}
+selects the plot-specific default: blue-white-red for continuous heatmaps,
+directional colors for volcano and S-plots, selection colors for ranked
+dot plots, and distinct hues for other plots.}
 
 \item{variables}{A character vector of row names to plot from a
 \code{SummarizedExperiment}. \code{NULL} (the default) plots all rows. Names must

@@ -9,8 +9,9 @@
 #'   bin, or `"abundance"`, summing their abundances across all eligible rows
 #'   and samples using [glydet::wsum()]. Abundance weighting requires finite,
 #'   non-negative, raw linear-scale abundances; missing values are omitted.
-#' @param ... Common appearance options in [glyvis_plot_options]. Bars use
-#'   the first colour in `palette`. The default plot area is 50 by 50 mm.
+#' @inheritParams glyvis_plot_options
+#' @details
+#'   Bars use the first colour in `palette`. The default plot area is 50 by 50 mm.
 #'
 #' @details
 #' The bar at `2` counts compositions with exactly two distinct annotated
@@ -33,7 +34,18 @@
 #' @examples
 #' plot_isomers_per_comp(glyexp::real_experiment2)
 #' @export
-plot_isomers_per_comp <- function(x, weight = "equal", ...) {
+plot_isomers_per_comp <- function(
+  x,
+  ...,
+  weight = "equal",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+) {
+  rlang::check_dots_empty()
   checkmate::assert_multi_class(x, c("GlycomicSE", "GlycoproteomicSE"))
   checkmate::assert_choice(weight, c("equal", "abundance"))
   info <- tibble::as_tibble(SummarizedExperiment::rowData(x))
@@ -71,6 +83,12 @@ plot_isomers_per_comp <- function(x, weight = "equal", ...) {
     weight,
     "Isomers per composition",
     "Number of compositions",
-    ...
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette
   )
 }

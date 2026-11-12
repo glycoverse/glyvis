@@ -85,13 +85,16 @@ test_that("abundance weights pool samples and duplicate measurements", {
     protein = c("P1", "P2", "P1"),
     site = c("10", "20", "10")
   )
-  expect_equal(plot_n_core_pie(gp, "abundance")$data$value, c(0, 100, 0, 11))
+  expect_equal(
+    plot_n_core_pie(gp, weight = "abundance")$data$value,
+    c(0, 100, 0, 11)
+  )
 })
 
 test_that("types merge mannose classes and cartoons represent their categories", {
   s <- n_plot_structures()
   x <- n_plot_fixture(s[c("bare", "hybrid", "complex")], matrix(c(1, 2, 7), 3))
-  p <- plot_n_type_pie(x, "abundance")
+  p <- plot_n_type_pie(x, weight = "abundance")
   expect_equal(
     as.character(p$data$category),
     c("oligomannose", "hybrid", "complex")
@@ -113,7 +116,7 @@ test_that("branch bars count presence, exclude bisection, and allow overlaps", {
   # Gal-GlcNAc occurs twice on the complex glycan, but contributes only once.
   expect_equal(p$data$value, c(3, 1))
   expect_equal(p$data$proportion, c(0.75, 0.25))
-  q <- plot_n_branch_bar(x, "abundance")
+  q <- plot_n_branch_bar(x, weight = "abundance")
   expect_equal(q$data$value, c(7, 4))
   expect_equal(q$data$proportion, c(7, 4) / 15)
   expect_true(all(q$data$cartoon_y > q$data$value))
@@ -150,23 +153,26 @@ test_that("missing and non-N structures are excluded with a clear denominator", 
 
 test_that("invalid inputs and unquantifiable abundance fail explicitly", {
   x <- n_plot_fixture(n_plot_structures()["bare"])
-  expect_error(plot_n_core_pie(x, "other"), "weight")
+  expect_error(plot_n_core_pie(x, weight = "other"), "weight")
   expect_error(plot_n_type_pie(list()), "class")
   expect_error(plot_n_core_pie(x[FALSE, ]), "No eligible")
   S4Vectors::metadata(x)$glycan_type <- "O"
   expect_error(plot_n_core_pie(x), "glycan_type")
   S4Vectors::metadata(x)$glycan_type <- "N"
   S4Vectors::metadata(x)$scale <- "log2"
-  expect_error(plot_n_type_pie(x, "abundance"), "linear-scale")
+  expect_error(plot_n_type_pie(x, weight = "abundance"), "linear-scale")
   S4Vectors::metadata(x)$scale <- "raw"
   for (value in c(0, NA_real_, Inf)) {
     SummarizedExperiment::assay(x)[] <- value
-    expect_error(plot_n_core_pie(x, "abundance"), "positive|non-negative")
+    expect_error(
+      plot_n_core_pie(x, weight = "abundance"),
+      "positive|non-negative"
+    )
   }
   S4Vectors::metadata(x)$scale <- "log2"
   SummarizedExperiment::assay(x)[] <- -1
   S4Vectors::metadata(x)$scale <- "raw"
-  expect_error(plot_n_core_pie(x, "abundance"), "non-negative")
+  expect_error(plot_n_core_pie(x, weight = "abundance"), "non-negative")
   SummarizedExperiment::assay(x)[] <- 1
   SummarizedExperiment::rowData(x)$glycan_structure <- NULL
   expect_error(plot_n_core_pie(x), "Missing row annotations")
@@ -221,7 +227,7 @@ test_that("zero-abundance branches remain visible without a false positive bar",
     n_plot_structures()[c("bare", "mixed")],
     matrix(c(1, 0), 2)
   )
-  p <- plot_n_branch_bar(x, "abundance")
+  p <- plot_n_branch_bar(x, weight = "abundance")
   expect_equal(p$data$value, c(0, 0))
   expect_true(all(p$data$cartoon_y > 0))
   expect_s3_class(ggplot2::ggplotGrob(p), "gtable")
@@ -262,7 +268,7 @@ test_that("branch pies share deduplication and abundance weighting semantics", {
   s <- n_plot_structures()[c("bare", "complex", "complex")]
   x <- n_plot_fixture(s, matrix(c(0, 2, 3, NA, 5, 7), 3))
   expect_equal(plot_n_branch_pie(x)$data$value, c(1, 1))
-  p <- plot_n_branch_pie(x, "abundance")
+  p <- plot_n_branch_pie(x, weight = "abundance")
   expect_equal(p$data$value, c(0, 17))
   expect_equal(p$data$proportion, c(0, 1))
   gp <- n_plot_fixture(s, protein = rep("P1", 3), site = c(10, 10, 20))

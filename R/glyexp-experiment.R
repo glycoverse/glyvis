@@ -11,11 +11,18 @@
 #' @param group_col A character string specifying where to find the group information.
 #'   It should be a column in the sample information tibble. Defaults to "group".
 #'   Only applicable to "boxplot".
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @inheritParams plot_heatmap
+#' @inheritParams plot_boxplot
+#' @inheritParams glyvis_plot_options
 #' @inheritParams glyvis_abundance_scale
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
-#' @details For SE containers, `fortify()` returns `.sample` and `.variable`
+#' @details Heatmap options (`scale`, `cluster_rows`, `cluster_cols`,
+#'   `show_rownames`, `show_colnames`, `na_col`) apply only to `type = "heatmap"`.
+#'   Boxplot options (`points`, `ncol`, `label_width`, `scales`) apply only to
+#'   `type = "boxplot"`.
+#'
+#'   For SE containers, `fortify()` returns `.sample` and `.variable`
 #'   axis identifiers and an abundance `value` column. Ordinary `sample` and
 #'   `variable` metadata are retained. Conflicting annotation names receive
 #'   numeric suffixes, with sample metadata preceding variable metadata.
@@ -26,21 +33,75 @@
 #' @export
 autoplot.glyexp_experiment <- function(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
-  log_transform = NULL
+  log_transform = NULL,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  points = TRUE,
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
+  plot_args <- switch(
+    type,
+    heatmap = list(
+      scale = scale,
+      cluster_rows = cluster_rows,
+      cluster_cols = cluster_cols,
+      show_rownames = show_rownames,
+      show_colnames = show_colnames,
+      na_col = na_col
+    ),
+    boxplot = list(
+      points = points,
+      ncol = ncol,
+      label_width = label_width,
+      scales = scales
+    )
+  )
   switch(
     type,
-    heatmap = .plot_exp_heatmap(object, ..., log_transform = log_transform),
-    boxplot = .plot_exp_boxplot(
+    heatmap = rlang::exec(
+      .plot_exp_heatmap,
+      object,
+      ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
+      log_transform = log_transform,
+      !!!plot_args
+    ),
+    boxplot = rlang::exec(
+      .plot_exp_boxplot,
       object,
       group_col,
       ...,
-      log_transform = log_transform
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
+      log_transform = log_transform,
+      !!!plot_args
     )
   )
 }
@@ -49,21 +110,75 @@ autoplot.glyexp_experiment <- function(
 #' @export
 autoplot.SummarizedExperiment <- function(
   object,
+  ...,
   type = "heatmap",
   group_col = "group",
-  ...,
-  log_transform = NULL
+  log_transform = NULL,
+  scale = "row",
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = FALSE,
+  show_colnames = NULL,
+  na_col = "grey90",
+  points = TRUE,
+  ncol = NULL,
+  label_width = 24,
+  scales = "free_y",
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   checkmate::assert_choice(type, c("heatmap", "boxplot"))
   checkmate::assert_string(group_col)
+  plot_args <- switch(
+    type,
+    heatmap = list(
+      scale = scale,
+      cluster_rows = cluster_rows,
+      cluster_cols = cluster_cols,
+      show_rownames = show_rownames,
+      show_colnames = show_colnames,
+      na_col = na_col
+    ),
+    boxplot = list(
+      points = points,
+      ncol = ncol,
+      label_width = label_width,
+      scales = scales
+    )
+  )
   switch(
     type,
-    heatmap = .plot_exp_heatmap(object, ..., log_transform = log_transform),
-    boxplot = .plot_exp_boxplot(
+    heatmap = rlang::exec(
+      .plot_exp_heatmap,
+      object,
+      ...,
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
+      log_transform = log_transform,
+      !!!plot_args
+    ),
+    boxplot = rlang::exec(
+      .plot_exp_boxplot,
       object,
       group_col,
       ...,
-      log_transform = log_transform
+      title = title,
+      width = width,
+      height = height,
+      fontsize = fontsize,
+      family = family,
+      palette = palette,
+      log_transform = log_transform,
+      !!!plot_args
     )
   )
 }

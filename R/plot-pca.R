@@ -18,17 +18,39 @@
 #'   sample information has already been added to the result.
 #'   In this case, you can specify the column name in the sample information tibble
 #'   to be used for coloring.
-#' @param ... Common and plot-specific options described in [glyvis_plot_options].
+#' @param axes Integer vector selecting two distinct principal components.
+#' @param label Whether to label samples and loading arrows. Defaults to `FALSE`.
+#' @param add_ellipse Whether to add group ellipses to individual and biplot scores.
+#' @param point_size,alpha Point size and opacity for individual and biplot scores.
+#' @param top_n Number of loading arrows to retain in variables and biplot views.
+#'   `NULL` retains all arrows; a positive integer selects the largest squared
+#'   loading norms. Biplots rescale arrows by a common display multiplier without
+#'   changing scores or explained variance.
+#' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
 plot_pca <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  stats_args = list()
 ) {
+  rlang::check_dots_empty()
   UseMethod("plot_pca")
 }
 
@@ -36,12 +58,43 @@ plot_pca <- function(
 #' @export
 plot_pca.glystats_pca_res <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
-  .plot_pca(x, type = type, groups = groups, group_col = group_col, ...)
+  rlang::check_dots_empty()
+  .plot_pca(
+    x,
+    type = type,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    axes = axes,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_pca
@@ -49,28 +102,90 @@ plot_pca.glystats_pca_res <- function(
 #' @export
 plot_pca.glyexp_experiment <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
-  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
+  .plot_pca(
+    pca_res,
+    type = type,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    axes = axes,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 #' @rdname plot_pca
 #' @export
 plot_pca.SummarizedExperiment <- function(
   x,
+  ...,
   type = "individual",
   groups = NULL,
   group_col = NULL,
   stats_args = list(),
-  ...
+  axes = c(1L, 2L),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
 ) {
+  rlang::check_dots_empty()
   pca_res <- rlang::exec(glystats::gly_pca, x, !!!stats_args)
-  .plot_pca(pca_res, type = type, groups = groups, group_col = group_col, ...)
+  .plot_pca(
+    pca_res,
+    type = type,
+    groups = groups,
+    group_col = group_col,
+    ...,
+    title = title,
+    width = width,
+    height = height,
+    fontsize = fontsize,
+    family = family,
+    palette = palette,
+    axes = axes,
+    label = label,
+    add_ellipse = add_ellipse,
+    point_size = point_size,
+    alpha = alpha,
+    top_n = top_n
+  )
 }
 
 .plot_pca <- function(
@@ -82,7 +197,9 @@ plot_pca.SummarizedExperiment <- function(
   label = FALSE,
   top_n = NULL,
   add_ellipse = FALSE,
-  ...
+  ...,
+  point_size = 2,
+  alpha = 0.8
 ) {
   checkmate::assert_choice(
     type,
@@ -150,6 +267,8 @@ plot_pca.SummarizedExperiment <- function(
       label_col = "sample",
       label = label,
       add_ellipse = add_ellipse,
+      point_size = point_size,
+      alpha = alpha,
       ...
     )
     if (type == "biplot") {
