@@ -12,8 +12,11 @@
 #' @param scale Standardize rows (`"row"`, the default), columns (`"column"`),
 #'   or neither (`"none"`). Applied after and independently of `log_transform`.
 #' @param cluster_rows,cluster_cols Whether to cluster rows or columns, or
-#'   compatible `hclust` objects. Clustering controls order; dendrograms are not
-#'   drawn. Use [autoplot.glystats_hclust_res()] to draw a dendrogram.
+#'   compatible `hclust` objects. Clustering controls the heatmap order.
+#' @param row_cluster_tree,col_cluster_tree Whether to display the row or column
+#'   clustering tree. Both default to `TRUE`. Hiding a tree preserves clustering
+#'   order. No tree is drawn when clustering for that axis is disabled or cannot
+#'   be computed.
 #' @param show_rownames Whether to display row labels. Defaults to `FALSE`.
 #' @param show_colnames Whether to display column labels. `NULL` displays them
 #'   automatically for at most 40 samples.
@@ -23,6 +26,12 @@
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
+#' @examples
+#' mat <- matrix(c(1, 5, 3, 7, 4, 2, 3, 8, 5, 4, 2, 9), nrow = 3,
+#'   dimnames = list(LETTERS[1:3], letters[1:4]))
+#' se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
+#' plot_heatmap(se)
+#' plot_heatmap(se, row_cluster_tree = FALSE, col_cluster_tree = FALSE)
 #' @export
 plot_heatmap <- function(
   x,
@@ -30,6 +39,8 @@ plot_heatmap <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -53,6 +64,8 @@ plot_heatmap.glyexp_experiment <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -77,6 +90,8 @@ plot_heatmap.glyexp_experiment <- function(
     scale = scale,
     cluster_rows = cluster_rows,
     cluster_cols = cluster_cols,
+    row_cluster_tree = row_cluster_tree,
+    col_cluster_tree = col_cluster_tree,
     show_rownames = show_rownames,
     show_colnames = show_colnames,
     na_col = na_col,
@@ -92,6 +107,8 @@ plot_heatmap.SummarizedExperiment <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -116,6 +133,8 @@ plot_heatmap.SummarizedExperiment <- function(
     scale = scale,
     cluster_rows = cluster_rows,
     cluster_cols = cluster_cols,
+    row_cluster_tree = row_cluster_tree,
+    col_cluster_tree = col_cluster_tree,
     show_rownames = show_rownames,
     show_colnames = show_colnames,
     na_col = na_col,
@@ -132,6 +151,8 @@ plot_heatmap.SummarizedExperiment <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -143,6 +164,8 @@ plot_heatmap.SummarizedExperiment <- function(
     palette <- c("#2166AC", "#F7F7F7", "#B2182B")
   }
   checkmate::assert_choice(scale, c("row", "column", "none"))
+  checkmate::assert_flag(row_cluster_tree)
+  checkmate::assert_flag(col_cluster_tree)
   checkmate::assert_flag(show_rownames)
   checkmate::assert_flag(show_colnames, null.ok = TRUE)
   transformation <- .resolve_plot_transformation(exp, log_transform)
@@ -219,6 +242,13 @@ plot_heatmap.SummarizedExperiment <- function(
   if (!show_colnames) {
     p <- tidyplots::remove_x_axis_labels(p)
   }
+  p <- .add_heatmap_trees(
+    p,
+    if (row_cluster_tree) row_tree else FALSE,
+    if (col_cluster_tree) col_tree else FALSE,
+    nrow(mat),
+    ncol(mat)
+  )
   p +
     labs(
       x = NULL,
@@ -235,6 +265,88 @@ plot_heatmap.SummarizedExperiment <- function(
       }
     ) +
     theme(axis.ticks = element_blank(), legend.position = "right")
+}
+
+# Keep trees in the same coordinate system as the heatmap so that tips stay
+# aligned with cell centers when the returned tidyplot is resized or styled.
+.add_heatmap_trees <- function(p, row_tree, col_tree, nrow, ncol) {
+  xlim <- c(0.5, ncol + 0.5)
+  ylim <- c(0.5, nrow + 0.5)
+  for (axis in c("row", "col")) {
+    tree <- if (axis == "row") row_tree else col_tree
+    if (!inherits(tree, "hclust")) {
+      next
+    }
+    segments <- .heatmap_tree_segments(tree)
+    height <- max(abs(tree$height))
+    if (height == 0) {
+      height <- 1
+    }
+    if (axis == "row") {
+      segments <- data.frame(
+        x = 0.5 - ncol * (0.02 + 0.16 * segments$y / height),
+        xend = 0.5 - ncol * (0.02 + 0.16 * segments$yend / height),
+        y = nrow + 1 - segments$x,
+        yend = nrow + 1 - segments$xend
+      )
+      xlim[1] <- 0.5 - ncol * 0.2
+    } else {
+      segments$y <- nrow + 0.5 + nrow * (0.02 + 0.16 * segments$y / height)
+      segments$yend <- nrow +
+        0.5 +
+        nrow * (0.02 + 0.16 * segments$yend / height)
+      ylim[2] <- nrow + 0.5 + nrow * 0.2
+    }
+    p <- p +
+      ggplot2::geom_segment(
+        data = segments,
+        mapping = ggplot2::aes(
+          x = .data$x,
+          y = .data$y,
+          xend = .data$xend,
+          yend = .data$yend
+        ),
+        inherit.aes = FALSE,
+        colour = "black",
+        linewidth = 0.3,
+        show.legend = FALSE
+      )
+  }
+  # add_heatmap() already supplies Cartesian coordinates. Updating its limits
+  # avoids a redundant coordinate replacement message.
+  p$coordinates$limits <- list(x = xlim, y = ylim)
+  p
+}
+
+.heatmap_tree_segments <- function(tree) {
+  centers <- numeric(nrow(tree$merge))
+  positions <- order(tree$order)
+  segments <- vector("list", nrow(tree$merge))
+  for (i in seq_len(nrow(tree$merge))) {
+    children <- tree$merge[i, ]
+    x <- vapply(
+      children,
+      \(child) {
+        if (child < 0) positions[-child] else centers[child]
+      },
+      numeric(1)
+    )
+    y <- vapply(
+      children,
+      \(child) {
+        if (child < 0) 0 else tree$height[child]
+      },
+      numeric(1)
+    )
+    centers[i] <- mean(x)
+    segments[[i]] <- data.frame(
+      x = c(x, x[1]),
+      y = c(y, tree$height[i]),
+      xend = c(x, x[2]),
+      yend = rep(tree$height[i], 3)
+    )
+  }
+  do.call(rbind, segments)
 }
 
 .scale_heatmap_columns <- function(mat) {
