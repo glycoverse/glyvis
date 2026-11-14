@@ -43,7 +43,8 @@ These are not export-page dimensions.}
 \item{palette}{Color vector. A named vector maps group names to fixed colors
 across plots and subsets; unnamed palettes follow factor order. \code{NULL}
 uses tidyplots palettes. Heatmaps and correlation plots use the blue,
-near-white, and red anchors of \code{colors_diverging_BuRd}. Other plots use
+near-white, and red anchors of \code{colors_diverging_BuRd}. Volcano plots use grey
+for points that do not meet both cutoffs. Other plots use
 the tidyplots defaults for discrete and continuous values.}
 }
 \value{

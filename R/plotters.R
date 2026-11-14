@@ -207,6 +207,13 @@ glyvis_diverging_colors <- as.character(tidyplots::colors_diverging_BuRd)[
     )
   )
   df$status <- factor(df$status, levels = c("Down", "Unchanged", "Up"))
+  if (is.null(palette)) {
+    palette <- c(
+      Down = glyvis_colors[1],
+      Unchanged = "#B8BEC5",
+      Up = glyvis_colors[length(glyvis_colors)]
+    )
+  }
   p <- .glyvis_scatter(
     df,
     log2fc_col,
