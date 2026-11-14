@@ -19,6 +19,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -38,6 +40,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -57,6 +61,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -89,9 +95,13 @@ plot_heatmap(
 - cluster_rows, cluster_cols:
 
   Whether to cluster rows or columns, or compatible `hclust` objects.
-  Clustering controls order; dendrograms are not drawn. Use
-  [`autoplot.glystats_hclust_res()`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_hclust_res.md)
-  to draw a dendrogram.
+  Clustering controls the heatmap order.
+
+- row_cluster_tree, col_cluster_tree:
+
+  Whether to display the row or column clustering tree. Both default to
+  `TRUE`. Hiding a tree preserves clustering order. No tree is drawn
+  when clustering for that axis is disabled or cannot be computed.
 
 - show_rownames:
 
@@ -149,3 +159,14 @@ A `tidyplot` object, also inheriting from `ggplot`.
 
 [glyvis_abundance_scale](https://glycoverse.github.io/glyvis/dev/reference/glyvis_abundance_scale.md)
 for scale metadata and compatibility rules.
+
+## Examples
+
+``` r
+mat <- matrix(c(1, 5, 3, 7, 4, 2, 3, 8, 5, 4, 2, 9), nrow = 3,
+  dimnames = list(LETTERS[1:3], letters[1:4]))
+se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
+plot_heatmap(se)
+
+plot_heatmap(se, row_cluster_tree = FALSE, col_cluster_tree = FALSE)
+```

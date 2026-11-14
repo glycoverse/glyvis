@@ -24,6 +24,8 @@ autoplot(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -49,6 +51,8 @@ autoplot(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -103,9 +107,13 @@ autoplot(
 - cluster_rows, cluster_cols:
 
   Whether to cluster rows or columns, or compatible `hclust` objects.
-  Clustering controls order; dendrograms are not drawn. Use
-  [`autoplot.glystats_hclust_res()`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_hclust_res.md)
-  to draw a dendrogram.
+  Clustering controls the heatmap order.
+
+- row_cluster_tree, col_cluster_tree:
+
+  Whether to display the row or column clustering tree. Both default to
+  `TRUE`. Hiding a tree preserves clustering order. No tree is drawn
+  when clustering for that axis is disabled or cannot be computed.
 
 - show_rownames:
 
@@ -173,9 +181,10 @@ A `tidyplot` object, also inheriting from `ggplot`.
 ## Details
 
 Heatmap options (`scale`, `cluster_rows`, `cluster_cols`,
-`show_rownames`, `show_colnames`, `na_col`) apply only to
-`type = "heatmap"`. Boxplot options (`points`, `ncol`, `label_width`,
-`scales`) apply only to `type = "boxplot"`.
+`row_cluster_tree`, `col_cluster_tree`, `show_rownames`,
+`show_colnames`, `na_col`) apply only to `type = "heatmap"`. Boxplot
+options (`points`, `ncol`, `label_width`, `scales`) apply only to
+`type = "boxplot"`.
 
 For SE containers, `fortify()` returns `.sample` and `.variable` axis
 identifiers and an abundance `value` column. Ordinary `sample` and
