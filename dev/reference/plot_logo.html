@@ -134,7 +134,8 @@ is <code>NULL</code>, UniProt.ws is used to fetch protein sequences automaticall
 
 <dt id="arg-logo-args">logo_args<a class="anchor" aria-label="anchor" href="#arg-logo-args"></a></dt>
 <dd><p>Named list of glyph options passed to
-<code><a href="https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html" class="external-link">ggseqlogo::geom_logo()</a></code>, for example <code>list(method = "prob")</code>.</p></dd>
+<code><a href="https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html" class="external-link">ggseqlogo::geom_logo()</a></code>, for example <code>list(method = "prob")</code>. An explicit
+<code>logo_args$col_scheme</code> takes precedence over <code>palette</code>.</p></dd>
 
 
 <dt id="arg-title">title<a class="anchor" aria-label="anchor" href="#arg-title"></a></dt>
@@ -158,9 +159,10 @@ These are not export-page dimensions.</p></dd>
 <dt id="arg-palette">palette<a class="anchor" aria-label="anchor" href="#arg-palette"></a></dt>
 <dd><p>Color vector. A named vector maps group names to fixed colors
 across plots and subsets; unnamed palettes follow factor order. <code>NULL</code>
-selects the plot-specific default: blue-white-red for continuous heatmaps,
-directional colors for volcano and S-plots, selection colors for ranked
-dot plots, and distinct hues for other plots.</p></dd>
+uses tidyplots palettes. Heatmaps and correlation plots use the blue,
+near-white, and red anchors of <code>colors_diverging_BuRd</code>. Volcano plots use grey
+for points that do not meet both cutoffs. Other plots use
+the tidyplots defaults for discrete and continuous values.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -92,7 +92,8 @@ plot_logo(
 
   Named list of glyph options passed to
   [`ggseqlogo::geom_logo()`](https://rdrr.io/pkg/ggseqlogo/man/geom_logo.html),
-  for example `list(method = "prob")`.
+  for example `list(method = "prob")`. An explicit
+  `logo_args$col_scheme` takes precedence over `palette`.
 
 - title:
 
@@ -115,10 +116,11 @@ plot_logo(
 - palette:
 
   Color vector. A named vector maps group names to fixed colors across
-  plots and subsets; unnamed palettes follow factor order. `NULL`
-  selects the plot-specific default: blue-white-red for continuous
-  heatmaps, directional colors for volcano and S-plots, selection colors
-  for ranked dot plots, and distinct hues for other plots.
+  plots and subsets; unnamed palettes follow factor order. `NULL` uses
+  tidyplots palettes. Heatmaps and correlation plots use the blue,
+  near-white, and red anchors of `colors_diverging_BuRd`. Volcano plots
+  use grey for points that do not meet both cutoffs. Other plots use the
+  tidyplots defaults for discrete and continuous values.
 
 ## Value
 

@@ -2,6 +2,11 @@
 
 ## glyvis (development version)
 
+- Plots use the tidyplots default palettes, with blue–white–red from
+  [`tidyplots::colors_diverging_BuRd`](https://jbengler.github.io/tidyplots/reference/colors_diverging_blue2red.html)
+  for heatmaps and correlation plots, and grey for unchanged points in
+  volcano plots. (#34)
+
 - [`plot_heatmap()`](https://glycoverse.github.io/glyvis/dev/reference/plot_heatmap.md)
   and container
   [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)

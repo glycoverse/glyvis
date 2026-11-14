@@ -64,10 +64,11 @@ plot_top10_bar(
 - palette:
 
   Color vector. A named vector maps group names to fixed colors across
-  plots and subsets; unnamed palettes follow factor order. `NULL`
-  selects the plot-specific default: blue-white-red for continuous
-  heatmaps, directional colors for volcano and S-plots, selection colors
-  for ranked dot plots, and distinct hues for other plots.
+  plots and subsets; unnamed palettes follow factor order. `NULL` uses
+  tidyplots palettes. Heatmaps and correlation plots use the blue,
+  near-white, and red anchors of `colors_diverging_BuRd`. Volcano plots
+  use grey for points that do not meet both cutoffs. Other plots use the
+  tidyplots defaults for discrete and continuous values.
 
 ## Value
 
@@ -78,10 +79,10 @@ coordinates.
 
 ## Details
 
-The plot area uses the tidyplots default (50 by 50 mm). The first two
-default glyvis colours identify the left and right sides. Cartoon sizes
-adapt to the plot dimensions supplied here. No title is added unless
-`title` is supplied.
+The plot area uses the tidyplots default (50 by 50 mm). The tidyplots
+two-group colours identify the left and right sides. Cartoon sizes adapt
+to the plot dimensions supplied here. No title is added unless `title`
+is supplied.
 
 Classification uses
 [`glydet::n_glycan_type()`](https://glycoverse.github.io/glydet/reference/n_glycan_type.html)

@@ -220,9 +220,10 @@ These are not export-page dimensions.</p></dd>
 <dt id="arg-palette">palette<a class="anchor" aria-label="anchor" href="#arg-palette"></a></dt>
 <dd><p>Color vector. A named vector maps group names to fixed colors
 across plots and subsets; unnamed palettes follow factor order. <code>NULL</code>
-selects the plot-specific default: blue-white-red for continuous heatmaps,
-directional colors for volcano and S-plots, selection colors for ranked
-dot plots, and distinct hues for other plots.</p></dd>
+uses tidyplots palettes. Heatmaps and correlation plots use the blue,
+near-white, and red anchors of <code>colors_diverging_BuRd</code>. Volcano plots use grey
+for points that do not meet both cutoffs. Other plots use
+the tidyplots defaults for discrete and continuous values.</p></dd>
 
 
 <dt id="arg-stats-args">stats_args<a class="anchor" aria-label="anchor" href="#arg-stats-args"></a></dt>
