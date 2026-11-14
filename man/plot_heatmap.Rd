@@ -12,6 +12,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -30,6 +32,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -48,6 +52,8 @@ plot_heatmap(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -69,8 +75,12 @@ plot_heatmap(
 or neither (\code{"none"}). Applied after and independently of \code{log_transform}.}
 
 \item{cluster_rows, cluster_cols}{Whether to cluster rows or columns, or
-compatible \code{hclust} objects. Clustering controls order; dendrograms are not
-drawn. Use \code{\link[=autoplot.glystats_hclust_res]{autoplot.glystats_hclust_res()}} to draw a dendrogram.}
+compatible \code{hclust} objects. Clustering controls the heatmap order.}
+
+\item{row_cluster_tree, col_cluster_tree}{Whether to display the row or column
+clustering tree. Both default to \code{TRUE}. Hiding a tree preserves clustering
+order. No tree is drawn when clustering for that axis is disabled or cannot
+be computed.}
 
 \item{show_rownames}{Whether to display row labels. Defaults to \code{FALSE}.}
 
@@ -112,6 +122,13 @@ Expression values use scale-aware log transformation controlled by
 Before plotting, zero-variance rows and columns are filtered out
 to ensure robust clustering. Supplied \code{hclust} objects must match the
 retained rows or columns, including their input order.
+}
+\examples{
+mat <- matrix(c(1, 5, 3, 7, 4, 2, 3, 8, 5, 4, 2, 9), nrow = 3,
+  dimnames = list(LETTERS[1:3], letters[1:4]))
+se <- SummarizedExperiment::SummarizedExperiment(assays = list(mat))
+plot_heatmap(se)
+plot_heatmap(se, row_cluster_tree = FALSE, col_cluster_tree = FALSE)
 }
 \seealso{
 \link{glyvis_abundance_scale} for scale metadata and compatibility rules.

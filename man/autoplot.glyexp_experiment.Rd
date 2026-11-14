@@ -14,6 +14,8 @@
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -38,6 +40,8 @@
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -74,8 +78,12 @@ for already logged values. This argument must be named after \code{...}.}
 or neither (\code{"none"}). Applied after and independently of \code{log_transform}.}
 
 \item{cluster_rows, cluster_cols}{Whether to cluster rows or columns, or
-compatible \code{hclust} objects. Clustering controls order; dendrograms are not
-drawn. Use \code{\link[=autoplot.glystats_hclust_res]{autoplot.glystats_hclust_res()}} to draw a dendrogram.}
+compatible \code{hclust} objects. Clustering controls the heatmap order.}
+
+\item{row_cluster_tree, col_cluster_tree}{Whether to display the row or column
+clustering tree. Both default to \code{TRUE}. Hiding a tree preserves clustering
+order. No tree is drawn when clustering for that axis is disabled or cannot
+be computed.}
 
 \item{show_rownames}{Whether to display row labels. Defaults to \code{FALSE}.}
 
@@ -125,7 +133,8 @@ Possible \code{type}s of plots:
 }
 \details{
 Heatmap options (\code{scale}, \code{cluster_rows}, \code{cluster_cols},
-\code{show_rownames}, \code{show_colnames}, \code{na_col}) apply only to \code{type = "heatmap"}.
+\code{row_cluster_tree}, \code{col_cluster_tree}, \code{show_rownames}, \code{show_colnames},
+\code{na_col}) apply only to \code{type = "heatmap"}.
 Boxplot options (\code{points}, \code{ncol}, \code{label_width}, \code{scales}) apply only to
 \code{type = "boxplot"}.
 

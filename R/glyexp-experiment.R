@@ -18,7 +18,8 @@
 #' @seealso [glyvis_abundance_scale] for scale metadata and compatibility rules.
 #'
 #' @details Heatmap options (`scale`, `cluster_rows`, `cluster_cols`,
-#'   `show_rownames`, `show_colnames`, `na_col`) apply only to `type = "heatmap"`.
+#'   `row_cluster_tree`, `col_cluster_tree`, `show_rownames`, `show_colnames`,
+#'   `na_col`) apply only to `type = "heatmap"`.
 #'   Boxplot options (`points`, `ncol`, `label_width`, `scales`) apply only to
 #'   `type = "boxplot"`.
 #'
@@ -40,6 +41,8 @@ autoplot.glyexp_experiment <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -63,6 +66,8 @@ autoplot.glyexp_experiment <- function(
       scale = scale,
       cluster_rows = cluster_rows,
       cluster_cols = cluster_cols,
+      row_cluster_tree = row_cluster_tree,
+      col_cluster_tree = col_cluster_tree,
       show_rownames = show_rownames,
       show_colnames = show_colnames,
       na_col = na_col
@@ -117,6 +122,8 @@ autoplot.SummarizedExperiment <- function(
   scale = "row",
   cluster_rows = TRUE,
   cluster_cols = TRUE,
+  row_cluster_tree = TRUE,
+  col_cluster_tree = TRUE,
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
@@ -140,6 +147,8 @@ autoplot.SummarizedExperiment <- function(
       scale = scale,
       cluster_rows = cluster_rows,
       cluster_cols = cluster_cols,
+      row_cluster_tree = row_cluster_tree,
+      col_cluster_tree = col_cluster_tree,
       show_rownames = show_rownames,
       show_colnames = show_colnames,
       na_col = na_col
