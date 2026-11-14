@@ -132,6 +132,25 @@ test_that("branch bars count presence, exclude bisection, and allow overlaps", {
   )
 })
 
+test_that("branch bar width grows with the displayed labels", {
+  withr::local_pdf(file = tempfile(fileext = ".pdf"))
+  arms <- strrep("Gal(b1-4)", 0:11)
+  x <- n_plot_fixture(paste0(
+    arms,
+    sub("^Gal\\(b1-4\\)", "", n_plot_structures()["hybrid"])
+  ))
+  expect_equal(plot_n_branch_bar(x[1:2, ])$tidyplot$width, 50)
+  p <- plot_n_branch_bar(x)
+  expect_equal(nrow(p$data), 12)
+  expect_gt(p$tidyplot$width, 50)
+  expect_gt(
+    plot_n_branch_bar(x, fontsize = 14)$tidyplot$width,
+    p$tidyplot$width
+  )
+  expect_equal(plot_n_branch_bar(x, width = 70)$tidyplot$width, 70)
+  expect_true(is.na(plot_n_branch_bar(x, width = NA)$tidyplot$width))
+})
+
 test_that("reduction does not change categories but retains glycoform identity", {
   s <- n_plot_structures()["both"]
   # Replace the reducing end only; there is also an internal GlcNAc.

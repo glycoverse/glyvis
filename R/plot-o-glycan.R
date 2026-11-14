@@ -5,6 +5,7 @@
 #' @param x A [glyexp::GlycomicSE()] or [glyexp::GlycoproteomicSE()] with
 #'   `glycan_structure` row annotations and `glycan_type = "O"` metadata.
 #'   Legacy `glyexp_experiment` objects are also supported.
+#' @inheritParams glyvis_plot_options
 #' @inheritParams plot_n_type_pie
 #' @param core_set Either `"4cores"` (default), showing Core 1-4, or
 #'   `"8cores"`, showing Core 1-8.

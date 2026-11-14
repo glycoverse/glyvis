@@ -14,8 +14,11 @@
 #'   their summed abundance. Missing abundances are omitted; negative or
 #'   infinite values and recorded non-raw scales are rejected.
 #' @inheritParams glyvis_plot_options
+#' @param width,height Plot-area dimensions in millimetres. With `NULL`, both
+#'   dimensions default to 50 mm, except that the branch bar plot widens to
+#'   fit its x-axis labels. Use `NA` to fill the available device dimension.
 #' @details
-#'   The default plot area is 50 by 50 mm. Pie annotations scale with the
+#'   Pie annotations scale with the
 #'   panel size; core labels are split across lines to avoid crowding.
 #'
 #' @details
@@ -215,6 +218,14 @@ plot_n_branch_bar <- function(
     paste0("B", seq_along(structures)),
     structures
   )
+  if (is.null(width)) {
+    checkmate::assert_number(fontsize, lower = 1)
+    # Allow one em per label character plus a gap between adjacent labels.
+    label_spacing_mm <- (max(nchar(as.character(df$category))) + 1) *
+      fontsize /
+      ggplot2::.pt
+    width <- max(50, (nrow(df) + 0.2) * label_spacing_mm)
+  }
   .n_branch_plot(
     df,
     weight,
