@@ -156,12 +156,12 @@ plot_heatmap.SummarizedExperiment <- function(
   show_rownames = FALSE,
   show_colnames = NULL,
   na_col = "grey90",
-  palette = c("#2166AC", "#F7F7F7", "#B2182B"),
+  palette = NULL,
   ...,
   log_transform = NULL
 ) {
   if (is.null(palette)) {
-    palette <- c("#2166AC", "#F7F7F7", "#B2182B")
+    palette <- glyvis_diverging_colors
   }
   checkmate::assert_choice(scale, c("row", "column", "none"))
   checkmate::assert_flag(row_cluster_tree)

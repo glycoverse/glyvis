@@ -16,7 +16,8 @@
 #'   is `NULL`, UniProt.ws is used to fetch protein sequences automatically.
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 #' @param logo_args Named list of glyph options passed to
-#'   [ggseqlogo::geom_logo()], for example `list(method = "prob")`.
+#'   [ggseqlogo::geom_logo()], for example `list(method = "prob")`. An explicit
+#'   `logo_args$col_scheme` takes precedence over `palette`.
 #' @inheritParams glyvis_plot_options
 #'
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
@@ -116,7 +117,15 @@ plot_logo.GlycoproteomicSE <- function(
 #' @param tax_id The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.
 #' @inheritParams glyvis_plot_options
 #' @noRd
-.plot_exp_logo <- function(exp, n_aa, fasta, tax_id, logo_args = list(), ...) {
+.plot_exp_logo <- function(
+  exp,
+  n_aa,
+  fasta,
+  tax_id,
+  logo_args = list(),
+  palette = NULL,
+  ...
+) {
   rlang::check_installed("ggseqlogo")
   checkmate::assert_integerish(n_aa, len = 1, lower = 0)
   checkmate::assert_string(fasta, null.ok = TRUE)
@@ -147,7 +156,12 @@ plot_logo.GlycoproteomicSE <- function(
     rlang::exec(ggseqlogo::geom_logo, data = seq, !!!logo_args),
     classes = "lifecycle_warning_deprecated"
   )
-  # ggseqlogo supplies glyph geometry and amino-acid colors, not the canvas.
+  # Apply the canvas palette to glyph groups unless a ggseqlogo scheme was requested.
+  if (is.null(logo_args$col_scheme)) {
+    glyphs <- logo[[1]]$data
+    glyph_plot <- .glyvis_plot(glyphs, "x", "y", "group", palette = palette)
+    logo <- c(logo, list(glyph_plot$scales$get_scales("fill")))
+  }
   p <- suppressMessages(tidyplots::add(p, logo))
   suppressMessages(
     p +

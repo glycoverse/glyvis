@@ -142,11 +142,11 @@ plot_corrplot.SummarizedExperiment <- function(
   label = FALSE,
   digits = 2,
   triangle = "lower",
-  palette = c("#2166AC", "#F7F7F7", "#B2182B"),
+  palette = NULL,
   ...
 ) {
   if (is.null(palette)) {
-    palette <- c("#2166AC", "#F7F7F7", "#B2182B")
+    palette <- glyvis_diverging_colors
   }
   checkmate::assert_choice(triangle, c("lower", "upper", "full"))
   checkmate::assert_flag(label)

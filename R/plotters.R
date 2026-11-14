@@ -1,12 +1,8 @@
 # Shared tidyplots canvas. Named palettes can be reused across plots and subsets.
-glyvis_colors <- c(
-  "#0072B2",
-  "#D55E00",
-  "#009E73",
-  "#CC79A7",
-  "#E69F00",
-  "#56B4E9"
-)
+glyvis_colors <- as.character(tidyplots::colors_discrete_friendly)
+glyvis_diverging_colors <- as.character(tidyplots::colors_diverging_BuRd)[
+  c(2L, 6L, 10L)
+]
 
 .glyvis_plot <- function(
   df,
@@ -42,13 +38,10 @@ glyvis_colors <- c(
     )
   }
   p <- tidyplots::adjust_font(p, fontsize = fontsize, family = family)
-  if (is.null(palette) && (is.null(group) || !is.numeric(df[[group]]))) {
-    palette <- glyvis_colors
-  }
   p <- tidyplots::adjust_colors(
     p,
     palette,
-    downsample = "first",
+    downsample = if (is.null(palette)) "evenly" else "first",
     labels = identity
   )
   p +
@@ -145,8 +138,7 @@ glyvis_colors <- c(
     tidyplots::add(geom_segment(
       aes(x = 0, y = 0, xend = .data[[x]], yend = .data[[y]]),
       arrow = grid::arrow(length = grid::unit(1.5, "mm")),
-      linewidth = 0.4,
-      color = glyvis_colors[1]
+      linewidth = 0.4
     ))
   .glyvis_labels(p, label_col, label)
 }
@@ -161,9 +153,6 @@ glyvis_colors <- c(
       levels = c(FALSE, TRUE),
       labels = c("Below cutoff", "Selected")
     )
-  }
-  if (!is.null(group) && is.null(palette)) {
-    palette <- c("Below cutoff" = "#B8BEC5", Selected = "#0072B2")
   }
   .glyvis_plot(df, x, y, group, palette = palette, ...) |>
     tidyplots::add_data_points(size = 2) |>
@@ -191,12 +180,9 @@ glyvis_colors <- c(
   id_col = "variable",
   point_size = 1.5,
   alpha = 0.7,
-  palette = c(Down = "#0072B2", Unchanged = "#B8BEC5", Up = "#D55E00"),
+  palette = NULL,
   ...
 ) {
-  if (is.null(palette)) {
-    palette <- c(Down = "#0072B2", Unchanged = "#B8BEC5", Up = "#D55E00")
-  }
   checkmate::assert_number(p_cutoff, lower = 0, upper = 1)
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   if (all(is.na(df[[log2fc_col]]))) {

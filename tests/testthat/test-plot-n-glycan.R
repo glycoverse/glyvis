@@ -217,7 +217,7 @@ test_that("plots build with cartoons, zero categories, and common styling", {
   single <- plot_n_core_pie(n_plot_fixture(n_plot_structures()["bare"]))
   expect_equal(
     unique(ggplot2::ggplot_build(single)$data[[1]]$fill),
-    glyvis_colors[4]
+    as.character(tidyplots::colors_discrete_friendly)[6]
   )
 })
 

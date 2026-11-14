@@ -14,8 +14,8 @@
 #'   count once in equal mode and contribute their summed abundance otherwise.
 #' @inheritParams glyvis_plot_options
 #' @details
-#'   The plot area uses the tidyplots default (50 by 50 mm). The first two default glyvis
-#'   colours identify the left and right sides. Cartoon sizes adapt to the
+#'   The plot area uses the tidyplots default (50 by 50 mm). The tidyplots
+#'   two-group colours identify the left and right sides. Cartoon sizes adapt to the
 #'   plot dimensions supplied here. No title is added unless `title` is supplied.
 #'
 #' @details
@@ -111,6 +111,13 @@ plot_top10_bar <- function(
   palette = NULL,
   ...
 ) {
+  # Both headings are displayed even if one ranking is empty.
+  if (is.null(palette)) {
+    palette <- glyvis_colors[c(1L, length(glyvis_colors))]
+  }
+  if (is.null(names(palette))) {
+    palette <- stats::setNames(rep_len(palette, 2L), levels(df$side))
+  }
   df$y <- -df$rank
   p <- .glyvis_plot(
     df,
@@ -184,13 +191,6 @@ plot_top10_bar <- function(
     side = factor(levels(df$side), levels = levels(df$side)),
     label = c("Including\noligomannose", "Excluding\noligomannose")
   )
-  colours <- if (is.null(palette)) {
-    glyvis_colors[1:2]
-  } else if (is.null(names(palette))) {
-    rep(palette, length.out = 2)
-  } else {
-    unname(palette[levels(df$side)])
-  }
   heading_size <- fontsize * min(1, panel_width / 75)
   p <- p +
     geom_col(aes(fill = .data$side), orientation = "y", width = 0.72) +
@@ -208,8 +208,8 @@ plot_top10_bar <- function(
     ) +
     geom_text(
       data = headings,
-      aes(x = .data$x, y = .data$y, label = .data$label),
-      colour = colours,
+      aes(x = .data$x, y = .data$y, label = .data$label, colour = .data$side),
+      show.legend = FALSE,
       inherit.aes = FALSE,
       family = family,
       size = heading_size / (72.27 / 25.4),

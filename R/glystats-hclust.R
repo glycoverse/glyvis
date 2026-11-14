@@ -39,7 +39,6 @@ autoplot.glystats_hclust_res <- function(
   ) |>
     tidyplots::add(geom_segment(
       aes(xend = .data$xend, yend = .data$yend),
-      color = "grey30",
       linewidth = 0.4
     ))
   p <- tidyplots::adjust_x_axis(

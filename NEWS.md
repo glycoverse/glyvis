@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Plots use the tidyplots default palettes, with blue–white–red from `tidyplots::colors_diverging_BuRd` for heatmaps and correlation plots.
+
 * `plot_heatmap()` and container `autoplot()` methods gain `row_cluster_tree` and `col_cluster_tree`, both defaulting to `TRUE`, to display clustering trees independently of clustering order. (#33)
 
 * All public plotting controls now follow `...` and must be supplied by their full argument names; replace positional calls such as `plot_pca(x, "biplot")` with `plot_pca(x, type = "biplot")`. (#32)

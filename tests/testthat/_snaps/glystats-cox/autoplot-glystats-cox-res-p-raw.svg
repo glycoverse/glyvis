@@ -36,9 +36,9 @@
 </defs>
 <g clip-path='url(#cpMzA4LjUyfDQ1MC4yNXwxODcuNTF8MzI5LjI0)'>
 <rect x='308.52' y='187.51' width='141.73' height='141.73' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='314.96' cy='302.67' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='334.09' cy='258.38' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='443.81' cy='214.08' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='314.96' cy='302.67' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='334.09' cy='258.38' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='443.81' cy='214.08' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; fill: #D55E00;' />
 <line x1='398.75' y1='329.24' x2='398.75' y2='187.51' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.70; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -66,9 +66,9 @@
 <text transform='translate(273.95,258.38) rotate(-90)' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='33.02px' lengthAdjust='spacingAndGlyphs'>Variable</text>
 <rect x='312.32' y='366.19' width='134.14' height='22.30' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='317.80' y='371.67' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='323.47' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
+<circle cx='323.47' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
 <rect x='389.13' y='371.67' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='394.80' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='394.80' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; fill: #D55E00;' />
 <text x='334.61' y='380.44' style='font-size: 9.00px; font-family: sans;' textLength='49.03px' lengthAdjust='spacingAndGlyphs'>Below cutoff</text>
 <text x='405.94' y='380.44' style='font-size: 9.00px; font-family: sans;' textLength='35.03px' lengthAdjust='spacingAndGlyphs'>Selected</text>
 </g>

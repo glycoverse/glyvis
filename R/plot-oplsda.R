@@ -316,12 +316,9 @@ plot_oplsda.SummarizedExperiment <- function(
 
 .plot_oplsda_splot <- function(
   object,
-  palette = c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00"),
+  palette = NULL,
   ...
 ) {
-  if (is.null(palette)) {
-    palette <- c(Negative = "#0072B2", Other = "#B8BEC5", Positive = "#D55E00")
-  }
   df <- object$tidy_result$variables
   df$direction <- factor(
     ifelse(

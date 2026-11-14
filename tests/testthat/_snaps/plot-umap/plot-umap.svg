@@ -39,15 +39,15 @@
 <circle cx='433.27' cy='196.19' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; stroke-opacity: 0.80; fill: #0072B2; fill-opacity: 0.80;' />
 <circle cx='434.09' cy='202.65' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; stroke-opacity: 0.80; fill: #0072B2; fill-opacity: 0.80;' />
 <circle cx='435.30' cy='195.05' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; stroke-opacity: 0.80; fill: #0072B2; fill-opacity: 0.80;' />
-<circle cx='306.45' cy='323.90' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
-<circle cx='307.51' cy='319.88' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
-<circle cx='309.08' cy='315.70' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
-<circle cx='422.75' cy='228.86' r='2.49' style='stroke-width: 0.71; stroke: #009E73; stroke-opacity: 0.80; fill: #009E73; fill-opacity: 0.80;' />
-<circle cx='425.10' cy='225.09' r='2.49' style='stroke-width: 0.71; stroke: #009E73; stroke-opacity: 0.80; fill: #009E73; fill-opacity: 0.80;' />
-<circle cx='425.27' cy='217.96' r='2.49' style='stroke-width: 0.71; stroke: #009E73; stroke-opacity: 0.80; fill: #009E73; fill-opacity: 0.80;' />
-<circle cx='428.13' cy='211.34' r='2.49' style='stroke-width: 0.71; stroke: #CC79A7; stroke-opacity: 0.80; fill: #CC79A7; fill-opacity: 0.80;' />
-<circle cx='429.74' cy='216.60' r='2.49' style='stroke-width: 0.71; stroke: #CC79A7; stroke-opacity: 0.80; fill: #CC79A7; fill-opacity: 0.80;' />
-<circle cx='431.32' cy='211.60' r='2.49' style='stroke-width: 0.71; stroke: #CC79A7; stroke-opacity: 0.80; fill: #CC79A7; fill-opacity: 0.80;' />
+<circle cx='306.45' cy='323.90' r='2.49' style='stroke-width: 0.71; stroke: #56B4E9; stroke-opacity: 0.80; fill: #56B4E9; fill-opacity: 0.80;' />
+<circle cx='307.51' cy='319.88' r='2.49' style='stroke-width: 0.71; stroke: #56B4E9; stroke-opacity: 0.80; fill: #56B4E9; fill-opacity: 0.80;' />
+<circle cx='309.08' cy='315.70' r='2.49' style='stroke-width: 0.71; stroke: #56B4E9; stroke-opacity: 0.80; fill: #56B4E9; fill-opacity: 0.80;' />
+<circle cx='422.75' cy='228.86' r='2.49' style='stroke-width: 0.71; stroke: #F5C710; stroke-opacity: 0.80; fill: #F5C710; fill-opacity: 0.80;' />
+<circle cx='425.10' cy='225.09' r='2.49' style='stroke-width: 0.71; stroke: #F5C710; stroke-opacity: 0.80; fill: #F5C710; fill-opacity: 0.80;' />
+<circle cx='425.27' cy='217.96' r='2.49' style='stroke-width: 0.71; stroke: #F5C710; stroke-opacity: 0.80; fill: #F5C710; fill-opacity: 0.80;' />
+<circle cx='428.13' cy='211.34' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
+<circle cx='429.74' cy='216.60' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
+<circle cx='431.32' cy='211.60' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='300.01,330.34 300.01,188.61 ' style='stroke-width: 0.53; stroke-linecap: square;' />
@@ -74,11 +74,11 @@
 <rect x='315.76' y='370.57' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='321.43' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; stroke-opacity: 0.80; fill: #0072B2; fill-opacity: 0.80;' />
 <rect x='344.56' y='370.57' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='350.23' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
+<circle cx='350.23' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #56B4E9; stroke-opacity: 0.80; fill: #56B4E9; fill-opacity: 0.80;' />
 <rect x='373.36' y='370.57' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='379.03' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #009E73; stroke-opacity: 0.80; fill: #009E73; fill-opacity: 0.80;' />
+<circle cx='379.03' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #F5C710; stroke-opacity: 0.80; fill: #F5C710; fill-opacity: 0.80;' />
 <rect x='403.16' y='370.57' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='408.83' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #CC79A7; stroke-opacity: 0.80; fill: #CC79A7; fill-opacity: 0.80;' />
+<circle cx='408.83' cy='376.24' r='2.49' style='stroke-width: 0.71; stroke: #D55E00; stroke-opacity: 0.80; fill: #D55E00; fill-opacity: 0.80;' />
 <text x='332.58' y='379.34' style='font-size: 9.00px; font-family: sans;' textLength='6.50px' lengthAdjust='spacingAndGlyphs'>C</text>
 <text x='361.38' y='379.34' style='font-size: 9.00px; font-family: sans;' textLength='6.50px' lengthAdjust='spacingAndGlyphs'>H</text>
 <text x='390.18' y='379.34' style='font-size: 9.00px; font-family: sans;' textLength='7.50px' lengthAdjust='spacingAndGlyphs'>M</text>
