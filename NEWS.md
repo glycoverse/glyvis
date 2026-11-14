@@ -1,27 +1,17 @@
 # glyvis (development version)
 
 * Plots use the tidyplots default palettes, with blue–white–red from `tidyplots::colors_diverging_BuRd` for heatmaps and correlation plots, and grey for unchanged points in volcano plots. (#34)
-
 * `plot_heatmap()` and container `autoplot()` methods gain `row_cluster_tree` and `col_cluster_tree`, both defaulting to `TRUE`, to display clustering trees independently of clustering order. (#33)
-
 * All public plotting controls now follow `...` and must be supplied by their full argument names; replace positional calls such as `plot_pca(x, "biplot")` with `plot_pca(x, type = "biplot")`. (#32)
-
 * Plot-specific options are now explicit named arguments in `plot_*()` functions and their `autoplot()` methods, with defaults and descriptions in each help page. Common styling options are also explicit arguments, share documentation via `@inheritParams`, and unused arguments in `...` now error at the plotting entry point. (#32)
-
 * New `plot_isomers_per_comp()` counts distinct annotated structures per composition across samples, proteins, and sites, using fixed bins from 1 through 7 and >=8 with optional pooled abundance weighting. (#31)
-
 * New `plot_n_branch_pie()` summarizes N-glycans by antenna count using equal glycan/site-specific glycoform counts or pooled abundance weights, with fixed core-and-antenna cartoons for zero to four antennae. (#29)
 * New `plot_fuc_sia_pie()` summarizes four fucosylation/sialylation categories from `glycan_composition`, with distinct composition or site-specific glycoform counts, optional pooled abundance weighting, and text annotations. Sialylation includes both NeuAc and NeuGc. (#28)
 * New `plot_o_type_pie()` plots O-GalNAc core distributions with glycan cartoons, equal or abundance weighting, and `core_set = "4cores"` (Core 1–4) or `"8cores"` (Core 1–8). (#27)
-
 * New `plot_top10_bar()` shows the top ten N-glycans in glycoproteomic data by site-specific glycoform count or pooled abundance, with independently ranked mirrored bars including and excluding oligomannose, glycan cartoons, and the default glyvis colours. (#30)
-
 * New `plot_glycans_per_site()` and `plot_sites_per_protein()` summarize GlycoproteomicSE glycan and site counts in fixed bins from 1 through 7 and >=8, with optional pooled abundance weighting. Glycan counts prefer structures and fall back to compositions with a message when structural annotations are absent or incomplete. (#26)
-
 * New `plot_n_core_pie()`, `plot_n_type_pie()`, and `plot_n_branch_bar()` summarize N-glycan core, type, and branch distributions with glydraw cartoons, using distinct glycan/site-specific glycoform counts or pooled abundances calculated with glydet. Branch bars use one colour and are ordered from highest to lowest value. (#26)
-
 * `plot_boxplot()` gains a `variables` argument to select SummarizedExperiment rows by name before applying the 25-variable limit. (#25)
-
 * `plot_logo()` now explains UniProt sequence lookup failures and suggests retrying or using a local FASTA, while retaining the original error for diagnosis.
 
 # glyvis 0.8.0
