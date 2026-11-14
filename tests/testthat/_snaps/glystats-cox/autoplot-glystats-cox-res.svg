@@ -36,11 +36,11 @@
 </defs>
 <g clip-path='url(#cpMzA0Ljc2fDQ0Ni40OXwxODcuNTF8MzI5LjI0)'>
 <rect x='304.76' y='187.51' width='141.73' height='141.73' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='367.27' cy='231.12' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='323.50' cy='285.63' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='311.20' cy='312.89' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='323.50' cy='258.38' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
-<circle cx='367.27' cy='203.86' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
+<circle cx='367.27' cy='231.12' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='323.50' cy='285.63' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='311.20' cy='312.89' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='323.50' cy='258.38' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
+<circle cx='367.27' cy='203.86' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
 <line x1='440.05' y1='329.24' x2='440.05' y2='187.51' style='stroke-width: 1.07; stroke: #000000; stroke-opacity: 0.70; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
@@ -81,7 +81,7 @@
 <text transform='translate(277.71,258.38) rotate(-90)' text-anchor='middle' style='font-size: 9.00px; font-family: sans;' textLength='33.02px' lengthAdjust='spacingAndGlyphs'>Variable</text>
 <rect x='337.22' y='366.19' width='76.81' height='22.30' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <rect x='342.70' y='371.67' width='11.34' height='11.34' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='348.37' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #B8BEC5; fill: #B8BEC5;' />
+<circle cx='348.37' cy='377.34' r='2.49' style='stroke-width: 0.71; stroke: #0072B2; fill: #0072B2;' />
 <text x='359.52' y='380.44' style='font-size: 9.00px; font-family: sans;' textLength='49.03px' lengthAdjust='spacingAndGlyphs'>Below cutoff</text>
 </g>
 </svg>

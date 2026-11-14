@@ -85,7 +85,10 @@ test_that("cartoons render, bars descend, and colours follow the glyvis palette"
     list(width = 50, height = 50, unit = "mm")
   )
   built <- ggplot2::ggplot_build(p)$data[[1]]
-  expect_equal(unique(built$fill), glyvis_colors[1:2])
+  expect_equal(
+    unique(built$fill),
+    as.character(tidyplots::colors_discrete_friendly)[c(1, 6)]
+  )
   expect_equal(built$y, c(-1, -2, -3, -1, -2))
   expect_equal(built$xmin, c(-3, -2, -1, 0, 0))
   expect_equal(built$xmax, c(0, 0, 0, 2, 1))

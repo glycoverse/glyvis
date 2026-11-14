@@ -40,9 +40,10 @@ These are not export-page dimensions.}
 
 \item{palette}{Color vector. A named vector maps group names to fixed colors
 across plots and subsets; unnamed palettes follow factor order. \code{NULL}
-selects the plot-specific default: blue-white-red for continuous heatmaps,
-directional colors for volcano and S-plots, selection colors for ranked
-dot plots, and distinct hues for other plots.}
+uses tidyplots palettes. Heatmaps and correlation plots use the blue,
+near-white, and red anchors of \code{colors_diverging_BuRd}. Volcano plots use grey
+for points that do not meet both cutoffs. Other plots use
+the tidyplots defaults for discrete and continuous values.}
 }
 \value{
 A \code{tidyplot}, also inheriting from \code{ggplot}. Its \code{data} contains
@@ -56,8 +57,8 @@ independently selects up to ten glycans, ranked from highest to lowest
 from top to bottom, on a shared quantitative scale.
 }
 \details{
-The plot area uses the tidyplots default (50 by 50 mm). The first two default glyvis
-colours identify the left and right sides. Cartoon sizes adapt to the
+The plot area uses the tidyplots default (50 by 50 mm). The tidyplots
+two-group colours identify the left and right sides. Cartoon sizes adapt to the
 plot dimensions supplied here. No title is added unless \code{title} is supplied.
 
 Classification uses \code{\link[glydet:n_glycan_type]{glydet::n_glycan_type()}} with \code{merge_mannose = TRUE}:

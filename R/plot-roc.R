@@ -178,12 +178,7 @@ plot_roc.SummarizedExperiment <- function(
 .plot_roc_dotplot <- function(roc_res, auc_cutoff, ...) {
   df <- roc_res$tidy_result$auc %>%
     dplyr::mutate(
-      candidate = .data$auc >= auc_cutoff,
-      point_color = dplyr::if_else(
-        .data$candidate,
-        glyvis_colors[1],
-        "lightgrey"
-      )
+      candidate = .data$auc >= auc_cutoff
     )
   .glyvis_dotchart(
     df,

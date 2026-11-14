@@ -228,12 +228,7 @@ autoplot.glystats_limma_res <- function(
   df <- object$tidy_result$main_test %>%
     dplyr::mutate(
       neglog10p = -log10(pmax(.data[[p_col]], .Machine$double.xmin)),
-      candidate = .data[[p_col]] < p_cutoff,
-      point_color = dplyr::if_else(
-        .data$candidate,
-        glyvis_colors[1],
-        "lightgrey"
-      )
+      candidate = .data[[p_col]] < p_cutoff
     )
 
   .glyvis_dotchart(

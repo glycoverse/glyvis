@@ -67,7 +67,8 @@ is \code{NULL}, UniProt.ws is used to fetch protein sequences automatically.}
 \item{tax_id}{The NCBI taxonomy ID used for UniProt.ws lookups. Defaults to 9606.}
 
 \item{logo_args}{Named list of glyph options passed to
-\code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, for example \code{list(method = "prob")}.}
+\code{\link[ggseqlogo:geom_logo]{ggseqlogo::geom_logo()}}, for example \code{list(method = "prob")}. An explicit
+\code{logo_args$col_scheme} takes precedence over \code{palette}.}
 
 \item{title}{Optional plot title. Defaults to \code{NULL}.}
 
@@ -81,9 +82,10 @@ These are not export-page dimensions.}
 
 \item{palette}{Color vector. A named vector maps group names to fixed colors
 across plots and subsets; unnamed palettes follow factor order. \code{NULL}
-selects the plot-specific default: blue-white-red for continuous heatmaps,
-directional colors for volcano and S-plots, selection colors for ranked
-dot plots, and distinct hues for other plots.}
+uses tidyplots palettes. Heatmaps and correlation plots use the blue,
+near-white, and red anchors of \code{colors_diverging_BuRd}. Volcano plots use grey
+for points that do not meet both cutoffs. Other plots use
+the tidyplots defaults for discrete and continuous values.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
