@@ -143,6 +143,7 @@ test_that("branch bar width grows with the displayed labels", {
   p <- plot_n_branch_bar(x)
   expect_equal(nrow(p$data), 12)
   expect_gt(p$tidyplot$width, 50)
+  expect_lt(p$tidyplot$width / nrow(p$data), 8)
   expect_gt(
     plot_n_branch_bar(x, fontsize = 14)$tidyplot$width,
     p$tidyplot$width

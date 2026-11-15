@@ -220,10 +220,17 @@ plot_n_branch_bar <- function(
   )
   if (is.null(width)) {
     checkmate::assert_number(fontsize, lower = 1)
-    # Allow one em per label character plus a gap between adjacent labels.
-    label_spacing_mm <- (max(nchar(as.character(df$category))) + 1) *
-      fontsize /
-      ggplot2::.pt
+    label_font <- grid::gpar(fontsize = fontsize, fontfamily = family)
+    label_widths <- vapply(
+      as.character(df$category),
+      function(label) {
+        grob <- grid::textGrob(label, gp = label_font)
+        grid::convertWidth(grid::grobWidth(grob), "mm", valueOnly = TRUE)
+      },
+      numeric(1)
+    )
+    # Leave 0.8 mm between the widest labels at adjacent tick positions.
+    label_spacing_mm <- max(label_widths) + 0.8
     width <- max(50, (nrow(df) + 0.2) * label_spacing_mm)
   }
   .n_branch_plot(
