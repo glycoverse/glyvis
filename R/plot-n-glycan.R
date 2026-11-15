@@ -714,9 +714,8 @@ plot_n_branch_bar <- function(
     peak <- 1
   }
   df$cartoon_y <- df$value + peak * 0.025
-  cartoon_size <- min(0.22, 1 / nrow(df))
   # Use glydraw's native panel dimensions, excluding standalone export borders.
-  cartoon_height <- vapply(
+  dimensions <- vapply(
     df$glycan_structure,
     function(structure) {
       cartoon <- glydraw::draw_cartoon(
@@ -724,21 +723,19 @@ plot_n_branch_bar <- function(
         orient = "up",
         show_linkage = FALSE
       )
-      attr(cartoon, "glydraw_panel_size_px")[["height"]] / 300 * 25.4
+      attr(cartoon, "glydraw_panel_size_px")[c("width", "height")] / 300 * 25.4
     },
-    numeric(1)
-  ) *
-    cartoon_size
-  panel_height <- if (is.null(height)) {
-    50
-  } else if (is.na(height)) {
-    50
-  } else {
-    height
-  }
-  shrink <- min(1, panel_height * 0.5 / max(cartoon_height))
-  cartoon_size <- cartoon_size * shrink
-  cartoon_height <- cartoon_height * shrink
+    numeric(2)
+  )
+  panel_width <- if (is.null(width) || is.na(width)) 50 else width
+  panel_height <- if (is.null(height) || is.na(height)) 50 else height
+  slot_width <- panel_width / (nrow(df) + 0.2)
+  cartoon_size <- min(
+    0.22,
+    0.9 * slot_width / max(dimensions["width", ]),
+    0.5 * panel_height / max(dimensions["height", ])
+  )
+  cartoon_height <- dimensions["height", ] * cartoon_size
   top_gap <- min(2, panel_height * 0.05)
   upper <- max(df$cartoon_y / (1 - (cartoon_height + top_gap) / panel_height))
   p <- .glyvis_plot(
