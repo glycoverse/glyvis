@@ -72,9 +72,9 @@ infinite values and recorded non-raw scales are rejected.}
 
 \item{title}{Optional plot title. Defaults to \code{NULL}.}
 
-\item{width, height}{Plot-area dimensions in millimetres. \code{NULL} uses the
-tidyplots defaults (50 by 50 mm); \code{NA} fills the available graphics device.
-These are not export-page dimensions.}
+\item{width, height}{Plot-area dimensions in millimetres. With \code{NULL}, both
+dimensions default to 50 mm, except that the branch bar plot widens to
+fit its x-axis labels. Use \code{NA} to fill the available device dimension.}
 
 \item{fontsize}{Base text size in points. Defaults to 9.}
 
@@ -98,7 +98,7 @@ Summarize an N-glycan experiment across all samples, with glycan cartoons
 drawn by \code{\link[glydraw:geom_glycan]{glydraw::geom_glycan()}}.
 }
 \details{
-The default plot area is 50 by 50 mm. Pie annotations scale with the
+Pie annotations scale with the
 panel size; core labels are split across lines to avoid crowding.
 
 \code{plot_n_core_pie()} separates core fucosylation and bisecting GlcNAc into
