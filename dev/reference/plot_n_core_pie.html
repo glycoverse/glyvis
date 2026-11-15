@@ -119,9 +119,9 @@ infinite values and recorded non-raw scales are rejected.</p></dd>
 
 
 <dt id="arg-width-height">width, height<a class="anchor" aria-label="anchor" href="#arg-width-height"></a></dt>
-<dd><p>Plot-area dimensions in millimetres. <code>NULL</code> uses the
-tidyplots defaults (50 by 50 mm); <code>NA</code> fills the available graphics device.
-These are not export-page dimensions.</p></dd>
+<dd><p>Plot-area dimensions in millimetres. With <code>NULL</code>, both
+dimensions default to 50 mm, except that the branch bar plot widens to
+fit its x-axis labels. Use <code>NA</code> to fill the available device dimension.</p></dd>
 
 
 <dt id="arg-fontsize">fontsize<a class="anchor" aria-label="anchor" href="#arg-fontsize"></a></dt>
@@ -150,7 +150,7 @@ Pies retain zero-valued categories in <code>data</code> and in their cartoon lab
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The default plot area is 50 by 50 mm. Pie annotations scale with the
+    <p>Pie annotations scale with the
 panel size; core labels are split across lines to avoid crowding.</p>
 <p><code>plot_n_core_pie()</code> separates core fucosylation and bisecting GlcNAc into
 four combinations. Antennal fucose does not count as core fucose.

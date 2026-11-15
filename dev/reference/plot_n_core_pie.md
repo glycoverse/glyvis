@@ -90,9 +90,9 @@ plot_n_branch_bar(
 
 - width, height:
 
-  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
-  defaults (50 by 50 mm); `NA` fills the available graphics device.
-  These are not export-page dimensions.
+  Plot-area dimensions in millimetres. With `NULL`, both dimensions
+  default to 50 mm, except that the branch bar plot widens to fit its
+  x-axis labels. Use `NA` to fill the available device dimension.
 
 - fontsize:
 
@@ -121,8 +121,8 @@ cartoon labels.
 
 ## Details
 
-The default plot area is 50 by 50 mm. Pie annotations scale with the
-panel size; core labels are split across lines to avoid crowding.
+Pie annotations scale with the panel size; core labels are split across
+lines to avoid crowding.
 
 `plot_n_core_pie()` separates core fucosylation and bisecting GlcNAc
 into four combinations. Antennal fucose does not count as core fucose.
