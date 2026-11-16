@@ -15,16 +15,79 @@ Draw a t-SNE scores plot. Currently supported data types:
 ## Usage
 
 ``` r
-plot_tsne(x, ...)
+plot_tsne(
+  x,
+  ...,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list()
+)
 
 # S3 method for class 'glystats_tsne_res'
-plot_tsne(x, groups = NULL, group_col = NULL, ...)
+plot_tsne(
+  x,
+  ...,
+  groups = NULL,
+  group_col = NULL,
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'glyexp_experiment'
-plot_tsne(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+plot_tsne(
+  x,
+  ...,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 
 # S3 method for class 'SummarizedExperiment'
-plot_tsne(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
+plot_tsne(
+  x,
+  ...,
+  groups = NULL,
+  group_col = NULL,
+  stats_args = list(),
+  label = FALSE,
+  add_ellipse = FALSE,
+  point_size = 2,
+  alpha = 0.8,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -35,8 +98,46 @@ plot_tsne(x, groups = NULL, group_col = NULL, stats_args = list(), ...)
 
 - ...:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md).
+  Must be empty. Supply plotting controls by their full argument names.
+
+- label:
+
+  Whether to label samples. Defaults to `FALSE`.
+
+- add_ellipse:
+
+  Whether to add group ellipses. Requires sample groups.
+
+- point_size, alpha:
+
+  Point size and opacity.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL` uses
+  tidyplots palettes. Heatmaps and correlation plots use the blue,
+  near-white, and red anchors of `colors_diverging_BuRd`. Volcano plots
+  use grey for points that do not meet both cutoffs. Other plots use the
+  tidyplots defaults for discrete and continuous values.
 
 - groups:
 

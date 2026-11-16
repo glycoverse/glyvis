@@ -15,6 +15,8 @@ statistical results into clear, compelling visuals.
 
 library(glyvis)
 library(glyexp)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 library(glyclean)
 #> 
 #> Attaching package: 'glyclean'

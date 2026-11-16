@@ -38,10 +38,24 @@
   : Boxplot
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/reference/plot_corrplot.md)
   : Correlation Plot
+- [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/reference/plot_fuc_sia_pie.md)
+  : Fucosylation and sialylation distribution
+- [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/reference/plot_glycans_per_site.md)
+  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/reference/plot_glycans_per_site.md)
+  : Distributions of glycans per site and sites per protein
 - [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
   : Heatmap
+- [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/reference/plot_isomers_per_comp.md)
+  : Distribution of isomers per glycan composition
 - [`plot_logo()`](https://glycoverse.github.io/glyvis/reference/plot_logo.md)
   : Logo Plot
+- [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  : N-glycan core, type, and branch distributions
+- [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/reference/plot_o_type_pie.md)
+  : O-GalNAc core distribution
 - [`plot_oplsda()`](https://glycoverse.github.io/glyvis/reference/plot_oplsda.md)
   : OPLS-DA Plot
 - [`plot_pca()`](https://glycoverse.github.io/glyvis/reference/plot_pca.md)
@@ -50,6 +64,8 @@
   : PLS-DA Plot
 - [`plot_roc()`](https://glycoverse.github.io/glyvis/reference/plot_roc.md)
   : ROC plot
+- [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/reference/plot_top10_bar.md)
+  : Top ten glycans by site-specific glycoform count or abundance
 - [`plot_tsne()`](https://glycoverse.github.io/glyvis/reference/plot_tsne.md)
   : t-SNE Plot
 - [`plot_umap()`](https://glycoverse.github.io/glyvis/reference/plot_umap.md)

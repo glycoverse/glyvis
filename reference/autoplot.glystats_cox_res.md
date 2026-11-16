@@ -8,7 +8,19 @@ Visualization for results from
 
 ``` r
 # S3 method for class 'glystats_cox_res'
-autoplot(object, p_cutoff = 0.05, p_col = "p_adj", ...)
+autoplot(
+  object,
+  ...,
+  p_cutoff = 0.05,
+  p_col = "p_adj",
+  top_n = NULL,
+  title = NULL,
+  width = NULL,
+  height = NULL,
+  fontsize = 9,
+  family = "sans",
+  palette = NULL
+)
 ```
 
 ## Arguments
@@ -16,6 +28,10 @@ autoplot(object, p_cutoff = 0.05, p_col = "p_adj", ...)
 - object:
 
   A `glystats_cox_res` object.
+
+- ...:
+
+  Must be empty. Supply plotting controls by their full argument names.
 
 - p_cutoff:
 
@@ -26,10 +42,37 @@ autoplot(object, p_cutoff = 0.05, p_col = "p_adj", ...)
   The column name for p-value. Defaults to "p_adj". Can also be "p_val"
   (raw p-values without multiple testing correction).
 
-- ...:
+- top_n:
 
-  Common and plot-specific options described in
-  [glyvis_plot_options](https://glycoverse.github.io/glyvis/reference/glyvis_plot_options.md).
+  Number of variables to retain. `NULL` retains all variables; a
+  positive integer selects the smallest plotted p-values.
+
+- title:
+
+  Optional plot title. Defaults to `NULL`.
+
+- width, height:
+
+  Plot-area dimensions in millimetres. `NULL` uses the tidyplots
+  defaults (50 by 50 mm); `NA` fills the available graphics device.
+  These are not export-page dimensions.
+
+- fontsize:
+
+  Base text size in points. Defaults to 9.
+
+- family:
+
+  Font family. Defaults to `"sans"`.
+
+- palette:
+
+  Color vector. A named vector maps group names to fixed colors across
+  plots and subsets; unnamed palettes follow factor order. `NULL` uses
+  tidyplots palettes. Heatmaps and correlation plots use the blue,
+  near-white, and red anchors of `colors_diverging_BuRd`. Volcano plots
+  use grey for points that do not meet both cutoffs. Other plots use the
+  tidyplots defaults for discrete and continuous values.
 
 ## Value
 

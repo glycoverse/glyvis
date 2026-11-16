@@ -1,5 +1,80 @@
 # Changelog
 
+## glyvis 0.9.0
+
+### Breaking changes
+
+- Plotting options in `plot_*()` and
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  must now be supplied by their full names. Positional options, partial
+  names, and unused arguments in `...` raise an error. Change calls such
+  as `plot_pca(x, "biplot")` to `plot_pca(x, type = "biplot")`. (#32)
+
+### New features
+
+- `plot_*()` functions and their
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods list supported plotting and styling options, with their full
+  argument names and defaults, in each help page. (#32)
+- [`plot_boxplot()`](https://glycoverse.github.io/glyvis/reference/plot_boxplot.md)
+  gains a `variables` argument to select rows of a
+  `SummarizedExperiment` by name before applying the 25-variable limit.
+  (#25)
+- New
+  [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/reference/plot_fuc_sia_pie.md)
+  groups compositions by fucosylation and sialylation, including both
+  NeuAc and NeuGc. Slices can show counts or pooled abundance. (#28)
+- New
+  [`plot_glycans_per_site()`](https://glycoverse.github.io/glyvis/reference/plot_glycans_per_site.md)
+  and
+  [`plot_sites_per_protein()`](https://glycoverse.github.io/glyvis/reference/plot_glycans_per_site.md)
+  summarize glycoproteomic diversity in bins from 1 through 7 and 8 or
+  more, with optional pooled abundance weighting. Glycan counts use
+  structures when available and fall back to compositions when
+  structural annotations are incomplete. (#26)
+- [`plot_heatmap()`](https://glycoverse.github.io/glyvis/reference/plot_heatmap.md)
+  and container
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  methods now display clustering trees by default. Set
+  `row_cluster_tree = FALSE` or `col_cluster_tree = FALSE` to hide
+  either tree while preserving the clustered order. (#33)
+- New
+  [`plot_isomers_per_comp()`](https://glycoverse.github.io/glyvis/reference/plot_isomers_per_comp.md)
+  counts distinct annotated structures per composition across samples,
+  proteins, and sites, with optional pooled abundance weighting. (#31)
+- New
+  [`plot_n_branch_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  groups N-glycans by antenna count and illustrates the zero- to
+  four-antenna categories with glycan cartoons. Slices can show counts
+  or pooled abundance. (#29)
+- New
+  [`plot_n_core_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md),
+  [`plot_n_type_pie()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md),
+  and
+  [`plot_n_branch_bar()`](https://glycoverse.github.io/glyvis/reference/plot_n_core_pie.md)
+  show N-glycan core, type, and branch distributions with glycan
+  cartoons. Choose counts of distinct glycans or site-specific
+  glycoforms, or weight by pooled abundance. (#26)
+- New
+  [`plot_o_type_pie()`](https://glycoverse.github.io/glyvis/reference/plot_o_type_pie.md)
+  shows O-GalNAc core distributions with glycan cartoons. Choose Core
+  1–4 or Core 1–8 and weight slices by counts or pooled abundance. (#27)
+- New
+  [`plot_top10_bar()`](https://glycoverse.github.io/glyvis/reference/plot_top10_bar.md)
+  compares the ten highest-ranked N-glycans with and without
+  oligomannose in a mirrored bar chart. Each side ranks glycans
+  independently by site-specific glycoform count or pooled abundance.
+  (#30)
+
+### Minor improvements and fixes
+
+- Plots use the tidyplots default palettes. Heatmaps and correlation
+  plots use a blue–white–red scale, and volcano plots show unchanged
+  points in grey. (#34)
+- [`plot_logo()`](https://glycoverse.github.io/glyvis/reference/plot_logo.md)
+  reports the original UniProt lookup error and suggests retrying or
+  supplying a local FASTA file. (#24)
+
 ## glyvis 0.8.0
 
 ### Breaking changes
