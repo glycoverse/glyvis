@@ -39,19 +39,18 @@ test_that("set bubbles use original p-values and unsigned Mahalanobis effects", 
   expect_equal(p$tidyplot$width, 80)
   expect_equal(p$tidyplot$height, 60)
   expect_equal(p$labels$title, "Overview")
-  expect_equal(p$data$p, sets$p_adj)
-  expect_equal(p$data$effect, sets$effect_size)
-  expect_equal(p$data$score, c(3, -log10(0.05), NA, NA, 4))
+  expect_equal(p$data$p, sets$p_adj[c(1, 2, 5)])
+  expect_equal(p$data$effect, sets$effect_size[c(1, 2, 5)])
+  expect_equal(p$data$score, c(3, -log10(0.05), 4))
   expect_match(p$labels$caption, "Reported P = 0 shown at x = 4", fixed = TRUE)
   b <- ggplot2::ggplot_build(p)
   expect_equal(b$data[[1]]$x, c(3, -log10(0.05), 4))
-  expect_length(unique(b$data[[1]]$colour), 1L)
+  expect_equal(b$data[[1]]$colour, rep("#0072B2", 3))
+  expect_equal(b$data[[1]]$alpha, rep(0.3, 3))
   expect_equal(unname(b$data[[1]]$size^2 / b$data[[1]]$size[3]^2), c(2, 4, 1))
   expect_equal(
     as.character(b$layout$panel_params[[1]]$y$get_labels()),
     c(
-      "no adjusted value (P unavailable)",
-      "failed (test failed)",
       "A: singleton",
       "rank #1",
       "zero"
@@ -60,6 +59,12 @@ test_that("set bubbles use original p-values and unsigned Mahalanobis effects", 
   expect_length(
     ggplot2::ggplot_build(p + ggplot2::geom_vline(xintercept = 2))$data,
     3
+  )
+  selected <- plot_bubble(fit, variables = c("failed", "no adjusted value"))
+  selected_panel <- ggplot2::ggplot_build(selected)$layout$panel_params[[1L]]
+  expect_equal(
+    as.character(selected_panel$y$get_labels()),
+    c("no adjusted value (P unavailable)", "failed (test failed)")
   )
   filtered <- plot_bubble(fit, variables = c("A: singleton", "rank #1"))
   expect_equal(
@@ -91,19 +96,20 @@ test_that("raw, unavailable and extreme p-values do not invent significance", {
   p <- plot_bubble(fit, p_col = "p_val")
   expect_equal(
     p$data$score,
-    c(0, -log10(table$p_val[2]), -log10(table$p_val[2]) + 1, NA)
+    c(0, -log10(table$p_val[2]), -log10(table$p_val[2]) + 1)
   )
   expect_match(paste(deparse(p$labels$x), collapse = ""), "raw")
   expect_match(p$labels$caption, "Small dot: zero effect", fixed = TRUE)
-  expect_equal(p$data$magnitude, c(0, 1, 2, 3))
+  expect_equal(p$data$magnitude, c(0, 1, 2))
   expect_equal(
     as.character(p$data$direction),
-    c("Zero", "Negative", "Positive", "Positive")
+    c("Zero", "Negative", "Positive")
   )
-  expect_equal(
-    ggplot2::ggplot_build(p)$data[[1]]$colour,
-    c("#B14A18", "#216698")
-  )
+  b <- ggplot2::ggplot_build(p)
+  expect_equal(b$data[[1]]$colour, c("#B14A18", "#216698"))
+  expect_equal(b$data[[1]]$alpha, c(0.3, 0.3))
+  expect_equal(b$data[[2]]$colour, "#0072B2")
+  expect_equal(b$data[[2]]$alpha, 0.3)
 
   missing_only <- plot_bubble(fit, p_col = "p_val", variables = "unknown")
   expect_no_warning(ggplot2::ggplot_build(missing_only))
@@ -136,9 +142,15 @@ test_that("supplied effects, unavailable effects and unsigned effects stay disti
   expect_equal(k$data$magnitude, c(NA, .5))
   expect_null(k$labels$colour)
   expect_match(k$labels$caption, "Open circle", fixed = TRUE)
-  expect_equal(ggplot2::ggplot_build(k)$data[[2]]$shape, 1)
+  k_open <- ggplot2::ggplot_build(k)$data[[2]]
+  expect_equal(k_open$shape, 1)
+  expect_equal(k_open$colour, "#0072B2")
+  expect_equal(k_open$alpha, 0.3)
   a <- plot_bubble(bubble_fixture("ancova", fits$ancova))
-  expect_equal(ggplot2::ggplot_build(a)$data[[1]]$size, c(2, 2))
+  a_points <- ggplot2::ggplot_build(a)$data[[1]]
+  expect_equal(a_points$size, c(2, 2))
+  expect_equal(a_points$colour, rep("#0072B2", 2))
+  expect_equal(a_points$alpha, rep(0.3, 2))
   expect_null(a$scales$get_scales("size"))
   expect_match(a$labels$caption, "uniform size", fixed = TRUE)
 })
@@ -215,4 +227,77 @@ test_that("actual glystats set results plot overlapping sets without recomputati
   expect_equal(p$data$p, fit$tidy_result$sets$p_adj)
   expect_equal(p$data$magnitude, fit$tidy_result$sets$effect_size)
   expect_no_warning(ggplot2::ggplot_build(p))
+})
+
+
+test_that("the default keeps ten ranked rows in the plotted p-value column", {
+  ids <- paste("Set", 1:14)
+  sets <- tibble::tibble(
+    set_id = ids,
+    status = c(rep("ok", 13), "failed"),
+    p_adj = c(
+      .60,
+      .20,
+      .20,
+      .18,
+      .16,
+      .14,
+      .12,
+      .10,
+      .08,
+      .07,
+      .06,
+      .20,
+      NA,
+      0
+    ),
+    p_val = c(
+      .02,
+      .04,
+      .06,
+      .08,
+      .10,
+      .12,
+      .14,
+      .16,
+      .18,
+      .20,
+      .22,
+      .24,
+      NA,
+      0
+    ),
+    effect_size = seq_along(ids)
+  )
+  fit <- bubble_fixture("set_test", sets)
+  adjusted <- plot_bubble(fit)
+  raw <- plot_bubble(fit, p_col = "p_val")
+  expect_equal(adjusted$data$id, ids[c(2:11)])
+  expect_equal(raw$data$id, ids[1:10])
+  expect_equal(adjusted$data$p, sets$p_adj[2:11])
+  expect_equal(autoplot(fit)$data$id, adjusted$data$id)
+  panel <- ggplot2::ggplot_build(adjusted)$layout$panel_params[[1L]]
+  expect_equal(as.character(panel$y$get_labels()), ids[c(3, 2, 4:11)])
+
+  picked <- plot_bubble(fit, variables = rev(ids))
+  expect_equal(nrow(picked$data), 14L)
+  expect_equal(autoplot(fit, variables = rev(ids))$data$id, picked$data$id)
+  expect_true(is.na(picked$data$score[picked$data$id == ids[14L]]))
+
+  fit$tidy_result$sets$p_adj <- NA_real_
+  missing <- plot_bubble(fit)
+  expect_equal(missing$data$id, ids[1:10])
+  expect_true(all(is.na(missing$data$score)))
+})
+
+test_that("explicit variables keep all tests for a multiple-term feature", {
+  model <- tibble::tibble(
+    variable = rep("feature", 12),
+    term = paste("term", 1:12),
+    estimate = seq_len(12),
+    p_adj = seq_len(12) / 20
+  )
+  fit <- bubble_fixture("linear_model", model)
+  expect_equal(nrow(plot_bubble(fit)$data), 10L)
+  expect_equal(plot_bubble(fit, variables = "feature")$data$p, model$p_adj)
 })

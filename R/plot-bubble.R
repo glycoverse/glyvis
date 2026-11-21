@@ -14,15 +14,17 @@
 #'   IDs for correlation, depending on how it was fit. A correlation pair
 #'   is included once if either endpoint matches; it is ordered by the first
 #'   matching ID. All terms or contrasts for a selected variable are retained.
-#'   `NULL` keeps all rows, ordered by increasing plotted p-value, preserving
-#'   input order for ties and placing unavailable results last.
+#'   `NULL` (the default) displays up to ten rows with the smallest plotted
+#'   p-values, preserving input order for ties. Explicit selection is not
+#'   limited to ten rows.
 #' @param p_col Plot supplied adjusted p-values (`"p_adj"`, the default) or
 #'   explicitly request unadjusted p-values (`"p_val"`). If adjusted p-values
 #'   were not computed, request `"p_val"`. The plot does not adjust p-values.
-#' @param palette Color vector. Unsigned plots use the first color, or grey by
-#'   default. Signed plots accept colors for `"Negative"`, `"Zero"` and
-#'   `"Positive"`; an unnamed palette follows this order. Defaults are orange,
-#'   grey, and blue respectively. Missing effects are always grey.
+#' @param palette Color vector. Unsigned plots use the first color, or the
+#'   default glyvis blue. Signed plots accept colors for `"Negative"`,
+#'   `"Zero"` and `"Positive"`; an unnamed palette follows this order.
+#'   Defaults are orange, glyvis blue, and dark blue, respectively. Missing
+#'   effects use the default glyvis blue. All points use alpha 0.3.
 #' @inheritParams glyvis_plot_options
 #'
 #' @section Effects and test rows:
@@ -51,11 +53,13 @@
 #' plotted finite score (or at 1 if there are none). The position is reported
 #' in the caption and does not replace the original p-values.
 #'
-#' Rows with missing p-values or failed set tests remain labeled without
-#' bubbles. A rank-deficient set is included if the test succeeded. For a
-#' valid p-value, an open circle marks an unavailable effect, including a
-#' negative estimate of an unsigned magnitude such as epsilon-squared. A
-#' small filled dot marks zero effect. Empty results raise an error.
+#' The default ranking excludes rows with missing p-values or failed set
+#' tests. If no p-value is available, the first ten rows are labeled without
+#' bubbles. Explicitly selected rows with unavailable p-values also retain
+#' their labels without bubbles. A rank-deficient set is eligible if the test
+#' succeeded. With a valid p-value, an open circle marks an unavailable effect,
+#' including a negative estimate of an unsigned magnitude (e.g., epsilon-squared).
+#' A small filled dot marks zero effect. Empty results raise an error.
 #'
 #' @returns A composable `tidyplot` object, also inheriting from `ggplot`.
 #' @examples
@@ -108,6 +112,17 @@ plot_bubble <- function(
   spec <- .bubble_test_data(x, p_col, variables)
   plot_data <- spec$data
   p_available <- plot_data$status == "ok" & !is.na(plot_data$p)
+  if (is.null(variables)) {
+    ranked <- which(p_available)
+    if (length(ranked)) {
+      ranked <- ranked[order(plot_data$p[ranked], ranked)]
+    } else {
+      ranked <- seq_len(nrow(plot_data))
+    }
+    keep <- sort(utils::head(ranked, 10L))
+    plot_data <- plot_data[keep, , drop = FALSE]
+    p_available <- p_available[keep]
+  }
   score <- rep(NA_real_, nrow(plot_data))
   positive_p <- p_available & plot_data$p > 0
   zero_p <- p_available & plot_data$p == 0
@@ -139,6 +154,7 @@ plot_bubble <- function(
     }
   }
 
+  default_blue <- glyvis_colors[[1L]]
   group <- NULL
   if (spec$signed) {
     if (any(p_available & effect_ok)) {
@@ -157,14 +173,22 @@ plot_bubble <- function(
       levels = c("Negative", "Zero", "Positive")
     )
     if (!is.null(group) && is.null(palette)) {
-      palette <- c(Negative = "#B14A18", Zero = "#666666", Positive = "#216698")
+      palette <- c(
+        Negative = "#B14A18",
+        Zero = default_blue,
+        Positive = "#216698"
+      )
     }
   }
   if (is.null(group)) {
-    palette <- if (is.null(palette)) "#666666" else unname(palette[1L])
+    palette <- if (is.null(palette)) default_blue else unname(palette[1L])
   }
 
-  display_order <- order(plot_data$selection, is.na(score), -score)
+  display_order <- order(
+    plot_data$selection,
+    !p_available,
+    replace(plot_data$p, !p_available, NA_real_)
+  )
   plot_data$row <- factor(seq_len(nrow(plot_data)), levels = rev(display_order))
   labels <- paste0(
     plot_data$label,
@@ -193,15 +217,26 @@ plot_bubble <- function(
     )
 
   if (spec$fixed) {
-    p <- p + geom_point(data = p$data[p_available, , drop = FALSE], size = 2)
+    p <- p +
+      geom_point(
+        data = p$data[p_available, , drop = FALSE],
+        size = 2,
+        alpha = 0.3
+      )
   } else {
     p <- p +
       geom_point(
         data = p$data[size_known, , drop = FALSE],
-        aes(size = .data$magnitude)
+        aes(size = .data$magnitude),
+        alpha = 0.3
       )
     if (any(size_zero)) {
-      p <- p + geom_point(data = p$data[size_zero, , drop = FALSE], size = 1.5)
+      p <- p +
+        geom_point(
+          data = p$data[size_zero, , drop = FALSE],
+          size = 1.5,
+          alpha = 0.3
+        )
     }
     if (any(size_unknown)) {
       p <- p +
@@ -209,7 +244,8 @@ plot_bubble <- function(
           data = p$data[size_unknown, , drop = FALSE],
           aes(x = .data$score, y = .data$row),
           inherit.aes = FALSE,
-          colour = "#666666",
+          colour = default_blue,
+          alpha = 0.3,
           size = 2,
           shape = 1
         )

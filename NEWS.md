@@ -2,7 +2,7 @@
 
 ## New features
 
-* New `plot_bubble()` displays test significance and effect magnitudes from fitted glystats results. Use `variables` to select fitted IDs. Set-test results also support this plot through `autoplot()`. (#11)
+* New `plot_bubble()` displays test significance and effect magnitudes from fitted glystats results. The ten smallest plotted p-values are shown by default; use `variables` to select fitted IDs without the default limit. Set-test results also support this plot through `autoplot()`. (#11)
 
 # glyvis 0.9.0
 

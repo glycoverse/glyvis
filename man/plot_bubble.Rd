@@ -45,8 +45,9 @@ top-to-bottom order. Use set IDs for a set test, and variable or sample
 IDs for correlation, depending on how it was fit. A correlation pair
 is included once if either endpoint matches; it is ordered by the first
 matching ID. All terms or contrasts for a selected variable are retained.
-\code{NULL} keeps all rows, ordered by increasing plotted p-value, preserving
-input order for ties and placing unavailable results last.}
+\code{NULL} (the default) displays up to ten rows with the smallest plotted
+p-values, preserving input order for ties. Explicit selection is not
+limited to ten rows.}
 
 \item{p_col}{Plot supplied adjusted p-values (\code{"p_adj"}, the default) or
 explicitly request unadjusted p-values (\code{"p_val"}). If adjusted p-values
@@ -62,10 +63,11 @@ These are not export-page dimensions.}
 
 \item{family}{Font family. Defaults to \code{"sans"}.}
 
-\item{palette}{Color vector. Unsigned plots use the first color, or grey by
-default. Signed plots accept colors for \code{"Negative"}, \code{"Zero"} and
-\code{"Positive"}; an unnamed palette follows this order. Defaults are orange,
-grey, and blue respectively. Missing effects are always grey.}
+\item{palette}{Color vector. Unsigned plots use the first color, or the
+default glyvis blue. Signed plots accept colors for \code{"Negative"},
+\code{"Zero"} and \code{"Positive"}; an unnamed palette follows this order.
+Defaults are orange, glyvis blue, and dark blue, respectively. Missing
+effects use the default glyvis blue. All points use alpha 0.3.}
 
 \item{object}{A set-test result from \code{\link[glystats:gly_set_test]{glystats::gly_set_test()}}.}
 }
@@ -108,11 +110,13 @@ reported as zero share a finite display position one unit beyond the largest
 plotted finite score (or at 1 if there are none). The position is reported
 in the caption and does not replace the original p-values.
 
-Rows with missing p-values or failed set tests remain labeled without
-bubbles. A rank-deficient set is included if the test succeeded. For a
-valid p-value, an open circle marks an unavailable effect, including a
-negative estimate of an unsigned magnitude such as epsilon-squared. A
-small filled dot marks zero effect. Empty results raise an error.
+The default ranking excludes rows with missing p-values or failed set
+tests. If no p-value is available, the first ten rows are labeled without
+bubbles. Explicitly selected rows with unavailable p-values also retain
+their labels without bubbles. A rank-deficient set is eligible if the test
+succeeded. With a valid p-value, an open circle marks an unavailable effect,
+including a negative estimate of an unsigned magnitude (e.g., epsilon-squared).
+A small filled dot marks zero effect. Empty results raise an error.
 }
 
 \examples{
