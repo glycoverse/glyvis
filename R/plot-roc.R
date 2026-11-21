@@ -2,7 +2,7 @@
 #'
 #' Draw ROC curves.
 #' Only two groups are allowed.
-#' At most 10 variables can be plotted.
+#' At most 10 variables can be shown in a ROC curve plot.
 #' Currently supported data types:
 #' - `glystats_roc_res`: Result from [glystats::gly_roc()].
 #' - `SummarizedExperiment`: A [glyexp::GlycomicSE()],
@@ -13,8 +13,15 @@
 #' @param x An object to be plotted.
 #' @param type The type of plot, one of "dotplot" or "roc". Default is "roc".
 #' @param auc_cutoff The AUC cutoff. Default is 0.5.
+#' @param variables A character vector of feature identifiers to display, or
+#'   `NULL` for the existing unfiltered behavior. Identifiers come from
+#'   `.variable` in current results and `variable` in legacy results.
+#'   Unknown identifiers error; repeated identifiers do not repeat curves or
+#'   points. Selection retains the result row order and does not recompute ROC
+#'   statistics. Select up to 10 features to plot curves from a larger input.
 #' @param top_n Number of variables to retain when `type = "dotplot"`. `NULL`
-#'   retains all variables; a positive integer selects the largest AUC values.
+#'   retains all variables; a positive integer selects the largest AUC values
+#'   after applying `variables`.
 #'   Does not affect ROC curves.
 #' @inheritParams glyvis_plot_options
 #'
@@ -32,7 +39,8 @@ plot_roc <- function(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  stats_args = list()
+  stats_args = list(),
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   UseMethod("plot_roc")
@@ -51,7 +59,8 @@ plot_roc.glystats_roc_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_roc(
@@ -65,7 +74,8 @@ plot_roc.glystats_roc_res <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }
 
@@ -84,16 +94,17 @@ plot_roc.glyexp_experiment <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
-  if (nrow(x) > 10) {
+  if (is.null(variables) && nrow(x) > 10) {
     cli::cli_abort(c(
       "Number of variables must be less than or equal to 10.",
       "x" = "Current number of variables: {.val {nrow(x)}}",
-      "i" = "Try to filter the experiment before plotting."
+      "i" = "Use {.arg variables} to select features to plot."
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
@@ -108,7 +119,8 @@ plot_roc.glyexp_experiment <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }
 
@@ -126,16 +138,17 @@ plot_roc.SummarizedExperiment <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
-  if (nrow(x) > 10) {
+  if (is.null(variables) && nrow(x) > 10) {
     cli::cli_abort(c(
       "Number of variables must be less than or equal to 10.",
       "x" = "Current number of variables: {.val {nrow(x)}}",
-      "i" = "Try to filter the experiment before plotting."
+      "i" = "Use {.arg variables} to select features to plot."
     ))
   }
   roc_res <- rlang::exec(glystats::gly_roc, x, !!!stats_args)
@@ -150,7 +163,8 @@ plot_roc.SummarizedExperiment <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }
 
@@ -160,13 +174,26 @@ plot_roc.SummarizedExperiment <- function(
 #' @param auc_cutoff The AUC cutoff.
 #' @inheritParams glyvis_plot_options
 #' @noRd
-.plot_roc <- function(roc_res, type, auc_cutoff, ..., top_n = NULL) {
+.plot_roc <- function(
+  roc_res,
+  type,
+  auc_cutoff,
+  ...,
+  top_n = NULL,
+  variables = NULL
+) {
   checkmate::assert_choice(type, c("dotplot", "roc"))
   checkmate::assert_number(auc_cutoff, lower = 0, upper = 1)
   switch(
     type,
-    dotplot = .plot_roc_dotplot(roc_res, auc_cutoff, ..., top_n = top_n),
-    roc = .plot_roc_curves(roc_res, ...)
+    dotplot = .plot_roc_dotplot(
+      roc_res,
+      auc_cutoff,
+      ...,
+      top_n = top_n,
+      variables = variables
+    ),
+    roc = .plot_roc_curves(roc_res, ..., variables = variables)
   )
 }
 
@@ -175,14 +202,15 @@ plot_roc.SummarizedExperiment <- function(
 #' @param auc_cutoff The AUC cutoff.
 #' @inheritParams glyvis_plot_options
 #' @noRd
-.plot_roc_dotplot <- function(roc_res, auc_cutoff, ...) {
-  df <- roc_res$tidy_result$auc %>%
+.plot_roc_dotplot <- function(roc_res, auc_cutoff, ..., variables = NULL) {
+  id_col <- .result_id_column(roc_res, "variable")
+  df <- .select_result_variables(roc_res$tidy_result$auc, id_col, variables) %>%
     dplyr::mutate(
       candidate = .data$auc >= auc_cutoff
     )
   .glyvis_dotchart(
     df,
-    x = .result_id_column(roc_res, "variable"),
+    x = id_col,
     y = "auc",
     ...
   ) +
@@ -194,17 +222,19 @@ plot_roc.SummarizedExperiment <- function(
 #' @param roc_res A `glystats_roc_res` object.
 #' @inheritParams glyvis_plot_options
 #' @noRd
-.plot_roc_curves <- function(roc_res, ...) {
-  if (nrow(roc_res$tidy_result$auc) > 10) {
+.plot_roc_curves <- function(roc_res, ..., variables = NULL) {
+  id_col <- .result_id_column(roc_res, "variable")
+  auc <- .select_result_variables(roc_res$tidy_result$auc, id_col, variables)
+  if (nrow(auc) > 10) {
     cli::cli_abort(c(
       "Number of variables must be less than or equal to 10 when {.arg type} is {.val roc}.",
-      "x" = "Current number of variables: {.val {nrow(roc_res$tidy_result$auc)}}",
-      "i" = "Use {.arg type} = {.val dotplot}."
+      "x" = "Current number of variables: {.val {nrow(auc)}}",
+      "i" = "Select features with {.arg variables} or use {.arg type} = {.val dotplot}."
     ))
   }
-  .glyvis_roc(
-    roc_res$tidy_result$coords,
-    id_col = .result_id_column(roc_res, "variable"),
-    ...
-  )
+  coords <- roc_res$tidy_result$coords
+  if (!is.null(variables)) {
+    coords <- coords[coords[[id_col]] %in% auc[[id_col]], , drop = FALSE]
+  }
+  .glyvis_roc(coords, id_col = id_col, ...)
 }

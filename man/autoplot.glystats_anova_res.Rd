@@ -16,7 +16,8 @@
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 
 \method{autoplot}{glystats_kruskal_res}(
@@ -30,7 +31,8 @@
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 }
 \arguments{
@@ -44,7 +46,8 @@
 Can also be "p_val" (raw p-values without multiple testing correction).}
 
 \item{top_n}{Number of variables to retain. \code{NULL} retains all variables;
-a positive integer selects the smallest plotted p-values.}
+a positive integer selects the smallest plotted p-values after applying
+\code{variables}.}
 
 \item{title}{Optional plot title. Defaults to \code{NULL}.}
 
@@ -62,6 +65,13 @@ uses tidyplots palettes. Heatmaps and correlation plots use the blue,
 near-white, and red anchors of \code{colors_diverging_BuRd}. Volcano plots use grey
 for points that do not meet both cutoffs. Other plots use
 the tidyplots defaults for discrete and continuous values.}
+
+\item{variables}{A character vector of feature identifiers to display, or
+\code{NULL} to display all features. Identifiers come from \code{.variable} in
+current results and \code{variable} in legacy results. Unknown identifiers
+error; repeated identifiers do not repeat rows. Selection retains the
+result row order, after choosing any contrast, and does not change fitted
+effects, p-values, or multiple-testing adjustment.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.

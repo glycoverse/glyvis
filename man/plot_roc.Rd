@@ -19,7 +19,8 @@ plot_roc(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  stats_args = list()
+  stats_args = list(),
+  variables = NULL
 )
 
 \method{plot_roc}{glystats_roc_res}(
@@ -33,7 +34,8 @@ plot_roc(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 
 \method{plot_roc}{glyexp_experiment}(
@@ -48,7 +50,8 @@ plot_roc(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 
 \method{plot_roc}{SummarizedExperiment}(
@@ -63,7 +66,8 @@ plot_roc(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 }
 \arguments{
@@ -76,7 +80,8 @@ plot_roc(
 \item{auc_cutoff}{The AUC cutoff. Default is 0.5.}
 
 \item{top_n}{Number of variables to retain when \code{type = "dotplot"}. \code{NULL}
-retains all variables; a positive integer selects the largest AUC values.
+retains all variables; a positive integer selects the largest AUC values
+after applying \code{variables}.
 Does not affect ROC curves.}
 
 \item{title}{Optional plot title. Defaults to \code{NULL}.}
@@ -97,6 +102,13 @@ for points that do not meet both cutoffs. Other plots use
 the tidyplots defaults for discrete and continuous values.}
 
 \item{stats_args}{A list of keyword arguments to pass to \code{\link[glystats:gly_roc]{glystats::gly_roc()}}.}
+
+\item{variables}{A character vector of feature identifiers to display, or
+\code{NULL} for the existing unfiltered behavior. Identifiers come from
+\code{.variable} in current results and \code{variable} in legacy results.
+Unknown identifiers error; repeated identifiers do not repeat curves or
+points. Selection retains the result row order and does not recompute ROC
+statistics. Select up to 10 features to plot curves from a larger input.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
@@ -104,7 +116,7 @@ A \code{tidyplot} object, also inheriting from \code{ggplot}.
 \description{
 Draw ROC curves.
 Only two groups are allowed.
-At most 10 variables can be plotted.
+At most 10 variables can be shown in a ROC curve plot.
 Currently supported data types:
 \itemize{
 \item \code{glystats_roc_res}: Result from \code{\link[glystats:gly_roc]{glystats::gly_roc()}}.
