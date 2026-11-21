@@ -26,6 +26,12 @@
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
+#' @param variables A character vector of feature identifiers to display, or
+#'   `NULL` to display all features. Identifiers come from `.variable` in
+#'   current results and `variable` in legacy results. Unknown identifiers
+#'   error; repeated identifiers do not repeat rows. Selection retains the
+#'   result row order, after choosing any contrast, and does not change fitted
+#'   effects, p-values, or multiple-testing adjustment.
 #' @param label Whether to label variables. Defaults to `FALSE`.
 #' @param point_size,alpha Point size and opacity.
 #' @inheritParams glyvis_plot_options
@@ -50,7 +56,8 @@ plot_volcano <- function(
   palette = NULL,
   test = "limma",
   stats_args = list(),
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   UseMethod("plot_volcano")
@@ -78,7 +85,8 @@ plot_volcano.glyexp_experiment <- function(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
@@ -109,7 +117,8 @@ plot_volcano.glyexp_experiment <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -132,7 +141,8 @@ plot_volcano.SummarizedExperiment <- function(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   checkmate::assert_choice(test, c("ttest", "wilcox", "limma"))
@@ -163,7 +173,8 @@ plot_volcano.SummarizedExperiment <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -183,7 +194,8 @@ plot_volcano.glystats_ttest_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano(
@@ -200,7 +212,8 @@ plot_volcano.glystats_ttest_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -220,7 +233,8 @@ plot_volcano.glystats_wilcox_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano(
@@ -237,7 +251,8 @@ plot_volcano.glystats_wilcox_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -261,7 +276,8 @@ plot_volcano.glystats_limma_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano_limma(
@@ -279,7 +295,8 @@ plot_volcano.glystats_limma_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -289,7 +306,8 @@ plot_volcano.glystats_limma_res <- function(
   p_cutoff,
   p_col,
   contrast,
-  ...
+  ...,
+  variables = NULL
 ) {
   checkmate::assert_string(contrast, null.ok = TRUE)
   contrasts <- unique(paste0(
@@ -333,28 +351,39 @@ plot_volcano.glystats_limma_res <- function(
       .data$ref_group == .env$ref_group,
       .data$test_group == .env$test_group
     )
+  id_col <- .result_id_column(x, "variable")
+  tidy_res <- .select_result_variables(tidy_res, id_col, variables)
   .glyvis_volcano(
     tidy_res,
     p_col,
     "log2fc",
     p_cutoff,
     log2fc_cutoff,
-    id_col = .result_id_column(x, "variable"),
+    id_col = id_col,
     ...
   )
 }
 
-.plot_volcano <- function(dea_res, log2fc_cutoff, p_cutoff, p_col, ...) {
+.plot_volcano <- function(
+  dea_res,
+  log2fc_cutoff,
+  p_cutoff,
+  p_col,
+  ...,
+  variables = NULL
+) {
   checkmate::assert_number(log2fc_cutoff, lower = 0)
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
+  id_col <- .result_id_column(dea_res, "variable")
+  df <- .select_result_variables(dea_res$tidy_result, id_col, variables)
   .glyvis_volcano(
-    dea_res$tidy_result,
+    df,
     p_col,
     "log2fc",
     p_cutoff,
     log2fc_cutoff,
-    id_col = .result_id_column(dea_res, "variable"),
+    id_col = id_col,
     ...
   )
 }

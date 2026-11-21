@@ -15,7 +15,8 @@
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 }
 \arguments{
@@ -29,7 +30,8 @@ If "roc", at most 10 variables can be plotted.}
 \item{auc_cutoff}{The AUC cutoff. Defaults to 0.5. Only used if type is "dotplot".}
 
 \item{top_n}{Number of variables to retain when \code{type = "dotplot"}. \code{NULL}
-retains all variables; a positive integer selects the largest AUC values.
+retains all variables; a positive integer selects the largest AUC values
+after applying \code{variables}.
 Does not affect ROC curves.}
 
 \item{title}{Optional plot title. Defaults to \code{NULL}.}
@@ -48,11 +50,18 @@ uses tidyplots palettes. Heatmaps and correlation plots use the blue,
 near-white, and red anchors of \code{colors_diverging_BuRd}. Volcano plots use grey
 for points that do not meet both cutoffs. Other plots use
 the tidyplots defaults for discrete and continuous values.}
+
+\item{variables}{A character vector of feature identifiers to display, or
+\code{NULL} for the existing unfiltered behavior. Identifiers come from
+\code{.variable} in current results and \code{variable} in legacy results.
+Unknown identifiers error; repeated identifiers do not repeat curves or
+points. Selection retains the result row order and does not recompute ROC
+statistics. Select up to 10 features to plot curves from a larger input.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
 }
 \description{
 Visualization for results from \code{\link[glystats:gly_roc]{glystats::gly_roc()}} (\code{glystats_roc_res} objects).
-At most 10 variables can be plotted.
+At most 10 variables can be shown in a ROC curve plot.
 }

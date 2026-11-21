@@ -31,7 +31,8 @@ autoplot.glystats_ttest_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano(
@@ -48,7 +49,8 @@ autoplot.glystats_ttest_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -68,7 +70,8 @@ autoplot.glystats_wilcox_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano(
@@ -85,7 +88,8 @@ autoplot.glystats_wilcox_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
@@ -98,8 +102,10 @@ autoplot.glystats_wilcox_res <- function(
 #' @param p_cutoff The p-value cutoff. Defaults to 0.05.
 #' @param p_col The column name for p-value. Defaults to "p_adj".
 #'   Can also be "p_val" (raw p-values without multiple testing correction).
+#' @inheritParams plot_volcano
 #' @param top_n Number of variables to retain. `NULL` retains all variables;
-#'   a positive integer selects the smallest plotted p-values.
+#'   a positive integer selects the smallest plotted p-values after applying
+#'   `variables`.
 #' @inheritParams glyvis_plot_options
 #' @returns A `tidyplot` object, also inheriting from `ggplot`.
 #' @export
@@ -114,7 +120,8 @@ autoplot.glystats_anova_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_multigroup_dea(
@@ -128,7 +135,8 @@ autoplot.glystats_anova_res <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }
 
@@ -145,7 +153,8 @@ autoplot.glystats_kruskal_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_multigroup_dea(
@@ -159,7 +168,8 @@ autoplot.glystats_kruskal_res <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }
 
@@ -199,7 +209,8 @@ autoplot.glystats_limma_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_volcano_limma(
@@ -217,15 +228,27 @@ autoplot.glystats_limma_res <- function(
     palette = palette,
     label = label,
     point_size = point_size,
-    alpha = alpha
+    alpha = alpha,
+    variables = variables
   )
 }
 
-.plot_multigroup_dea <- function(object, p_cutoff, p_col, ...) {
+.plot_multigroup_dea <- function(
+  object,
+  p_cutoff,
+  p_col,
+  ...,
+  variables = NULL
+) {
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
 
-  df <- object$tidy_result$main_test %>%
+  id_col <- .result_id_column(object, "variable")
+  df <- .select_result_variables(
+    object$tidy_result$main_test,
+    id_col,
+    variables
+  ) %>%
     dplyr::mutate(
       neglog10p = -log10(pmax(.data[[p_col]], .Machine$double.xmin)),
       candidate = .data[[p_col]] < p_cutoff
@@ -233,7 +256,7 @@ autoplot.glystats_limma_res <- function(
 
   .glyvis_dotchart(
     df,
-    x = .result_id_column(object, "variable"),
+    x = id_col,
     y = "neglog10p",
     ...
   ) +

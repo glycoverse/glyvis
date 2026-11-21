@@ -23,13 +23,15 @@ autoplot.glystats_cox_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   checkmate::assert_number(p_cutoff, lower = 0)
   checkmate::assert_choice(p_col, c("p_val", "p_adj"))
 
-  df <- object$tidy_result %>%
+  id_col <- .result_id_column(object, "variable")
+  df <- .select_result_variables(object$tidy_result, id_col, variables) %>%
     dplyr::mutate(
       neglog10p = -log10(pmax(.data[[p_col]], .Machine$double.xmin)),
       candidate = .data[[p_col]] < p_cutoff
@@ -37,7 +39,7 @@ autoplot.glystats_cox_res <- function(
 
   .glyvis_dotchart(
     df,
-    x = .result_id_column(object, "variable"),
+    x = id_col,
     y = "neglog10p",
     ...,
     title = title,

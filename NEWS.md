@@ -1,5 +1,7 @@
 # glyvis (development version)
 
+* Volcano plots, ROC curves and AUC dotplots, and ANOVA, Kruskal–Wallis, and Cox dotplots accept `variables` to display selected features without changing the underlying analysis.
+
 # glyvis 0.9.0
 
 ## Breaking changes

@@ -1,7 +1,7 @@
 #' Plots for ROC Analysis
 #'
 #' Visualization for results from [glystats::gly_roc()] (`glystats_roc_res` objects).
-#' At most 10 variables can be plotted.
+#' At most 10 variables can be shown in a ROC curve plot.
 #'
 #' @param object A `glystats_roc_res` object.
 #' @param type "dotplot" or "roc". Defaults to "dotplot".
@@ -23,7 +23,8 @@ autoplot.glystats_roc_res <- function(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 ) {
   rlang::check_dots_empty()
   .plot_roc(
@@ -37,6 +38,7 @@ autoplot.glystats_roc_res <- function(
     fontsize = fontsize,
     family = family,
     palette = palette,
-    top_n = top_n
+    top_n = top_n,
+    variables = variables
   )
 }

@@ -26,7 +26,8 @@ plot_volcano(
   palette = NULL,
   test = "limma",
   stats_args = list(),
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 )
 
 \method{plot_volcano}{glyexp_experiment}(
@@ -46,7 +47,8 @@ plot_volcano(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 )
 
 \method{plot_volcano}{SummarizedExperiment}(
@@ -66,7 +68,8 @@ plot_volcano(
   fontsize = 9,
   family = "sans",
   palette = NULL,
-  contrast = NULL
+  contrast = NULL,
+  variables = NULL
 )
 
 \method{plot_volcano}{glystats_ttest_res}(
@@ -83,7 +86,8 @@ plot_volcano(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 
 \method{plot_volcano}{glystats_wilcox_res}(
@@ -100,7 +104,8 @@ plot_volcano(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 
 \method{plot_volcano}{glystats_limma_res}(
@@ -118,7 +123,8 @@ plot_volcano(
   height = NULL,
   fontsize = 9,
   family = "sans",
-  palette = NULL
+  palette = NULL,
+  variables = NULL
 )
 }
 \arguments{
@@ -162,6 +168,13 @@ the tidyplots defaults for discrete and continuous values.}
 \item{contrast}{A character string specifying the contrast to plot, in the format of "group1_vs_group2".
 Must be one of the contrasts in the result.
 When there is only one contrast (two-group comparison), it can be NULL (default).}
+
+\item{variables}{A character vector of feature identifiers to display, or
+\code{NULL} to display all features. Identifiers come from \code{.variable} in
+current results and \code{variable} in legacy results. Unknown identifiers
+error; repeated identifiers do not repeat rows. Selection retains the
+result row order, after choosing any contrast, and does not change fitted
+effects, p-values, or multiple-testing adjustment.}
 }
 \value{
 A \code{tidyplot} object, also inheriting from \code{ggplot}.
