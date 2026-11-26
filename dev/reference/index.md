@@ -31,11 +31,17 @@
   : Plots for 2-Group Differential Expression Analysis (DEA)
 - [`autoplot(`*`<glystats_umap_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/autoplot.glystats_umap_res.md)
   : Plots for UMAP
+- [`plot_bubble()`](https://glycoverse.github.io/glyvis/dev/reference/plot_bubble.md)
+  [`autoplot(`*`<glystats_set_test_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/plot_bubble.md)
+  : Bubble plots for glystats test results
 
 ## Direct Plot
 
 - [`plot_boxplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_boxplot.md)
   : Boxplot
+- [`plot_bubble()`](https://glycoverse.github.io/glyvis/dev/reference/plot_bubble.md)
+  [`autoplot(`*`<glystats_set_test_res>`*`)`](https://glycoverse.github.io/glyvis/dev/reference/plot_bubble.md)
+  : Bubble plots for glystats test results
 - [`plot_corrplot()`](https://glycoverse.github.io/glyvis/dev/reference/plot_corrplot.md)
   : Correlation Plot
 - [`plot_fuc_sia_pie()`](https://glycoverse.github.io/glyvis/dev/reference/plot_fuc_sia_pie.md)

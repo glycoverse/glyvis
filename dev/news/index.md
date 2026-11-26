@@ -2,6 +2,17 @@
 
 ## glyvis (development version)
 
+### New features
+
+- New
+  [`plot_bubble()`](https://glycoverse.github.io/glyvis/dev/reference/plot_bubble.md)
+  displays test significance and effect magnitudes from fitted glystats
+  results. The ten smallest plotted p-values are shown by default; use
+  `variables` to select fitted IDs without the default limit. Set-test
+  results also support this plot through
+  [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html).
+  (#11)
+
 ## glyvis 0.9.0
 
 ### Breaking changes
